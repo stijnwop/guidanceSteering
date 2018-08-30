@@ -14,7 +14,8 @@ function GuidanceUtil.mathRound(number, idp)
 end
 
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
-    local width = 0
+    local maxWidth = 0
+    local minWidth = 0
 
     if object.workAreas ~= nil then
         for _, workArea in pairs(object.workAreas) do
@@ -23,13 +24,14 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
             local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
             local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
 
-            local maxWidth = math.max(x0, x1, x2)
-            local minWidth = math.min(x0, x1, x2)
-
-            width = math.max(width, math.abs(maxWidth) + math.abs(minWidth))
+            maxWidth = math.max(maxWidth, x0, x1, x2)
+            minWidth = math.min(minWidth, x0, x1, x2)
             --            end
         end
     end
+
+    local width = math.abs(maxWidth) + math.abs(minWidth)
+
     return GuidanceUtil.mathRound(width, 2)
 end
 
