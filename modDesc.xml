@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="39">
+    <author>Wopster</author>
+    <version>1.0.0.0</version>
+
+    <title>
+        <en>Guidance Steering</en>
+        <de>Guidance Steering</de>
+    </title>
+
+    <description>
+        <en>
+            <![CDATA[Guidance Steering.]]>
+        </en>
+        <de>
+            <![CDATA[Guidance Steering.]]>
+        </de>
+    </description>
+
+    <l10n>
+        <text name="input_GS_AUTO_WIDTH">
+            <en>Auto width</en>
+            <de>Auto width</de>
+        </text>
+        <text name="input_GS_OFFSET_WIDTH_RESET">
+            <en>Reset width</en>
+            <de>Reset width</de>
+        </text>
+        <text name="input_GS_OFFSET_WIDTH_LEFT">
+            <en>Offset width left</en>
+            <de>Offset width left</de>
+        </text>
+        <text name="input_GS_OFFSET_WIDTH_RIGHT">
+            <en>Offset width right</en>
+            <de>Offset width right</de>
+        </text>
+        <text name="GS_ENABLE_STEERING">
+            <en>Steering guidance</en>
+            <de>Steering guidance</de>
+        </text>
+        <text name="input_GS_ACTIVATE">
+            <en>Activate</en>
+            <de>Activate</de>
+        </text>
+        <text name="input_GS_SETPOINT">
+            <en>SETPOINT</en>
+            <de>SETPOINT</de>
+        </text>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP">
+            <en>Snap to terrain angle</en>
+            <de>Snap to terrain angle</de>
+        </text>
+    </l10n>
+
+    <iconFilename>icon.png</iconFilename>
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+        <sourceFile filename="src/Register.lua"/>
+    </extraSourceFiles>
+
+    <inputBindings>
+        <input name="GS_ACTIVATE" category="VEHICLE" key1="KEY_lctrl KEY_KP_enter" button=""/>
+        <input name="GS_SETPOINT" category="VEHICLE" key1="KEY_lctrl KEY_KP_1" button=""/>
+        <input name="GS_ENABLE_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_0" button=""/>
+        <input name="GS_AUTO_WIDTH" category="VEHICLE" key1="KEY_lctrl KEY_KP_3" button=""/>
+        <input name="GS_OFFSET_WIDTH_LEFT" category="VEHICLE" key1="KEY_lctrl KEY_pagedown" button=""/>
+        <input name="GS_OFFSET_WIDTH_RIGHT" category="VEHICLE" key1="KEY_lctrl KEY_pageup" button=""/>
+        <input name="GS_OFFSET_WIDTH_RESET" category="VEHICLE" key1="KEY_lctrl KEY_end" button=""/>
+        <!--TODO: DELETE JUST DEV OPTION-->
+        <input name="GS_TOGGLE_TERRAIN_ANGLE_SNAP" category="VEHICLE" key1="KEY_lctrl KEY_KP_2" button=""/>
+    </inputBindings>
+
+    <!--<l10n filenamePrefix="translations/translation"/>-->
+</modDesc>
