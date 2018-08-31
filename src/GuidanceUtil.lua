@@ -49,3 +49,42 @@ function GuidanceUtil.getDriveDirection(dx, dz)
 
     return dlx, dlz
 end
+
+function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
+    if self.lastIsNotOnField then
+        local vX, vY, vZ = unpack(self.lastValidGroundPos)
+        local dist = Utils.vector3Length(vX - x, vY - y, vZ - z)
+        return self.distanceToEnd - dist, not self.lastIsNotOnField
+    end
+
+    local distanceToHeadLand = lookAheadStepDistance
+
+    local dx, dz = unpack(self.guidanceInfo.snapDirection)
+
+    local fx = x + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dx
+    local fz = z + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dz
+
+--    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
+
+    local densityBits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
+    local isOnField = densityBits ~= 0
+
+    print(tostring(isOnField))
+    local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
+
+    DebugUtil.drawDebugCircle(fx, fy, fz, 1, 10)
+
+    self.lastIsNotOnField = not isOnField
+    if isOnField then
+        local distance = self.lastMovedDistance
+        local dirX, dirY, dirZ = localDirectionToWorld(self.guidanceNode, 0, 0, distance + 0.75)
+        self.lastValidGroundPos = { x + dirX, y + dirY, z + dirZ }
+    else
+        self.distanceToEnd = lookAheadStepDistance
+        local vX, vY, vZ = unpack(self.lastValidGroundPos)
+        local dist = Utils.vector3Length(vX - x, vY - y, vZ - z)
+        distanceToHeadLand = self.distanceToEnd - dist
+    end
+
+    return distanceToHeadLand, isOnField
+end
