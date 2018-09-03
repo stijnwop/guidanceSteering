@@ -19,20 +19,24 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
     if object.workAreas ~= nil then
         for _, workArea in pairs(object.workAreas) do
-            --            if object:getIsWorkAreaActive(workArea) then
             local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
             local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
             local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
 
             maxWidth = math.max(maxWidth, x0, x1, x2)
             minWidth = math.min(minWidth, x0, x1, x2)
-            --            end
         end
     end
 
     local width = math.abs(maxWidth) + math.abs(minWidth)
 
     return GuidanceUtil.mathRound(width, 2)
+end
+
+function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)
+    local dot = GuidanceUtil.getAProjectOnLineParameter(px, pz, lineX, lineZ, lineDirX, lineDirZ)
+
+    return lineX + lineDirX * dot, lineZ + lineDirZ * dot
 end
 
 function GuidanceUtil.getAProjectOnLineParameter(px, pz, lineX, lineZ, lineDirX, lineDirZ)
@@ -64,15 +68,15 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
     local fx = x + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dx
     local fz = z + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dz
 
---    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
+    --    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
 
     local densityBits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
     local isOnField = densityBits ~= 0
 
-    print(tostring(isOnField))
+    -- Todo: if debug
     local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
-
-    DebugUtil.drawDebugCircle(fx, fy, fz, 1, 10)
+    DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
+    --
 
     self.lastIsNotOnField = not isOnField
     if isOnField then
