@@ -37,12 +37,12 @@ function GuidanceLine:drawABLine(x, z, snapX, snapZ, width, moveDirection, beta,
         local line0x = x + width * snapZ * (beta + line.position / 2)
         local line0z = z - width * snapX * (beta + line.position / 2)
 
+        local lineXDirection = lhDirectionPlusMinus * snapX * moveDirection
+        local lineZDirection = lhDirectionPlusMinus * snapZ * moveDirection
+
         local r, g, b = unpack(line.rgb)
 
         for l = 0, GuidanceLine.NUM_STEPS, GuidanceLine.STEP_SIZE do
-            local lineXDirection = lhDirectionPlusMinus * snapX * moveDirection
-            local lineZDirection = lhDirectionPlusMinus * snapZ * moveDirection
-
             local lineAx = line0x + GuidanceLine.STEP_SIZE * l * lineXDirection
             local lineAz = line0z + GuidanceLine.STEP_SIZE * l * lineZDirection
             local lineAy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, lineAx, 0, lineAz) + GuidanceLine.GROUND_CLEARANCE_OFFSET

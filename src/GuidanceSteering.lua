@@ -12,6 +12,8 @@ source(Utils.getFilename("src/GuidanceUtil.lua", baseDirectory))
 -- Circles
 
 GuidanceSteering.DEFAULT_WIDTH = 6
+GuidanceSteering.DIRECTION_LEFT = -1
+GuidanceSteering.DIRECTION_RIGHT = 1
 
 function GuidanceSteering.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Steerable, specializations)
@@ -118,11 +120,11 @@ function GuidanceSteering:update(dt)
             else
                 if reset then
                     self.abDistanceCounter = 0
+                    self.guidanceInfo.snapDirection = { 0, 0, 0, 0 }
                     GuidanceSteering.deleteABPoints(self)
                     print("reset AB Line")
                 elseif generateA or generateB then
                     GuidanceSteering.createABPoint(self, generateB)
-                    --                    GuidanceSteering.setSnapDirection(self, true)
                 end
 
                 self.abClickCounter = self.abClickCounter + 1
@@ -163,9 +165,8 @@ function GuidanceSteering:update(dt)
         local info = self.guidanceInfo
         local dx, dz, xSq, zSq = unpack(info.snapDirection)
         local tx, _, tz, dlx, dlz = unpack(info.driveTarget)
-        local dot = Utils.clamp(dlx * dx + dlz * dz, -1, 1)
+        local dot = Utils.clamp(dlx * dx + dlz * dz, GuidanceSteering.DIRECTION_LEFT, GuidanceSteering.DIRECTION_RIGHT)
         local angle = math.acos(dot) -- dot towards point
-
         local alpha = GuidanceUtil.getAProjectOnLineParameter(tz, tx, zSq, xSq, dx, dz) / info.width
 
         info.alphaRad = alpha - math.floor(alpha + 0.5)
@@ -204,9 +205,7 @@ function GuidanceSteering:update(dt)
             --        local acceleration = 1.0
             --        AIVehicleUtil.driveToPoint(self, dt, acceleration, true, info.movingDirection > 0, pX, pZ, 25, false)
 
-            local arcAngle = math.deg(math.asin(dlx * dz - dlz * dx))
-
-            GuidanceSteering.guideSteering(self, arcAngle, lastSpeed)
+            GuidanceSteering.guideSteering(self)
         else
             self.guidanceSteeringOffset = 0
         end
@@ -225,12 +224,18 @@ function GuidanceSteering:update(dt)
             local lookAheadStepDistance = 11 * speedMultiplier -- m
             local distance, isDistancenOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
             print(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistancenOnField)))
---            print(("End of field distance: %.1f (owned: %s)"):format(distance, tostring(isDistancenOnField)))
+            --            print(("End of field distance: %.1f (owned: %s)"):format(distance, tostring(isDistancenOnField)))
 
             if distance <= distanceToTurn then
                 if self.guidanceSteeringIsActive then
                     -- if stop mode
-                    self:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
+                    if self.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
+                        self:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
+                    end
+
+                    if self.lastIsNotOnField and self.lastIsNotOnField ~= not isOnField then
+                        self.lastIsNotOnField = false
+                    end
                 end
             end
 
@@ -290,13 +295,11 @@ function GuidanceSteering.activatedSettingsEventListeners(self, dt)
     end
 
     if InputBinding.isPressed(InputBinding.GS_OFFSET_WIDTH_LEFT) then
-        --        self.guidanceInfo.offsetWidth = self.guidanceInfo.offsetWidth - 0.0002 * dt
-        GuidanceSteering.shiftParallel(self, dt, -1)
+        GuidanceSteering.shiftParallel(self, dt, GuidanceSteering.DIRECTION_LEFT)
     end
 
     if InputBinding.isPressed(InputBinding.GS_OFFSET_WIDTH_RIGHT) then
-        --        self.guidanceInfo.offsetWidth = self.guidanceInfo.offsetWidth + 0.0002 * dt
-        GuidanceSteering.shiftParallel(self, dt, 1)
+        GuidanceSteering.shiftParallel(self, dt, GuidanceSteering.DIRECTION_RIGHT)
     end
 end
 
@@ -319,7 +322,7 @@ function GuidanceSteering.createABPoint(self, isB)
         return
     end
 
-    local p = createTransformGroup("AB_point_" .. key)
+    local p = createTransformGroup(("AB_point_%d"):format(key))
     local x, _, z = unpack(self.guidanceInfo.driveTarget)
     local dx, dy, dz = localDirectionToWorld(self.guidanceNode, 0, 0, 1)
     local upX, upY, upZ = worldDirectionToLocal(self.guidanceNode, 0, 1, 0)
@@ -374,7 +377,6 @@ function GuidanceSteering.setSnapDirection(self, forceUpdateSnapDirection)
         if self.guidanceTerrainAngleIsActive then
             angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
         end
-        print(angleRad)
 
         dx, dz = Utils.getDirectionFromYRotation(angleRad)
 
@@ -400,46 +402,65 @@ function GuidanceSteering.shiftParallel(self, dt, direction)
     self.guidanceInfo.snapDirection = { dx, dz, xSq, zSq }
 end
 
-function GuidanceSteering.guideSteering(self, arcAngle, lastSpeed)
-    --if lastSpeed < 0.1 then
-    local info = self.guidanceInfo
-    local angleLimit = 90 -- todo: >.<
-    local refangle = arcAngle * info.snapDirectionFactor * self.movingDirection
+function GuidanceSteering.guideSteering(self)
+    if not self.steeringEnabled or self.isHired then
+        -- Disallow when AI is active
+        return
+    end
 
+    local info = self.guidanceInfo
     local offsetFactor = 1.0
-    --    if self.GPSturnOffset then
+
+    --    if turn offset? then
     --        offsetFactor = lhDirectionPlusMinus
     --    end
 
-    local _iA = 15
-    local _iB = .025
-    local angleDecre = _iA * (info.alphaRad - info.snapDirectionFactor * offsetFactor * (info.offsetWidth) / info.width) * info.width * info.snapDirectionFactor
-    print(angleDecre)
-    angleDecre = Utils.clamp(angleDecre, -angleLimit, angleLimit)
+    local dirX, dirZ = unpack(info.snapDirection)
+    local tx, ty, tz = unpack(info.driveTarget)
+    local steeringAngleLimit = 30
 
-    local steer = _iB * (refangle - angleDecre)
-    if self.isReverseDriving then
-        steer = -steer
-    end
+    local targetX = tx + info.width * dirZ * info.alphaRad
+    local targetZ = tz - info.width * dirX * info.alphaRad
 
-    if self.articulatedAxis ~= nil or self.steeringMode ~= nil then
-        if self.lastSpeedReal * 3600 < 0.1 then
-            steer = self.guidanceSteeringOffset
-        end
-    end
+    local lineXDirection = info.snapDirectionFactor * dirX * info.movingDirection
+    local lineZDirection = info.snapDirectionFactor * dirZ * info.movingDirection
 
-    self.guidanceSteeringOffset = steer
+    local projTargetX, projTargetZ = Utils.projectOnLine(tx, tz, targetX * lineXDirection, targetZ * lineZDirection, dirX, dirZ)
 
-    if self.steeringEnabled then
-        --        if if analog controller? then
-        --            self.axisSide = Utils.getNoNil(self.guidanceSteeringOffset,0)
-        --        else
-        self.axisSide = self.axisSide + Utils.getNoNil(self.guidanceSteeringOffset, 0)
-        --        end
+    local sideX, sideZ = -dirZ, dirX
+    local newTargetX = projTargetX + sideX * info.width
+    local newTargetZ = projTargetZ + sideZ * info.width
 
-        if self.guidanceSteeringIsActive then
-            self.axisSideIsAnalog = true
-        end
-    end
+    local lx, lz = AIVehicleUtil.getDriveDirection(self.guidanceNode, newTargetX, ty, newTargetZ)
+    local angle = math.deg(math.asin(lz))
+
+    angle = angle * info.snapDirectionFactor * info.movingDirection
+
+    print(angle)
+    --    print("refangle: " .. refangle )
+
+    -- Todo: make sense out of this
+    local d = 15 * (info.alphaRad - info.snapDirectionFactor * offsetFactor * info.offsetWidth / info.width) * info.width * info.snapDirectionFactor
+
+    print("decre" .. d)
+
+    local axisSide = angle - Utils.clamp(d, -steeringAngleLimit, steeringAngleLimit) * (1 / 40)
+
+    -- if self.isReverseDriving then
+    -- axisSide = -axisSide
     -- end
+
+    if math.abs(self.lastSpeedReal) > 0.0001 then
+        self.guidanceSteeringOffset = axisSide
+    end
+
+    -- if analog controller? then
+    -- self.axisSide = Utils.getNoNil(self.guidanceSteeringOffset,0)
+    -- else
+    self.axisSide = self.axisSide + self.guidanceSteeringOffset
+    -- end
+
+    if self.guidanceSteeringIsActive then
+        self.axisSideIsAnalog = true
+    end
 end
