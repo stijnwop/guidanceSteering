@@ -322,7 +322,7 @@ function GuidanceSteering.createABPoint(self, isB)
         return
     end
 
-    local p = createTransformGroup(("AB_point_%d"):format(key))
+    local p = createTransformGroup(("AB_point_%s"):format(key))
     local x, _, z = unpack(self.guidanceInfo.driveTarget)
     local dx, dy, dz = localDirectionToWorld(self.guidanceNode, 0, 0, 1)
     local upX, upY, upZ = worldDirectionToLocal(self.guidanceNode, 0, 1, 0)
@@ -444,7 +444,7 @@ function GuidanceSteering.guideSteering(self)
 
     print("decre" .. d)
 
-    local axisSide = angle - Utils.clamp(d, -steeringAngleLimit, steeringAngleLimit) * (1 / 40)
+    local axisSide = (angle - Utils.clamp(d, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
 
     -- if self.isReverseDriving then
     -- axisSide = -axisSide
