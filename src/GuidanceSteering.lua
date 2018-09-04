@@ -80,11 +80,10 @@ end
 function GuidanceSteering:keyEvent(...)
 end
 
-
+-- Todo: move to overwrite just once
 function GuidanceSteering:updateVehiclePhysics(superFunc, axisForward, axisForwardIsAnalog, axisSide, axisSideIsAnalog, doHandbrake, dt)
     local offset = self.guidanceSteeringOffset
-
-    if offset ~= 0 then
+    if offset ~= nil and offset ~= 0 then
         axisSide = axisSide + offset
     end
 
@@ -434,10 +433,11 @@ function GuidanceSteering.guideSteering(self)
     local lx, lz = AIVehicleUtil.getDriveDirection(self.guidanceNode, newTargetX, ty, newTargetZ)
     local angle = math.deg(math.asin(lz))
 
-    angle = angle * info.snapDirectionFactor * info.movingDirection
+    if lx < 0 then
+        angle = -angle
+    end
 
-    print(angle)
-    --    print("refangle: " .. refangle )
+    angle = angle * info.snapDirectionFactor * info.movingDirection
 
     -- Todo: make sense out of this
     local d = 15 * (info.alphaRad - info.snapDirectionFactor * offsetFactor * info.offsetWidth / info.width) * info.width * info.snapDirectionFactor
