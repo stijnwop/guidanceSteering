@@ -11,7 +11,7 @@ source(Utils.getFilename("src/GuidanceUtil.lua", baseDirectory))
 -- Curves
 -- Circles
 
-GuidanceSteering.DEFAULT_WIDTH = 6
+GuidanceSteering.DEFAULT_WIDTH = 9 -- autotrack default (~30ft)
 GuidanceSteering.DIRECTION_LEFT = -1
 GuidanceSteering.DIRECTION_RIGHT = 1
 
@@ -114,8 +114,8 @@ function GuidanceSteering:update(dt)
             local generateB = self.abClickCounter > 1 and self.abClickCounter < 3
             local generate = self.abClickCounter > 2 and self.abClickCounter < 4
 
-            if generateB and self.abDistanceCounter < 25 then
-                g_currentMission:showBlinkingWarning("Drive 25m in other to set point B. Current traveled distance: " .. tostring(self.abDistanceCounter), 4000)
+            if generateB and self.abDistanceCounter < 10 then
+                g_currentMission:showBlinkingWarning("Drive 10m in other to set point B. Current traveled distance: " .. tostring(self.abDistanceCounter), 4000)
             else
                 if reset then
                     self.abDistanceCounter = 0
@@ -418,31 +418,24 @@ function GuidanceSteering.guideSteering(self)
     local tx, ty, tz = unpack(info.driveTarget)
     local steeringAngleLimit = 30
 
-    local targetX = tx + info.width * dirZ * info.alphaRad
-    local targetZ = tz - info.width * dirX * info.alphaRad
+    local targetX = tx + info.width * dirZ
+    local targetZ = tz - info.width * dirX
 
-    local lineXDirection = info.snapDirectionFactor * dirX * info.movingDirection
-    local lineZDirection = info.snapDirectionFactor * dirZ * info.movingDirection
+--    DebugUtil.drawDebugCircle(targetX, ty + .2, targetZ, .5, 10)
 
-    local projTargetX, projTargetZ = Utils.projectOnLine(tx, tz, targetX * lineXDirection, targetZ * lineZDirection, dirX, dirZ)
+    local projTargetX, projTargetZ = Utils.projectOnLine(tx, tz, targetX, targetZ, dirX, dirZ)
 
-    local sideX, sideZ = -dirZ, dirX
-    local newTargetX = projTargetX + sideX * info.width
-    local newTargetZ = projTargetZ + sideZ * info.width
+    DebugUtil.drawDebugCircle(projTargetX, ty + .5, projTargetZ, .5, 10)
 
-    local lx, lz = AIVehicleUtil.getDriveDirection(self.guidanceNode, newTargetX, ty, newTargetZ)
-    local angle = math.deg(math.asin(lz))
-
-    if lx < 0 then
-        angle = -angle
-    end
+    local _, dot = AIVehicleUtil.getDriveDirection(self.guidanceNode, projTargetX, ty, projTargetZ)
+    local angle = math.deg(math.asin(dot))
 
     angle = angle * info.snapDirectionFactor * info.movingDirection
 
     -- Todo: make sense out of this
     local d = 15 * (info.alphaRad - info.snapDirectionFactor * offsetFactor * info.offsetWidth / info.width) * info.width * info.snapDirectionFactor
 
-    print("decre" .. d)
+    --    print("decre" .. d)
 
     local axisSide = (angle - Utils.clamp(d, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
 
