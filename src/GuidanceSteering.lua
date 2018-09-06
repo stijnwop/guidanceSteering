@@ -4,7 +4,7 @@ local baseDirectory = g_currentModDirectory
 
 source(Utils.getFilename("src/GuidanceLine.lua", baseDirectory))
 source(Utils.getFilename("src/GuidanceUtil.lua", baseDirectory))
---source(Utils.getFilename("src/strategies/StraightABStrategy.lua", baseDirectory))
+source(Utils.getFilename("src/strategies/StraightABStrategy.lua", baseDirectory))
 
 -- Modes:
 -- AB lines
@@ -43,7 +43,7 @@ function GuidanceSteering:load(savegame)
 
     self.guidanceLine = GuidanceLine:new({ 0, .8, 0 })
 
-    --    self.lineStrategy = StraightABStrategy:new() -- todo: make dynamic
+    self.lineStrategy = StraightABStrategy:new() -- todo: make dynamic
 
     self.guidanceIsActive = false
     self.guidanceSteeringIsActive = false
@@ -52,7 +52,7 @@ function GuidanceSteering:load(savegame)
     self.abDistanceCounter = 0
     self.abClickCounter = 0
 
-    self.guidanceInfo = {
+    self.guidanceData = {
         width = GuidanceSteering.DEFAULT_WIDTH,
         offsetWidth = 0,
         movingDirection = 1,
@@ -102,8 +102,8 @@ function GuidanceSteering:update(dt)
 
             if not self.guidanceIsActive then
                 -- Todo: do full reset
-                --                self.lineStrategy:delete()
-                GuidanceSteering.deleteABPoints(self)
+                self.lineStrategy:delete()
+--                GuidanceSteering.deleteABPoints(self)
                 self.lastIsNotOnField = false
             end
         end
@@ -119,18 +119,23 @@ function GuidanceSteering:update(dt)
             else
                 if reset then
                     self.abDistanceCounter = 0
-                    self.guidanceInfo.snapDirection = { 0, 0, 0, 0 }
-                    GuidanceSteering.deleteABPoints(self)
+                    self.guidanceData.snapDirection = { 0, 0, 0, 0 }
+                    --                    GuidanceSteering.deleteABPoints(self)
+
+                    self.lineStrategy:delete()
+
                     print("reset AB Line")
                 elseif generateA or generateB then
-                    GuidanceSteering.createABPoint(self, generateB)
+                    self.lineStrategy:handleABPoints(self.guidanceNode, self.guidanceData)
+
+                    --                    GuidanceSteering.createABPoint(self, generateB)
                 end
 
                 self.abClickCounter = self.abClickCounter + 1
 
                 if generate then
                     self.abClickCounter = 0
-                    GuidanceSteering.setSnapDirection(self, true)
+                    GuidanceSteering.setGuidanceData(self, true)
                 end
             end
         end
@@ -141,34 +146,23 @@ function GuidanceSteering:update(dt)
     end
 
     if self.guidanceIsActive then
-        --        if self.abDistanceCounter > 0.01 and self.guidanceABNodes.a == nil then
-        --            GuidanceSteering.createABPoint(self, false)
-        --        end
-        --
-        --
-        --        if self.abDistanceCounter > 25 and self.guidanceABNodes.b == nil then
-        --            g_currentMission:showBlinkingWarning("Set AB point B")
-        --            GuidanceSteering.createABPoint(self, true)
-        --        end
-        --
-
         local distance = self.lastMovedDistance
         self.abDistanceCounter = self.abDistanceCounter + distance
 
-        for key, node in pairs(self.guidanceABNodes) do
-            DebugUtil.drawDebugNode(node, key)
-        end
+        self.lineStrategy:update(dt)
+    
+        GuidanceSteering.setGuidanceData(self, false)
 
-        GuidanceSteering.setSnapDirection(self, false)
+        local data = self.guidanceData
+        local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+        local x, _, z, driveDirX, driveDirZ = unpack(data.driveTarget)
+        local alpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
 
-        local info = self.guidanceInfo
-        local dx, dz, xSq, zSq = unpack(info.snapDirection)
-        local tx, _, tz, dlx, dlz = unpack(info.driveTarget)
-        local dot = Utils.clamp(dlx * dx + dlz * dz, GuidanceSteering.DIRECTION_LEFT, GuidanceSteering.DIRECTION_RIGHT)
+        data.alphaRad = alpha - math.floor(alpha + 0.5)
+
+        local dirX, _, dirZ =  localDirectionToWorld(self.guidanceNode, worldDirectionToLocal(self.guidanceNode, lineDirX, 0, lineDirZ))
+        local dot = Utils.clamp(driveDirX * dirX + driveDirZ * dirZ, GuidanceSteering.DIRECTION_LEFT, GuidanceSteering.DIRECTION_RIGHT)
         local angle = math.acos(dot) -- dot towards point
-        local alpha = GuidanceUtil.getAProjectOnLineParameter(tz, tx, zSq, xSq, dx, dz) / info.width
-
-        info.alphaRad = alpha - math.floor(alpha + 0.5)
 
         local snapDirectionFactor = 1
         if angle > 1.5708 then -- 90 deg
@@ -189,21 +183,10 @@ function GuidanceSteering:update(dt)
             end
         end
 
-        info.snapDirectionFactor = snapDirectionFactor
-        info.movingDirection = movingDirection
+        data.snapDirectionFactor = snapDirectionFactor
+        data.movingDirection = movingDirection
 
         if self.guidanceSteeringIsActive then
-            --        local wx, wy, wz = getWorldTranslation(self.guidanceNode)
-            --        local pX, pZ = Utils.projectOnLine(wx, wz, info.driveTarget[1], info.driveTarget[2], info.snapDirection[1], info.snapDirection[2])
-            --        local maxTurningRadius = 0
-            --
-            --        local tX = pX + info.snapDirection[1] * maxTurningRadius
-            --        local tZ = pZ + info.snapDirection[2] * maxTurningRadius
-            --
-            --        local pX, pY, pZ = worldToLocal(self.guidanceNode, tX, wy, tZ)
-            --        local acceleration = 1.0
-            --        AIVehicleUtil.driveToPoint(self, dt, acceleration, true, info.movingDirection > 0, pX, pZ, 25, false)
-
             GuidanceSteering.guideSteering(self)
         else
             self.guidanceSteeringOffset = 0
@@ -214,8 +197,8 @@ function GuidanceSteering:update(dt)
         if isOnField then
             DebugUtil.drawDebugNode(self.guidanceNode, "GuidanceNode")
 
-            local lx, lz = unpack(info.snapDirection)
-            local x, y, z = unpack(info.driveTarget)
+            local lx, lz = unpack(data.snapDirection)
+            local x, y, z = unpack(data.driveTarget)
 
             -- Offset to search infront of vehicle because distance is relative to the guidanceNode
             local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
@@ -238,7 +221,7 @@ function GuidanceSteering:update(dt)
                 end
             end
 
-            self.guidanceLine:drawABLine(x, z, lx, lz, info.width, info.movingDirection, info.alphaRad, info.snapDirectionFactor)
+            self.guidanceLine:drawABLine(x, z, lx, lz, data.width, data.movingDirection, data.alphaRad, data.snapDirectionFactor)
         end
     end
 end
@@ -273,10 +256,10 @@ end
 
 function GuidanceSteering.activatedSettingsEventListeners(self, dt)
     if InputBinding.hasEvent(InputBinding.GS_AUTO_WIDTH) then
-        self.guidanceInfo.offsetWidth = 0
-        self.guidanceInfo.width = GuidanceSteering.getAssumedWorkWidth(self)
+        self.guidanceData.offsetWidth = 0
+        self.guidanceData.width = GuidanceSteering.getAssumedWorkWidth(self)
 
-        print("Calculated width: " .. self.guidanceInfo.width)
+        print("Calculated width: " .. self.guidanceData.width)
     end
 
     if InputBinding.hasEvent(InputBinding.GS_ENABLE_STEERING) then
@@ -290,7 +273,7 @@ function GuidanceSteering.activatedSettingsEventListeners(self, dt)
     end
 
     if InputBinding.hasEvent(InputBinding.GS_OFFSET_WIDTH_RESET) then
-        self.guidanceInfo.offsetWidth = 0
+        self.guidanceData.offsetWidth = 0
     end
 
     if InputBinding.isPressed(InputBinding.GS_OFFSET_WIDTH_LEFT) then
@@ -322,7 +305,7 @@ function GuidanceSteering.createABPoint(self, isB)
     end
 
     local p = createTransformGroup(("AB_point_%s"):format(key))
-    local x, _, z = unpack(self.guidanceInfo.driveTarget)
+    local x, _, z = unpack(self.guidanceData.driveTarget)
     local dx, dy, dz = localDirectionToWorld(self.guidanceNode, 0, 0, 1)
     local upX, upY, upZ = worldDirectionToLocal(self.guidanceNode, 0, 1, 0)
     local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
@@ -344,61 +327,56 @@ function GuidanceSteering.deleteABPoints(self)
     self.guidanceABNodes = {}
 end
 
-function GuidanceSteering.setSnapDirection(self, forceUpdateSnapDirection)
-    local refNode = self.guidanceNode
+function GuidanceSteering.setGuidanceData(self, updateDirection)
+    local data = self.guidanceData
+    local direction = {}
 
-    local numOfABNode = #self.guidanceABNodes
-    local dx, dy, dz
-
-    if numOfABNode > 0 then
-        local ldx, ldy, ldz -- Todo: cleanup this mess
-        if numOfABNode < 2 then
-            ldx, ldy, ldz = localDirectionToLocal(self.guidanceNode, self.guidanceABNodes[1], 0, 0, 1)
-        else
-            ldx, ldy, ldz = localDirectionToLocal(self.guidanceABNodes[1], self.guidanceABNodes[2], 0, 0, 1)
-        end
-
-        dx, dy, dz = localDirectionToWorld(refNode, ldx, ldy, ldz)
+    if self.lineStrategy:getRequiresABDirection()
+            and self.lineStrategy:getIsABDirectionPossible() then
+        direction = self.lineStrategy:getGuidanceDirection(self.guidanceNode)
     else
-        dx, dy, dz = localDirectionToWorld(self.guidanceNode, 0, 0, 1)
+        direction = { localDirectionToWorld(self.guidanceNode, 0, 0, 1) }
     end
 
-    local x, y, z = getWorldTranslation(refNode)
-    local directionX, directionZ = GuidanceUtil.getDriveDirection(dx, dz)
+    local translation = { getWorldTranslation(self.guidanceNode) }
+    local driveDirectionX, driveDirectionZ = GuidanceUtil.getDriveDirection(direction[1], direction[3])
 
-    self.guidanceInfo.driveTarget = { x, y, z, directionX, directionZ }
+    -- Includes: drive datarmation
+    -- Guidance node xyz translation and xz direction
+    data.driveTarget = { translation[1], translation[2], translation[3], driveDirectionX, driveDirectionZ }
 
-    if forceUpdateSnapDirection then
+    if updateDirection then
         local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
-        local angleRad = Utils.getYRotationFromDirection(dx, dz)
+        local angleRad = Utils.getYRotationFromDirection(direction[1], direction[3])
 
-        -- Todo: make snapping optional
         if self.guidanceTerrainAngleIsActive then
             angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
         end
 
-        dx, dz = Utils.getDirectionFromYRotation(angleRad)
+        direction[1], direction[3] = Utils.getDirectionFromYRotation(angleRad)
 
         local offsetFactor = 1.0 -- offset?
-        local snapFactor = Utils.getNoNil(self.guidanceInfo.snapDirectionFactor, 1.0)
-        local xSq = x + offsetFactor * snapFactor * self.guidanceInfo.offsetWidth * dz
-        local zSq = z - offsetFactor * snapFactor * self.guidanceInfo.offsetWidth * dx
+        local snapFactor = Utils.getNoNil(data.snapDirectionFactor, 1.0)
+        local x = translation[1] + offsetFactor * snapFactor * data.offsetWidth * direction[3]
+        local z = translation[3] - offsetFactor * snapFactor * data.offsetWidth * direction[1]
 
-        self.guidanceInfo.snapDirection = { dx, dz, xSq, zSq }
+        -- Includes: line datarmation
+        -- Line direction and translation xz axis
+        data.snapDirection = { direction[1], direction[3], x, z }
     end
 end
 
 function GuidanceSteering.shiftParallel(self, dt, direction)
-    local info = self.guidanceInfo
-    local snapFactor = Utils.getNoNil(info.snapDirectionFactor, 1.0)
-    local dx, dz, xSq, zSq = unpack(info.snapDirection)
+    local data = self.guidanceData
+    local snapFactor = Utils.getNoNil(data.snapDirectionFactor, 1.0)
+    local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
-    -- Todo: take self.guidanceInfo.offsetWidth in account?
-    xSq = xSq + (snapFactor * dt / 1000 * dz) * direction
-    zSq = zSq + (snapFactor * dt / 1000 * dx) * direction
+    -- Todo: take self.guidanceData.offsetWidth in account?
+    lineX = lineX + (snapFactor * dt / 1000 * lineDirZ) * direction
+    lineZ = lineZ + (snapFactor * dt / 1000 * lineDirX) * direction
 
     -- Todo: store what we offset?
-    self.guidanceInfo.snapDirection = { dx, dz, xSq, zSq }
+    data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
 end
 
 function GuidanceSteering.guideSteering(self)
@@ -407,33 +385,33 @@ function GuidanceSteering.guideSteering(self)
         return
     end
 
-    local info = self.guidanceInfo
+    local data = self.guidanceData
     local offsetFactor = 1.0
 
     --    if turn offset? then
     --        offsetFactor = lhDirectionPlusMinus
     --    end
 
-    local dirX, dirZ = unpack(info.snapDirection)
-    local tx, ty, tz = unpack(info.driveTarget)
+    local dirX, dirZ = unpack(data.snapDirection)
+    local tx, ty, tz = unpack(data.driveTarget)
     local steeringAngleLimit = 30
 
-    local targetX = tx + info.width * dirZ
-    local targetZ = tz - info.width * dirX
+    local targetX = tx + data.width * dirZ
+    local targetZ = tz - data.width * dirX
 
---    DebugUtil.drawDebugCircle(targetX, ty + .2, targetZ, .5, 10)
+    --    DebugUtil.drawDebugCircle(targetX, ty + .2, targetZ, .5, 10)
 
     local projTargetX, projTargetZ = Utils.projectOnLine(tx, tz, targetX, targetZ, dirX, dirZ)
 
-    DebugUtil.drawDebugCircle(projTargetX, ty + .5, projTargetZ, .5, 10)
+    DebugUtil.drawDebugCircle(projTargetX, ty + .2, projTargetZ, .5, 10)
 
     local _, dot = AIVehicleUtil.getDriveDirection(self.guidanceNode, projTargetX, ty, projTargetZ)
     local angle = math.deg(math.asin(dot))
 
-    angle = angle * info.snapDirectionFactor * info.movingDirection
+    angle = angle * data.snapDirectionFactor * data.movingDirection
 
     -- Todo: make sense out of this
-    local d = 15 * (info.alphaRad - info.snapDirectionFactor * offsetFactor * info.offsetWidth / info.width) * info.width * info.snapDirectionFactor
+    local d = 15 * (data.alphaRad - data.snapDirectionFactor * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionFactor
 
     --    print("decre" .. d)
 

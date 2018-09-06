@@ -7,10 +7,38 @@
 --
 
 GuidanceUtil = {}
+GuidanceUtil.POINT_NAMES = { "A", "B", "C", "D", "E", "F" }
 
 function GuidanceUtil.mathRound(number, idp)
     local multiplier = 10 ^ (idp or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
+end
+
+function GuidanceUtil.createABPoint(guidanceNode, data, points)
+    local numOfPoints = #points
+    local name = GuidanceUtil.POINT_NAMES[math.max(numOfPoints + 1, numOfPoints)]
+
+    local p = createTransformGroup(("AB_point_%s"):format(name))
+    local x, _, z = unpack(data.driveTarget)
+    local dx, dy, dz = localDirectionToWorld(guidanceNode, 0, 0, 1)
+    local upX, upY, upZ = worldDirectionToLocal(guidanceNode, 0, 1, 0)
+    local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
+
+    link(getRootNode(), p)
+
+    setTranslation(p, x, y, z)
+    setDirection(p, dx, dy, dz, upX, upY, upZ)
+
+    local point = { node = p, name = name }
+
+    table.insert(points, point)
+end
+
+
+function GuidanceUtil.deleteABPoints(points)
+    for _, point in pairs(points) do
+        delete(point.node)
+    end
 end
 
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
@@ -63,10 +91,10 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
 
     local distanceToHeadLand = lookAheadStepDistance
 
-    local dx, dz = unpack(self.guidanceInfo.snapDirection)
+    local dx, dz = unpack(self.guidanceData.snapDirection)
 
-    local fx = x + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dx
-    local fz = z + lookAheadStepDistance * self.guidanceInfo.snapDirectionFactor * dz
+    local fx = x + lookAheadStepDistance * self.guidanceData.snapDirectionFactor * dx
+    local fz = z + lookAheadStepDistance * self.guidanceData.snapDirectionFactor * dz
 
     --    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
 
