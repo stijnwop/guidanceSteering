@@ -410,26 +410,18 @@ function GuidanceSteering.guideSteering(self)
 
     angle = angle * data.snapDirectionFactor * data.movingDirection
 
-    -- Todo: make sense out of this
-    local d = 15 * (data.alphaRad - data.snapDirectionFactor * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionFactor
-
-    --    print("decre" .. d)
-
-    local axisSide = (angle - Utils.clamp(d, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
+    local im = steeringAngleLimit * 0.5 * (data.alphaRad - data.snapDirectionFactor * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionFactor
+    local axisSide = (angle - Utils.clamp(im, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
 
     -- if self.isReverseDriving then
     -- axisSide = -axisSide
     -- end
 
     if math.abs(self.lastSpeedReal) > 0.0001 then
-        self.guidanceSteeringOffset = axisSide
+        self.guidanceSteeringOffset = axisSide * data.movingDirection
     end
 
-    -- if analog controller? then
-    -- self.axisSide = Utils.getNoNil(self.guidanceSteeringOffset,0)
-    -- else
     self.axisSide = self.axisSide + self.guidanceSteeringOffset
-    -- end
 
     if self.guidanceSteeringIsActive then
         self.axisSideIsAnalog = true

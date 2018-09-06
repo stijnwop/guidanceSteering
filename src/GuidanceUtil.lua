@@ -90,11 +90,11 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
     end
 
     local distanceToHeadLand = lookAheadStepDistance
+    local data = self.guidanceData
+    local dx, dz = unpack(data.snapDirection)
 
-    local dx, dz = unpack(self.guidanceData.snapDirection)
-
-    local fx = x + lookAheadStepDistance * self.guidanceData.snapDirectionFactor * dx
-    local fz = z + lookAheadStepDistance * self.guidanceData.snapDirectionFactor * dz
+    local fx = x + lookAheadStepDistance * data.snapDirectionFactor * dx * data.movingDirection
+    local fz = z + lookAheadStepDistance * data.snapDirectionFactor * dz * data.movingDirection
 
     --    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
 
