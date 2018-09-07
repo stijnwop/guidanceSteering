@@ -11,7 +11,7 @@ source(Utils.getFilename("src/strategies/StraightABStrategy.lua", baseDirectory)
 -- Curves
 -- Circles
 
-GuidanceSteering.DEFAULT_WIDTH = 9 -- autotrack default (~30ft)
+GuidanceSteering.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
 GuidanceSteering.DIRECTION_LEFT = -1
 GuidanceSteering.DIRECTION_RIGHT = 1
 
