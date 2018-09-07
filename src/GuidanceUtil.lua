@@ -93,18 +93,18 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
     local data = self.guidanceData
     local dx, dz = unpack(data.snapDirection)
 
-    local fx = x + lookAheadStepDistance * data.snapDirectionFactor * dx * data.movingDirection
-    local fz = z + lookAheadStepDistance * data.snapDirectionFactor * dz * data.movingDirection
+    local fx = x + lookAheadStepDistance * data.snapDirectionMultiplier * dx * data.movingDirection
+    local fz = z + lookAheadStepDistance * data.snapDirectionMultiplier * dz * data.movingDirection
 
     --    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
 
     local densityBits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
     local isOnField = densityBits ~= 0
 
-    -- Todo: if debug
-    local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
-    DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
-    --
+    if self.showGuidanceLines then
+        local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
+        DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
+    end
 
     self.lastIsNotOnField = not isOnField
     if isOnField then

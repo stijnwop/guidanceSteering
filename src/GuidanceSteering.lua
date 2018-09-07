@@ -27,7 +27,7 @@ function GuidanceSteering:load(savegame)
 
     local rootNode = self.steeringCenterNode
     if rootNode == nil then
-        print("Warning: GuidanceSteering can't be loaded for " .. tostring(self.configFileName) .. ", because the setup for Ackermann Steering is missing!")
+        print(("Warning: GuidanceSteering can't be loaded for %s, because the setup for Ackermann Steering is missing!"):format(tostring(self.configFileName)))
     end
 
     local componentIndex = getXMLString(self.xmlFile, "vehicle.guidanceSteering#index")
@@ -56,7 +56,7 @@ function GuidanceSteering:load(savegame)
         width = GuidanceSteering.DEFAULT_WIDTH,
         offsetWidth = 0,
         movingDirection = 1,
-        snapDirectionFactor = 1,
+        snapDirectionMultiplier = 1,
         alphaRad = 0,
         snapDirection = { 0, 0, 0, 0 },
         driveTarget = { 0, 0, 0, 0, 0 }
@@ -66,6 +66,14 @@ function GuidanceSteering:load(savegame)
     self.lastIsNotOnField = false
     self.lastValidGroundPos = { 0, 0, 0 }
     self.distanceToEnd = 0
+
+    self.debug = true
+    self.showGuidanceLines = self.debug
+
+    -- Turning
+    self.turningDirection = 1.0
+    self.snapDirectionMultiplier = nil
+    self.turningActive = false
 end
 
 function GuidanceSteering:postLoad(savegame)
@@ -91,19 +99,20 @@ function GuidanceSteering:updateVehiclePhysics(superFunc, axisForward, axisForwa
 end
 
 function GuidanceSteering:update(dt)
-    if not self.isClient then
+    if not self.isClient then -- todo: make server sided
         return
     end
 
-    if self:getIsActive()
-            and self:getIsActiveForInput(false) then
+    if not self:getIsActive() or not self.isControlled then
+        return
+    end
+
+    if self:getIsActiveForInput(false) then
         if InputBinding.hasEvent(InputBinding.GS_ACTIVATE) then
             self.guidanceIsActive = not self.guidanceIsActive
 
             if not self.guidanceIsActive then
-                -- Todo: do full reset
                 self.lineStrategy:delete()
---                GuidanceSteering.deleteABPoints(self)
                 self.lastIsNotOnField = false
             end
         end
@@ -120,15 +129,10 @@ function GuidanceSteering:update(dt)
                 if reset then
                     self.abDistanceCounter = 0
                     self.guidanceData.snapDirection = { 0, 0, 0, 0 }
-                    --                    GuidanceSteering.deleteABPoints(self)
-
                     self.lineStrategy:delete()
-
                     print("reset AB Line")
                 elseif generateA or generateB then
                     self.lineStrategy:handleABPoints(self.guidanceNode, self.guidanceData)
-
-                    --                    GuidanceSteering.createABPoint(self, generateB)
                 end
 
                 self.abClickCounter = self.abClickCounter + 1
@@ -150,7 +154,7 @@ function GuidanceSteering:update(dt)
         self.abDistanceCounter = self.abDistanceCounter + distance
 
         self.lineStrategy:update(dt)
-    
+
         GuidanceSteering.setGuidanceData(self, false)
 
         local data = self.guidanceData
@@ -160,13 +164,13 @@ function GuidanceSteering:update(dt)
 
         data.alphaRad = alpha - math.floor(alpha + 0.5)
 
-        local dirX, _, dirZ =  localDirectionToWorld(self.guidanceNode, worldDirectionToLocal(self.guidanceNode, lineDirX, 0, lineDirZ))
+        local dirX, _, dirZ = localDirectionToWorld(self.guidanceNode, worldDirectionToLocal(self.guidanceNode, lineDirX, 0, lineDirZ))
         local dot = Utils.clamp(driveDirX * dirX + driveDirZ * dirZ, GuidanceSteering.DIRECTION_LEFT, GuidanceSteering.DIRECTION_RIGHT)
         local angle = math.acos(dot) -- dot towards point
 
-        local snapDirectionFactor = 1
+        local snapDirectionMultiplier = 1
         if angle > 1.5708 then -- 90 deg
-            snapDirectionFactor = -snapDirectionFactor
+            snapDirectionMultiplier = -snapDirectionMultiplier
         end
 
         local lastSpeed = self:getLastSpeed(true)
@@ -183,7 +187,7 @@ function GuidanceSteering:update(dt)
             end
         end
 
-        data.snapDirectionFactor = snapDirectionFactor
+        data.snapDirectionMultiplier = snapDirectionMultiplier
         data.movingDirection = movingDirection
 
         if self.guidanceSteeringIsActive then
@@ -195,9 +199,6 @@ function GuidanceSteering:update(dt)
         local isOnField = self:getIsOnField() -- if vehicle is on field (relative to component node)
 
         if isOnField then
-            DebugUtil.drawDebugNode(self.guidanceNode, "GuidanceNode")
-
-            local lx, lz = unpack(data.snapDirection)
             local x, y, z = unpack(data.driveTarget)
 
             -- Offset to search infront of vehicle because distance is relative to the guidanceNode
@@ -205,11 +206,14 @@ function GuidanceSteering:update(dt)
             local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
             local lookAheadStepDistance = 11 * speedMultiplier -- m
             local distance, isDistancenOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
-            print(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistancenOnField)))
+            --            print(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistancenOnField)))
             --            print(("End of field distance: %.1f (owned: %s)"):format(distance, tostring(isDistancenOnField)))
 
             if distance <= distanceToTurn then
                 if self.guidanceSteeringIsActive then
+--                    self.turningActive = true
+--                    self.snapDirectionMultiplier = -data.snapDirectionMultiplier
+
                     -- if stop mode
                     if self.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
                         self:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
@@ -221,13 +225,19 @@ function GuidanceSteering:update(dt)
                 end
             end
 
-            self.guidanceLine:drawABLine(x, z, lx, lz, data.width, data.movingDirection, data.alphaRad, data.snapDirectionFactor)
+            if self.showGuidanceLines then
+                self.lineStrategy:draw(data)
+            end
         end
     end
 end
 
 function GuidanceSteering:updateTick(dt)
     if not self.isClient then
+        return
+    end
+
+    if not self:getIsActive() or not self.isControlled then
         return
     end
 
@@ -297,36 +307,6 @@ function GuidanceSteering.getAssumedWorkWidth(self)
     return width
 end
 
-function GuidanceSteering.createABPoint(self, isB)
-    local key = tostring(isB)
-
-    if self.guidanceABNodes[key] ~= nil then
-        return
-    end
-
-    local p = createTransformGroup(("AB_point_%s"):format(key))
-    local x, _, z = unpack(self.guidanceData.driveTarget)
-    local dx, dy, dz = localDirectionToWorld(self.guidanceNode, 0, 0, 1)
-    local upX, upY, upZ = worldDirectionToLocal(self.guidanceNode, 0, 1, 0)
-    local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
-
-    link(getRootNode(), p)
-
-    setTranslation(p, x, y, z)
-    setDirection(p, dx, dy, dz, upX, upY, upZ)
-
-    table.insert(self.guidanceABNodes, p)
-    --    self.guidanceABNodes[key] = p
-end
-
-function GuidanceSteering.deleteABPoints(self)
-    for key, _ in pairs(self.guidanceABNodes) do
-        delete(self.guidanceABNodes[key])
-    end
-
-    self.guidanceABNodes = {}
-end
-
 function GuidanceSteering.setGuidanceData(self, updateDirection)
     local data = self.guidanceData
     local direction = {}
@@ -341,7 +321,7 @@ function GuidanceSteering.setGuidanceData(self, updateDirection)
     local translation = { getWorldTranslation(self.guidanceNode) }
     local driveDirectionX, driveDirectionZ = GuidanceUtil.getDriveDirection(direction[1], direction[3])
 
-    -- Includes: drive datarmation
+    -- Includes: drive data
     -- Guidance node xyz translation and xz direction
     data.driveTarget = { translation[1], translation[2], translation[3], driveDirectionX, driveDirectionZ }
 
@@ -356,11 +336,11 @@ function GuidanceSteering.setGuidanceData(self, updateDirection)
         direction[1], direction[3] = Utils.getDirectionFromYRotation(angleRad)
 
         local offsetFactor = 1.0 -- offset?
-        local snapFactor = Utils.getNoNil(data.snapDirectionFactor, 1.0)
+        local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
         local x = translation[1] + offsetFactor * snapFactor * data.offsetWidth * direction[3]
         local z = translation[3] - offsetFactor * snapFactor * data.offsetWidth * direction[1]
 
-        -- Includes: line datarmation
+        -- Includes: line data
         -- Line direction and translation xz axis
         data.snapDirection = { direction[1], direction[3], x, z }
     end
@@ -368,7 +348,7 @@ end
 
 function GuidanceSteering.shiftParallel(self, dt, direction)
     local data = self.guidanceData
-    local snapFactor = Utils.getNoNil(data.snapDirectionFactor, 1.0)
+    local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
     -- Todo: take self.guidanceData.offsetWidth in account?
@@ -399,23 +379,38 @@ function GuidanceSteering.guideSteering(self)
     local targetX = tx + data.width * dirZ
     local targetZ = tz - data.width * dirX
 
-    --    DebugUtil.drawDebugCircle(targetX, ty + .2, targetZ, .5, 10)
-
     local projTargetX, projTargetZ = Utils.projectOnLine(tx, tz, targetX, targetZ, dirX, dirZ)
 
-    DebugUtil.drawDebugCircle(projTargetX, ty + .2, projTargetZ, .5, 10)
+    if self.debug then
+        DebugUtil.drawDebugCircle(projTargetX, ty + .2, projTargetZ, .5, 10)
+    end
 
     local _, dot = AIVehicleUtil.getDriveDirection(self.guidanceNode, projTargetX, ty, projTargetZ)
     local angle = math.deg(math.asin(dot))
 
-    angle = angle * data.snapDirectionFactor * data.movingDirection
+    angle = angle * data.snapDirectionMultiplier * data.movingDirection
 
-    local im = steeringAngleLimit * 0.5 * (data.alphaRad - data.snapDirectionFactor * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionFactor
+    local im = steeringAngleLimit * 0.5 * (data.alphaRad - data.snapDirectionMultiplier * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionMultiplier
     local axisSide = (angle - Utils.clamp(im, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
 
-    -- if self.isReverseDriving then
-    -- axisSide = -axisSide
-    -- end
+--    local forceOffset
+--    if self.turningActive and self.snapDirectionMultiplier ~= nil then
+--        if self.snapDirectionMultiplier == data.snapDirectionMultiplier then
+--            self.snapDirectionMultiplier = nil
+--            self.turningActive = false
+--            self.turningDirection = -self.turningDirection
+--        else
+--            axisSide = .4 * self.turningDirection
+--        end
+--    end
+--
+--    if forceOffset ~= nil then
+--        axisSide = forceOffset
+--    end
+--
+--    if self.turningActive then
+--        axisSide = Utils.clamp(axisSide, -70, 70)
+--    end
 
     if math.abs(self.lastSpeedReal) > 0.0001 then
         self.guidanceSteeringOffset = axisSide * data.movingDirection

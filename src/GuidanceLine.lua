@@ -32,12 +32,12 @@ function GuidanceLine:new(offset, rgb)
     return instance
 end
 
-function GuidanceLine:drawABLine(x, z, snapX, snapZ, width, moveDirection, beta, snapDirectionFactor)
+function GuidanceLine:drawABLine(x, z, snapX, snapZ, width, moveDirection, beta, snapDirection)
     for key, line in pairs(GuidanceLine.ABLines) do
         local line0x = x + width * snapZ * (beta + line.position / 2)
         local line0z = z - width * snapX * (beta + line.position / 2)
-        local lineXDirection = snapDirectionFactor * snapX * moveDirection
-        local lineZDirection = snapDirectionFactor * snapZ * moveDirection
+        local lineXDirection = snapDirection * snapX * moveDirection
+        local lineZDirection = snapDirection * snapZ * moveDirection
 
         local r, g, b = unpack(line.rgb)
 
