@@ -5,6 +5,7 @@ local baseDirectory = g_currentModDirectory
 source(Utils.getFilename("src/GuidanceLine.lua", baseDirectory))
 source(Utils.getFilename("src/GuidanceUtil.lua", baseDirectory))
 source(Utils.getFilename("src/strategies/StraightABStrategy.lua", baseDirectory))
+source(Utils.getFilename("src/strategies/CurveABStrategy.lua", baseDirectory))
 
 -- Modes:
 -- AB lines
@@ -43,7 +44,8 @@ function GuidanceSteering:load(savegame)
 
     self.guidanceLine = GuidanceLine:new({ 0, .8, 0 })
 
-    self.lineStrategy = StraightABStrategy:new() -- todo: make dynamic
+--    self.lineStrategy = StraightABStrategy:new() -- todo: make dynamic
+    self.lineStrategy = CurveABStrategy:new() -- todo: make dynamic
 
     self.guidanceIsActive = false
     self.guidanceSteeringIsActive = false
@@ -74,12 +76,23 @@ function GuidanceSteering:load(savegame)
     self.turningDirection = 1.0
     self.snapDirectionMultiplier = nil
     self.turningActive = false
+
+    if self.isClient then
+        self.warningTime = 1000
+        self.warningSoundAllowed = true
+        self.sampleBeep = SoundUtil.loadSample(self.xmlFile, {}, "vehicle.guidanceSteering.beepSound", "resources/beep.wav", baseDirectory, self.components[1].node)
+        self.sampleWarningBeep = SoundUtil.loadSample(self.xmlFile, {}, "vehicle.guidanceSteering.warningBeepSound", "resources/warning_beep.wav", baseDirectory, self.components[1].node)
+    end
 end
 
 function GuidanceSteering:postLoad(savegame)
 end
 
 function GuidanceSteering:delete()
+    if self.isClient then
+        SoundUtil.deleteSample(self.sampleBeep)
+        SoundUtil.deleteSample(self.sampleWarningBeep)
+    end
 end
 
 function GuidanceSteering:mouseEvent(...)
@@ -150,10 +163,11 @@ function GuidanceSteering:update(dt)
     end
 
     if self.guidanceIsActive then
+        local lastSpeed = self:getLastSpeed(true)
         local distance = self.lastMovedDistance
         self.abDistanceCounter = self.abDistanceCounter + distance
 
-        self.lineStrategy:update(dt)
+        self.lineStrategy:update(dt, self.guidanceData, lastSpeed)
 
         GuidanceSteering.setGuidanceData(self, false)
 
@@ -173,7 +187,6 @@ function GuidanceSteering:update(dt)
             snapDirectionMultiplier = -snapDirectionMultiplier
         end
 
-        local lastSpeed = self:getLastSpeed(true)
         local movingDirection = 1
         if not self.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
             movingDirection = -movingDirection
@@ -190,29 +203,45 @@ function GuidanceSteering:update(dt)
         data.snapDirectionMultiplier = snapDirectionMultiplier
         data.movingDirection = movingDirection
 
-        if self.guidanceSteeringIsActive then
-            GuidanceSteering.guideSteering(self)
+        if self:getIsActiveForSound()
+                and self.warningSoundAllowed
+                and self.warningTime > g_currentMission.time then
+            SoundUtil.playSample(self.sampleWarningBeep, 0, 0, nil)
+            self.warningSoundAllowed = false
         else
-            self.guidanceSteeringOffset = 0
+            SoundUtil.stopSample(self.sampleWarningBeep)
         end
 
-        local isOnField = self:getIsOnField() -- if vehicle is on field (relative to component node)
+        if self.guidanceSteeringIsActive then
+            GuidanceSteering.guideSteering(self)
 
-        if isOnField then
-            local x, y, z = unpack(data.driveTarget)
+            local isOnField = self:getIsOnField() -- if vehicle is on field (relative to component node)
 
-            -- Offset to search infront of vehicle because distance is relative to the guidanceNode
-            local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
-            local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
-            local lookAheadStepDistance = 11 * speedMultiplier -- m
-            local distance, isDistancenOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
-            --            print(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistancenOnField)))
-            --            print(("End of field distance: %.1f (owned: %s)"):format(distance, tostring(isDistancenOnField)))
+            if isOnField then
+                local x, y, z = unpack(data.driveTarget)
 
-            if distance <= distanceToTurn then
-                if self.guidanceSteeringIsActive then
---                    self.turningActive = true
---                    self.snapDirectionMultiplier = -data.snapDirectionMultiplier
+                -- Offset to search infront of vehicle because distance is relative to the guidanceNode
+                local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
+                local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
+                local lookAheadStepDistance = 11 * speedMultiplier -- m
+                local distance, isDistancenOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
+                --            print(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistancenOnField)))
+                --            print(("End of field distance: %.1f (owned: %s)"):format(distance, tostring(isDistancenOnField)))
+
+                -- Warning in advance
+                if distance <= distanceToTurn + (lookAheadStepDistance * 0.5) and not isDistancenOnField then
+                    if not self.warningSoundAllowed then
+                        if self.warningTime <= g_currentMission.time then
+                            self.warningTime = g_currentMission.time + 1000
+                        end
+                    end
+
+                    self.warningSoundAllowed = true
+                end
+
+                if distance <= distanceToTurn then
+                    --                    self.turningActive = true
+                    --                    self.snapDirectionMultiplier = -data.snapDirectionMultiplier
 
                     -- if stop mode
                     if self.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
@@ -224,10 +253,13 @@ function GuidanceSteering:update(dt)
                     end
                 end
             end
+        else
+            self.warningSoundAllowed = false
+            self.guidanceSteeringOffset = 0
+        end
 
-            if self.showGuidanceLines then
-                self.lineStrategy:draw(data)
-            end
+        if self.showGuidanceLines then
+            self.lineStrategy:draw(data)
         end
     end
 end
@@ -393,27 +425,32 @@ function GuidanceSteering.guideSteering(self)
     local im = steeringAngleLimit * 0.5 * (data.alphaRad - data.snapDirectionMultiplier * offsetFactor * data.offsetWidth / data.width) * data.width * data.snapDirectionMultiplier
     local axisSide = (angle - Utils.clamp(im, -steeringAngleLimit, steeringAngleLimit)) * (1 / 40)
 
---    local forceOffset
---    if self.turningActive and self.snapDirectionMultiplier ~= nil then
---        if self.snapDirectionMultiplier == data.snapDirectionMultiplier then
---            self.snapDirectionMultiplier = nil
---            self.turningActive = false
---            self.turningDirection = -self.turningDirection
---        else
---            axisSide = .4 * self.turningDirection
---        end
---    end
---
---    if forceOffset ~= nil then
---        axisSide = forceOffset
---    end
---
---    if self.turningActive then
---        axisSide = Utils.clamp(axisSide, -70, 70)
---    end
+    --    local forceOffset
+    --    if self.turningActive and self.snapDirectionMultiplier ~= nil then
+    --        if self.snapDirectionMultiplier == data.snapDirectionMultiplier then
+    --            self.snapDirectionMultiplier = nil
+    --            self.turningActive = false
+    --            self.turningDirection = -self.turningDirection
+    --        else
+    --            axisSide = .4 * self.turningDirection
+    --        end
+    --    end
+    --
+    --    if forceOffset ~= nil then
+    --        axisSide = forceOffset
+    --    end
+    --
+    --    if self.turningActive then
+    --        axisSide = Utils.clamp(axisSide, -70, 70)
+    --    end
 
     if math.abs(self.lastSpeedReal) > 0.0001 then
         self.guidanceSteeringOffset = axisSide * data.movingDirection
+    end
+
+    -- disallow warning sounds when turned again
+    if math.abs(self.guidanceSteeringOffset) > 0.5 then
+        self.warningSoundAllowed = false
     end
 
     self.axisSide = self.axisSide + self.guidanceSteeringOffset

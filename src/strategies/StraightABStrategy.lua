@@ -35,7 +35,7 @@ function StraightABStrategy:delete()
     self.straightABPoints = {}
 end
 
-function StraightABStrategy:update(dt)
+function StraightABStrategy:update(dt, data, lastSpeed)
     for _, point in pairs(self.straightABPoints) do
         DebugUtil.drawDebugNode(point.node, point.name)
     end
