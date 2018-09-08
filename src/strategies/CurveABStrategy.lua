@@ -143,7 +143,35 @@ function CurveABStrategy:update(dt, data, lastSpeed)
 end
 
 function CurveABStrategy:draw(data)
+    local lines = ABLine
+    local drawBotherLines = self:getIsGuidancesPossible()
 
+    if drawBotherLines then
+        lines = ABLines
+    end
+
+    local numSegements = #self.curve
+    for _, line in pairs(lines) do
+        local r, g, b = unpack(line.rgb)
+
+        for i = 1, numSegements do
+            local dot = self.curve[i]
+            local dot2 = self.curve[math.min(i + 1, numSegements)]
+            -- Get normal
+            local len1 = math.sqrt(dot.x * dot.x + dot.z * dot.z)
+            local len2 = math.sqrt(dot2.x * dot2.x + dot2.z * dot2.z)
+            local nx1 = (-dot.z / len1) * (data.alphaRad + line.position / 2)
+            local nz1 = (dot.x / len1) * (data.alphaRad + line.position / 2)
+            local nx2 = (-dot2.z / len2) * (data.alphaRad + line.position / 2)
+            local nz2 = (dot2.x / len2) * (data.alphaRad + line.position / 2)
+            local x1 = dot.x + nx1 * data.width
+            local z1 = dot.z + nz1 * data.width
+            local x2 = dot2.x + nx2 * data.width
+            local z2 = dot2.z + nz2 * data.width
+
+            drawDebugLine(x1, dot.y, z1, r, g, b, x2, dot2.y, z2, r, g, b)
+        end
+    end
 end
 
 -- Todo: duplicate on straight
