@@ -120,3 +120,61 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
 
     return distanceToHeadLand, isOnField
 end
+
+function GuidanceUtil:computeCatmullRomSpline(t, p0, p1, p2, p3)
+    return 0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t ^ 2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t ^ 3)
+end
+
+function GuidanceUtil.getHasSplinePoint(spline, x, y, z)
+    local t = #spline
+    local p = spline[t]
+    return t > 0
+            and p.x == x
+            and p.y == y
+            and p.z == z
+end
+
+function GuidanceUtil:computeSpline(points, smoothingSteps)
+    local numOfPoints = #points
+    if numOfPoints < 3 then
+        return points
+    end
+
+    local spline = {}
+    local smoothingSteps = smoothingSteps or 5 -- default step 5 times
+
+    for i = 1, numOfPoints - 1 do
+        local current = points[i]
+        local next = points[math.min(i + 1, numOfPoints)]
+
+        -- Curve controllers
+        local p0, p1, p2, p3
+        if current.isStartPoint then
+            p0, p1, p2, p3 = current, current, next, points[i + 2]
+        elseif next.isEndPoint then
+            p0, p1, p2, p3 = points[numOfPoints - 2], points[numOfPoints - 1], next, next
+        else
+            p0, p1, p2, p3 = points[i - 1], current, next, points[i + 2]
+        end
+
+        for t = 0, 1, 1 / smoothingSteps do
+            local x = GuidanceUtil:computeCatmullRomSpline(t, p0.x, p1.x, p2.x, p3.x)
+            local y = GuidanceUtil:computeCatmullRomSpline(t, p0.y, p1.y, p2.y, p3.y)
+            local z = GuidanceUtil:computeCatmullRomSpline(t, p0.z, p1.z, p2.z, p3.z)
+
+            if not GuidanceUtil.getHasSplinePoint(spline, x, y, z) then
+                local point = {
+                    x = x,
+                    y = y,
+                    z = z,
+                    dx = current.dx,
+                    dz = current.dz,
+                }
+
+                table.insert(spline, point)
+            end
+        end
+    end
+
+    return spline
+end
