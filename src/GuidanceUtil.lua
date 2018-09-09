@@ -166,9 +166,7 @@ function GuidanceUtil:computeSpline(points, smoothingSteps)
                 local point = {
                     x = x,
                     y = y,
-                    z = z,
-                    dx = current.dx,
-                    dz = current.dz,
+                    z = z
                 }
 
                 table.insert(spline, point)
@@ -177,4 +175,22 @@ function GuidanceUtil:computeSpline(points, smoothingSteps)
     end
 
     return spline
+end
+
+function GuidanceUtil:getClosestPointIndex(points, x, z)
+    local closestDistance = math.huge
+    local closestPointIndex
+
+    -- Possible to make this faster? like a merge sort approach? But this isn't always linear
+    for i = 1, #points do
+        local p = points[i]
+        local distance = Utils.vector2Length(p.x - x, p.z - z)
+
+        if distance < closestDistance then
+            closestDistance = distance
+            closestPointIndex = i
+        end
+    end
+
+    return closestPointIndex
 end

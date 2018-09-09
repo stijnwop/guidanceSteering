@@ -27,6 +27,7 @@ function CurveABStrategy:new(customMt)
 
     instance.curvedABPoints = {} -- {id = object pointer, name = render name}
     instance.curve = {}
+    instance.offsetCurves = {} -- draw only
     instance.segmentPoints = {}
     instance.segmentGenerated = false
 
@@ -44,6 +45,7 @@ function CurveABStrategy:delete()
     self.curvedABPoints = {}
     self.segmentPoints = {}
     self.curve = {}
+    self.offsetCurves = {}
 
     self.firstInterval = true
     self.segmentGenerated = false
@@ -78,14 +80,11 @@ function CurveABStrategy:update(dt, data, lastSpeed)
             and not generate then
         if self.firstInterval then
             local x, y, z = getWorldTranslation(self.curvedABPoints[1].node)
-            local dx, _, dz = localDirectionToWorld(self.curvedABPoints[1].node, 0, 0, 1)
 
             local segment = {
                 x = x,
                 y = y,
                 z = z,
-                dx = dx,
-                dz = dz,
                 isStartPoint = true,
                 isEndPoint = false
             }
@@ -97,15 +96,13 @@ function CurveABStrategy:update(dt, data, lastSpeed)
                 self.segmentDt = self.segmentDt + dt
 
                 if self.segmentDt > self.segmentInterval then
-                    local x, y, z, dx, dz = unpack(data.driveTarget)
+                    local x, y, z = unpack(data.driveTarget)
                     print(("drop segment x: %.1f y: %.1f z: %.1f "):format(x, y, z))
 
                     local segment = {
                         x = x,
                         y = y,
                         z = z,
-                        dx = dx,
-                        dz = dz,
                         isStartPoint = false,
                         isEndPoint = false
                     }
@@ -122,14 +119,11 @@ function CurveABStrategy:update(dt, data, lastSpeed)
     if generate and not self.segmentGenerated then
         print("generate")
         local x, y, z = getWorldTranslation(self.curvedABPoints[2].node)
-        local dx, _, dz = localDirectionToWorld(self.curvedABPoints[2].node, 0, 0, 1)
 
         local segment = {
             x = x,
             y = y,
             z = z,
-            dx = dx,
-            dz = dz,
             isStartPoint = false,
             isEndPoint = true
         }
@@ -139,7 +133,65 @@ function CurveABStrategy:update(dt, data, lastSpeed)
         self.segmentGenerated = true
 
         self.curve = GuidanceUtil:computeSpline(self.segmentPoints, 3)
+
+--        self.offsetCurves = {}
+--        for _, line in pairs(ABLines) do
+--            local c = self:createParallelSpline(self.segmentPoints, data, data.alphaRad + line.position / 2)
+--            table.insert(self.offsetCurves, c)
+--        end
     end
+end
+
+function CurveABStrategy:createParallelSpline(points, data, dir)
+    local numOfPoints = #points
+    local parallelPoints = {}
+
+--    local lineDirX, lineDirZ = unpack(data.snapDirection)
+--
+--    local lineXDir = data.snapDirectionMultiplier * lineDirX * data.movingDirection
+--    local lineZDir = data.snapDirectionMultiplier * lineDirZ * data.movingDirection
+
+    for i = 1, numOfPoints do
+        local p = points[i]
+        --        local pNext = points[math.max(numOfPoints - i, 1)]
+        local pNext = points[math.min(i + 1, numOfPoints)]
+
+        if i == numOfPoints then
+            pNext = points[i - 1]
+        end
+
+        local dirX, dirZ = pNext.x - p.x, pNext.z - p.z
+
+        if i == numOfPoints then
+            dirX, dirZ = p.x - pNext.x, p.z - pNext.z
+        end
+
+        local length = math.sqrt(dirX * dirX + dirZ * dirZ)
+        -- normalize
+        if length and length > 0.0001 then
+            dirX = dirX / length
+            dirZ = dirZ / length
+        end
+
+        local x = p.x + dirZ *  data.width * dir
+        local z = p.z - dirX *  data.width * dir
+        -- Todo: only needed for draw
+        local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
+
+        local point = {
+            x = x,
+            y = y,
+            z = z,
+            isStartPoint = i == 1,
+            isEndPoint = i == numOfPoints
+        }
+
+        table.insert(parallelPoints, point)
+    end
+
+    -- if recompute
+        return GuidanceUtil:computeSpline(parallelPoints, 3)
+--    return parallelPoints
 end
 
 function CurveABStrategy:draw(data)
@@ -150,45 +202,42 @@ function CurveABStrategy:draw(data)
         lines = ABLines
     end
 
-    local numSegements = #self.curve
-    for _, line in pairs(lines) do
-        local r, g, b = unpack(line.rgb)
+    -- Todo: draw parts of the curve
+    if drawBotherLines then
+        for _, line in pairs(lines) do
+            local c = self:createParallelSpline(self.segmentPoints, data, data.alphaRad + line.position / 2)
 
-        for i = 1, numSegements do
-            local dot = self.curve[i]
-            local dot2 = self.curve[math.min(i + 1, numSegements)]
-            -- Get normal
-            local len1 = math.sqrt(dot.x * dot.x + dot.z * dot.z)
-            local len2 = math.sqrt(dot2.x * dot2.x + dot2.z * dot2.z)
-            local nx1 = (-dot.z / len1) * (data.alphaRad + line.position / 2)
-            local nz1 = (dot.x / len1) * (data.alphaRad + line.position / 2)
-            local nx2 = (-dot2.z / len2) * (data.alphaRad + line.position / 2)
-            local nz2 = (dot2.x / len2) * (data.alphaRad + line.position / 2)
-            local x1 = dot.x + nx1 * data.width
-            local z1 = dot.z + nz1 * data.width
-            local x2 = dot2.x + nx2 * data.width
-            local z2 = dot2.z + nz2 * data.width
+            local numSegements = #c
+            local r, g, b = unpack(line.rgb)
 
-            drawDebugLine(x1, dot.y, z1, r, g, b, x2, dot2.y, z2, r, g, b)
+            for i = 1, numSegements do
+                local dot = c[i]
+                local dot2 = c[math.min(i + 1, numSegements)]
+                drawDebugLine(dot.x, dot.y + .2, dot.z, r, g, b, dot2.x, dot2.y + .2, dot2.z, r, g, b)
+            end
         end
     end
 end
 
 -- Todo: duplicate on straight
-function CurveABStrategy:getGuidanceDirection(guidanceNode)
-    local pointA = guidanceNode
-    local pointB = self.curvedABPoints[1].node
-    local numOfABPoints = #self.curvedABPoints
-
-    if numOfABPoints >= 2 then
-        pointA = self.curvedABPoints[1].node
-        pointB = self.curvedABPoints[2].node
+function CurveABStrategy:getGuidanceDirection(guidanceNode, data)
+    if #self.curve == 0 then
+        return { localDirectionToWorld(guidanceNode, 0, 0, 1) }
     end
 
-    --    local localDirX, localDirY, localDirZ = localDirectionToLocal(pointA, pointB, 0, 0, 1)
-    local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
+    local x, _, z = unpack(data.driveTarget)
+    local index = GuidanceUtil:getClosestPointIndex(self.curve, x, z)
+    local p = self.curve[index]
 
-    return { localDirectionToWorld(guidanceNode, localDirX, localDirY, localDirZ) }
+    local dirX, dirZ = p.x - x, p.z - z
+    local length = math.sqrt(dirX * dirX + dirZ * dirZ)
+    -- normalize
+    if length and length > 0.0001 then
+        dirX = dirX / length
+        dirZ = dirZ / length
+    end
+
+    return { dirX, 0, dirZ }
 end
 
 function CurveABStrategy:handleABPoints(guidanceNode, data)

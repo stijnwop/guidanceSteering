@@ -345,7 +345,7 @@ function GuidanceSteering.setGuidanceData(self, updateDirection)
 
     if self.lineStrategy:getRequiresABDirection()
             and self.lineStrategy:getIsABDirectionPossible() then
-        direction = self.lineStrategy:getGuidanceDirection(self.guidanceNode)
+        direction = self.lineStrategy:getGuidanceDirection(self.guidanceNode, data)
     else
         direction = { localDirectionToWorld(self.guidanceNode, 0, 0, 1) }
     end
