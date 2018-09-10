@@ -85,7 +85,7 @@ function StraightABStrategy:handleABPoints(guidanceNode, data)
     GuidanceUtil.createABPoint(guidanceNode, data, self.straightABPoints)
 end
 
-function StraightABStrategy:getGuidanceDirection(guidanceNode)
+function StraightABStrategy:getGuidanceData(guidanceNode, data)
     local pointA = guidanceNode
     local pointB = self.straightABPoints[1].node
     local numOfABPoints = #self.straightABPoints
@@ -95,10 +95,21 @@ function StraightABStrategy:getGuidanceDirection(guidanceNode)
         pointB = self.straightABPoints[2].node
     end
 
-    --    local localDirX, localDirY, localDirZ = localDirectionToLocal(pointA, pointB, 0, 0, 1)
+    local x, y, z = getWorldTranslation(guidanceNode)
     local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
+    local dirX, _, dirZ = localDirectionToWorld(guidanceNode, localDirX, localDirY, localDirZ)
 
-    return { localDirectionToWorld(guidanceNode, localDirX, localDirY, localDirZ) }
+    -- tx, ty, tz = drive target translation
+    -- dirX, dirZ = drive direction
+    local d = {
+        tx = x,
+        ty = y,
+        tz = z,
+        dirX = dirX,
+        dirZ = dirZ,
+    }
+
+    return d
 end
 
 function StraightABStrategy:getIsGuidancesPossible()
