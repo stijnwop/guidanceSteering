@@ -43,12 +43,25 @@ end
 
 function StraightABStrategy:draw(data)
     local lines = ABLine
+    local step = 1
+    local numSteps = StraightABStrategy.NUM_STEPS
     local drawBotherLines = self:getIsGuidancesPossible()
     local x, _, z, lineDirX, lineDirZ = unpack(data.driveTarget)
 
     if drawBotherLines then
         lineDirX, lineDirZ = unpack(data.snapDirection)
         lines = ABLines
+    end
+
+    local drawDirectionLine = self:getIsABDirectionPossible() and not drawBotherLines
+    if drawDirectionLine then -- Todo: optimize
+        --        local a = { localToWorld(self.straightABPoints[1].node, 0, 0, 0) }
+        local a = { localToWorld(self.straightABPoints[1].node, 0, 0, 0) }
+        local dirX = x - a[1]
+        local dirZ = z - a[3]
+        local length = Utils.vector2Length(dirX, dirZ)
+        numSteps = math.max(math.floor(length) - 1, 0)
+        step = 2
     end
 
     local lineXDir = data.snapDirectionMultiplier * lineDirX * data.movingDirection
@@ -60,7 +73,7 @@ function StraightABStrategy:draw(data)
 
         local r, g, b = unpack(line.rgb)
 
-        for l = 1, StraightABStrategy.NUM_STEPS do
+        for l = 1, numSteps, step do
             local x1 = lineX + StraightABStrategy.STEP_SIZE * l * lineXDir
             local z1 = lineZ + StraightABStrategy.STEP_SIZE * l * lineZDir
             local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + StraightABStrategy.GROUND_CLEARANCE_OFFSET
@@ -72,9 +85,9 @@ function StraightABStrategy:draw(data)
         end
 
         -- draw direction arrow
-        if line.position == 0 then
-            local x = lineX + StraightABStrategy.STEP_SIZE * StraightABStrategy.NUM_STEPS * lineXDir
-            local z = lineZ + StraightABStrategy.STEP_SIZE * StraightABStrategy.NUM_STEPS * lineZDir
+        if not drawDirectionLine and line.position == 0 then
+            local x = lineX + StraightABStrategy.STEP_SIZE * numSteps * lineXDir
+            local z = lineZ + StraightABStrategy.STEP_SIZE * numSteps * lineZDir
             local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z) + StraightABStrategy.GROUND_CLEARANCE_OFFSET
             drawDebugArrow(x, y, z, lineXDir, 0, lineZDir, 0, math.tan(90), 0, r, g, b)
         end
@@ -88,16 +101,28 @@ end
 function StraightABStrategy:getGuidanceData(guidanceNode, data)
     local pointA = guidanceNode
     local pointB = self.straightABPoints[1].node
-    local numOfABPoints = #self.straightABPoints
+    local pointBIsDropped = self:getIsGuidancesPossible()
 
-    if numOfABPoints >= 2 then
+    if pointBIsDropped then
         pointA = self.straightABPoints[1].node
         pointB = self.straightABPoints[2].node
     end
 
+    local a = { localToWorld(pointA, 0, 0, 0) }
+    local b = { localToWorld(pointB, 0, 0, 0) }
+
+    local dirX = a[1] - b[1]
+    local dirZ = a[3] - b[3]
+    local length = Utils.vector2Length(dirX, dirZ)
+
+    dirX, dirZ = dirX / length, dirZ / length
+
     local x, y, z = getWorldTranslation(guidanceNode)
-    local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
-    local dirX, _, dirZ = localDirectionToWorld(guidanceNode, localDirX, localDirY, localDirZ)
+    --        local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
+--    local dirPoint = pointB
+    if pointBIsDropped then
+        dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(pointB, dirX, 0, dirZ))
+    end
 
     -- tx, ty, tz = drive target translation
     -- dirX, dirZ = drive direction
