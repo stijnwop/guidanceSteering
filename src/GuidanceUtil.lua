@@ -20,6 +20,9 @@ function GuidanceUtil.createABPoint(guidanceNode, data, points)
 
     local p = createTransformGroup(("AB_point_%s"):format(name))
     local x, _, z = unpack(data.driveTarget)
+    if not (x ~= 0 or z ~= 0) then
+        x, _, z = getWorldTranslation(guidanceNode)
+    end
     local dx, dy, dz = localDirectionToWorld(guidanceNode, 0, 0, 1)
     local upX, upY, upZ = worldDirectionToLocal(guidanceNode, 0, 1, 0)
     local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
@@ -177,18 +180,24 @@ function GuidanceUtil:computeSpline(points, smoothingSteps)
     return spline
 end
 
-function GuidanceUtil:getClosestPointIndex(points, x, z)
+function GuidanceUtil:getClosestPointIndex(points, x, z, data)
     local closestDistance = math.huge
     local closestPointIndex
+    local numPoints = #points
 
     -- Possible to make this faster? like a merge sort approach? But this isn't always linear
-    for i = 1, #points do
+    for i = 1, numPoints do
         local p = points[i]
         local distance = Utils.vector2Length(p.x - x, p.z - z)
 
         if distance < closestDistance then
             closestDistance = distance
-            closestPointIndex = i
+            closestPointIndex = 1
+            --            if data.snapDirectionMultiplier > 0 then
+            --                closestPointIndex = math.min(i + 1, numPoints)
+            --            else
+            --                closestPointIndex = math.max(i - 1, 1)
+            --            end
         end
     end
 
