@@ -217,9 +217,9 @@ end
 
 local function iteratePrev(self, current)
     if not current then
-        current = self.head
+        current = self.tail
     elseif current then
-        current = current._next
+        current = current._prev
     end
 
     return current
