@@ -173,6 +173,10 @@ function LinkedList:get(index)
     return self:_node(index)._item
 end
 
+function LinkedList:getSize()
+    return self.size
+end
+
 local function bitShiftLeft(x, by)
     return x * 2 ^ by
 end
@@ -201,17 +205,33 @@ function LinkedList:_node(index)
     return x
 end
 
-function LinkedList:iterateInsertOrder()
-    local i = 1
-    local item = self.head
-
-    while item ~= nil do
-        i = i + 1
-        print(("dropped segment x: %.1f y: %.1f z: %.1f "):format(item._item.x, item._item.y, item._item.z))
-        item = item._next
+local function iterateNext(self, current)
+    if not current then
+        current = self.head
+    elseif current then
+        current = current._next
     end
+
+    return current
 end
 
+local function iteratePrev(self, current)
+    if not current then
+        current = self.head
+    elseif current then
+        current = current._next
+    end
+
+    return current
+end
+
+function LinkedList:iterate()
+    return iterateNext, self, nil
+end
+
+function LinkedList:iterateDesc()
+    return iteratePrev, self, nil
+end
 
 LinkedNode = {}
 
