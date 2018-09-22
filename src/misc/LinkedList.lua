@@ -8,15 +8,15 @@ LinkedList = {}
 local LinkedList_mt = Class(LinkedList)
 
 function LinkedList:new()
-    local self = {}
+    local instance = {}
 
-    setmetatable(self, LinkedList_mt)
+    setmetatable(instance, LinkedList_mt)
 
-    self.head = nil
-    self.tail = nil
-    self.size = 0
+    instance.head = nil
+    instance.tail = nil
+    instance.size = 0
 
-    return self
+    return instance
 end
 
 ---
@@ -140,7 +140,6 @@ end
 function LinkedList:delete(index)
     local node = self:_node(index)
 
-    local item = node._item
     local next = node._next
     local prev = node._prev
 
@@ -158,6 +157,7 @@ function LinkedList:delete(index)
         node._next = nil
     end
 
+    local item = node._item
     node._item = nil
 
     self.size = self.size - 1
