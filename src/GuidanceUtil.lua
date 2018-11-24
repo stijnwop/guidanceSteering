@@ -1,23 +1,12 @@
---
--- Created by IntelliJ IDEA.
--- User: Wopereis
--- Date: 8/28/2018
--- Time: 6:40 PM
--- To change this template use File | Settings | File Templates.
---
 
 GuidanceUtil = {}
-GuidanceUtil.POINT_NAMES = { "A", "B", "C", "D", "E", "F" }
 
 function GuidanceUtil.mathRound(number, idp)
     local multiplier = 10 ^ (idp or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
 end
 
-function GuidanceUtil.createABPoint(guidanceNode, data, points)
-    local numOfPoints = #points
-    local name = GuidanceUtil.POINT_NAMES[math.max(numOfPoints + 1, numOfPoints)]
-
+function GuidanceUtil.createABPoint(guidanceNode, data, name)
     local p = createTransformGroup(("AB_point_%s"):format(name))
     local x, _, z = unpack(data.driveTarget)
     if not (x ~= 0 or z ~= 0) then
@@ -34,7 +23,7 @@ function GuidanceUtil.createABPoint(guidanceNode, data, points)
 
     local point = { node = p, name = name }
 
-    table.insert(points, point)
+    return point
 end
 
 
@@ -78,7 +67,7 @@ function GuidanceUtil.getAProjectOnLineParameter(px, pz, lineX, lineZ, lineDirX,
 end
 
 function GuidanceUtil.getDriveDirection(dx, dz)
-    local length = Utils.vector2Length(dx, dz)
+    local length = MathUtil.vector2Length(dx, dz)
     local dlx = dx / length
     local dlz = dz / length
 
@@ -88,7 +77,7 @@ end
 function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
     if self.lastIsNotOnField then
         local vX, vY, vZ = unpack(self.lastValidGroundPos)
-        local dist = Utils.vector3Length(vX - x, vY - y, vZ - z)
+        local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
         return self.distanceToEnd - dist, not self.lastIsNotOnField
     end
 
@@ -117,7 +106,7 @@ function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance
     else
         self.distanceToEnd = lookAheadStepDistance
         local vX, vY, vZ = unpack(self.lastValidGroundPos)
-        local dist = Utils.vector3Length(vX - x, vY - y, vZ - z)
+        local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
         distanceToHeadLand = self.distanceToEnd - dist
     end
 
@@ -188,7 +177,7 @@ function GuidanceUtil:getClosestPointIndex(points, x, z, data)
     -- Possible to make this faster? like a merge sort approach? But this isn't always linear
     for i = 1, numPoints do
         local p = points[i]
-        local distance = Utils.vector2Length(p.x - x, p.z - z)
+        local distance = MathUtil.vector2Length(p.x - x, p.z - z)
 
         if distance < closestDistance then
             closestDistance = distance
