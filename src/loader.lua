@@ -1,12 +1,13 @@
 local directory = g_currentModDirectory
 local modName = g_currentModName
 
-source(directory .. "src/utils/Logger.lua")
-source(directory .. "src/GuidanceSteering.lua")
+source(Utils.getFilename("src/utils/Logger.lua", directory))
+source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
+source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
 source(Utils.getFilename("src/misc/ABPoint.lua", directory))
-source(Utils.getFilename("src/misc/LinkedList.lua", directory))
-source(Utils.getFilename("src/GuidanceUtil.lua", directory))
+--source(Utils.getFilename("src/misc/LinkedList.lua", directory))
+
 source(Utils.getFilename("src/strategies/ABStrategy.lua", directory))
 source(Utils.getFilename("src/strategies/StraightABStrategy.lua", directory))
 --source(Utils.getFilename("src/strategies/CurveABStrategy.lua", directory))
@@ -41,8 +42,6 @@ function _unload()
     guidanceSteering:delete()
     guidanceSteering = nil -- Allows garbage collecting
     _G["g_guidanceSteering"] = nil
-
-    Logger.info("Hello GPS")
 end
 
 function _validateVehicleTypes(vehicleTypeManager)
