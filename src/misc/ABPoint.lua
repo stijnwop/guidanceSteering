@@ -1,17 +1,21 @@
 --
--- Created by IntelliJ IDEA.
--- User: Wopereis
--- Date: 9/21/2018
--- Time: 9:01 PM
--- To change this template use File | Settings | File Templates.
+-- ABPoint
 --
+-- Authors: Wopster
+-- Description: AB point class to handle AB points.
+--
+-- Copyright (c) Wopster, 2018
 
 ABPoint = {}
 
 local ABPoint_mt = Class(ABPoint)
 
-ABPoint.POINT_A = "A"
-ABPoint.POINT_B = "B"
+ABPoint.POINT_A = "a"
+ABPoint.POINT_B = "b"
+
+ABPoint.AB_POINTS = {}
+ABPoint.AB_POINTS[true] = ABPoint.POINT_A
+ABPoint.AB_POINTS[false] = ABPoint.POINT_B
 
 ABPoint.__index = ABPoint
 
@@ -20,8 +24,7 @@ function ABPoint:new(refNode)
 
     setmetatable(instance, ABPoint_mt)
 
-    instance.pointA = nil
-    instance.pointB = nil
+    instance.points = { a = nil, b = nil }
 
     instance._refNode = refNode
 
@@ -33,10 +36,8 @@ end
 function ABPoint:purge()
     self:iterate(function(point)
         delete(point.node)
+        point = nil
     end)
-
-    self.pointA = nil
-    self.pointB = nil
 end
 
 ---
@@ -46,17 +47,11 @@ end
 function ABPoint:nextPoint(data)
     if self:getIsCreated() then return end
 
-    local isPointA = self.pointA == nil
-    local name = isPointA and ABPoint.POINT_A or ABPoint.POINT_B
+    local createAPoint = self.points[ABPoint.POINT_A] == nil
+    local name = ABPoint.AB_POINTS[createAPoint]
     local next = self:_createNextPoint(data, name)
 
-    if isPointA then
-        self.pointA = next
-        return self.pointA
-    end
-
-    self.pointB = next
-    return self.pointB
+    return next
 end
 
 ---
@@ -79,28 +74,31 @@ function ABPoint:_createNextPoint(data, name)
     setTranslation(p, x, y, z)
     setDirection(p, dx, dy, dz, upX, upY, upZ)
 
-    local point = { node = p, name = name }
+    local point = { node = p, name = name:upper() }
+
+    self.points[name] = point
 
     return point
 end
 
+---
+-- @param name
+--
 function ABPoint:getPointNode(name)
-    if name == ABPoint.POINT_A then
-        return self.pointA.node
-    end
-
-    return self.pointB.node
+    return self.points[name].node
 end
+
 ---
 --
 function ABPoint:getIsCreated()
-    return self.pointB ~= nil
+    return self.points[ABPoint.POINT_B] ~= nil
 end
 
 ---
 --
 function ABPoint:getIsEmpty()
-    return self.pointA == nil and self.pointB == nil
+    return self.points[ABPoint.POINT_A] == nil
+            and self.points[ABPoint.POINT_B] == nil
 end
 
 ---
@@ -108,11 +106,7 @@ end
 -- @param visitor
 --
 function ABPoint:iterate(visitor)
-    if self.pointA ~= nil then
-        visitor(self.pointA)
-    end
-
-    if self.pointB ~= nil then
-        visitor(self.pointB)
+    for _, point in pairs(self.points) do
+        visitor(point)
     end
 end
