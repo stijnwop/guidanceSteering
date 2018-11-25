@@ -18,6 +18,7 @@ function GlobalPositioningSystem.registerEvents(vehicleType)
 end
 
 function GlobalPositioningSystem.registerFunctions(vehicleType)
+    SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
@@ -26,8 +27,11 @@ end
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if self.isClient and isActiveForInputIgnoreSelection then
         local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-        local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.GS_SETPOINT, self, GlobalPositioningSystem.actionEventSetABPoint, false, true, false, true, nil, nil, true)
-        g_inputBinding:setActionEventTextVisibility(actionEventId, false)
+        local _, actionEventIdSetPoint = self:addActionEvent(spec.actionEvents, InputAction.GS_SETPOINT, self, GlobalPositioningSystem.actionEventSetABPoint, false, true, false, true, nil, nil, true)
+        local _, actionEventIdAutoWidth = self:addActionEvent(spec.actionEvents, InputAction.GS_SET_AUTO_WIDTH, self, GlobalPositioningSystem.actionEventSetAutoWidth, false, true, false, true, nil, nil, true)
+
+        g_inputBinding:setActionEventTextVisibility(actionEventIdSetPoint, false)
+        g_inputBinding:setActionEventTextVisibility(actionEventIdAutoWidth, false)
     end
 end
 
@@ -86,9 +90,9 @@ function GlobalPositioningSystem:onUpdate(dt)
         return
     end
 
---    if not self:getIsActive() or not self.isControlled then
---        return
---    end
+    --    if not self:getIsActive() or not self.isControlled then
+    --        return
+    --    end
 
     DebugUtil.drawDebugNode(self.guidanceNode)
 
@@ -142,10 +146,29 @@ function GlobalPositioningSystem:onUpdate(dt)
         data.snapDirectionMultiplier = snapDirectionMultiplier
         data.movingDirection = movingDirection
 
---        if self.showGuidanceLines then
-            self.lineStrategy:draw(data)
---        end
+        --        if self.showGuidanceLines then
+        self.lineStrategy:draw(data)
+        --        end
     end
+end
+
+function GlobalPositioningSystem:actionEventSetAutoWidth()
+    self.guidanceData.offsetWidth = 0
+    self.guidanceData.width = GlobalPositioningSystem.getActualWorkWidth(self.guidanceNode, self)
+
+    Logger.info("Calculated width", self.guidanceData.width)
+end
+
+function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
+    local width = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+
+    for _, implement in pairs(object.spec_attacherJoints.attachedImplements) do
+        if implement.object ~= nil then
+            width = math.max(width, GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object))
+        end
+    end
+
+    return width
 end
 
 function GlobalPositioningSystem:actionEventSetABPoint()
@@ -177,6 +200,9 @@ function GlobalPositioningSystem:actionEventSetABPoint()
     end
 end
 
+function GlobalPositioningSystem:setGuidanceStrategy()
+    self.lineStrategy = StraightABStrategy:new(self)
+end
 
 function GlobalPositioningSystem.setGuidanceData(self, updateDirection)
     local data = self.guidanceData
@@ -204,7 +230,7 @@ function GlobalPositioningSystem.setGuidanceData(self, updateDirection)
     if updateDirection then
         -- Take angle snapping from AI code
         local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
---        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ) -- Todo: whats the new function
+        --        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ) -- Todo: whats the new function
         local angleRad = math.atan2(dirX, dirZ)
 
         if self.guidanceTerrainAngleIsActive then

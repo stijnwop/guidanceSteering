@@ -18,7 +18,7 @@
     </description>
 
     <l10n>
-        <text name="input_GS_AUTO_WIDTH">
+        <text name="input_GS_SET_AUTO_WIDTH">
             <en>Auto width</en>
             <de>Auto width</de>
         </text>
@@ -65,11 +65,16 @@
 
     <actions>
         <action name="GS_SETPOINT" axisType="HALF" />
+        <action name="GS_SET_AUTO_WIDTH" axisType="HALF" />
     </actions>
 
     <inputBinding>
         <actionBinding action="GS_SETPOINT">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_s" />
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10" />
+        </actionBinding>
+        <actionBinding action="GS_SET_AUTO_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x" />
             <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10" />
         </actionBinding>
     </inputBinding>

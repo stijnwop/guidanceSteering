@@ -36,9 +36,10 @@ end
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local maxWidth = 0
     local minWidth = 0
+    local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
 
-    if object.workAreas ~= nil then
-        for _, workArea in pairs(object.workAreas) do
+    if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
+        for _, workArea in pairs(workAreaSpec.workAreas) do
             local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
             local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
             local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
