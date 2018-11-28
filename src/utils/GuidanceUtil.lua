@@ -1,4 +1,3 @@
-
 GuidanceUtil = {}
 
 function GuidanceUtil.mathRound(number, idp)
@@ -40,18 +39,20 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
     if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
         for _, workArea in pairs(workAreaSpec.workAreas) do
-            local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
-            local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
-            local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
+            if workArea.functionName ~= "processRidgeMarkerArea" then
+                local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
+                local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
+                local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
 
-            maxWidth = math.max(maxWidth, x0, x1, x2)
-            minWidth = math.min(minWidth, x0, x1, x2)
+                maxWidth = math.max(maxWidth, x0, x1, x2)
+                minWidth = math.min(minWidth, x0, x1, x2)
+            end
         end
     end
 
     local width = math.abs(maxWidth) + math.abs(minWidth)
 
-    return GuidanceUtil.mathRound(width, 2)
+    return GuidanceUtil.mathRound(width, 3)
 end
 
 function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)
