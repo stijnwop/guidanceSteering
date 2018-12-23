@@ -38,6 +38,8 @@ function ABPoint:purge()
         delete(point.node)
         point = nil
     end)
+
+    self.points = { a = nil, b = nil }
 end
 
 ---
@@ -107,6 +109,8 @@ end
 --
 function ABPoint:iterate(visitor)
     for _, point in pairs(self.points) do
-        visitor(point)
+        if point ~= nil then
+            visitor(point)
+        end
     end
 end
