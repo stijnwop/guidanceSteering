@@ -63,13 +63,14 @@ end
 --
 function ABPoint:_createNextPoint(data, name)
     local p = createTransformGroup(("AB_point_%s"):format(name))
-    local x, _, z = unpack(data.driveTarget)
+    local x, y, z = unpack(data.driveTarget)
     if not (x ~= 0 or z ~= 0) then
-        x, _, z = getWorldTranslation(self._refNode)
+        x, y, z = getWorldTranslation(self._refNode)
     end
     local dx, dy, dz = localDirectionToWorld(self._refNode, 0, 0, 1)
-    local upX, upY, upZ = worldDirectionToLocal(self._refNode, 0, 1, 0)
-    local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
+    local upX, upY, upZ = localDirectionToWorld(self._refNode, 0, 1, 0)
+
+    y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, y, z)
 
     link(getRootNode(), p)
 
