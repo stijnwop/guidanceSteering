@@ -57,8 +57,8 @@ function StraightABStrategy:draw(data)
         step = 2
     end
 
-    local lineXDir = data.snapDirectionMultiplier * lineDirX * data.movingDirection
-    local lineZDir = data.snapDirectionMultiplier * lineDirZ * data.movingDirection
+    local lineXDir = data.snapDirectionMultiplier * lineDirX -- * data.movingDirection
+    local lineZDir = data.snapDirectionMultiplier * lineDirZ -- * data.movingDirection
 
     for _, line in pairs(lines) do
         local lineX = x + data.width * lineDirZ * (data.alphaRad + line.position / 2)
@@ -105,18 +105,22 @@ function StraightABStrategy:getGuidanceData(guidanceNode, data)
     local x, y, z = getWorldTranslation(guidanceNode)
     --        local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
     --    local dirPoint = pointB
+    local dx, dy, dz
     if pointBIsDropped then
-        dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(pointB, dirX, 0, dirZ))
+        dx, dy, dz = localDirectionToWorld(guidanceNode, worldDirectionToLocal(pointB, dirX, 0, dirZ))
+    else
+        dx, dz = dirX, dirZ
     end
 
     -- tx, ty, tz = drive target translation
     -- dirX, dirZ = drive direction
+    -- Todo: multiply by movingDirection
     local d = {
         tx = x,
         ty = y,
         tz = z,
-        dirX = dirX,
-        dirZ = dirZ,
+        dirX = dx,
+        dirZ = dz,
     }
 
     return d

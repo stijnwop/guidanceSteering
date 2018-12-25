@@ -3,7 +3,7 @@ GuidanceSteering = {}
 
 local GuidanceSteering_mt = Class(GuidanceSteering)
 
-function GuidanceSteering:new(mission, modDirectory, modName)
+function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputManager)
     local self = {}
 
     setmetatable(self, GuidanceSteering_mt)
@@ -11,9 +11,22 @@ function GuidanceSteering:new(mission, modDirectory, modName)
     self.isServer = mission:getIsServer()
     self.modDirectory = modDirectory
     self.modName = modName
+
+    self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, inputManager)
+
+    return self
 end
 
 function GuidanceSteering:delete()
+    self.ui:delete()
+end
+
+function GuidanceSteering:onMissionLoaded(mission)
+    self.ui:load()
+end
+
+function GuidanceSteering:onMissionStart(mission)
+    self.ui:onMissionStart()
 end
 
 function GuidanceSteering:update(dt)
@@ -36,5 +49,27 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
             -- Make sure to namespace the spec again
             vehicleTypeManager:addSpecialization(typeName, modName .. ".globalPositioningSystem")
         end
+    end
+
+
+    Drivable.actionEventAccelerate = Utils.overwrittenFunction(Drivable.actionEventAccelerate, GuidanceSteering.actionEventAccelerate)
+    Drivable.actionEventBrake = Utils.overwrittenFunction(Drivable.actionEventBrake, GuidanceSteering.actionEventBrake)
+end
+
+function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
+    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if spec.guidanceSteeringIsActive then
+        spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
+    end
+end
+
+function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
+    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if spec.guidanceSteeringIsActive then
+        spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
 end

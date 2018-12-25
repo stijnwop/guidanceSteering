@@ -25,8 +25,9 @@ function ABStrategy:new(vehicle, customMt)
     end
 
     local instance = {}
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    instance.ab = ABPoint:new(vehicle.guidanceNode)
+    instance.ab = ABPoint:new(spec.guidanceNode)
     instance.turnActive = false
     instance.vehicle = vehicle
 

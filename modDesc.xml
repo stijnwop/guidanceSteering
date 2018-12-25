@@ -18,6 +18,18 @@
     </description>
 
     <l10n>
+        <text name="configuration_buyableGPS">
+            <en>Global Positioning System</en>
+        </text>
+        <text name="configuration_buyableGPS_withoutGPS">
+            <en>No</en>
+        </text>
+        <text name="configuration_buyableGPS_withGPS">
+            <en>Yes</en>
+        </text>
+        <text name="input_GS_SHOW_UI">
+            <en>Show UI</en>
+        </text>
         <text name="input_GS_SET_AUTO_WIDTH">
             <en>Auto width</en>
             <de>Auto width</de>
@@ -34,7 +46,7 @@
             <en>Offset width right</en>
             <de>Offset width right</de>
         </text>
-        <text name="GS_ENABLE_STEERING">
+        <text name="input_GS_ENABLE_STEERING">
             <en>Steering guidance</en>
             <de>Steering guidance</de>
         </text>
@@ -64,32 +76,52 @@
     </extraSourceFiles>
 
     <actions>
-        <action name="GS_SETPOINT" axisType="HALF" />
-        <action name="GS_SET_AUTO_WIDTH" axisType="HALF" />
+        <action name="GS_SHOW_UI" axisType="HALF"/>
+        <action name="GS_SETPOINT" axisType="HALF"/>
+        <action name="GS_SET_AUTO_WIDTH" axisType="HALF"/>
+        <action name="GS_MINUS_WIDTH" axisType="HALF"/>
+        <action name="GS_PLUS_WIDTH" axisType="HALF"/>
+        <action name="GS_ENABLE_STEERING" axisType="HALF"/>
     </actions>
 
     <inputBinding>
+        <actionBinding action="GS_SHOW_UI">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_KP_0"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+        </actionBinding>
         <actionBinding action="GS_SETPOINT">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_s" />
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10" />
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_s"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
         </actionBinding>
         <actionBinding action="GS_SET_AUTO_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x" />
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10" />
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+        </actionBinding>
+        <actionBinding action="GS_MINUS_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_minus"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+        </actionBinding>
+        <actionBinding action="GS_PLUS_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_plus"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+        </actionBinding>
+        <actionBinding action="GS_ENABLE_STEERING">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_0"/>
+            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
         </actionBinding>
     </inputBinding>
 
     <!--<inputBindings>-->
-        <!--<input name="GS_ACTIVATE" category="VEHICLE" key1="KEY_lctrl KEY_KP_enter" button=""/>-->
-        <!--<input name="GS_SETPOINT" category="VEHICLE" key1="KEY_lctrl KEY_KP_1" button=""/>-->
-        <!--<input name="GS_TURN_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_4" button=""/>-->
-        <!--<input name="GS_ENABLE_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_0" button=""/>-->
-        <!--<input name="GS_AUTO_WIDTH" category="VEHICLE" key1="KEY_lctrl KEY_KP_3" button=""/>-->
-        <!--<input name="GS_OFFSET_WIDTH_LEFT" category="VEHICLE" key1="KEY_lctrl KEY_pagedown" button=""/>-->
-        <!--<input name="GS_OFFSET_WIDTH_RIGHT" category="VEHICLE" key1="KEY_lctrl KEY_pageup" button=""/>-->
-        <!--<input name="GS_OFFSET_WIDTH_RESET" category="VEHICLE" key1="KEY_lctrl KEY_end" button=""/>-->
-        <!--&lt;!&ndash;TODO: DELETE JUST DEV OPTION&ndash;&gt;-->
-        <!--<input name="GS_TOGGLE_TERRAIN_ANGLE_SNAP" category="VEHICLE" key1="KEY_lctrl KEY_KP_2" button=""/>-->
+    <!--<input name="GS_ACTIVATE" category="VEHICLE" key1="KEY_lctrl KEY_KP_enter" button=""/>-->
+    <!--<input name="GS_SETPOINT" category="VEHICLE" key1="KEY_lctrl KEY_KP_1" button=""/>-->
+    <!--<input name="GS_TURN_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_4" button=""/>-->
+    <!--<input name="GS_ENABLE_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_0" button=""/>-->
+    <!--<input name="GS_AUTO_WIDTH" category="VEHICLE" key1="KEY_lctrl KEY_KP_3" button=""/>-->
+    <!--<input name="GS_OFFSET_WIDTH_LEFT" category="VEHICLE" key1="KEY_lctrl KEY_pagedown" button=""/>-->
+    <!--<input name="GS_OFFSET_WIDTH_RIGHT" category="VEHICLE" key1="KEY_lctrl KEY_pageup" button=""/>-->
+    <!--<input name="GS_OFFSET_WIDTH_RESET" category="VEHICLE" key1="KEY_lctrl KEY_end" button=""/>-->
+    <!--&lt;!&ndash;TODO: DELETE JUST DEV OPTION&ndash;&gt;-->
+    <!--<input name="GS_TOGGLE_TERRAIN_ANGLE_SNAP" category="VEHICLE" key1="KEY_lctrl KEY_KP_2" button=""/>-->
     <!--</inputBindings>-->
 
     <!--<l10n filenamePrefix="translations/translation"/>-->
