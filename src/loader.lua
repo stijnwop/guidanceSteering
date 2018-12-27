@@ -10,6 +10,7 @@ source(Utils.getFilename("src/gui/GuidanceSteeringHUD.lua", directory))
 
 source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
+source(Utils.getFilename("src/misc/MultiPurposeActionEvent.lua", directory))
 source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 --source(Utils.getFilename("src/misc/LinkedList.lua", directory))
 

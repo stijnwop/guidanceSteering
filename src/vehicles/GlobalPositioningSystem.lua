@@ -9,6 +9,7 @@ GlobalPositioningSystem.CONFIG_NAME = "buyableGPS"
 GlobalPositioningSystem.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
 GlobalPositioningSystem.DIRECTION_LEFT = -1
 GlobalPositioningSystem.DIRECTION_RIGHT = 1
+GlobalPositioningSystem.AB_DROP_DISTANCE = 15
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
@@ -20,12 +21,12 @@ end
 
 function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
+    SpecializationUtil.registerFunction(vehicleType, "registerMultiPurposeActionEvents", GlobalPositioningSystem.registerMultiPurposeActionEvents)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "leaveVehicle", GlobalPositioningSystem.inj_leaveVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "setReverserDirection", GlobalPositioningSystem.inj_setReverserDirection)
 end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
@@ -115,6 +116,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.abDistanceCounter = 0
     spec.abClickCounter = 0
 
+
     spec.guidanceData = {
         width = GlobalPositioningSystem.DEFAULT_WIDTH,
         offsetWidth = 0,
@@ -132,10 +134,47 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.ui = g_guidanceSteering.ui
     spec.uiActive = false
+
+    self:registerMultiPurposeActionEvents()
 end
 
 function GlobalPositioningSystem:onLoadFinished(savegame)
 end
+
+function GlobalPositioningSystem:registerMultiPurposeActionEvents()
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local callbacks = {}
+
+    table.insert(callbacks, function()
+        GlobalPositioningSystem.resetGuidanceData(self)
+        Logger.info("Resetting AB line strategy")
+        return true
+    end)
+
+    table.insert(callbacks, function()
+        spec.lineStrategy:pushABPoint(spec.guidanceData)
+        return true
+    end)
+
+    table.insert(callbacks, function()
+        if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
+            g_currentMission:showBlinkingWarning("Drive 10m in other to set point B. Current traveled distance: " .. tostring(spec.abDistanceCounter), 4000)
+            return false
+        end
+
+        spec.lineStrategy:pushABPoint(spec.guidanceData)
+        return true
+    end)
+
+    table.insert(callbacks, function()
+        GlobalPositioningSystem.setGuidanceData(self, true, false)
+        Logger.info("Generating AB line strategy")
+        return true
+    end)
+
+    spec.abMultiActionEvent = MultiPurposeActionEvent:new(4, callbacks)
+end
+
 
 function GlobalPositioningSystem:onDelete()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
@@ -245,13 +284,6 @@ function GlobalPositioningSystem.inj_leaveVehicle(vehicle, superFunc)
     return superFunc(vehicle)
 end
 
-function GlobalPositioningSystem.inj_setReverserDirection(vehicle, superFunc, reverserDirection)
-    if reverserDirection ~= 0 then
-        Logger.info("Reverse direction", reverserDirection)
-    end
-    return superFunc(vehicle, reverserDirection)
-end
-
 function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
     local width = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
@@ -269,7 +301,7 @@ function GlobalPositioningSystem:setGuidanceStrategy()
     spec.lineStrategy = StraightABStrategy:new(self)
 end
 
-function GlobalPositioningSystem.setGuidanceData(self, updateDirection, updateReverser)
+function GlobalPositioningSystem.setGuidanceData(self, doDirectionUpdate)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
 
@@ -302,7 +334,7 @@ function GlobalPositioningSystem.setGuidanceData(self, updateDirection, updateRe
     -- Guidance node xyz translation and xz direction
     data.driveTarget = { transX, transY, transZ, driveDirX, driveDirZ }
 
-    if updateDirection then
+    if doDirectionUpdate then
         -- Take angle snapping from AI code
         local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
         --        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ) -- Todo: whats the new function
@@ -324,6 +356,15 @@ function GlobalPositioningSystem.setGuidanceData(self, updateDirection, updateRe
         data.snapDirection = { dirX, dirZ, x, z }
         data.snapDirectionForwards = data.movingFowards
     end
+end
+
+function GlobalPositioningSystem.resetGuidanceData(self)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local data = spec.guidanceData
+    spec.abDistanceCounter = 0
+    spec.lineStrategy:delete()
+    data.snapDirection = { 0, 0, 0, 0 }
+    data.snapDirectionForwards = not data.isReverseDriving
 end
 
 function GlobalPositioningSystem.guideSteering(vehicle, dt)
@@ -427,33 +468,8 @@ end
 
 function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    -- Todo: Cleanup mess
-    local reset = spec.abClickCounter < 1
-    local generateA = spec.abClickCounter > 0 and spec.abClickCounter < 2
-    local generateB = spec.abClickCounter > 1 and spec.abClickCounter < 3
-    local generate = spec.abClickCounter > 2 and spec.abClickCounter < 4
 
-    if generateB and spec.abDistanceCounter < 10 then
-        g_currentMission:showBlinkingWarning("Drive 10m in other to set point B. Current traveled distance: " .. tostring(spec.abDistanceCounter), 4000)
-    else
-        if reset then
-            spec.abDistanceCounter = 0
-            spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
-            spec.guidanceData.snapDirectionForwards = true
-            spec.lineStrategy:delete()
-            Logger.info("Reset AB Line")
-        elseif generateA or generateB then
-            spec.lineStrategy:pushABPoint(spec.guidanceData)
-        end
-
-        spec.abClickCounter = spec.abClickCounter + 1
-
-        if generate then
-            spec.abClickCounter = 0
-            Logger.info("Generate AB Line")
-            GlobalPositioningSystem.setGuidanceData(self, true, false)
-        end
-    end
+    spec.abMultiActionEvent:handle()
 end
 
 function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inputValue, callbackState, isAnalog)

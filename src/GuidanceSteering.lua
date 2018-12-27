@@ -1,4 +1,3 @@
-
 GuidanceSteering = {}
 
 local GuidanceSteering_mt = Class(GuidanceSteering)
@@ -40,10 +39,10 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
     specializationManager:addSpecialization("globalPositioningSystem", "GlobalPositioningSystem", Utils.getFilename("src/vehicles/GlobalPositioningSystem.lua", modDirectory), nil) -- Nil is important here
 
     for typeName, typeEntry in pairs(vehicleTypeManager:getVehicleTypes()) do
---                for name, o in pairs(typeEntry.specializations) do
---                    Logger.info("", o)
---                end
---        Logger.info(typeName, typeEntry.specializationNames)
+        --                for name, o in pairs(typeEntry.specializations) do
+        --                    Logger.info("", o)
+        --                end
+        --        Logger.info(typeName, typeEntry.specializationNames)
 
         if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) then
             -- Make sure to namespace the spec again
@@ -51,9 +50,9 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
         end
     end
 
-
     Drivable.actionEventAccelerate = Utils.overwrittenFunction(Drivable.actionEventAccelerate, GuidanceSteering.actionEventAccelerate)
     Drivable.actionEventBrake = Utils.overwrittenFunction(Drivable.actionEventBrake, GuidanceSteering.actionEventBrake)
+    Drivable.actionEventSteer = Utils.overwrittenFunction(Drivable.actionEventSteer, GuidanceSteering.actionEventSteer)
 end
 
 function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
@@ -71,5 +70,14 @@ function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, input
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec.guidanceSteeringIsActive then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
+    end
+end
+
+function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
+    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if spec.guidanceSteeringIsActive and inputValue ~= 0 then
+        spec.guidanceSteeringIsActive = false
     end
 end
