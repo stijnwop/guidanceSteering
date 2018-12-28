@@ -28,7 +28,6 @@ function _init()
     Mission00.onStartMission = Utils.appendedFunction(Mission00.onStartMission, _startMission)
 
     VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, _validateVehicleTypes)
-    --    StoreManager.loadItem = Utils.appendedFunction(StoreManager.loadItem, _addGPSConfiguration)
     StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, _addGPSConfigurationUtil)
 end
 
@@ -84,24 +83,83 @@ function _validateVehicleTypes(vehicleTypeManager)
     GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
 end
 
-local allowedStoreCategories = {
+local forcedStoreCategories = {
     ["TRACTORSS"] = true,
     ["TRACTORSM"] = true,
     ["TRACTORSL"] = true,
     ["TRUCKS"] = true,
+    ["TELELOADERS"] = false,
+    ["TELELOADERVEHICLES"] = false,
+    ["FRONTLOADERVEHICLES"] = false,
+    ["FRONTLOADERS"] = false,
+    ["WHEELLOADERS"] = false,
+    ["WHEELLOADERVEHICLES"] = false,
+    ["SKIDSTEERS"] = false,
+    ["SKIDSTEERVEHICLES"] = false,
+    ["ANIMALSVEHICLES"] = false,
     ["HARVESTERS"] = true,
+    ["CUTTERS"] = false,
+    ["FORAGEHARVESTERCUTTERS"] = false,
+    ["CORNHEADERS"] = false,
     ["FORAGEHARVESTERS"] = true,
     ["BEETVEHICLES"] = true,
-    ["POTATOVEHICLES"] = true
+    ["POTATOVEHICLES"] = true,
+    ["SPRAYERVEHICLES"] = true,
+    ["COTTONVEHICLES"] = true,
+    ["WOODHARVESTING"] = false,
+    ["MOWERVEHICLES"] = true,
+    ["ANIMALS"] = false,
+    ["CUTTERTRAILERS"] = false,
+    ["TRAILERS"] = false,
+    ["SLURRYTANKS"] = false,
+    ["MANURESPREADERS"] = false,
+    ["LOADERWAGONS"] = false,
+    ["AUGERWAGONS"] = false,
+    ["WINDROWERS"] = false,
+    ["WEIGHTS"] = false,
+    ["LOWLOADERS"] = false,
+    ["WOOD"] = false,
+    ["BELTS"] = false,
+    ["LEVELER"] = false,
+    ["CARS"] = false,
+    ["DECORATION"] = false,
+    ["PLACEABLEMISC"] = false,
+    ["PLACEABLEMISC"] = false,
+    ["CHAINSAWS"] = false,
+    ["SHEDS"] = false,
+    ["BIGBAGS"] = false,
+    ["BALES"] = false,
+    ["ANIMALPENS"] = false,
+    ["FARMHOUSES"] = false,
+    ["SILOS"] = false,
 }
+
+local function storeItemAllowsGuidanceSteering(storeItem)
+    if forcedStoreCategories[storeItem.categoryName] == nil then
+        Logger.info(storeItem.categoryName)
+        if storeItem.specs ~= nil then
+            -- Check for exception vehicles
+            local specs = storeItem.specs
+            local isFuelConsumer = #specs.fuel.consumers > 0
+            local hasWorkingWidth = specs.workingWidth ~= nil
+
+            if isFuelConsumer and hasWorkingWidth then
+                return true
+            end
+        end
+
+        return false
+    end
+
+    return forcedStoreCategories[storeItem.categoryName]
+end
 
 function _addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
     local configurations = superFunc(xmlFile, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
 
-    if allowedStoreCategories[storeItem.categoryName] then
-        if configurations ~= nil and configurations["buyableGPS"] == nil then
-            configurations["buyableGPS"] = {}
-
+    if storeItemAllowsGuidanceSteering(storeItem) then
+        local key = GlobalPositioningSystem.CONFIG_NAME
+        if configurations ~= nil and configurations[key] == nil then
             local entryNoGPS = {
                 desc = "",
                 price = 0,
@@ -114,7 +172,7 @@ function _addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, cust
 
             local entryGPS = {
                 desc = "",
-                price = 10000,
+                price = 15000,
                 dailyUpkeep = 0,
                 isDefault = false,
                 index = 2,
@@ -122,16 +180,13 @@ function _addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, cust
                 enabled = true
             }
 
-            table.insert(configurations["buyableGPS"], entryNoGPS)
-            table.insert(configurations["buyableGPS"], entryGPS)
+            configurations[key] = {}
+            table.insert(configurations[key], entryNoGPS)
+            table.insert(configurations[key], entryGPS)
         end
     end
 
     return configurations
-end
-
-function _addGPSConfiguration(self, xmlFilename, baseDir, customEnvironment, isMod, isBundleItem, dlcTitle)
-    Logger.info("", xmlFilename)
 end
 
 _init()
