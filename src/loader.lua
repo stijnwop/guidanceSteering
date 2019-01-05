@@ -6,7 +6,10 @@ source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
 source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
 
 source(Utils.getFilename("src/gui/GuidanceSteeringUI.lua", directory))
-source(Utils.getFilename("src/gui/GuidanceSteeringHUD.lua", directory))
+source(Utils.getFilename("src/gui/GuidanceSteeringMenu.lua", directory))
+source(Utils.getFilename("src/gui/frames/GuidanceSteeringSettingsFrame.lua", directory))
+source(Utils.getFilename("src/gui/frames/GuidanceSteeringStrategyFrame.lua", directory))
+source(Utils.getFilename("src/gui/hud/GuidanceSteeringHUD.lua", directory))
 
 source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
@@ -27,6 +30,8 @@ function _init()
     Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, _loadedMission)
     Mission00.onStartMission = Utils.appendedFunction(Mission00.onStartMission, _startMission)
 
+    FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
+
     VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, _validateVehicleTypes)
     StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, _addGPSConfigurationUtil)
 end
@@ -34,10 +39,9 @@ end
 function _load(mission)
     assert(g_guidanceSteering == nil)
 
-    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager)
+    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter, g_settingsScreen.settingsModel)
 
-    g_guidanceSteering = guidanceSteering
-    _G["g_guidanceSteering"] = guidanceSteering
+    getfenv(0)["g_guidanceSteering"] = guidanceSteering
 
     addModEventListener(guidanceSteering)
 end
@@ -50,14 +54,6 @@ function _loadedMission(mission, node)
     end
 
     guidanceSteering:onMissionLoaded(mission)
-
-    --    if mission:getIsServer() and mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/seasons.xml") then
-    --        local xmlFile = loadXMLFile("SeasonsXML", mission.missionInfo.savegameDirectory .. "/seasons.xml")
-    --        if xmlFile ~= nil then
-    --            seasons:onMissionLoadFromSavegame(mission, xmlFile)
-    --            delete(xmlFile)
-    --        end
-    --    end
 end
 
 -- Player clicked on start
@@ -71,12 +67,23 @@ end
 function _unload()
     removeModEventListener(guidanceSteering)
 
-    if GS_IS_CONSOLE_VERSION then
-    end
-
     guidanceSteering:delete()
     guidanceSteering = nil -- Allows garbage collecting
-    _G["g_guidanceSteering"] = nil
+    getfenv(0)["g_guidanceSteering"] = nil
+end
+
+function saveToXMLFile(missionInfo)
+--    if not isActive() then return end
+
+    if missionInfo.isValid then
+        local xmlFile = createXMLFile("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
+        if xmlFile ~= nil then
+            guidanceSteering:onMissionSaveToSavegame(xmlFile)
+
+            saveXMLFile(xmlFile)
+            delete(xmlFile)
+        end
+    end
 end
 
 function _validateVehicleTypes(vehicleTypeManager)
@@ -136,7 +143,6 @@ local forcedStoreCategories = {
 
 local function storeItemAllowsGuidanceSteering(storeItem)
     if forcedStoreCategories[storeItem.categoryName] == nil then
-        Logger.info(storeItem.categoryName)
         if storeItem.specs ~= nil then
             -- Check for exception vehicles
             local specs = storeItem.specs

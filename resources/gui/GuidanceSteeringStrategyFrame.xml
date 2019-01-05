@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI name="guidanceSteeringStrategy">
+    <GuiElement type="empty" profile="uiInGameMenuFrame">
+        <!-- Static page header -->
+        <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel" position="130px -60px">
+            <GuiElement type="bitmap" profile="ingameMenuGameSettingsHeaderIcon" position="0px 0px"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" position="80px 0px" text="$l10n_guidanceSteering_ui_settings"/>
+        </GuiElement>
+
+        <GuiElement type="empty" profile="emptyPanel" position="130px -124px" size="1660px 708px" screenAlign="topLeft" positionOrigin="topLeft" id="container">
+        </GuiElement>
+    </GuiElement>
+</GUI>

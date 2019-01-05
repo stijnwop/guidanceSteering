@@ -10,6 +10,7 @@ GlobalPositioningSystem.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
 GlobalPositioningSystem.DIRECTION_LEFT = -1
 GlobalPositioningSystem.DIRECTION_RIGHT = 1
 GlobalPositioningSystem.AB_DROP_DISTANCE = 15
+GlobalPositioningSystem.MAX_TRACKS = 2 ^ 6
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
@@ -25,19 +26,21 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "leaveVehicle", GlobalPositioningSystem.inj_leaveVehicle)
+--    SpecializationUtil.registerOverwrittenFunction(vehicleType, "leaveVehicle", GlobalPositioningSystem.inj_leaveVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
 end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if self.isClient and isActiveForInputIgnoreSelection then
         local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local _, actionEventIdToggleUI = self:addActionEvent(spec.actionEvents, InputAction.GS_SHOW_UI, self, GlobalPositioningSystem.actionEventOnToggleUI, false, true, false, true, nil, nil, true)
         local _, actionEventIdSetPoint = self:addActionEvent(spec.actionEvents, InputAction.GS_SETPOINT, self, GlobalPositioningSystem.actionEventSetABPoint, false, true, false, true, nil, nil, true)
         local _, actionEventIdAutoWidth = self:addActionEvent(spec.actionEvents, InputAction.GS_SET_AUTO_WIDTH, self, GlobalPositioningSystem.actionEventSetAutoWidth, false, true, false, true, nil, nil, true)
         local _, actionEventIdMinusWidth = self:addActionEvent(spec.actionEvents, InputAction.GS_MINUS_WIDTH, self, GlobalPositioningSystem.actionEventMinusWidth, false, true, false, true, nil, nil, true)
         local _, actionEventIdPlusWidth = self:addActionEvent(spec.actionEvents, InputAction.GS_PLUS_WIDTH, self, GlobalPositioningSystem.actionEventPlusWidth, false, true, false, true, nil, nil, true)
         local _, actionEventIdEnableSteering = self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true)
 
+        g_inputBinding:setActionEventTextVisibility(actionEventIdToggleUI, true)
         g_inputBinding:setActionEventTextVisibility(actionEventIdSetPoint, false)
         g_inputBinding:setActionEventTextVisibility(actionEventIdAutoWidth, false)
         g_inputBinding:setActionEventTextVisibility(actionEventIdMinusWidth, false)
@@ -48,9 +51,15 @@ end
 
 function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLoad", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onReadStream", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
+
+    SpecializationUtil.registerEventListener(vehicleType, "onEnterVehicle", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", GlobalPositioningSystem)
 end
 
 function GlobalPositioningSystem.initSpecialization()
@@ -85,6 +94,7 @@ function GlobalPositioningSystem:onLoad(savegame)
         return
     end
 
+    spec.savedTracks = {}
     spec.axisAccelerate = 0
     spec.axisBrake = 0
 
@@ -104,9 +114,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     setRotation(spec.guidanceReverseNode, 0, math.rad(180), 0)
 
     spec.lineStrategy = StraightABStrategy:new(self)
-
-    --    Logger.info("hello from spec")
-
     spec.guidanceIsActive = true -- todo: make toggle
     spec.showGuidanceLines = true -- todo: make toggle
     spec.guidanceSteeringIsActive = false
@@ -115,7 +122,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceSteeringOffset = 0
     spec.abDistanceCounter = 0
     spec.abClickCounter = 0
-
 
     spec.guidanceData = {
         width = GlobalPositioningSystem.DEFAULT_WIDTH,
@@ -138,7 +144,20 @@ function GlobalPositioningSystem:onLoad(savegame)
     self:registerMultiPurposeActionEvents()
 end
 
-function GlobalPositioningSystem:onLoadFinished(savegame)
+function GlobalPositioningSystem:onPostLoad(savegame)
+end
+
+function GlobalPositioningSystem:onReadStream(streamId, connection)
+    if connection:getIsServer() then
+    end
+end
+
+function GlobalPositioningSystem:onWriteStream(streamId, connection)
+    if not connection:getIsServer() then
+    end
+end
+
+function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
 end
 
 function GlobalPositioningSystem:registerMultiPurposeActionEvents()
@@ -168,6 +187,7 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
 
     table.insert(callbacks, function()
         GlobalPositioningSystem.setGuidanceData(self, true, false)
+        g_guidanceSteering:saveTrack("Test", spec.guidanceData)
         Logger.info("Generating AB line strategy")
         return true
     end)
@@ -275,13 +295,22 @@ function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, sup
     return superFunc(vehicle)
 end
 
-function GlobalPositioningSystem.inj_leaveVehicle(vehicle, superFunc)
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.hasGuidanceSystem and spec.uiActive then
+function GlobalPositioningSystem:onLeaveVehicle()
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if spec.hasGuidanceSystem then
         spec.ui:setVehicle(nil)
     end
+end
 
-    return superFunc(vehicle)
+function GlobalPositioningSystem:onEnterVehicle()
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if spec.hasGuidanceSystem then
+        if spec.ui:getVehicle() ~= self then
+            spec.ui:setVehicle(self)
+        end
+    end
 end
 
 function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
@@ -430,16 +459,6 @@ end
 
 function GlobalPositioningSystem.updateUI(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.uiActive = not spec.uiActive
-
-    local vehicle
-    if spec.uiActive then
-        vehicle = self
-    end
-
-    if spec.ui:getVehicle() ~= vehicle then
-        spec.ui:setVehicle(vehicle)
-    end
 
     Logger.info("Calculated width", spec.guidanceData.width)
 
@@ -447,6 +466,13 @@ function GlobalPositioningSystem.updateUI(self)
 end
 
 --- Action events
+function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    spec.uiActive = not spec.uiActive
+
+    spec.ui:onToggleUI()
+end
+
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.offsetWidth = 0

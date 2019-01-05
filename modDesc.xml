@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="41">
+<modDesc descVersion="42">
     <author>Wopster</author>
     <version>1.0.0.0</version>
 
@@ -17,56 +17,7 @@
         </de>
     </description>
 
-    <l10n>
-        <text name="configuration_buyableGPS">
-            <en>Global Positioning System</en>
-        </text>
-        <text name="configuration_buyableGPS_withoutGPS">
-            <en>No</en>
-        </text>
-        <text name="configuration_buyableGPS_withGPS">
-            <en>Yes</en>
-        </text>
-        <text name="input_GS_SHOW_UI">
-            <en>Show UI</en>
-        </text>
-        <text name="input_GS_SET_AUTO_WIDTH">
-            <en>Auto width</en>
-            <de>Auto width</de>
-        </text>
-        <text name="input_GS_OFFSET_WIDTH_RESET">
-            <en>Reset width</en>
-            <de>Reset width</de>
-        </text>
-        <text name="input_GS_OFFSET_WIDTH_LEFT">
-            <en>Offset width left</en>
-            <de>Offset width left</de>
-        </text>
-        <text name="input_GS_OFFSET_WIDTH_RIGHT">
-            <en>Offset width right</en>
-            <de>Offset width right</de>
-        </text>
-        <text name="input_GS_ENABLE_STEERING">
-            <en>Steering guidance</en>
-            <de>Steering guidance</de>
-        </text>
-        <text name="input_GS_ACTIVATE">
-            <en>Activate</en>
-            <de>Activate</de>
-        </text>
-        <text name="input_GS_SETPOINT">
-            <en>SETPOINT</en>
-            <de>SETPOINT</de>
-        </text>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP">
-            <en>Snap to terrain angle</en>
-            <de>Snap to terrain angle</de>
-        </text>
-        <text name="input_GS_TURN_STEERING">
-            <en>Set steering direction</en>
-            <de>Set steering direction</de>
-        </text>
-    </l10n>
+    <l10n filenamePrefix="translations/translation" />
 
     <iconFilename>icon.png</iconFilename>
     <multiplayer supported="true"/>
