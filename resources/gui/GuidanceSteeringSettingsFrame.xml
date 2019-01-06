@@ -44,6 +44,14 @@
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout">
 
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthInCrementElement" toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthInCrement"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
+
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_width">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
                     <GuiElement type="button" profile="multiTextOptionRight"/>

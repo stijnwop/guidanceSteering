@@ -1,9 +1,9 @@
-
 GuidanceSteeringStrategyFrame = {}
 local GuidanceSteeringStrategyFrame_mt = Class(GuidanceSteeringStrategyFrame, TabbedMenuFrameElement)
 
 GuidanceSteeringStrategyFrame.CONTROLS = {
     CONTAINER = "container",
+    STRATEGY = "guidanceSteeringStrategyElement"
 }
 
 function GuidanceSteeringStrategyFrame:new(i18n)
@@ -23,21 +23,25 @@ function GuidanceSteeringStrategyFrame:copyAttributes(src)
 end
 
 function GuidanceSteeringStrategyFrame:initialize()
+
+    self.guidanceSteeringStrategyElement:setTexts({
+        self.i18n:getText("guidanceSteering_strategy_abStraight"),
+        self.i18n:getText("guidanceSteering_strategy_cardinals"),
+    })
 end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
     GuidanceSteeringStrategyFrame:superClass().onFrameOpen(self)
 end
 
----Get the frame's main content element's screen size.
+--- Get the frame's main content element's screen size.
 function GuidanceSteeringStrategyFrame:getMainElementSize()
     return self.container.size
 end
 
----Get the frame's main content element's screen position.
+--- Get the frame's main content element's screen position.
 function GuidanceSteeringStrategyFrame:getMainElementPosition()
     return self.container.absPosition
 end
 
-GuidanceSteeringStrategyFrame.L10N_SYMBOL = {
-}
+GuidanceSteeringStrategyFrame.L10N_SYMBOL = {}

@@ -88,8 +88,8 @@ end
 
 --- Page tab UV coordinates for display elements.
 GuidanceSteeringMenu.TAB_UV = {
-    STRATEGY = { 0, 209, 65, 65 },
-    SETTINGS = { 130, 209, 65, 65 },
+    SETTINGS = { 0, 209, 65, 65 },
+    STRATEGY = { 65, 209, 65, 65 },
 }
 
 GuidanceSteeringMenu.L10N_SYMBOL = {

@@ -4,10 +4,20 @@
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel" position="130px -60px">
             <GuiElement type="bitmap" profile="ingameMenuGameSettingsHeaderIcon" position="0px 0px"/>
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" position="80px 0px" text="$l10n_guidanceSteering_ui_settings"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" position="80px 0px" text="$l10n_guidanceSteering_ui_strategy"/>
         </GuiElement>
 
-        <GuiElement type="empty" profile="emptyPanel" position="130px -124px" size="1660px 708px" screenAlign="topLeft" positionOrigin="topLeft" id="container">
+        <GuiElement type="bitmap" profile="ingameMenuSettingsBox" position="130px -124px" id="container">
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -50px" id="boxLayout">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringStrategyElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_strategy">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_strategy"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
+            </GuiElement>
         </GuiElement>
     </GuiElement>
 </GUI>
