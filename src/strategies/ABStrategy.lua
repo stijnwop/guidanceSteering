@@ -8,6 +8,16 @@
 
 ABStrategy = {}
 
+ABStrategy.AB = 0
+ABStrategy.A_AUTO_B = 1
+ABStrategy.A_PLUS_HEADING = 2
+
+ABStrategy.METHODS = {
+    ABStrategy.AB,
+    ABStrategy.A_AUTO_B,
+    ABStrategy.A_PLUS_HEADING
+}
+
 local RGB_WHITE = { 1, 1, 1 }
 local RGB_BLUE = { 0, 0, .7 }
 
@@ -49,23 +59,41 @@ end
 function ABStrategy:draw(guidanceData)
 end
 
+---Gets the guidance drive data
+---@param guidanceNode number
+---@param data table
 function ABStrategy:getGuidanceData(guidanceNode, data)
     return nil
 end
 
+---Creates the next AB point
+---@param guidanceData table
 function ABStrategy:pushABPoint(guidanceData)
     return self.ab:nextPoint(guidanceData)
 end
 
-function ABStrategy:getIsGuidancesPossible()
+---Gets if guidance can be activated
+function ABStrategy:getIsGuidancePossible()
     return self.ab:getIsCreated()
 end
 
+---Returns if this strategy is AB depended
 function ABStrategy:getHasABDependentDirection()
     return true
 end
 
--- Todo: really needs to be accessible?
+---Returns if we can guide based on AB points
 function ABStrategy:getIsABDirectionPossible()
     return not self.ab:getIsEmpty()
+end
+
+---Gets the UI texts for the methods
+---@param i18n table
+function ABStrategy:getTexts(i18n)
+    -- Remember the order is important here.
+    return {
+        i18n:getText("guidanceSteering_strategyMethod_aPlusB"), -- ABStrategy.AB
+        i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
+        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
+    }
 end
