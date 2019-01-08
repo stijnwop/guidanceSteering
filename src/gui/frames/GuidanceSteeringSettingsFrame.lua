@@ -22,14 +22,13 @@ function GuidanceSteeringSettingsFrame:new(i18n)
     local self = TabbedMenuFrameElement:new(nil, GuidanceSteeringSettingsFrame_mt)
 
     self.i18n = i18n
-    self.vehicle = nil
 
     self.currentWidth = 0
-    self.currentWidth = 0
+    self.currentWidthIncrement = 0
+
     self.allowSave = false
 
     self:registerControls(GuidanceSteeringSettingsFrame.CONTROLS)
-
     return self
 end
 
@@ -46,6 +45,10 @@ function GuidanceSteeringSettingsFrame:initialize()
     end
 
     self.guidanceSteeringWidthInCrementElement:setTexts(increments)
+
+    self.guidanceSteeringWidthElement.onRightButtonClicked = self.onClickIncreaseWidth
+    self.guidanceSteeringWidthElement.onLeftButtonClicked = self.onClickDecreaseWidth
+
 end
 
 function GuidanceSteeringSettingsFrame:onFrameOpen()
@@ -65,7 +68,6 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.allowSave = true
     end
 end
-
 
 function GuidanceSteeringSettingsFrame:onFrameClose()
     GuidanceSteeringSettingsFrame:superClass().onFrameClose(self)
@@ -94,6 +96,31 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 end
 
 function GuidanceSteeringSettingsFrame:onClickAutoWidth()
+    local vehicle = g_guidanceSteering.ui:getVehicle()
+
+    if vehicle ~= nil then
+        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        self.currentWidth = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
+        self.guidanceSteeringWidthElement:setTexts({ self.currentWidth })
+    end
+
+    Logger.info("", self.guidanceSteeringWidthElement.onRightButtonClicked)
+end
+
+function GuidanceSteeringSettingsFrame:onClickIncreaseWidth()
+    local state = self.guidanceSteeringWidthInCrementElement:getState()
+    local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+    self.currentWidth = self.currentWidth + increment
+
+    print(self.currentWidth)
+end
+
+function GuidanceSteeringSettingsFrame:onClickDecreaseWidth()
+    local state = self.guidanceSteeringWidthInCrementElement:getState()
+    local decrement = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+    self.currentWidth = math.min(self.currentWidth - decrement, 0)
 end
 
 --- Get the frame's main content element's screen size.

@@ -30,6 +30,9 @@ end
 
 function GuidanceSteeringUI:load()
     if self.isClient then
+
+        self.gui:loadProfiles(Utils.getFilename("resources/gui/guiProfiles.xml", self.modDirectory))
+
         self.hud:load()
 
         self:loadMenu()

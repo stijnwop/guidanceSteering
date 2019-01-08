@@ -43,8 +43,8 @@
             </GuiElement>
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout">
-
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthInCrementElement" toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthInCrementElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
                     <GuiElement type="button" profile="multiTextOptionRight"/>
                     <GuiElement type="text" profile="multiTextOptionText"/>
@@ -52,15 +52,17 @@
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
 
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_width">
-                    <GuiElement type="button" profile="multiTextOptionLeft"/>
-                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_width">
+                    <GuiElement type="button" profile="multiTextOptionLeft" onClick="onClickDecreaseWidth" id="guidanceSteeringDecreaseWidthButton"/>
+                    <GuiElement type="button" profile="multiTextOptionRight" onClick="onClickIncreaseWidth" id="guidanceSteeringIncreaseWidthButton"/>
                     <GuiElement type="text" profile="multiTextOptionText"/>
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_width"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
 
-                <GuiElement type="button" profile="buttonBack" text="$l10n_guidanceSteering_setting_autoWidth" onClick="onClickAutoWidth" id="guidanceSteeringWidthButton" />
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px" onClick="onClickAutoWidth"
+                            id="guidanceSteeringWidthButton"/>
             </GuiElement>
         </GuiElement>
 
@@ -69,6 +71,5 @@
             <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon"/>
             <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged"/>
         </GuiElement>
-
     </GuiElement>
 </GUI>

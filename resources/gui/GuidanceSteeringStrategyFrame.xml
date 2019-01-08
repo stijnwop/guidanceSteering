@@ -8,7 +8,7 @@
         </GuiElement>
 
         <GuiElement type="bitmap" profile="ingameMenuSettingsBox" position="130px -124px" id="container">
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -50px" id="boxLayout">
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -50px" id="boxLayout1">
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringStrategyElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_strategy">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
@@ -17,7 +17,51 @@
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_strategy"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringStrategyMethodElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_strategyMethod">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_strategyMethod"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
             </GuiElement>
+
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -250px" id="boxLayout2">
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_pointA" position="-210px 64px"
+                            onClick="onClickAutoWidth"
+                            id="guidanceSteeringPointAButton"/>
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_pointB" position="-210px 64px"
+                            onClick="onClickAutoWidth"
+                            id="guidanceSteeringPointBButton"/>
+            </GuiElement>
+
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout3">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringTrackElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_currentTrack">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_currentTrack"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
+            </GuiElement>
+
+            <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" position="450px -150px" id="flowLayout">
+                <GuiElement type="button" profile="guidanceButtonSmallLeft" text="$l10n_guidanceSteering_setting_newTrack"
+                            onClick="onClickAutoWidth"
+                            id="guidanceSteeringNewTrackButton"/>
+                <GuiElement type="button" profile="guidanceButtonSmallRight" text="$l10n_guidanceSteering_setting_removeTrack"
+                            onClick="onClickAutoWidth"
+                            id="guidanceSteeringRemoveTrackButton"/>
+            </GuiElement>
+        </GuiElement>
+
+        <!-- Tool tip display -->
+        <GuiElement type="bitmap" profile="ingameMenuHelpRowBg" position="210px 64px" id="settingsHelpBox" visible="true">
+            <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon"/>
+            <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged"/>
         </GuiElement>
     </GuiElement>
 </GUI>

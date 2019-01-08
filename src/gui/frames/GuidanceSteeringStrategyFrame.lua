@@ -3,7 +3,9 @@ local GuidanceSteeringStrategyFrame_mt = Class(GuidanceSteeringStrategyFrame, Ta
 
 GuidanceSteeringStrategyFrame.CONTROLS = {
     CONTAINER = "container",
-    STRATEGY = "guidanceSteeringStrategyElement"
+    STRATEGY = "guidanceSteeringStrategyElement",
+    STRATEGY_METHOD = "guidanceSteeringStrategyMethodElement",
+    TRACK = "guidanceSteeringTrackElement",
 }
 
 function GuidanceSteeringStrategyFrame:new(i18n)
@@ -23,11 +25,17 @@ function GuidanceSteeringStrategyFrame:copyAttributes(src)
 end
 
 function GuidanceSteeringStrategyFrame:initialize()
-
     self.guidanceSteeringStrategyElement:setTexts({
         self.i18n:getText("guidanceSteering_strategy_abStraight"),
         self.i18n:getText("guidanceSteering_strategy_cardinals"),
     })
+
+    self.guidanceSteeringStrategyMethodElement:setTexts({
+        self.i18n:getText("guidanceSteering_strategyMethod_APLUSB"),
+        self.i18n:getText("guidanceSteering_strategyMethod_autoB"),
+    })
+
+    self.guidanceSteeringTrackElement:setTexts({"Field 2 Lime"})
 end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
