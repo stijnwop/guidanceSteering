@@ -8,7 +8,7 @@
         <text name="configuration_buyableGPS_withGPS" text="Yes" />
 
         <!--Inputs-->
-        <text name="input_GS_SHOW_UI" text="Show UI" />
+        <text name="input_GS_SHOW_UI" text="Show guidance steering menu" />
         <text name="input_GS_SET_AUTO_WIDTH" text="Auto width" />
         <text name="input_GS_OFFSET_WIDTH_RESET" text="Reset width" />
         <text name="input_GS_OFFSET_WIDTH_LEFT" text="Offset width left" />
@@ -26,7 +26,10 @@
 
         <text name="guidanceSteering_strategy_abStraight" text="AB Straight" />
         <text name="guidanceSteering_strategy_abCurve" text="AB Curve" />
-        <text name="guidanceSteering_strategy_cardinals" text="Cardinals" />
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B" />
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B" />
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Heading" />
 
         <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Support your visuals by showing the guidance lines" />
@@ -36,6 +39,9 @@
         <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width" />
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines" />
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use" />
+        <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use" />
+        <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points" />
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Show lines" />
@@ -44,9 +50,16 @@
         <text name="guidanceSteering_setting_width" text="Width" />
         <text name="guidanceSteering_setting_widthInCrement" text="Width increment" />
         <text name="guidanceSteering_setting_autoWidth" text="Auto width" />
+        <text name="guidanceSteering_setting_cardinals" text="Cardinal point" />
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy" />
+        <text name="guidanceSteering_setting_strategyMethod" text="Line method" />
+        <text name="guidanceSteering_setting_currentTrack" text="Current track" />
 
+        <text name="guidanceSteering_setting_pointA" text="Set A" />
+        <text name="guidanceSteering_setting_pointB" text="Set B" />
+        <text name="guidanceSteering_setting_newTrack" text="New track" />
+        <text name="guidanceSteering_setting_removeTrack" text="Remove track" />
 
     </texts>
 </l10n>
