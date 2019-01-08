@@ -19,6 +19,8 @@ ABPoint.AB_POINTS[false] = ABPoint.POINT_B
 
 ABPoint.__index = ABPoint
 
+---creates a new ABPoint instance
+---@param refNode number
 function ABPoint:new(refNode)
     local instance = {}
 
@@ -31,8 +33,7 @@ function ABPoint:new(refNode)
     return instance
 end
 
----
--- Purges the AB points
+---purges the point nodes
 function ABPoint:purge()
     self:iterate(function(point)
         delete(point.node)
@@ -42,12 +43,12 @@ function ABPoint:purge()
     self.points = { a = nil, b = nil }
 end
 
----
--- Creates the next point dependent on the last point
--- @param data
---
+---Creates the next point dependent on the last point
+---@param data table
 function ABPoint:nextPoint(data)
-    if self:getIsCreated() then return end
+    if self:getIsCreated() then
+        return
+    end
 
     local createAPoint = self.points[ABPoint.POINT_A] == nil
     local name = ABPoint.AB_POINTS[createAPoint]
@@ -56,11 +57,9 @@ function ABPoint:nextPoint(data)
     return next
 end
 
----
--- Creates the next world transform group
--- @param data
--- @param name
---
+---Creates the next world transform group
+---@param data table
+---@param name string
 function ABPoint:_createNextPoint(data, name)
     local p = createTransformGroup(("AB_point_%s"):format(name))
     local x, y, z = unpack(data.driveTarget)
@@ -84,30 +83,25 @@ function ABPoint:_createNextPoint(data, name)
     return point
 end
 
----
--- @param name
---
+---Gets point node by name
+---@param name string
 function ABPoint:getPointNode(name)
     return self.points[name].node
 end
 
----
---
+---Gets if the AB points are created
 function ABPoint:getIsCreated()
     return self.points[ABPoint.POINT_B] ~= nil
 end
 
----
---
+---Gets if AB is empty
 function ABPoint:getIsEmpty()
     return self.points[ABPoint.POINT_A] == nil
             and self.points[ABPoint.POINT_B] == nil
 end
 
----
--- Iteration function to have clean code access
--- @param visitor
---
+---Iteration function to have clean code access
+---@param visitor table
 function ABPoint:iterate(visitor)
     for _, point in pairs(self.points) do
         if point ~= nil then
