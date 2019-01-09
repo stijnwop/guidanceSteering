@@ -21,6 +21,10 @@ function GuidanceSteeringHUD:delete()
     if self.box ~= nil then
         self.box:delete()
     end
+
+    if self.boxAutoWidth ~= nil then
+        self.boxAutoWidth:delete()
+    end
 end
 
 function GuidanceSteeringHUD:load()

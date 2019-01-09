@@ -1,6 +1,8 @@
 local directory = g_currentModDirectory
 local modName = g_currentModName
 
+source(Utils.getFilename("src/events/TrackChangedEvent.lua", directory))
+
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
 source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
@@ -28,7 +30,6 @@ function _init()
 
     Mission00.load = Utils.prependedFunction(Mission00.load, _load)
     Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, _loadedMission)
-    Mission00.onStartMission = Utils.appendedFunction(Mission00.onStartMission, _startMission)
 
     FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
 
@@ -55,14 +56,6 @@ function _loadedMission(mission, node)
 
     guidanceSteering:onMissionLoaded(mission)
 end
-
--- Player clicked on start
-function _startMission(mission)
-    --    if not isActive() then return end
-
-    guidanceSteering:onMissionStart(mission)
-end
-
 
 function _unload()
     removeModEventListener(guidanceSteering)
