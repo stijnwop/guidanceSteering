@@ -35,14 +35,19 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     setXMLInt(xmlFile, "guidanceSteering#version", 1)
 
     if self.savedTracks ~= nil then
-        for index, track in pairs(self.savedTracks) do
-            setXMLInt(xmlFile, "guidanceSteering.track#id", index)
-            setXMLFloat(xmlFile, "guidanceSteering.track#width", track.width)
-            setXMLFloat(xmlFile, "guidanceSteering.track#offsetWidth", track.offsetWidth)
+        for i, track in ipairs(self.savedTracks) do
+            local key = ("guidanceSteering.tracks.track(%d)"):format(i - 1)
+            setXMLInt(xmlFile, key .. "#id", i)
+            setXMLString(xmlFile, key .. "#name", track.name)
+            setXMLInt(xmlFile, key .. "#strategy", track.strategy)
+            setXMLInt(xmlFile, key .. "#method", track.method)
+            setXMLFloat(xmlFile, key .. "#width", track.width)
+            setXMLFloat(xmlFile, key .. "#offsetWidth", track.offsetWidth)
+            setXMLString(xmlFile, key .. "#snapDirection", table.concat(track.snapDirection, " "))
+            setXMLString(xmlFile, key .. "#driveTarget", table.concat(track.driveTarget, " "))
         end
     end
 end
-
 
 function GuidanceSteering:update(dt)
 end
@@ -50,41 +55,51 @@ end
 function GuidanceSteering:draw(dt)
 end
 
-function GuidanceSteering:saveTrack(name, data)
+function GuidanceSteering:createTrack(name)
     local entry = {
         name = name,
-        width = data.width,
-        offsetWidth = data.offsetWidth,
-        snapDirection = data.snapDirection,
-        driveTarget = data.driveTarget
+        strategy = 0,
+        method = 0,
+        width = 0,
+        offsetWidth = 0,
+        snapDirection = { 0, 0, 0, 0 },
+        driveTarget = { 0, 0, 0, 0, 0 }
     }
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
         ListUtil.addElementToList(self.savedTracks, entry)
         Logger.info("add", entry)
     end
-
-    -- push event
 end
 
-function GuidanceSteering:deleteTrack(name)
-    -- get id by name
-    local entry = ListUtil.findListElementFirstIndex(self.listeners)
+function GuidanceSteering:saveTrack(id, data)
+    local entry = self.savedTracks[id]
+
+    if entry ~= nil then
+        entry.strategy = data.strategy
+        entry.method = data.method
+        entry.width = data.width
+        entry.offsetWidth = data.offsetWidth
+        entry.snapDirection = data.snapDirection
+        entry.driveTarget = data.driveTarget
+    end
+end
+
+function GuidanceSteering:deleteTrack(id)
+    local entry = self.savedTracks[id]
     ListUtil.removeElementFromList(self.savedTracks, entry)
 end
 
+function GuidanceSteering:getTrack(id)
+    return self.savedTracks[id]
+end
 
 function GuidanceSteering.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
-    -- Specializations are namespaced for mods: the names are prefixed with the mod folder/zip name and a dot. E.g. FS19_RM_Seasons.snowTracks
     specializationManager:addSpecialization("globalPositioningSystem", "GlobalPositioningSystem", Utils.getFilename("src/vehicles/GlobalPositioningSystem.lua", modDirectory), nil) -- Nil is important here
 
     for typeName, typeEntry in pairs(vehicleTypeManager:getVehicleTypes()) do
-        --                for name, o in pairs(typeEntry.specializations) do
-        --                    Logger.info("", o)
-        --                end
-        --        Logger.info(typeName, typeEntry.specializationNames)
-
-        if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) then
+        if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) and
+                not SpecializationUtil.hasSpecialization(SplineVehicle, typeEntry.specializations) then
             -- Make sure to namespace the spec again
             vehicleTypeManager:addSpecialization(typeName, modName .. ".globalPositioningSystem")
         end
@@ -99,7 +114,7 @@ function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, 
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.guidanceSteeringIsActive then
+    if spec ~= nil and spec.guidanceSteeringIsActive then
         spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
     end
 end
@@ -108,7 +123,7 @@ function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, input
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.guidanceSteeringIsActive then
+    if spec ~= nil and spec.guidanceSteeringIsActive then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
 end
@@ -117,7 +132,7 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.guidanceSteeringIsActive and inputValue ~= 0 then
+    if spec ~= nil and spec.guidanceSteeringIsActive and inputValue ~= 0 then
         spec.guidanceSteeringIsActive = false
     end
 end
