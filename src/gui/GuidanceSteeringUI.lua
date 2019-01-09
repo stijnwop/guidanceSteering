@@ -38,7 +38,6 @@ function GuidanceSteeringUI:load()
 end
 
 function GuidanceSteeringUI:loadMenu()
-    Logger.info("", Gui)
     local settingsFrame = GuidanceSteeringSettingsFrame:new(self.i18n, self.settingsModel)
     local strategyFrame = GuidanceSteeringStrategyFrame:new(self.i18n)
     --
