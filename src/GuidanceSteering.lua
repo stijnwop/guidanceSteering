@@ -27,10 +27,6 @@ function GuidanceSteering:onMissionLoaded(mission)
     self.ui:load()
 end
 
-function GuidanceSteering:onMissionStart(mission)
-    self.ui:onMissionStart()
-end
-
 function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     setXMLInt(xmlFile, "guidanceSteering#version", 1)
 
@@ -100,7 +96,6 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
     for typeName, typeEntry in pairs(vehicleTypeManager:getVehicleTypes()) do
         if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) and
                 not SpecializationUtil.hasSpecialization(SplineVehicle, typeEntry.specializations) then
-            -- Make sure to namespace the spec again
             vehicleTypeManager:addSpecialization(typeName, modName .. ".globalPositioningSystem")
         end
     end
