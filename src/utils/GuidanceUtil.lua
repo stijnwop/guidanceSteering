@@ -32,6 +32,19 @@ function GuidanceUtil.deleteABPoints(points)
     end
 end
 
+function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOffset, r, g, b)
+    local sx, sy, sz = project(x, y, z)
+    if sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1 then
+        setTextAlignment(RenderText.ALIGN_CENTER)
+        setTextColor(0.0, 0.0, 0.0, 0.75)
+        renderText(sx, sy - 0.0015 + textOffset, textSize, text)
+        setTextColor(r, g, b, 0.95)
+        renderText(sx, sy + textOffset, textSize, text)
+        setTextAlignment(RenderText.ALIGN_LEFT)
+    end
+end
+
+
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local maxWidth = 0
     local minWidth = 0
@@ -40,6 +53,8 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local excludedWorkAreas = {
         ["processRidgeMarkerArea"] = true
     }
+
+    -- Todo: some tools have work area depending on their filltype!
 
     if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
         for _, workArea in pairs(workAreaSpec.workAreas) do
