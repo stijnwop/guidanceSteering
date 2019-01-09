@@ -30,10 +30,20 @@
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -250px" id="boxLayout2">
                 <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_pointA" position="-210px 64px"
-                            onClick="onClickAutoWidth"
+                            onClick="onClickSetPointA"
                             id="guidanceSteeringPointAButton"/>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringCardinalsElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_cardinals">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_cardinals"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
+
                 <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_pointB" position="-210px 64px"
-                            onClick="onClickAutoWidth"
+                            onClick="onClickSetPointB"
                             id="guidanceSteeringPointBButton"/>
             </GuiElement>
 
@@ -50,10 +60,10 @@
 
             <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" position="450px -150px" id="flowLayout">
                 <GuiElement type="button" profile="guidanceButtonSmallLeft" text="$l10n_guidanceSteering_setting_newTrack"
-                            onClick="onClickAutoWidth"
+                            onClick="onClickNewTrack"
                             id="guidanceSteeringNewTrackButton"/>
                 <GuiElement type="button" profile="guidanceButtonSmallRight" text="$l10n_guidanceSteering_setting_removeTrack"
-                            onClick="onClickAutoWidth"
+                            onClick="onClickRemoveTrack"
                             id="guidanceSteeringRemoveTrackButton"/>
             </GuiElement>
         </GuiElement>

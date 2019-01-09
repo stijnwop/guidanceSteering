@@ -29,6 +29,7 @@ function GuidanceSteeringSettingsFrame:new(i18n)
     self.allowSave = false
 
     self:registerControls(GuidanceSteeringSettingsFrame.CONTROLS)
+
     return self
 end
 
