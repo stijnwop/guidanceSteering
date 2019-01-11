@@ -83,9 +83,9 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local guidanceSteeringIsActive = self.guidanceSteeringEnableSteeringElement:getIsChecked()
             local guidanceTerrainAngleIsActive = self.guidanceSteeringSnapAngleElement:getIsChecked()
 
-            spec.showGuidanceLines = showGuidanceLines
-            spec.guidanceSteeringIsActive = guidanceSteeringIsActive
-            spec.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
+            spec.lastInputValues.showGuidanceLines = showGuidanceLines
+            spec.lastInputValues.guidanceSteeringIsActive = guidanceSteeringIsActive
+            spec.lastInputValues.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
 
             data.width = self.currentWidth
 
