@@ -24,7 +24,6 @@ CurveABStrategy.STEP_SIZE = 1 -- 1m each line
 CurveABStrategy.NUM_STEPS = 15 -- draw 15
 CurveABStrategy.GROUND_CLEARANCE_OFFSET = .2
 
-
 function CurveABStrategy:new(customMt)
     if customMt == nil then
         customMt = CurveABStrategy_mt
@@ -43,7 +42,6 @@ function CurveABStrategy:new(customMt)
     instance.segmentInterval = 1 / (0.75 * 0.001) -- ms
     instance.firstInterval = true
     instance.segmentDt = 0
-
 
     return instance
 end
@@ -66,7 +64,7 @@ function CurveABStrategy:update(dt, data, guidanceNode, lastSpeed)
         DebugUtil.drawDebugNode(point.node, point.name)
     end
 
-    local generate = self:getIsGuidancesPossible()
+    local generate = self:getIsGuidancePossible()
 
     if generate then
         --        local numSegements = #self.curve
@@ -218,7 +216,7 @@ end
 
 function CurveABStrategy:draw(data)
     local lines = ABLine
-    local drawBotherLines = self:getIsGuidancesPossible()
+    local drawBotherLines = self:getIsGuidancePossible()
 
     if drawBotherLines then
         lines = ABLines
@@ -254,7 +252,7 @@ function CurveABStrategy:getGuidanceData(guidanceNode, data)
 
     if not validCurve then
         dirX, _, dirZ = localDirectionToWorld(guidanceNode, 0, 0, 1)
---        x, y, z = getWorldTranslation(guidanceNode)
+        --        x, y, z = getWorldTranslation(guidanceNode)
     else
         local index = GuidanceUtil:getClosestPointIndex(self.curve, x, z, data)
         -- Todo: save last index
@@ -287,7 +285,7 @@ function CurveABStrategy:pushABPoint(guidanceNode, data)
     GuidanceUtil.createABPoint(guidanceNode, data, self.curvedABPoints)
 end
 
-function CurveABStrategy:getIsGuidancesPossible()
+function CurveABStrategy:getIsGuidancePossible()
     return #self.curvedABPoints == 2
 end
 

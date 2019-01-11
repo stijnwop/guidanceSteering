@@ -2,43 +2,47 @@
 -- CardinalStrategy
 --
 -- Authors: Wopster
--- Description: Strategy class for cardinal degrees.
+-- Description: Strategy class for cardinal degrees also called A+heading.
 --
 -- Copyright (c) Wopster, 2018
 
 CardinalStrategy = {}
 
 CardinalStrategy.NORTH = 0
-CardinalStrategy.SOUTH = 0
-CardinalStrategy.EAST = 0
-CardinalStrategy.WEST = 0
+CardinalStrategy.SOUTH = 90
+CardinalStrategy.EAST = -90
+CardinalStrategy.WEST = 180
 
-local CardinalStrategy_mt = Class(CardinalStrategy)
+local CardinalStrategy_mt = Class(CardinalStrategy, ABStrategy)
 
 function CardinalStrategy:new(vehicle, customMt)
     if customMt == nil then
         customMt = CardinalStrategy_mt
     end
 
-    local instance = {}
-
-    setmetatable(instance, customMt)
+    local instance = ABStrategy:new(vehicle, customMt)
 
     return instance
 end
 
 function CardinalStrategy:delete()
+    CardinalStrategy:superClass().delete(self)
 end
 
-function CardinalStrategy:update(dt, data, lastSpeed)
+function CardinalStrategy:update(dt)
+    CardinalStrategy:superClass().update(self, dt)
 end
 
 function CardinalStrategy:draw(data)
+    CardinalStrategy:superClass().draw(self, data)
 end
 
 function CardinalStrategy:getGuidanceData(guidanceNode, data)
     local cardinal = 0 -- Todo: get cardinal from settings
-    local x, y, z = 0,0,0
+
+    local pointA = self.ab:getPointNode(ABPoint.POINT_A)
+
+    local x, y, z = 0, 0, 0
     local dirX, dirZ = math.sin(cardinal), math.cos(cardinal)
 
     -- tx, ty, tz = drive target translation
@@ -52,4 +56,8 @@ function CardinalStrategy:getGuidanceData(guidanceNode, data)
     }
 
     return d
+end
+
+function CardinalStrategy:getIsGuidancePossible()
+    return self.ab:getPointNode(ABPoint.POINT_A) ~= nil
 end

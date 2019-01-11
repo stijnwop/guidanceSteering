@@ -27,8 +27,15 @@ ABStrategy.ABLines = {
     ["right"] = { position = 1, rgb = RGB_BLUE },
 }
 
+ABStrategy.STEP_SIZE = 1 -- 1m each line
+ABStrategy.NUM_STEPS = 15 -- draw 15
+ABStrategy.GROUND_CLEARANCE_OFFSET = .2
+
 local ABStrategy_mt = Class(ABStrategy)
 
+---Create a new instance of the ABStrategy
+---@param vehicle table
+---@param customMt table
 function ABStrategy:new(vehicle, customMt)
     if customMt == nil then
         customMt = ABStrategy_mt
@@ -46,17 +53,67 @@ function ABStrategy:new(vehicle, customMt)
     return instance
 end
 
+---Delete
 function ABStrategy:delete()
     self.ab:purge()
 end
 
+---Update
+---@param dt number
 function ABStrategy:update(dt)
     self.ab:iterate(function(point)
         DebugUtil.drawDebugNode(point.node, point.name)
     end)
 end
 
-function ABStrategy:draw(guidanceData)
+---Draw
+---@param data table
+function ABStrategy:draw(data)
+    local lines = { ABStrategy.ABLines["middle"] }
+    local step = 1
+    local numSteps = ABStrategy.NUM_STEPS
+    local drawBotherLines = self:getIsGuidancePossible()
+    local x, _, z, lineDirX, lineDirZ = unpack(data.driveTarget)
+
+    if drawBotherLines then
+        lineDirX, lineDirZ = unpack(data.snapDirection)
+        lines = ABStrategy.ABLines
+    end
+
+    local drawDirectionLine = self:getIsABDirectionPossible() and not drawBotherLines
+    if drawDirectionLine then
+        -- Todo: optimize
+        local pointA = self.ab:getPointNode(ABPoint.POINT_A)
+        local a = { localToWorld(pointA, 0, 0, 0) }
+        local dirX = x - a[1]
+        local dirZ = z - a[3]
+        local length = MathUtil.vector2Length(dirX, dirZ)
+        numSteps = math.max(math.floor(length) - 1, 0)
+        step = 2
+    end
+
+    local lineXDir = data.snapDirectionMultiplier * lineDirX
+    local lineZDir = data.snapDirectionMultiplier * lineDirZ
+
+    for _, line in pairs(lines) do
+        local lineX = x + data.width * lineDirZ * (data.alphaRad + line.position / 2)
+        local lineZ = z - data.width * lineDirX * (data.alphaRad + line.position / 2)
+
+        local r, g, b = unpack(line.rgb)
+
+        for l = 1, numSteps, step do
+            local x1 = lineX + ABStrategy.STEP_SIZE * l * lineXDir
+            local z1 = lineZ + ABStrategy.STEP_SIZE * l * lineZDir
+            local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
+            local x2 = lineX + ABStrategy.STEP_SIZE * (l + 1) * lineXDir
+            local z2 = lineZ + ABStrategy.STEP_SIZE * (l + 1) * lineZDir
+            local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + ABStrategy.GROUND_CLEARANCE_OFFSET
+
+            setTextBold(true)
+            GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.018), 0, r, g, b)
+            GuidanceUtil.renderTextAtWorldPosition(x2, y2, z2, ".", getCorrectTextSize(0.018), 0, r, g, b)
+        end
+    end
 end
 
 ---Gets the guidance drive data
