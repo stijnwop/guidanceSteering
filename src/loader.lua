@@ -2,6 +2,7 @@ local directory = g_currentModDirectory
 local modName = g_currentModName
 
 source(Utils.getFilename("src/events/TrackChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/SettingsChangedEvent.lua", directory))
 
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))

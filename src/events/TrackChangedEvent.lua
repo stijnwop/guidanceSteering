@@ -22,7 +22,7 @@ end
 
 function TrackChangedEvent:writeStream(streamId, connection)
     streamWriteUInt8(streamId, self.id)
-    NetworkUtil.writeNodeObject(streamId, self.bale)
+    NetworkUtil.writeNodeObject(streamId, self.data)
 end
 
 function TrackChangedEvent:readStream(streamId, connection)
