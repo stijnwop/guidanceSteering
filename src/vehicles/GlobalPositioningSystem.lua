@@ -277,8 +277,8 @@ function GlobalPositioningSystem:onUpdate(dt)
         local angle = math.acos(dot) -- dot towards point
 
         local snapDirectionMultiplier = 1
+        -- 90 deg
         if angle < 1.5708 then
-            -- 90 deg
             snapDirectionMultiplier = -snapDirectionMultiplier
         end
 
@@ -367,9 +367,16 @@ function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
     return width
 end
 
-function GlobalPositioningSystem:setGuidanceStrategy()
+function GlobalPositioningSystem:setGuidanceStrategy(method)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.lineStrategy = StraightABStrategy:new(self)
+
+    if method == ABStrategy.AB then
+        spec.lineStrategy = StraightABStrategy:new(self)
+    elseif method == ABStrategy.A_AUTO_B then
+
+    elseif method == ABStrategy.A_PLUS_HEADING then
+        spec.lineStrategy = CardinalStrategy:new(self)
+    end
 end
 
 function GlobalPositioningSystem:getGuidanceStrategy()

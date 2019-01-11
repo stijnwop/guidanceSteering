@@ -25,7 +25,6 @@ function GuidanceUtil.createABPoint(guidanceNode, data, name)
     return point
 end
 
-
 function GuidanceUtil.deleteABPoints(points)
     for _, point in pairs(points) do
         delete(point.node)
@@ -44,7 +43,6 @@ function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOff
     end
 end
 
-
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local maxWidth = 0
     local minWidth = 0
@@ -54,7 +52,7 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
         ["processRidgeMarkerArea"] = true
     }
 
-    -- Todo: some tools have work area depending on their filltype!
+    -- Todo: some tools have work area depending on their filltype/sprayType!
 
     if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
         for _, workArea in pairs(workAreaSpec.workAreas) do
