@@ -19,7 +19,8 @@ end
 function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getGuidanceStrategy", GlobalPositioningSystem.getGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
-    SpecializationUtil.registerFunction(vehicleType, "setGuidanceData", GlobalPositioningSystem.setGuidanceStrategy)
+    SpecializationUtil.registerFunction(vehicleType, "setGuidanceData", GlobalPositioningSystem.setGuidanceData)
+    SpecializationUtil.registerFunction(vehicleType, "updateGuidanceData", GlobalPositioningSystem.updateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "registerMultiPurposeActionEvents", GlobalPositioningSystem.registerMultiPurposeActionEvents)
 end
 
@@ -32,8 +33,6 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onReadUpdateStream", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
@@ -153,8 +152,7 @@ function GlobalPositioningSystem:onLoad(savegame)
         spec.widthSend = 0
         spec.snapDirectionMultiplierSend = 0
         spec.snapDirectionForwardsSend = 0
-        spec.snapDirectionSend = 0
-        spec.driveTargetSend = 0
+        spec.snapDirectionSend = {}
         spec.alphaRadSend = 0
     end
 
@@ -203,43 +201,6 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
     end
 end
 
-function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connection)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-
-    if connection:getIsServer() then
-        if streamReadBool(streamId) then
-            if spec.hasGuidanceSystem then
-                local data = spec.guidanceData
-
-                -- Todo: this is somehow nil on buy
-                data.width = streamReadFloat32(streamId)
-                data.snapDirectionMultiplier = streamReadUInt8(streamId)
-                data.snapDirectionForwards = streamReadBool(streamId)
-                data.alphaRad = streamReadFloat32(streamId)
-
-                GlobalPositioningSystem.calculateGuidanceData(self, true)
-            end
-        end
-    end
-end
-
-function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirtyMask)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-
-    if not connection:getIsServer() then
-        if streamWriteBool(streamId, bitAND(dirtyMask, spec.dirtyFlag) ~= 0) then
-            if spec.hasGuidanceSystem then
-                local data = spec.guidanceData
-
-                streamWriteFloat32(streamId, data.width)
-                streamWriteUInt8(streamId, data.snapDirectionMultiplier)
-                streamWriteBool(streamId, data.snapDirectionForwards)
-                streamWriteFloat32(streamId, data.alphaRad)
-            end
-        end
-    end
-end
-
 function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
 end
 
@@ -283,13 +244,17 @@ end
 
 function GlobalPositioningSystem:onUpdate(dt)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if not spec.hasGuidanceSystem then
+    local isControlled = self.getIsControlled ~= nil and self:getIsControlled()
+    -- We don't update when no player is in the vehicle
+    if not spec.hasGuidanceSystem or not isControlled then
         return
     end
 
+    local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
+
     if self.isClient then
         if self.getIsEntered ~= nil and self:getIsEntered() then
-            if spec.guidanceSteeringIsActive then
+            if guidanceSteeringIsActive then
                 if self:getIsActiveForInput(true, true) then
                     local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
                     local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
@@ -317,10 +282,6 @@ function GlobalPositioningSystem:onUpdate(dt)
     local distance = self.lastMovedDistance
     spec.abDistanceCounter = spec.abDistanceCounter + distance
 
-    if not self.isServer then
-        return
-    end
-
     local lastSpeed = self:getLastSpeed()
     local guidanceNode = spec.guidanceNode
     local data = spec.guidanceData
@@ -329,7 +290,7 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     spec.lineStrategy:update(dt, data, guidanceNode, lastSpeed)
 
-    GlobalPositioningSystem.calculateGuidanceData(self, false, false)
+    GlobalPositioningSystem.calculateGuidanceData(self, false)
 
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
     local x, _, z, driveDirX, driveDirZ = unpack(data.driveTarget)
@@ -374,7 +335,11 @@ function GlobalPositioningSystem:onUpdate(dt)
         data.movingDirection = movingDirection
     end
 
-    if spec.guidanceSteeringIsActive then
+    if not self.isServer then
+        return
+    end
+
+    if guidanceSteeringIsActive then
         GlobalPositioningSystem.guideSteering(self, dt)
     end
 end
@@ -455,7 +420,31 @@ end
 function GlobalPositioningSystem:setGuidanceData(guidanceData)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData = guidanceData
-    GlobalPositioningSystem.guidanceDataChanged(self)
+end
+
+function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEventSend)
+    GuidanceDataChangedEvent.sendEvent(self, doReset, guidanceData, noEventSend)
+
+    Logger.info("Updating guidance data: ", doReset)
+
+    if doReset then
+        GlobalPositioningSystem.resetGuidanceData(self)
+    else
+        Logger.info("It should not get here.. when resetting. [doReset]:", doReset)
+        Logger.info("It should not get here.. when resetting. [guidanceData ~= nil]:", guidanceData ~= nil)
+
+        if guidanceData ~= nil then
+            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local data = spec.guidanceData
+
+            data.width = guidanceData.width
+            data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
+            data.snapDirectionForwards = guidanceData.snapDirectionForwards
+            data.snapDirection = guidanceData.snapDirection
+            data.alphaRad = guidanceData.alphaRad
+            data.currentLane = guidanceData.currentLane
+        end
+    end
 end
 
 function GlobalPositioningSystem.calculateGuidanceData(self, doDirectionUpdate)
@@ -514,7 +503,8 @@ function GlobalPositioningSystem.calculateGuidanceData(self, doDirectionUpdate)
         data.snapDirectionForwards = data.movingForwards
 
         -- Update clients
-        GlobalPositioningSystem.guidanceDataChanged(self)
+        self:updateGuidanceData(false, data)
+        Logger.info("Calculated snapdirection")
     end
 end
 
@@ -525,32 +515,6 @@ function GlobalPositioningSystem.resetGuidanceData(self)
     spec.lineStrategy:delete()
     data.snapDirection = { 0, 0, 0, 0 }
     data.snapDirectionForwards = not data.isReverseDriving -- Todo: we might want to save this
-
-    -- Update clients
-    GlobalPositioningSystem.guidanceDataChanged(self)
-end
-
-function GlobalPositioningSystem.guidanceDataChanged(self)
-    if self.isServer then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-        local data = spec.guidanceData
-
-        if data.width ~= spec.widthSend
-                or data.snapDirectionMultiplier ~= spec.snapDirectionMultiplierSend
-                or data.snapDirectionForwards ~= spec.snapDirectionForwardsSend
-                or data.snapDirection ~= spec.snapDirectionSend
-                or data.driveTarget ~= spec.driveTargetSend
-                or data.alphaRad ~= spec.alphaRadSend
-        then
-            spec.widthSend = data.width
-            spec.snapDirectionMultiplierSend = data.snapDirectionMultiplier
-            spec.snapDirectionForwardsSend = data.snapDirectionForwards
-            spec.snapDirectionSend = data.snapDirection
-            spec.driveTargetSend = data.driveTarget
-            spec.alphaRadSend = data.alphaRad
-            self:raiseDirtyFlags(spec.dirtyFlag)
-        end
-    end
 end
 
 function GlobalPositioningSystem.guideSteering(vehicle, dt)
@@ -619,20 +583,24 @@ end
 
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.guidanceData.offsetWidth = 0
-    spec.guidanceData.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
+    local data = spec.guidanceData
+    data.offsetWidth = 0
+    data.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
+    self:updateGuidanceData(false, data)
     GlobalPositioningSystem.updateUI(self)
 end
 
 function GlobalPositioningSystem.actionEventMinusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = math.max(0, spec.guidanceData.width - 0.05)
+    self:updateGuidanceData(false, spec.guidanceData)
     GlobalPositioningSystem.updateUI(self)
 end
 
 function GlobalPositioningSystem.actionEventPlusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = spec.guidanceData.width + 0.05
+    self:updateGuidanceData(false, spec.guidanceData)
     GlobalPositioningSystem.updateUI(self)
 end
 
@@ -656,7 +624,8 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
     local callbacks = {}
 
     table.insert(callbacks, function()
-        GlobalPositioningSystem.resetGuidanceData(self)
+        --GlobalPositioningSystem.resetGuidanceData(self)
+        self:updateGuidanceData(true)
         Logger.info("Resetting AB line strategy")
         return true
     end)
@@ -677,7 +646,7 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
     end)
 
     table.insert(callbacks, function()
-        GlobalPositioningSystem.calculateGuidanceData(self, true, false)
+        GlobalPositioningSystem.calculateGuidanceData(self, true)
         Logger.info("Generating AB line strategy")
         return true
     end)

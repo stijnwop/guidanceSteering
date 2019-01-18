@@ -95,7 +95,7 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
             local id = self.guidanceSteeringTrackElement:getState()
             if g_currentMission:getIsServer() then
                 g_guidanceSteering:saveTrack(id, saveData)
-                vehicle:setGuidanceData(data)
+                vehicle:updateGuidanceData(data, false)
             else
                 g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, saveData))
             end
