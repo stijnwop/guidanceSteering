@@ -2,6 +2,7 @@ local directory = g_currentModDirectory
 local modName = g_currentModName
 
 source(Utils.getFilename("src/events/TrackChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
 source(Utils.getFilename("src/events/SettingsChangedEvent.lua", directory))
 
 source(Utils.getFilename("src/utils/Logger.lua", directory))
@@ -26,6 +27,10 @@ source(Utils.getFilename("src/strategies/StraightABStrategy.lua", directory))
 
 local guidanceSteering
 
+local function isEnabled()
+    return guidanceSteering ~= nil
+end
+
 function _init()
     FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, _unload)
 
@@ -49,7 +54,9 @@ function _load(mission)
 end
 
 function _loadedMission(mission, node)
-    --    if not isActive() then return end
+    if not isEnabled() then
+        return
+    end
 
     if mission.cancelLoading then
         return
@@ -59,6 +66,10 @@ function _loadedMission(mission, node)
 end
 
 function _unload()
+    if not isEnabled() then
+        return
+    end
+
     removeModEventListener(guidanceSteering)
 
     guidanceSteering:delete()
@@ -67,7 +78,9 @@ function _unload()
 end
 
 function saveToXMLFile(missionInfo)
---    if not isActive() then return end
+    if not isEnabled() then
+        return
+    end
 
     if missionInfo.isValid then
         local xmlFile = createXMLFile("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
