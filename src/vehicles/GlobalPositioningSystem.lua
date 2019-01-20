@@ -33,6 +33,8 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onReadUpdateStream", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
@@ -134,6 +136,11 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
 
+    spec.guidanceSteeringIsActiveSend = false
+    spec.showGuidanceLinesSend = false
+    spec.guidanceIsActiveSend = false
+    spec.guidanceTerrainAngleIsActiveSend = false
+
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
     spec.guidanceData.offsetWidth = 0
@@ -171,15 +178,18 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
 
         if spec.hasGuidanceSystem then
             local data = spec.guidanceData
+
+            -- sync guidance data
             data.width = streamReadFloat32(streamId)
             data.snapDirectionMultiplier = streamReadUInt8(streamId)
             data.snapDirectionForwards = streamReadBool(streamId)
             data.alphaRad = streamReadFloat32(streamId)
 
-            Logger.info("[onReadStream] client reading stream data width:", data.width)
-
-            GlobalPositioningSystem.calculateGuidanceData(self, false)
-            Logger.info("[onReadStream] client calculating guidance data")
+            -- sync settings
+            spec.showGuidanceLines = streamReadBool(streamId)
+            spec.guidanceIsActive = streamReadBool(streamId)
+            spec.guidanceSteeringIsActive = streamReadBool(streamId)
+            spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
         end
     end
 end
@@ -191,14 +201,49 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
         if spec.hasGuidanceSystem then
             local data = spec.guidanceData
 
+            -- sync guidance data
             streamWriteFloat32(streamId, data.width)
             streamWriteUInt8(streamId, data.snapDirectionMultiplier)
             streamWriteBool(streamId, data.snapDirectionForwards)
             streamWriteFloat32(streamId, data.alphaRad)
 
-            Logger.info("[onReadStream] server writing stream data width:", data.width)
+            -- sync settings
+            streamWriteBool(streamId, spec.showGuidanceLines)
+            streamWriteBool(streamId, spec.guidanceIsActive)
+            streamWriteBool(streamId, spec.guidanceSteeringIsActive)
+            streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
         end
     end
+end
+
+function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connection)
+    --if connection:getIsServer() then
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if spec.hasGuidanceSystem then
+        if streamReadBool(streamId) then
+            spec.showGuidanceLines = streamReadBool(streamId)
+            spec.guidanceIsActive = streamReadBool(streamId)
+            spec.guidanceSteeringIsActive = streamReadBool(streamId)
+            spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
+        end
+    end
+    -- end
+end
+
+function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirtyMask)
+    --if not connection:getIsServer() then
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if spec.hasGuidanceSystem then
+        if streamWriteBool(streamId, bitAND(dirtyMask, spec.dirtyFlag) ~= 0) then
+            streamWriteBool(streamId, spec.showGuidanceLines)
+            streamWriteBool(streamId, spec.guidanceIsActive)
+            streamWriteBool(streamId, spec.guidanceSteeringIsActive)
+            streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
+        end
+    end
+    --end
 end
 
 function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
@@ -215,45 +260,38 @@ end
 function GlobalPositioningSystem.updateNetWorkInputs(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    local guidanceIsActive = spec.lastInputValues.guidanceIsActive
-    local showGuidanceLines = spec.lastInputValues.showGuidanceLines
-    local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
-    local guidanceTerrainAngleIsActive = spec.lastInputValues.guidanceTerrainAngleIsActive
+    spec.showGuidanceLines = spec.lastInputValues.showGuidanceLines
+    spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
+    spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
+    spec.guidanceTerrainAngleIsActive = spec.lastInputValues.guidanceTerrainAngleIsActive
 
-    spec.lastInputValues.guidanceIsActive = true -- todo: remove
+    if spec.guidanceSteeringIsActive ~= spec.guidanceSteeringIsActiveSend
+            or spec.showGuidanceLines ~= spec.showGuidanceLinesSend
+            or spec.guidanceIsActive ~= spec.guidanceIsActiveSend
+            or spec.guidanceTerrainAngleIsActive ~= spec.guidanceTerrainAngleIsActiveSend
+    then
+        spec.guidanceSteeringIsActiveSend = spec.guidanceSteeringIsActive
+        spec.showGuidanceLinesSend = spec.showGuidanceLines
+        spec.guidanceIsActiveSend = spec.guidanceIsActive
+        spec.guidanceTerrainAngleIsActiveSend = spec.guidanceTerrainAngleIsActive
 
-    if guidanceIsActive ~= spec.guidanceIsActive
-            or showGuidanceLines ~= spec.showGuidanceLines
-            or guidanceSteeringIsActive ~= spec.guidanceSteeringIsActive
-            or guidanceTerrainAngleIsActive ~= spec.guidanceTerrainAngleIsActive then
-        if self.isServer then
-            spec.guidanceIsActive = guidanceIsActive
-            spec.showGuidanceLines = showGuidanceLines
-            spec.guidanceSteeringIsActive = guidanceSteeringIsActive
-            spec.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
-        end
-
-        -- TODO: function this
-        if g_server ~= nil then
-            g_server:broadcastEvent(SettingsChangedEvent:new(self, guidanceIsActive, showGuidanceLines, guidanceSteeringIsActive, guidanceTerrainAngleIsActive), nil, nil, self)
-        else
-            g_client:getServerConnection():sendEvent(SettingsChangedEvent:new(self, guidanceIsActive, showGuidanceLines, guidanceSteeringIsActive, guidanceTerrainAngleIsActive))
-        end
+        self:raiseDirtyFlags(spec.dirtyFlag)
     end
 end
 
 function GlobalPositioningSystem:onUpdate(dt)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local isControlled = self.getIsControlled ~= nil and self:getIsControlled()
+
     -- We don't update when no player is in the vehicle
     if not spec.hasGuidanceSystem or not isControlled then
         return
     end
 
-    local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
-
     if self.isClient then
         if self.getIsEntered ~= nil and self:getIsEntered() then
+            local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
+
             if guidanceSteeringIsActive then
                 if self:getIsActiveForInput(true, true) then
                     local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
@@ -279,7 +317,9 @@ function GlobalPositioningSystem:onUpdate(dt)
         return
     end
 
+    local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
     local distance = self.lastMovedDistance
+
     spec.abDistanceCounter = spec.abDistanceCounter + distance
 
     local lastSpeed = self:getLastSpeed()
@@ -290,7 +330,7 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     spec.lineStrategy:update(dt, data, guidanceNode, lastSpeed)
 
-    GlobalPositioningSystem.calculateGuidanceData(self, false)
+    GlobalPositioningSystem.computeGuidanceData(self, false)
 
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
     local x, _, z, driveDirX, driveDirZ = unpack(data.driveTarget)
@@ -447,7 +487,7 @@ function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEve
     end
 end
 
-function GlobalPositioningSystem.calculateGuidanceData(self, doDirectionUpdate)
+function GlobalPositioningSystem.computeGuidanceData(self, doSnapDirectionUpdate)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
 
@@ -476,31 +516,37 @@ function GlobalPositioningSystem.calculateGuidanceData(self, doDirectionUpdate)
         driveDirX, driveDirZ = -driveDirX, -driveDirZ
     end
 
-    -- Includes: drive data
-    -- Guidance node xyz translation and xz direction
-    data.driveTarget = { transX, transY, transZ, driveDirX, driveDirZ }
+    -- Guidance driveTarget
+    data.driveTarget = {
+        transX, -- x translation of target
+        transY, -- y translation of target
+        transZ, -- z translation of target
+        driveDirX, -- x direction of target
+        driveDirZ -- z direction of target
+    }
 
-    if doDirectionUpdate then
-        -- Take angle snapping from AI code
-        local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
-        --        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ) -- Todo: whats the new function
-        local angleRad = math.atan2(dirX, dirZ)
-
+    if doSnapDirectionUpdate then
+        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
+        -- Snap to terrain when settings is active
         if spec.guidanceTerrainAngleIsActive then
+            local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
             angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
         end
 
         dirX, dirZ = math.sin(angleRad), math.cos(angleRad)
 
-        local offsetFactor = 1.0 -- offset?
-        local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
-        local x = transX + offsetFactor * snapFactor * data.offsetWidth * dirZ
-        local z = transZ - offsetFactor * snapFactor * data.offsetWidth * dirX
+        local offsetFactor = 1.0 -- Todo: offset
+        local x = transX + offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirZ
+        local z = transZ - offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirX
 
-        -- Includes: line data
-        -- Line direction and translation xz axis
-        data.snapDirection = { dirX, dirZ, x, z }
         data.snapDirectionForwards = data.movingForwards
+        -- Line direction and translation xz axis
+        data.snapDirection = {
+            dirX,
+            dirZ,
+            x,
+            z
+        }
 
         -- Update clients
         self:updateGuidanceData(false, data)
@@ -510,9 +556,10 @@ end
 
 function GlobalPositioningSystem.resetGuidanceData(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    local data = spec.guidanceData
     spec.abDistanceCounter = 0
     spec.lineStrategy:delete()
+
+    local data = spec.guidanceData
     data.snapDirection = { 0, 0, 0, 0 }
     data.snapDirectionForwards = not data.isReverseDriving -- Todo: we might want to save this
 end
@@ -545,7 +592,7 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local data = spec.guidanceData
     local guidanceNode = spec.guidanceNode
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
-    local dX, dY, dZ, driveDirX, driveDirZ = unpack(data.driveTarget)
+    local dX, dY, dZ = unpack(data.driveTarget)
     local lineXDir = data.snapDirectionMultiplier * snapDirX --* data.movingDirection
     local lineZDir = data.snapDirectionMultiplier * snapDirZ --* data.movingDirection
     -- Calculate target points
@@ -563,16 +610,15 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     DriveUtil.driveToPoint(vehicle, dt, pX, pZ)
 
     local drivable_spec = vehicle:guidanceSteering_getSpecTable("drivable")
-    --Drivable.actionEventAccelerate(self, actionName, inputValue, callbackState, isAnalog)
+    -- lock max speed to working tool
+    local speed, _ = vehicle:getSpeedLimit(true)
+    if drivable_spec.cruiseControl.state == Drivable.CRUISECONTROL_STATE_ACTIVE then
+        speed = math.min(speed, drivable_spec.cruiseControl.speed)
+    end
+
+    vehicle:getMotor():setSpeedLimit(speed)
+
     DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
-end
-
-function GlobalPositioningSystem.updateUI(self)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-
-    Logger.info("Calculated width", spec.guidanceData.width)
-
-    spec.ui:dataChanged(spec.guidanceData)
 end
 
 --- Action events
@@ -587,27 +633,24 @@ function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, input
     data.offsetWidth = 0
     data.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
     self:updateGuidanceData(false, data)
-    GlobalPositioningSystem.updateUI(self)
 end
 
 function GlobalPositioningSystem.actionEventMinusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = math.max(0, spec.guidanceData.width - 0.05)
     self:updateGuidanceData(false, spec.guidanceData)
-    GlobalPositioningSystem.updateUI(self)
 end
 
 function GlobalPositioningSystem.actionEventPlusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = spec.guidanceData.width + 0.05
     self:updateGuidanceData(false, spec.guidanceData)
-    GlobalPositioningSystem.updateUI(self)
 end
 
 function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    spec.abMultiActionEvent:handle()
+    spec.multiActionEvent:handle()
 end
 
 function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inputValue, callbackState, isAnalog)
@@ -621,21 +664,20 @@ end
 
 function GlobalPositioningSystem:registerMultiPurposeActionEvents()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    local callbacks = {}
+    local event = MultiPurposeActionEvent:new(4)
 
-    table.insert(callbacks, function()
-        --GlobalPositioningSystem.resetGuidanceData(self)
+    event:addAction(function()
         self:updateGuidanceData(true)
         Logger.info("Resetting AB line strategy")
         return true
     end)
 
-    table.insert(callbacks, function()
+    event:addAction(function()
         spec.lineStrategy:pushABPoint(spec.guidanceData)
         return true
     end)
 
-    table.insert(callbacks, function()
+    event:addAction(function()
         if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
             g_currentMission:showBlinkingWarning("Drive 10m in other to set point B. Current traveled distance: " .. tostring(spec.abDistanceCounter), 4000)
             return false
@@ -645,11 +687,11 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
         return true
     end)
 
-    table.insert(callbacks, function()
-        GlobalPositioningSystem.calculateGuidanceData(self, true)
+    event:addAction(function()
+        GlobalPositioningSystem.computeGuidanceData(self, true)
         Logger.info("Generating AB line strategy")
         return true
     end)
 
-    spec.abMultiActionEvent = MultiPurposeActionEvent:new(4, callbacks)
+    spec.multiActionEvent = event
 end
