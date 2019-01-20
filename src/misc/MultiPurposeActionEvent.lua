@@ -2,27 +2,41 @@ MultiPurposeActionEvent = {}
 
 local MultiPurposeActionEvent_mt = Class(MultiPurposeActionEvent)
 
-function MultiPurposeActionEvent:new(maxNumberOfEvents, callbacks)
+function MultiPurposeActionEvent:new(maxNumberOfEvents)
     local instance = {}
 
     instance.numberOfEvents = 0
     instance.maxNumberOfEvents = maxNumberOfEvents
-    instance.callbacks = callbacks
+    instance.actions = {}
 
     setmetatable(instance, MultiPurposeActionEvent_mt)
 
     return instance
 end
 
+function MultiPurposeActionEvent:delete()
+    self.actions = {}
+end
+
+function MultiPurposeActionEvent:addAction(callback)
+    table.insert(self.actions, callback)
+end
+
+function MultiPurposeActionEvent:canHandle()
+    return #self.actions > 0
+end
+
 function MultiPurposeActionEvent:handle()
-    local callback = self.callbacks[self.numberOfEvents + 1]
+    if self:canHandle() then
+        local callback = self.actions[self.numberOfEvents + 1]
 
-    if callback() then
-        self:clicked()
-    end
+        if callback() then
+            self:clicked()
+        end
 
-    if self.numberOfEvents >= self.maxNumberOfEvents then
-        self:reset()
+        if self.numberOfEvents >= self.maxNumberOfEvents then
+            self:reset()
+        end
     end
 end
 
