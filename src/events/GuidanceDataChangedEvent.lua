@@ -13,8 +13,8 @@ function GuidanceDataChangedEvent:new(vehicle, doReset, data)
     local self = GuidanceDataChangedEvent:emptyNew()
 
     self.vehicle = vehicle
-    self.data = data
     self.doReset = doReset
+    self.data = data
 
     return self
 end
@@ -22,10 +22,8 @@ end
 function GuidanceDataChangedEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     streamWriteBool(streamId, self.doReset)
-    streamWriteBool(streamId, self.data ~= nil)
-
-    if self.data ~= nil then
-        NetworkUtil.writeNodeObject(streamId, self.data)
+    if not self.doReset then
+        GuidanceUtil.writeGuidanceDataObject(streamId, self.data)
     end
 end
 
@@ -33,8 +31,8 @@ function GuidanceDataChangedEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     self.doReset = streamReadBool(streamId)
 
-    if streamReadBool(streamId) then
-        self.data = NetworkUtil.readNodeObject(streamId)
+    if not self.doReset then
+        self.data = GuidanceUtil.readGuidanceDataObject(streamId)
     end
 
     self:run(connection)

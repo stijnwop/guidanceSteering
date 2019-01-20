@@ -1,5 +1,60 @@
 GuidanceUtil = {}
 
+function GuidanceUtil.writeGuidanceDataObject(streamId, data)
+    -- Todo: currentLane and ... do you we need to sync?
+
+    --local paramsY = self.highPrecisionPositionSynchronization and g_currentMission.vehicleYPosHighPrecisionCompressionParams or g_currentMission.vehicleYPosCompressionParams
+
+    --local x, y, z, dirX, dirZ = unpack(data.driveTarget)
+    --
+    --NetworkUtil.writeCompressedWorldPosition(streamId, x, paramsXZ)
+    --NetworkUtil.writeCompressedWorldPosition(streamId, y, paramsY)
+    --NetworkUtil.writeCompressedWorldPosition(streamId, z, paramsXZ)
+    --
+    --streamWriteFloat32(streamId, dirX)
+    --streamWriteFloat32(streamId, dirZ)
+
+    --local paramsXZ = self.highPrecisionPositionSynchronization and g_currentMission.vehicleXZPosHighPrecisionCompressionParams or g_currentMission.vehicleXZPosCompressionParams
+    --local paramsXZ = g_currentMission.vehicleXZPosCompressionParams
+
+    local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
+
+    streamWriteFloat32(streamId, data.width)
+    streamWriteInt8(streamId, data.snapDirectionMultiplier)
+    streamWriteBool(streamId, data.snapDirectionForwards)
+    streamWriteFloat32(streamId, data.alphaRad)
+
+    --NetworkUtil.writeCompressedWorldPosition(streamId, snapX, paramsXZ)
+    --NetworkUtil.writeCompressedWorldPosition(streamId, snapZ, paramsXZ)
+
+    streamWriteFloat32(streamId, snapX)
+    streamWriteFloat32(streamId, snapZ)
+    streamWriteFloat32(streamId, snapDirX)
+    streamWriteFloat32(streamId, snapDirZ)
+end
+
+function GuidanceUtil.readGuidanceDataObject(streamId)
+    local data = {}
+    --local paramsXZ = g_currentMission.vehicleXZPosCompressionParams
+
+    data.width = streamReadFloat32(streamId)
+    data.snapDirectionMultiplier = streamReadInt8(streamId)
+    data.snapDirectionForwards = streamReadBool(streamId)
+    data.alphaRad = streamReadFloat32(streamId)
+
+    --local snapX = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
+    --local snapZ = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
+
+    local snapX = streamReadFloat32(streamId)
+    local snapZ = streamReadFloat32(streamId)
+    local snapDirX = streamReadFloat32(streamId)
+    local snapDirZ = streamReadFloat32(streamId)
+
+    data.snapDirection = { snapDirX, snapDirZ, snapX, snapZ }
+
+    return data
+end
+
 function GuidanceUtil.mathRound(number, idp)
     local multiplier = 10 ^ (idp or 0)
     return math.floor(number * multiplier + 0.5) / multiplier
