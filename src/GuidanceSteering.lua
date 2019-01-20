@@ -126,9 +126,11 @@ end
 function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec ~= nil and spec.guidanceSteeringIsActive and inputValue ~= 0 then
-        spec.guidanceSteeringIsActive = false
+    if inputValue ~= 0 then
+        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        if spec ~= nil and spec.lastInputValues.guidanceSteeringIsActive then
+            spec.lastInputValues.guidanceSteeringIsActive = false
+        end
     end
 end
 
