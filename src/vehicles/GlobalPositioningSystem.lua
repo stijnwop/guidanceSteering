@@ -21,6 +21,7 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceData", GlobalPositioningSystem.setGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "updateGuidanceData", GlobalPositioningSystem.updateGuidanceData)
+    SpecializationUtil.registerFunction(vehicleType, "pushABPoint", GlobalPositioningSystem.pushABPoint)
     SpecializationUtil.registerFunction(vehicleType, "registerMultiPurposeActionEvents", GlobalPositioningSystem.registerMultiPurposeActionEvents)
 end
 
@@ -167,6 +168,8 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.dirtyFlag = self:getNextDirtyFlag()
 
     self:registerMultiPurposeActionEvents()
+
+    Logger.info("NetworkUtil", NetworkUtil)
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
@@ -462,16 +465,21 @@ function GlobalPositioningSystem:setGuidanceData(guidanceData)
     spec.guidanceData = guidanceData
 end
 
+function GlobalPositioningSystem:pushABPoint(noEventSend)
+    -- Todo: fix MP -> client or server does not know when line is created yes or no.
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    spec.lineStrategy:pushABPoint(spec.guidanceData, noEventSend)
+end
+
 function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEventSend)
     GuidanceDataChangedEvent.sendEvent(self, doReset, guidanceData, noEventSend)
 
-    Logger.info("Updating guidance data: ", doReset)
+    Logger.info("[updateGuidanceData]: resetting = ", doReset)
 
     if doReset then
         GlobalPositioningSystem.resetGuidanceData(self)
     else
-        Logger.info("It should not get here.. when resetting. [doReset]:", doReset)
-        Logger.info("It should not get here.. when resetting. [guidanceData ~= nil]:", guidanceData ~= nil)
+        Logger.info("[updateGuidanceData]: guidanceData = ", guidanceData)
 
         if guidanceData ~= nil then
             local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
@@ -482,7 +490,6 @@ function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEve
             data.snapDirectionForwards = guidanceData.snapDirectionForwards
             data.snapDirection = guidanceData.snapDirection
             data.alphaRad = guidanceData.alphaRad
-            data.currentLane = guidanceData.currentLane
         end
     end
 end
@@ -550,7 +557,7 @@ function GlobalPositioningSystem.computeGuidanceData(self, doSnapDirectionUpdate
 
         -- Update clients
         self:updateGuidanceData(false, data)
-        Logger.info("Calculated snapdirection")
+        Logger.info("Calculated snapdirection with data:", data)
     end
 end
 
@@ -673,7 +680,7 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
     end)
 
     event:addAction(function()
-        spec.lineStrategy:pushABPoint(spec.guidanceData)
+        self:pushABPoint()
         return true
     end)
 
@@ -683,7 +690,8 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
             return false
         end
 
-        spec.lineStrategy:pushABPoint(spec.guidanceData)
+        self:pushABPoint()
+
         return true
     end)
 
