@@ -58,6 +58,8 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
             insert(self:addActionEvent(spec.actionEvents, InputAction.GS_MINUS_WIDTH, self, GlobalPositioningSystem.actionEventMinusWidth, false, true, false, true, nil, nil, true))
             insert(self:addActionEvent(spec.actionEvents, InputAction.GS_PLUS_WIDTH, self, GlobalPositioningSystem.actionEventPlusWidth, false, true, false, true, nil, nil, true))
             insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
+            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_LEFT, self, GlobalPositioningSystem.actionEventShiftLeft, false, true, false, true, nil, nil, true))
+            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_RIGHT, self, GlobalPositioningSystem.actionEventShiftRight, false, true, false, true, nil, nil, true))
 
             for _, actionEventId in ipairs(nonDrawnActionEvents) do
                 g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -77,22 +79,16 @@ end
 
 function GlobalPositioningSystem:onLoad(savegame)
     local hasGuidanceSystem = false
-    local guidanceConfigId = self.configurations[GlobalPositioningSystem.CONFIG_NAME]
+    local configId = self.configurations[GlobalPositioningSystem.CONFIG_NAME]
 
-    if guidanceConfigId ~= nil then
-        -- TODO: get actual store item
-        --        local item = StoreItemUtil.storeItemsByXMLFilename[self.configFileName:lower()];
-        --        local storeItem = self.storeItem
-        --        local storeConfigurations = storeItem.configurations[GlobalPositioningSystem.CONFIG_NAME]
-        --
-        --        if storeConfigurations ~= nil then
-        --            local config = storeConfigurations[guidanceConfigId]
-        --            hasGuidanceSystem = config.enabled
-        hasGuidanceSystem = guidanceConfigId ~= 1
-        ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.buyableGPSConfigurations.buyableGPSConfiguration", guidanceConfigId, self.components, self)
+    if configId ~= nil then
+        local item = g_storeManager:getItemByXMLFilename(self.configFileName)
+        local config = item.configurations[GlobalPositioningSystem.CONFIG_NAME][configId]
 
-        Logger.info("hasGuidanceSystem", hasGuidanceSystem)
-        --        end
+        if config ~= nil then
+            hasGuidanceSystem = config.enabled
+            ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.buyableGPSConfigurations.buyableGPSConfiguration", configId, self.components, self)
+        end
     end
 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
@@ -127,6 +123,10 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = false
+
+    spec.shiftParallel = false
+    spec.shiftParallelDirection = GlobalPositioningSystem.DIRECTION_RIGHT
+
     spec.guidanceSteeringOffset = 0
     spec.abDistanceCounter = 0
     spec.abClickCounter = 0
@@ -141,11 +141,14 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
+    spec.lastInputValues.shiftParallel = false
+    spec.lastInputValues.shiftParallelDirection = GlobalPositioningSystem.DIRECTION_RIGHT
 
     spec.guidanceSteeringIsActiveSend = false
     spec.showGuidanceLinesSend = false
     spec.guidanceIsActiveSend = false
-    spec.guidanceTerrainAngleIsActiveSend = false
+    spec.shiftParallelSend = false
+    spec.shiftParallelDirectionSend = false
 
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
@@ -160,14 +163,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
     spec.guidanceData.snapDirectionForwards = true
-
-    if self.isServer then
-        spec.widthSend = 0
-        spec.snapDirectionMultiplierSend = 0
-        spec.snapDirectionForwardsSend = 0
-        spec.snapDirectionSend = {}
-        spec.alphaRadSend = 0
-    end
 
     spec.ui = g_guidanceSteering.ui
     spec.dirtyFlag = self:getNextDirtyFlag()
@@ -207,6 +202,12 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
             -- sync guidance data
             GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
+            -- sync ab points
+            -- Todo: same more data in AB x,y,z and recreate the points.
+            --spec.lineStrategy.ab:iterate(function(point)
+            --
+            --end)
+
             -- sync settings
             streamWriteBool(streamId, spec.showGuidanceLines)
             streamWriteBool(streamId, spec.guidanceIsActive)
@@ -226,6 +227,8 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
+            spec.shiftParallel = streamReadBool(streamId)
+            spec.shiftParallelDirection = streamReadInt8(streamId)
         end
     end
     -- end
@@ -241,6 +244,9 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.guidanceIsActive)
             streamWriteBool(streamId, spec.guidanceSteeringIsActive)
             streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
+
+            streamWriteBool(streamId, spec.shiftParallel)
+            streamWriteInt8(streamId, spec.shiftParallelDirection)
         end
     end
     --end
@@ -264,16 +270,25 @@ function GlobalPositioningSystem.updateNetWorkInputs(self)
     spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
     spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
     spec.guidanceTerrainAngleIsActive = spec.lastInputValues.guidanceTerrainAngleIsActive
+    spec.shiftParallel = spec.lastInputValues.shiftParallel
+    spec.shiftParallelDirection = spec.lastInputValues.shiftParallelDirection
+
+    -- Reset
+    spec.lastInputValues.shiftParallel = false
 
     if spec.guidanceSteeringIsActive ~= spec.guidanceSteeringIsActiveSend
             or spec.showGuidanceLines ~= spec.showGuidanceLinesSend
             or spec.guidanceIsActive ~= spec.guidanceIsActiveSend
             or spec.guidanceTerrainAngleIsActive ~= spec.guidanceTerrainAngleIsActiveSend
+            or spec.shiftParallel ~= spec.shiftParallelSend
+            or spec.shiftParallelDirection ~= spec.shiftParallelDirectionSend
     then
         spec.guidanceSteeringIsActiveSend = spec.guidanceSteeringIsActive
         spec.showGuidanceLinesSend = spec.showGuidanceLines
         spec.guidanceIsActiveSend = spec.guidanceIsActive
         spec.guidanceTerrainAngleIsActiveSend = spec.guidanceTerrainAngleIsActive
+        spec.shiftParallelSend = spec.shiftParallel
+        spec.shiftParallelDirectionSend = spec.shiftParallelDirection
 
         self:raiseDirtyFlags(spec.dirtyFlag)
     end
@@ -325,6 +340,10 @@ function GlobalPositioningSystem:onUpdate(dt)
     local lastSpeed = self:getLastSpeed()
     local guidanceNode = spec.guidanceNode
     local data = spec.guidanceData
+
+    if spec.shiftParallel then
+        GlobalPositioningSystem.shiftParallel(data, dt, spec.shiftParallelDirection)
+    end
 
     data.movingForwards = self:getIsDrivingForward()
 
@@ -517,6 +536,7 @@ function GlobalPositioningSystem.computeGuidanceData(self, doSnapDirectionUpdate
     local transX, transY, transZ
     local dirX, dirZ
 
+    -- Todo: this should not be needed anymore after the creation. Just use it once and than it should be fine
     if spec.lineStrategy:getHasABDependentDirection()
             and spec.lineStrategy:getIsABDirectionPossible() then
         local strategyData = spec.lineStrategy:getGuidanceData(guidanceNode, data)
@@ -639,6 +659,18 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
 end
 
+function GlobalPositioningSystem.shiftParallel(data, dt, direction)
+    local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
+    local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+
+    -- Todo: take self.guidanceData.offsetWidth in account?
+    lineX = lineX + (snapFactor * dt / 1000 * lineDirZ) * direction
+    lineZ = lineZ + (snapFactor * dt / 1000 * lineDirX) * direction
+
+    -- Todo: store what we offset?
+    data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
+end
+
 --- Action events
 function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
@@ -663,6 +695,18 @@ function GlobalPositioningSystem.actionEventPlusWidth(self, actionName, inputVal
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = spec.guidanceData.width + 0.05
     self:updateGuidanceData(false, spec.guidanceData)
+end
+
+function GlobalPositioningSystem.actionEventShiftLeft(self, actionName, inputValue, callbackState, isAnalog)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    spec.lastInputValues.shiftParallel = true
+    spec.lastInputValues.shiftParallelDirection = GlobalPositioningSystem.DIRECTION_LEFT
+end
+
+function GlobalPositioningSystem.actionEventShiftRight(self, actionName, inputValue, callbackState, isAnalog)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    spec.lastInputValues.shiftParallel = true
+    spec.lastInputValues.shiftParallelDirection = GlobalPositioningSystem.DIRECTION_RIGHT
 end
 
 function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputValue, callbackState, isAnalog)
