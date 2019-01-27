@@ -124,7 +124,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.lineStrategy = StraightABStrategy:new(self)
     spec.guidanceIsActive = true -- todo: make toggle
-    spec.showGuidanceLines = false -- todo: make toggle
+    spec.showGuidanceLines = true -- todo: make toggle
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = false
     spec.guidanceSteeringOffset = 0
