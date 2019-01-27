@@ -1,5 +1,34 @@
 GuidanceUtil = {}
 
+function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+    local maxWidth = 0
+    local minWidth = 0
+    local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
+
+    local excludedWorkAreas = {
+        ["processRidgeMarkerArea"] = true
+    }
+
+    -- Todo: some tools have work area depending on their filltype/sprayType!
+
+    if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
+        for _, workArea in pairs(workAreaSpec.workAreas) do
+            if excludedWorkAreas[workArea.functionName] == nil then
+                local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
+                local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
+                local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
+
+                maxWidth = math.max(maxWidth, x0, x1, x2)
+                minWidth = math.min(minWidth, x0, x1, x2)
+            end
+        end
+    end
+
+    local width = math.abs(maxWidth) + math.abs(minWidth)
+
+    return MathUtil.round(width, 3)
+end
+
 function GuidanceUtil.writeGuidanceDataObject(streamId, data)
     -- Todo: currentLane and ... do you we need to sync?
 
@@ -26,6 +55,7 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapX, paramsXZ)
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapZ, paramsXZ)
+    --
 
     streamWriteFloat32(streamId, snapX)
     streamWriteFloat32(streamId, snapZ)
@@ -55,37 +85,6 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     return data
 end
 
-function GuidanceUtil.mathRound(number, idp)
-    local multiplier = 10 ^ (idp or 0)
-    return math.floor(number * multiplier + 0.5) / multiplier
-end
-
-function GuidanceUtil.createABPoint(guidanceNode, data, name)
-    local p = createTransformGroup(("AB_point_%s"):format(name))
-    local x, _, z = unpack(data.driveTarget)
-    if not (x ~= 0 or z ~= 0) then
-        x, _, z = getWorldTranslation(guidanceNode)
-    end
-    local dx, dy, dz = localDirectionToWorld(guidanceNode, 0, 0, 1)
-    local upX, upY, upZ = worldDirectionToLocal(guidanceNode, 0, 1, 0)
-    local y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
-
-    link(getRootNode(), p)
-
-    setTranslation(p, x, y, z)
-    setDirection(p, dx, dy, dz, upX, upY, upZ)
-
-    local point = { node = p, name = name }
-
-    return point
-end
-
-function GuidanceUtil.deleteABPoints(points)
-    for _, point in pairs(points) do
-        delete(point.node)
-    end
-end
-
 function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOffset, r, g, b)
     local sx, sy, sz = project(x, y, z)
     if sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1 then
@@ -96,35 +95,6 @@ function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOff
         renderText(sx, sy + textOffset, textSize, text)
         setTextAlignment(RenderText.ALIGN_LEFT)
     end
-end
-
-function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
-    local maxWidth = 0
-    local minWidth = 0
-    local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
-
-    local excludedWorkAreas = {
-        ["processRidgeMarkerArea"] = true
-    }
-
-    -- Todo: some tools have work area depending on their filltype/sprayType!
-
-    if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
-        for _, workArea in pairs(workAreaSpec.workAreas) do
-            if excludedWorkAreas[workArea.functionName] == nil then
-                local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
-                local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
-                local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
-
-                maxWidth = math.max(maxWidth, x0, x1, x2)
-                minWidth = math.min(minWidth, x0, x1, x2)
-            end
-        end
-    end
-
-    local width = math.abs(maxWidth) + math.abs(minWidth)
-
-    return GuidanceUtil.mathRound(width, 3)
 end
 
 function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)
@@ -149,39 +119,39 @@ function GuidanceUtil.getDriveDirection(dx, dz)
 end
 
 function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
-    if self.lastIsNotOnField then
-        local vX, vY, vZ = unpack(self.lastValidGroundPos)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if spec.lastIsNotOnField then
+        local vX, vY, vZ = unpack(spec.lastValidGroundPos)
         local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
-        return self.distanceToEnd - dist, not self.lastIsNotOnField
+        return spec.distanceToEnd - dist, not spec.lastIsNotOnField
     end
 
     local distanceToHeadLand = lookAheadStepDistance
-    local data = self.guidanceData
+    local data = spec.guidanceData
     local dx, dz = unpack(data.snapDirection)
 
-    local fx = x + lookAheadStepDistance * data.snapDirectionMultiplier * dx * data.movingDirection
-    local fz = z + lookAheadStepDistance * data.snapDirectionMultiplier * dz * data.movingDirection
+    local fx = x + lookAheadStepDistance * data.snapDirectionMultiplier * dx
+    local fz = z + lookAheadStepDistance * data.snapDirectionMultiplier * dz
 
-    --    local isOnField = g_currentMission:getIsFieldOwnedAtWorldPos(fx, fz)
+    local bits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
+    local isOnField = bits ~= 0
 
-    local densityBits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
-    local isOnField = densityBits ~= 0
-
-    if self.showGuidanceLines then
+    if spec.showGuidanceLines then
         local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
         DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
     end
 
-    self.lastIsNotOnField = not isOnField
+    spec.lastIsNotOnField = not isOnField
     if isOnField then
         local distance = self.lastMovedDistance
-        local dirX, dirY, dirZ = localDirectionToWorld(self.guidanceNode, 0, 0, distance + 0.75)
-        self.lastValidGroundPos = { x + dirX, y + dirY, z + dirZ }
+        local dirX, dirY, dirZ = localDirectionToWorld(spec.guidanceNode, 0, 0, distance + 0.75)
+        spec.lastValidGroundPos = { x + dirX, y + dirY, z + dirZ }
     else
-        self.distanceToEnd = lookAheadStepDistance
-        local vX, vY, vZ = unpack(self.lastValidGroundPos)
+        spec.distanceToEnd = lookAheadStepDistance
+        local vX, vY, vZ = unpack(spec.lastValidGroundPos)
         local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
-        distanceToHeadLand = self.distanceToEnd - dist
+        distanceToHeadLand = spec.distanceToEnd - dist
     end
 
     return distanceToHeadLand, isOnField

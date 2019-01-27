@@ -124,16 +124,21 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.lineStrategy = StraightABStrategy:new(self)
     spec.guidanceIsActive = true -- todo: make toggle
-    spec.showGuidanceLines = true -- todo: make toggle
+    spec.showGuidanceLines = false -- todo: make toggle
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = false
     spec.guidanceSteeringOffset = 0
     spec.abDistanceCounter = 0
     spec.abClickCounter = 0
 
+    -- Headland calculations
+    spec.lastIsNotOnField = false
+    spec.distanceToEnd = 0
+    spec.lastValidGroundPos = { 0, 0, 0 }
+
     spec.lastInputValues = {}
     spec.lastInputValues.guidanceIsActive = true -- todo: make toggle
-    spec.lastInputValues.showGuidanceLines = false
+    spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
 
@@ -168,8 +173,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.dirtyFlag = self:getNextDirtyFlag()
 
     self:registerMultiPurposeActionEvents()
-
-    Logger.info("NetworkUtil", NetworkUtil)
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
@@ -336,10 +339,10 @@ function GlobalPositioningSystem:onUpdate(dt)
     GlobalPositioningSystem.computeGuidanceData(self, false)
 
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
-    local x, _, z, driveDirX, driveDirZ = unpack(data.driveTarget)
+    local x, y, z, driveDirX, driveDirZ = unpack(data.driveTarget)
     local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
 
-    data.currentLane = GuidanceUtil.mathRound(lineAlpha)
+    data.currentLane = MathUtil.round(lineAlpha)
     data.alphaRad = lineAlpha - data.currentLane
 
     -- Todo: straight needs this?
@@ -384,6 +387,19 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     if guidanceSteeringIsActive then
         GlobalPositioningSystem.guideSteering(self, dt)
+
+        local isOnField = self:getIsOnField()
+
+        if isOnField then
+            local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
+            local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
+            local lookAheadStepDistance = 11 * speedMultiplier -- m
+            local distanceToHeadLand, isDistanceOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
+
+            Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
+            Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
+
+        end
     end
 end
 
@@ -466,9 +482,10 @@ function GlobalPositioningSystem:setGuidanceData(guidanceData)
 end
 
 function GlobalPositioningSystem:pushABPoint(noEventSend)
-    -- Todo: fix MP -> client or server does not know when line is created yes or no.
+    ABPointPushedEvent.sendEvent(self, noEventSend)
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.lineStrategy:pushABPoint(spec.guidanceData, noEventSend)
+    spec.lineStrategy:pushABPoint(spec.guidanceData)
 end
 
 function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEventSend)
