@@ -109,7 +109,7 @@ function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, 
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec ~= nil and spec.guidanceSteeringIsActive then
+    if spec ~= nil and spec.hasGuidanceSystem and spec.guidanceSteeringIsActive then
         spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
     end
 end
@@ -118,7 +118,7 @@ function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, input
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec ~= nil and spec.guidanceSteeringIsActive then
+    if spec ~= nil and spec.hasGuidanceSystem and spec.guidanceSteeringIsActive then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
 end
@@ -128,7 +128,7 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
 
     if inputValue ~= 0 then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-        if spec ~= nil and spec.lastInputValues.guidanceSteeringIsActive then
+        if spec ~= nil and spec.hasGuidanceSystem and spec.lastInputValues.guidanceSteeringIsActive then
             spec.lastInputValues.guidanceSteeringIsActive = false
         end
     end
