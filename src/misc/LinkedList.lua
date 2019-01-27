@@ -1,5 +1,5 @@
 ---
--- Doubly linked list implementation
+-- linked list implementation
 --
 -- Copyright (c) Wopster, 2018
 
