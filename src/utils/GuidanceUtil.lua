@@ -34,7 +34,7 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
     --local paramsY = self.highPrecisionPositionSynchronization and g_currentMission.vehicleYPosHighPrecisionCompressionParams or g_currentMission.vehicleYPosCompressionParams
 
-    --local x, y, z, dirX, dirZ = unpack(data.driveTarget)
+
     --
     --NetworkUtil.writeCompressedWorldPosition(streamId, x, paramsXZ)
     --NetworkUtil.writeCompressedWorldPosition(streamId, y, paramsY)
@@ -46,6 +46,7 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
     --local paramsXZ = self.highPrecisionPositionSynchronization and g_currentMission.vehicleXZPosHighPrecisionCompressionParams or g_currentMission.vehicleXZPosCompressionParams
     --local paramsXZ = g_currentMission.vehicleXZPosCompressionParams
 
+    local x, y, z, dirX, dirZ = unpack(data.driveTarget)
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
 
     streamWriteFloat32(streamId, data.width)
@@ -56,6 +57,12 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapX, paramsXZ)
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapZ, paramsXZ)
     --
+
+    streamWriteFloat32(streamId, x)
+    streamWriteFloat32(streamId, y)
+    streamWriteFloat32(streamId, z)
+    streamWriteFloat32(streamId, dirX)
+    streamWriteFloat32(streamId, dirZ)
 
     streamWriteFloat32(streamId, snapX)
     streamWriteFloat32(streamId, snapZ)
@@ -74,6 +81,14 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
 
     --local snapX = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
     --local snapZ = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
+
+    local x = streamReadFloat32(streamId)
+    local y = streamReadFloat32(streamId)
+    local z = streamReadFloat32(streamId)
+    local dirX = streamReadFloat32(streamId)
+    local dirZ = streamReadFloat32(streamId)
+
+    data.driveTarget = { x, y, z, dirX, dirZ }
 
     local snapX = streamReadFloat32(streamId)
     local snapZ = streamReadFloat32(streamId)
