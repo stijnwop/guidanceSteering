@@ -124,7 +124,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.lineStrategy = StraightABStrategy:new(self)
     spec.guidanceIsActive = true -- todo: make toggle
-    spec.showGuidanceLines = true -- todo: make toggle
+    spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = false
     spec.guidanceSteeringOffset = 0
@@ -183,13 +183,10 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
         local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
         if spec.hasGuidanceSystem then
-            local data = spec.guidanceData
+            local data = GuidanceUtil.readGuidanceDataObject(streamId)
 
             -- sync guidance data
-            data.width = streamReadFloat32(streamId)
-            data.snapDirectionMultiplier = streamReadUInt8(streamId)
-            data.snapDirectionForwards = streamReadBool(streamId)
-            data.alphaRad = streamReadFloat32(streamId)
+            self:updateGuidanceData(false, data, true)
 
             -- sync settings
             spec.showGuidanceLines = streamReadBool(streamId)
@@ -208,10 +205,7 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
             local data = spec.guidanceData
 
             -- sync guidance data
-            streamWriteFloat32(streamId, data.width)
-            streamWriteUInt8(streamId, data.snapDirectionMultiplier)
-            streamWriteBool(streamId, data.snapDirectionForwards)
-            streamWriteFloat32(streamId, data.alphaRad)
+            GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
             -- sync settings
             streamWriteBool(streamId, spec.showGuidanceLines)
