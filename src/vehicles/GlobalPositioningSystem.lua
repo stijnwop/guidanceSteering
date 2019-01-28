@@ -337,66 +337,64 @@ function GlobalPositioningSystem:onUpdate(dt)
         GlobalPositioningSystem.shiftParallel(data, dt, spec.shiftParallelDirection)
     end
 
-    local drivingDirection = self:getDrivingDirection()
-    -- Only compute when the vehicle is moving
-    if drivingDirection == 0 then
-        return
-    end
-
-    local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
-    local distance = self.lastMovedDistance
-
-    spec.abDistanceCounter = spec.abDistanceCounter + distance
-
-    local lastSpeed = self:getLastSpeed()
-    local guidanceNode = spec.guidanceNode
     local data = spec.guidanceData
-
-    data.movingForwards = self:getIsDrivingForward()
+    local guidanceNode = spec.guidanceNode
+    local lastSpeed = self:getLastSpeed()
 
     spec.lineStrategy:update(dt, data, guidanceNode, lastSpeed)
 
-    GlobalPositioningSystem.computeGuidanceTarget(self)
-
-    local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+    local drivingDirection = self:getDrivingDirection()
+    local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
     local x, y, z, driveDirX, driveDirZ = unpack(data.driveTarget)
-    local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
 
-    data.currentLane = MathUtil.round(lineAlpha)
-    data.alphaRad = lineAlpha - data.currentLane
+    -- Only compute when the vehicle is moving
+    if drivingDirection ~= 0 then
+        local distance = self.lastMovedDistance
 
-    -- Todo: straight strategy prob needs this?
-    local dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(guidanceNode, lineDirX, 0, lineDirZ))
-    --                local dirX, dirZ = lineDirX, lineDirZ
+        spec.abDistanceCounter = spec.abDistanceCounter + distance
 
-    local angle = math.acos(driveDirX * dirX + driveDirZ * dirZ) -- dot towards point
+        data.movingForwards = self:getIsDrivingForward()
 
-    local snapDirectionMultiplier = 1
-    -- 90 deg
-    if angle < 1.5708 then
-        snapDirectionMultiplier = -snapDirectionMultiplier
-    end
+        GlobalPositioningSystem.computeGuidanceTarget(self)
 
-    local spec_reverseDriving = self.spec_reverseDriving
+        local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+        local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
 
-    data.snapDirectionMultiplier = snapDirectionMultiplier
-    data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
+        data.currentLane = MathUtil.round(lineAlpha)
+        data.alphaRad = lineAlpha - data.currentLane
 
-    local movingDirection = 1
-    if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
-        movingDirection = -movingDirection
-    end
+        -- Todo: straight strategy prob needs this?
+        local dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(guidanceNode, lineDirX, 0, lineDirZ))
+        --                local dirX, dirZ = lineDirX, lineDirZ
 
-    if data.isReverseDriving then
-        movingDirection = -movingDirection
+        local angle = math.acos(driveDirX * dirX + driveDirZ * dirZ) -- dot towards point
 
-        if self.movingDirection > 0 then
-            movingDirection = math.abs(movingDirection)
+        local snapDirectionMultiplier = 1
+        -- 90 deg
+        if angle < 1.5708 then
+            snapDirectionMultiplier = -snapDirectionMultiplier
         end
+
+        local spec_reverseDriving = self.spec_reverseDriving
+
+        data.snapDirectionMultiplier = snapDirectionMultiplier
+        data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
+
+        local movingDirection = 1
+        if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
+            movingDirection = -movingDirection
+        end
+
+        if data.isReverseDriving then
+            movingDirection = -movingDirection
+
+            if self.movingDirection > 0 then
+                movingDirection = math.abs(movingDirection)
+            end
+        end
+
+        data.movingDirection = movingDirection
     end
-
-    data.movingDirection = movingDirection
-
     if not self.isServer then
         return
     end
