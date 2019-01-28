@@ -111,12 +111,12 @@ function GlobalPositioningSystem:onLoad(savegame)
     end
 
     spec.guidanceNode = createTransformGroup("guidance_node")
-    spec.guidanceReverseNode = createTransformGroup("guidance_reverse_node")
+    spec.guidanceTargetNode = createTransformGroup("guidance_reverse_node")
     link(rootNode, spec.guidanceNode)
-    link(rootNode, spec.guidanceReverseNode)
+    link(rootNode, spec.guidanceTargetNode)
     setTranslation(spec.guidanceNode, 0, 0, 0)
-    setTranslation(spec.guidanceReverseNode, 0, 0, 0)
-    setRotation(spec.guidanceReverseNode, 0, math.rad(180), 0)
+    setTranslation(spec.guidanceTargetNode, 0, 0, 0)
+    setRotation(spec.guidanceTargetNode, 0, math.rad(180), 0)
 
     spec.lineStrategy = StraightABStrategy:new(self)
     spec.guidanceIsActive = true -- todo: make toggle
@@ -168,6 +168,8 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.dirtyFlag = self:getNextDirtyFlag()
 
     self:registerMultiPurposeActionEvents()
+
+    spec.isCreated = false
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
@@ -201,12 +203,6 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
 
             -- sync guidance data
             GuidanceUtil.writeGuidanceDataObject(streamId, data)
-
-            -- sync ab points
-            -- Todo: same more data in AB x,y,z and recreate the points.
-            --spec.lineStrategy.ab:iterate(function(point)
-            --
-            --end)
 
             -- sync settings
             streamWriteBool(streamId, spec.showGuidanceLines)
@@ -257,10 +253,15 @@ end
 
 function GlobalPositioningSystem:onDelete()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    -- Cleanup current strategy
     spec.lineStrategy:delete()
 
+    -- Delete guidance nodes
     delete(spec.guidanceNode)
-    delete(spec.guidanceReverseNode)
+    delete(spec.guidanceTargetNode)
+
+    -- Remove sounds
 end
 
 function GlobalPositioningSystem.updateNetWorkInputs(self)
@@ -332,6 +333,16 @@ function GlobalPositioningSystem:onUpdate(dt)
         return
     end
 
+    if spec.shiftParallel then
+        GlobalPositioningSystem.shiftParallel(data, dt, spec.shiftParallelDirection)
+    end
+
+    local drivingDirection = self:getDrivingDirection()
+    -- Only compute when the vehicle is moving
+    if drivingDirection == 0 then
+        return
+    end
+
     local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
     local distance = self.lastMovedDistance
 
@@ -341,15 +352,11 @@ function GlobalPositioningSystem:onUpdate(dt)
     local guidanceNode = spec.guidanceNode
     local data = spec.guidanceData
 
-    if spec.shiftParallel then
-        GlobalPositioningSystem.shiftParallel(data, dt, spec.shiftParallelDirection)
-    end
-
     data.movingForwards = self:getIsDrivingForward()
 
     spec.lineStrategy:update(dt, data, guidanceNode, lastSpeed)
 
-    GlobalPositioningSystem.computeGuidanceData(self, false)
+    GlobalPositioningSystem.computeGuidanceTarget(self)
 
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
     local x, y, z, driveDirX, driveDirZ = unpack(data.driveTarget)
@@ -358,12 +365,11 @@ function GlobalPositioningSystem:onUpdate(dt)
     data.currentLane = MathUtil.round(lineAlpha)
     data.alphaRad = lineAlpha - data.currentLane
 
-    -- Todo: straight needs this?
+    -- Todo: straight strategy prob needs this?
     local dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(guidanceNode, lineDirX, 0, lineDirZ))
     --                local dirX, dirZ = lineDirX, lineDirZ
 
-    local dot = MathUtil.clamp(driveDirX * dirX + driveDirZ * dirZ, GlobalPositioningSystem.DIRECTION_LEFT, GlobalPositioningSystem.DIRECTION_RIGHT)
-    local angle = math.acos(dot) -- dot towards point
+    local angle = math.acos(driveDirX * dirX + driveDirZ * dirZ) -- dot towards point
 
     local snapDirectionMultiplier = 1
     -- 90 deg
@@ -371,28 +377,25 @@ function GlobalPositioningSystem:onUpdate(dt)
         snapDirectionMultiplier = -snapDirectionMultiplier
     end
 
-    local drivingDirection = self:getDrivingDirection()
-    if drivingDirection ~= 0 then
-        local spec_reverseDriving = self.spec_reverseDriving
+    local spec_reverseDriving = self.spec_reverseDriving
 
-        data.snapDirectionMultiplier = snapDirectionMultiplier
-        data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
+    data.snapDirectionMultiplier = snapDirectionMultiplier
+    data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
 
-        local movingDirection = 1
-        if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
-            movingDirection = -movingDirection
-        end
-
-        if data.isReverseDriving then
-            movingDirection = -movingDirection
-
-            if self.movingDirection > 0 then
-                movingDirection = math.abs(movingDirection)
-            end
-        end
-
-        data.movingDirection = movingDirection
+    local movingDirection = 1
+    if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
+        movingDirection = -movingDirection
     end
+
+    if data.isReverseDriving then
+        movingDirection = -movingDirection
+
+        if self.movingDirection > 0 then
+            movingDirection = math.abs(movingDirection)
+        end
+    end
+
+    data.movingDirection = movingDirection
 
     if not self.isServer then
         return
@@ -409,8 +412,8 @@ function GlobalPositioningSystem:onUpdate(dt)
             local lookAheadStepDistance = 11 * speedMultiplier -- m
             local distanceToHeadLand, isDistanceOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
 
-            Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
-            Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
+            --Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
+            --Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
 
         end
     end
@@ -524,35 +527,34 @@ function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEve
     end
 end
 
-function GlobalPositioningSystem.computeGuidanceData(self, doSnapDirectionUpdate)
+function GlobalPositioningSystem.computeGuidanceTarget(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
 
-    local guidanceNode = spec.guidanceNode
-    if not data.movingForwards then
-        guidanceNode = spec.guidanceReverseNode
-    end
-
+    local guidanceNode = spec.guidanceTargetNode
     local transX, transY, transZ
     local dirX, dirZ
 
-    -- Todo: this should not be needed anymore after the creation. Just use it once and than it should be fine
     if spec.lineStrategy:getHasABDependentDirection()
             and spec.lineStrategy:getIsABDirectionPossible() then
-        local strategyData = spec.lineStrategy:getGuidanceData(guidanceNode, data)
+        if not data.movingForwards then
+            guidanceNode = spec.guidanceNode -- inverse line
+        end
 
-        transX, transY, transZ = strategyData.tx, strategyData.ty, strategyData.tz
-        dirX, dirZ = strategyData.dirX, strategyData.dirZ
+        local strategyData = spec.lineStrategy:getGuidanceData(guidanceNode, data)
+        transX, transY, transZ, dirX, dirZ = unpack(strategyData)
     else
-        local dx, _, dz = localDirectionToWorld(guidanceNode, 0, 0, 1)
+        dirX, _, dirZ = localDirectionToWorld(guidanceNode, 0, 0, 1)
         transX, transY, transZ = getWorldTranslation(guidanceNode)
-        dirX, dirZ = dx, dz
     end
 
     local driveDirX, driveDirZ = GuidanceUtil.getDriveDirection(dirX, dirZ)
-    if not data.snapDirectionForwards then
+    if not data.movingForwards then
         driveDirX, driveDirZ = -driveDirX, -driveDirZ
     end
+
+    --Logger.info("snapDirectionForwards", data.movingForwards)
+    --Logger.info("dir", { driveDirX, driveDirZ })
 
     -- Guidance driveTarget
     data.driveTarget = {
@@ -562,34 +564,49 @@ function GlobalPositioningSystem.computeGuidanceData(self, doSnapDirectionUpdate
         driveDirX, -- x direction of target
         driveDirZ -- z direction of target
     }
+end
 
-    if doSnapDirectionUpdate then
-        local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
-        -- Snap to terrain when settings is active
-        if spec.guidanceTerrainAngleIsActive then
-            local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
-            angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
-        end
+function GlobalPositioningSystem.computeGuidanceDirection(self)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local data = spec.guidanceData
 
-        dirX, dirZ = math.sin(angleRad), math.cos(angleRad)
-
-        local offsetFactor = 1.0 -- Todo: offset
-        local x = transX + offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirZ
-        local z = transZ - offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirX
-
-        data.snapDirectionForwards = data.movingForwards
-        -- Line direction and translation xz axis
-        data.snapDirection = {
-            dirX,
-            dirZ,
-            x,
-            z
-        }
-
-        -- Update clients
-        self:updateGuidanceData(false, data)
-        Logger.info("Calculated snapdirection with data:", data)
+    local guidanceNode = spec.guidanceTargetNode
+    if spec.lineStrategy:getHasABDependentDirection()
+            and spec.lineStrategy:getIsABDirectionPossible()
+            and not data.movingForwards then
+        guidanceNode = spec.guidanceNode -- inverse line
     end
+
+    local dirX, _, dirZ = localDirectionToWorld(guidanceNode, 0, 0, 1)
+    local transX, _, transZ = unpack(data.driveTarget)
+
+    local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
+    -- Snap to terrain when settings is active
+    if spec.guidanceTerrainAngleIsActive then
+        local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
+        angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
+    end
+
+    dirX, dirZ = math.sin(angleRad), math.cos(angleRad)
+
+    local offsetFactor = 1.0 -- Todo: offset
+    local x = transX + offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirZ
+    local z = transZ - offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirX
+
+    data.snapDirectionForwards = data.movingForwards
+    -- Line direction and translation xz axis
+    data.snapDirection = {
+        dirX,
+        dirZ,
+        x,
+        z
+    }
+
+    -- Update clients
+    self:updateGuidanceData(false, data)
+    spec.lineStrategy:delete()
+    data.isCreated = true -- Todo: current placeholder
+    Logger.info("Calculated snapdirection with data:", data)
 end
 
 function GlobalPositioningSystem.resetGuidanceData(self)
@@ -598,6 +615,7 @@ function GlobalPositioningSystem.resetGuidanceData(self)
     spec.lineStrategy:delete()
 
     local data = spec.guidanceData
+    data.isCreated = false
     data.snapDirection = { 0, 0, 0, 0 }
     data.snapDirectionForwards = not data.isReverseDriving -- Todo: we might want to save this
 end
@@ -751,7 +769,7 @@ function GlobalPositioningSystem:registerMultiPurposeActionEvents()
     end)
 
     event:addAction(function()
-        GlobalPositioningSystem.computeGuidanceData(self, true)
+        GlobalPositioningSystem.computeGuidanceDirection(self)
         Logger.info("Generating AB line strategy")
         return true
     end)

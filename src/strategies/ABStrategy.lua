@@ -72,7 +72,8 @@ function ABStrategy:draw(data)
     local lines = { ABStrategy.ABLines["middle"] }
     local step = 1
     local numSteps = ABStrategy.NUM_STEPS
-    local drawBotherLines = self:getIsGuidancePossible()
+    --local drawBotherLines = self:getIsGuidancePossible()
+    local drawBotherLines = data.isCreated
     local x, _, z, lineDirX, lineDirZ = unpack(data.driveTarget)
 
     if drawBotherLines then

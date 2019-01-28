@@ -69,11 +69,11 @@ function StraightABStrategy:getGuidanceData(guidanceNode, data)
     -- dirX, dirZ = drive direction
     -- Todo: multiply by movingDirection
     local d = {
-        tx = x,
-        ty = y,
-        tz = z,
-        dirX = dx,
-        dirZ = dz,
+        x,
+        y,
+        z,
+        dx,
+        dz,
     }
 
     return d
