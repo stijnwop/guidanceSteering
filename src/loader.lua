@@ -32,19 +32,19 @@ local function isEnabled()
     return guidanceSteering ~= nil
 end
 
-function _init()
-    FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, _unload)
+function init()
+    FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, unload)
 
-    Mission00.load = Utils.prependedFunction(Mission00.load, _load)
-    Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, _loadedMission)
+    Mission00.load = Utils.prependedFunction(Mission00.load, load)
+    Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, loadedMission)
 
     FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
 
-    VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, _validateVehicleTypes)
-    StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, _addGPSConfigurationUtil)
+    VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, validateVehicleTypes)
+    StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, addGPSConfigurationUtil)
 end
 
-function _load(mission)
+function load(mission)
     assert(g_guidanceSteering == nil)
 
     guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter, g_settingsScreen.settingsModel)
@@ -54,7 +54,7 @@ function _load(mission)
     addModEventListener(guidanceSteering)
 end
 
-function _loadedMission(mission, node)
+function loadedMission(mission, node)
     if not isEnabled() then
         return
     end
@@ -66,7 +66,7 @@ function _loadedMission(mission, node)
     guidanceSteering:onMissionLoaded(mission)
 end
 
-function _unload()
+function unload()
     if not isEnabled() then
         return
     end
@@ -94,7 +94,7 @@ function saveToXMLFile(missionInfo)
     end
 end
 
-function _validateVehicleTypes(vehicleTypeManager)
+function validateVehicleTypes(vehicleTypeManager)
     GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
 end
 
@@ -168,7 +168,7 @@ local function storeItemAllowsGuidanceSteering(storeItem)
     return forcedStoreCategories[storeItem.categoryName]
 end
 
-function _addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
+function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
     local configurations = superFunc(xmlFile, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
 
     if storeItemAllowsGuidanceSteering(storeItem) then
@@ -203,7 +203,7 @@ function _addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, cust
     return configurations
 end
 
-_init()
+init()
 
 -- Fixes
 
