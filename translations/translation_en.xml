@@ -3,63 +3,63 @@
     <translationContributors>Wopster</translationContributors>
 
     <texts>
-        <text name="configuration_buyableGPS" text="Global Positioning System" />
-        <text name="configuration_buyableGPS_withoutGPS" text="No" />
-        <text name="configuration_buyableGPS_withGPS" text="Yes" />
+        <text name="configuration_buyableGPS" text="Global Positioning System"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="No"/>
+        <text name="configuration_buyableGPS_withGPS" text="Yes"/>
 
         <!--Inputs-->
-        <text name="input_GS_SHOW_UI" text="Show guidance steering menu" />
-        <text name="input_GS_SET_AUTO_WIDTH" text="Auto width" />
-        <text name="input_GS_OFFSET_WIDTH_RESET" text="Reset width" />
-        <text name="input_GS_OFFSET_WIDTH_LEFT" text="Offset width left" />
-        <text name="input_GS_OFFSET_WIDTH_RIGHT" text="Offset width right" />
-        <text name="input_GS_PLUS_WIDTH" text="Increase width" />
-        <text name="input_GS_MINUS_WIDTH" text="Decrease width" />
-        <text name="input_GS_ENABLE_STEERING" text="Steering guidance" />
-        <text name="input_GS_SETPOINT" text="Set guidance point" />
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Snap to terrain angle" />
-        <text name="input_GS_TURN_STEERING" text="Set steering direction" />
+        <text name="input_GS_SHOW_UI" text="Show guidance steering menu"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Auto width"/>
+        <text name="input_GS_SHIFT_RESET" text="Reset shift"/>
+        <text name="input_GS_SHIFT_LEFT" text="Shift track left"/>
+        <text name="input_GS_SHIFT_RIGHT" text="Shift track right"/>
+        <text name="input_GS_PLUS_WIDTH" text="Increase width"/>
+        <text name="input_GS_MINUS_WIDTH" text="Decrease width"/>
+        <text name="input_GS_ENABLE_STEERING" text="Steering guidance"/>
+        <text name="input_GS_SETPOINT" text="Set guidance point"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Snap to terrain angle"/>
+        <text name="input_GS_TURN_STEERING" text="Set steering direction"/>
 
         <!--GUI-->
-        <text name="guidanceSteering_ui_settings" text="Guidance settings" />
-        <text name="guidanceSteering_ui_strategy" text="Guidance strategy" />
+        <text name="guidanceSteering_ui_settings" text="Guidance settings"/>
+        <text name="guidanceSteering_ui_strategy" text="Guidance strategy"/>
 
-        <text name="guidanceSteering_strategy_abStraight" text="AB Straight" />
-        <text name="guidanceSteering_strategy_abCurve" text="AB Curve" />
+        <text name="guidanceSteering_strategy_abStraight" text="AB Straight"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Curve"/>
 
-        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B" />
-        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B" />
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Heading" />
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Heading"/>
 
         <!--Tooltips-->
-        <text name="guidanceSteering_tooltip_showLines" text="Support your visuals by showing the guidance lines" />
-        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Snap the direction to the terrain angle" />
-        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Let the GPS guide the steering" />
-        <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle" />
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width" />
+        <text name="guidanceSteering_tooltip_showLines" text="Support your visuals by showing the guidance lines"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Snap the direction to the terrain angle"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Let the GPS guide the steering"/>
+        <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width"/>
 
-        <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines" />
-        <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use" />
-        <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use" />
-        <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points" />
+        <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
 
         <!--Settings-->
-        <text name="guidanceSteering_setting_showLines" text="Show lines" />
-        <text name="guidanceSteering_setting_terrainAngleSnap" text="Snap terrain angle" />
-        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Enable guidance steering" />
-        <text name="guidanceSteering_setting_width" text="Width" />
-        <text name="guidanceSteering_setting_widthInCrement" text="Width increment" />
-        <text name="guidanceSteering_setting_autoWidth" text="Auto width" />
-        <text name="guidanceSteering_setting_cardinals" text="Cardinal point" />
+        <text name="guidanceSteering_setting_showLines" text="Show lines"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Snap terrain angle"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Enable guidance steering"/>
+        <text name="guidanceSteering_setting_width" text="Width"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="Width increment"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Auto width"/>
+        <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
 
-        <text name="guidanceSteering_setting_strategy" text="Line strategy" />
-        <text name="guidanceSteering_setting_strategyMethod" text="Line method" />
-        <text name="guidanceSteering_setting_currentTrack" text="Current track" />
+        <text name="guidanceSteering_setting_strategy" text="Line strategy"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Line method"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Current track"/>
 
-        <text name="guidanceSteering_setting_pointA" text="Set A" />
-        <text name="guidanceSteering_setting_pointB" text="Set B" />
-        <text name="guidanceSteering_setting_newTrack" text="New track" />
-        <text name="guidanceSteering_setting_removeTrack" text="Remove track" />
+        <text name="guidanceSteering_setting_pointA" text="Set A"/>
+        <text name="guidanceSteering_setting_pointB" text="Set B"/>
+        <text name="guidanceSteering_setting_newTrack" text="New track"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
 
     </texts>
 </l10n>

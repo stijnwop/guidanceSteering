@@ -17,7 +17,7 @@
         </de>
     </description>
 
-    <l10n filenamePrefix="translations/translation" />
+    <l10n filenamePrefix="translations/translation"/>
 
     <iconFilename>icon.png</iconFilename>
     <multiplayer supported="true"/>
@@ -33,47 +33,34 @@
         <action name="GS_MINUS_WIDTH" axisType="HALF"/>
         <action name="GS_PLUS_WIDTH" axisType="HALF"/>
         <action name="GS_ENABLE_STEERING" axisType="HALF"/>
+        <action name="GS_SHIFT_LEFT" axisType="HALF"/>
+        <action name="GS_SHIFT_RIGHT" axisType="HALF"/>
     </actions>
 
     <inputBinding>
         <actionBinding action="GS_SHOW_UI">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_KP_0"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_s"/>
         </actionBinding>
         <actionBinding action="GS_SETPOINT">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_s"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
         </actionBinding>
         <actionBinding action="GS_SET_AUTO_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_w"/>
         </actionBinding>
         <actionBinding action="GS_MINUS_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_minus"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus"/>
         </actionBinding>
         <actionBinding action="GS_PLUS_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_plus"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_plus"/>
         </actionBinding>
         <actionBinding action="GS_ENABLE_STEERING">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_KP_0"/>
-            <binding device="GAMEPAD_DEFAULT" input="BUTTON_5 BUTTON_10"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
+        </actionBinding>
+        <actionBinding action="GS_SHIFT_LEFT">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pagedown"/>
+        </actionBinding>
+        <actionBinding action="GS_SHIFT_RIGHT">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pageup"/>
         </actionBinding>
     </inputBinding>
-
-    <!--<inputBindings>-->
-    <!--<input name="GS_ACTIVATE" category="VEHICLE" key1="KEY_lctrl KEY_KP_enter" button=""/>-->
-    <!--<input name="GS_SETPOINT" category="VEHICLE" key1="KEY_lctrl KEY_KP_1" button=""/>-->
-    <!--<input name="GS_TURN_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_4" button=""/>-->
-    <!--<input name="GS_ENABLE_STEERING" category="VEHICLE" key1="KEY_lctrl KEY_KP_0" button=""/>-->
-    <!--<input name="GS_AUTO_WIDTH" category="VEHICLE" key1="KEY_lctrl KEY_KP_3" button=""/>-->
-    <!--<input name="GS_OFFSET_WIDTH_LEFT" category="VEHICLE" key1="KEY_lctrl KEY_pagedown" button=""/>-->
-    <!--<input name="GS_OFFSET_WIDTH_RIGHT" category="VEHICLE" key1="KEY_lctrl KEY_pageup" button=""/>-->
-    <!--<input name="GS_OFFSET_WIDTH_RESET" category="VEHICLE" key1="KEY_lctrl KEY_end" button=""/>-->
-    <!--&lt;!&ndash;TODO: DELETE JUST DEV OPTION&ndash;&gt;-->
-    <!--<input name="GS_TOGGLE_TERRAIN_ANGLE_SNAP" category="VEHICLE" key1="KEY_lctrl KEY_KP_2" button=""/>-->
-    <!--</inputBindings>-->
-
-    <!--<l10n filenamePrefix="translations/translation"/>-->
 </modDesc>
