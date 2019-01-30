@@ -1,8 +1,7 @@
---
+---
 -- Logger
 --
--- Authors: Wopster
--- Description: logger.
+-- Logger utility.
 --
 -- Copyright (c) Wopster, 2018
 

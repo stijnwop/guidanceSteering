@@ -1,8 +1,7 @@
---
+---
 -- CardinalStrategy
 --
--- Authors: Wopster
--- Description: Strategy class for cardinal degrees also called A+heading.
+-- Strategy class for cardinal degrees also called A+heading.
 --
 -- Copyright (c) Wopster, 2018
 
@@ -37,6 +36,9 @@ function CardinalStrategy:draw(data)
     CardinalStrategy:superClass().draw(self, data)
 end
 
+---Gets the guidance drive data for the given cardinals
+---@param guidanceNode number
+---@param data table
 function CardinalStrategy:getGuidanceData(guidanceNode, data)
     local cardinal = 0 -- Todo: get cardinal from settings
 

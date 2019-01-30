@@ -1,3 +1,10 @@
+---
+-- loader
+--
+-- loader script for the mod
+--
+-- Copyright (c) Wopster, 2018
+
 local directory = g_currentModDirectory
 local modName = g_currentModName
 

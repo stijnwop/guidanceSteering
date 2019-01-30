@@ -1,3 +1,10 @@
+---
+-- GlobalPositioningSystem
+--
+-- Main vehicle specialization for Guidance Steering
+--
+-- Copyright (c) Wopster, 2019
+
 GlobalPositioningSystem = {}
 
 -- Modes:
@@ -664,31 +671,14 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
         return
     end
 
-    local function drawDebugCircle(x, y, z, radius, steps, r, g, b)
-        for i = 1, steps do
-            local a1 = ((i - 1) / steps) * 2 * math.pi
-            local a2 = ((i) / steps) * 2 * math.pi
-
-            local c = math.cos(a1) * radius
-            local s = math.sin(a1) * radius
-            local x1, y1, z1 = x + c, y, z + s
-
-            local c = math.cos(a2) * radius
-            local s = math.sin(a2) * radius
-            local x2, y2, z2 = x + c, y, z + s
-
-            drawDebugLine(x1, y1, z1, r, g, b, x2, y2, z2, r, g, b);
-        end
-    end
-
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     -- data
     local data = spec.guidanceData
     local guidanceNode = spec.guidanceNode
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
     local dX, dY, dZ = unpack(data.driveTarget)
-    local lineXDir = data.snapDirectionMultiplier * snapDirX --* data.movingDirection
-    local lineZDir = data.snapDirectionMultiplier * snapDirZ --* data.movingDirection
+    local lineXDir = data.snapDirectionMultiplier * snapDirX
+    local lineZDir = data.snapDirectionMultiplier * snapDirZ
     -- Calculate target points
     local x1 = dX + data.width * snapDirZ * data.alphaRad
     local z1 = dZ - data.width * snapDirX * data.alphaRad
@@ -696,8 +686,27 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local tX = x1 + step * lineXDir
     local tZ = z1 + step * lineZDir
 
-    drawDebugCircle(snapX, dY, snapZ, .5, 10, 1, 0, 0)
-    drawDebugCircle(tX, dY + .2, tZ, .5, 10, 0, 1, 0)
+    if spec.showGuidanceLines then
+        local function drawDebugCircle(x, y, z, radius, steps, r, g, b)
+            for i = 1, steps do
+                local a1 = ((i - 1) / steps) * 2 * math.pi
+                local a2 = ((i) / steps) * 2 * math.pi
+
+                local c = math.cos(a1) * radius
+                local s = math.sin(a1) * radius
+                local x1, y1, z1 = x + c, y, z + s
+
+                local c = math.cos(a2) * radius
+                local s = math.sin(a2) * radius
+                local x2, y2, z2 = x + c, y, z + s
+
+                drawDebugLine(x1, y1, z1, r, g, b, x2, y2, z2, r, g, b);
+            end
+        end
+
+        drawDebugCircle(snapX, dY, snapZ, .5, 10, 1, 0, 0)
+        drawDebugCircle(tX, dY + .2, tZ, .5, 10, 0, 1, 0)
+    end
 
     local pX, _, pZ = worldToLocal(guidanceNode, tX, dY, tZ)
 

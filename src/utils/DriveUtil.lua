@@ -1,46 +1,21 @@
+---
+-- DriveUtil
+--
+-- Utility for driving the vehicle.
+--
+-- Copyright (c) Wopster, 2019
+
 DriveUtil = {}
 
 DriveUtil.MOVING_DIRECTION_FORWARDS = 1
 DriveUtil.MOVING_DIRECTION_BACKWARDS = -1
-
-function DriveUtil.driveInDirection(self, dt, steeringAngleLimit, movingDirection, lx, lz)
-
-    if lx ~= nil and lz ~= nil then
-        local data = self.guidanceData
-        local dot = lz
-        local moveForwards = movingDirection == DriveUtil.MOVING_DIRECTION_FORWARDS
-        local angle = math.deg(math.acos(dot)) * data.snapDirectionMultiplier * movingDirection
-        local t = math.acos(lx)
-        if t < 1.5708 then
-            --            angle = angle + 180
-        end
-
-        local turnLeft = lz > 0.00001
-        if not moveForwards then
-            turnLeft = not turnLeft
-        end
-
-        Logger.info("x", { steeringAngle = angle, lz = lz, lx = lx })
-
-        local targetRotTime
-        if turnLeft then
-            --rotate to the left
-            targetRotTime = self.maxRotTime * math.min(angle / steeringAngleLimit, 1)
-        else
-            --rotate to the right
-            targetRotTime = self.minRotTime * math.min(angle / steeringAngleLimit, 1)
-        end
-
-        if targetRotTime > self.rotatedTime then
-            self.rotatedTime = math.min(self.rotatedTime + dt * self:getAISteeringSpeed(), targetRotTime)
-        else
-            self.rotatedTime = math.max(self.rotatedTime - dt * self:getAISteeringSpeed(), targetRotTime)
-        end
-    end
-end
-
 DriveUtil.HIT_THRESHOLD = 100000
 
+---driveToPoint
+---@param self table
+---@param dt number
+---@param tX number
+---@param tZ number
 function DriveUtil.driveToPoint(self, dt, tX, tZ)
     if self.firstTimeRun then
         local halfX = tX * 0.5
@@ -74,6 +49,52 @@ function DriveUtil.driveToPoint(self, dt, tX, tZ)
     end
 end
 
+---driveInDirection
+---@param self table
+---@param dt number
+---@param steeringAngleLimit number
+---@param movingDirection number
+---@param lx number
+---@param lz number
+function DriveUtil.driveInDirection(self, dt, steeringAngleLimit, movingDirection, lx, lz)
+    if lx ~= nil and lz ~= nil then
+        local data = self.guidanceData
+        local dot = lz
+        local moveForwards = movingDirection == DriveUtil.MOVING_DIRECTION_FORWARDS
+        local angle = math.deg(math.acos(dot)) * data.snapDirectionMultiplier * movingDirection
+        local t = math.acos(lx)
+        if t < 1.5708 then
+            angle = angle + 180
+        end
+
+        local turnLeft = lz > 0.00001
+        if not moveForwards then
+            turnLeft = not turnLeft
+        end
+
+        Logger.info("x", { steeringAngle = angle, lz = lz, lx = lx })
+
+        local targetRotTime
+        if turnLeft then
+            --rotate to the left
+            targetRotTime = self.maxRotTime * math.min(angle / steeringAngleLimit, 1)
+        else
+            --rotate to the right
+            targetRotTime = self.minRotTime * math.min(angle / steeringAngleLimit, 1)
+        end
+
+        if targetRotTime > self.rotatedTime then
+            self.rotatedTime = math.min(self.rotatedTime + dt * self:getAISteeringSpeed(), targetRotTime)
+        else
+            self.rotatedTime = math.max(self.rotatedTime - dt * self:getAISteeringSpeed(), targetRotTime)
+        end
+    end
+end
+
+---accelerateInDirection
+---@param vehicle table
+---@param axisForward number
+---@param dt number
 function DriveUtil.accelerateInDirection(vehicle, axisForward, dt)
     local spec = vehicle.spec_drivable
     local acceleration = 0

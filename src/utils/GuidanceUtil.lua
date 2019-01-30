@@ -1,3 +1,10 @@
+---
+-- GuidanceUtil
+--
+-- Utility for Guidance Steering
+--
+-- Copyright (c) Wopster, 2019
+
 GuidanceUtil = {}
 
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)

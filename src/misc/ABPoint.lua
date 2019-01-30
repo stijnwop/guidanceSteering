@@ -1,8 +1,7 @@
 --
 -- ABPoint
 --
--- Authors: Wopster
--- Description: AB point class to handle AB points.
+-- AB point class to handle AB points.
 --
 -- Copyright (c) Wopster, 2018
 

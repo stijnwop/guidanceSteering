@@ -1,8 +1,7 @@
---
+---
 -- StraightABStrategy
 --
--- Authors: Wopster
--- Description: Strategy class for AB straight points.
+-- Strategy class for AB straight points.
 --
 -- Copyright (c) Wopster, 2018
 
@@ -32,6 +31,9 @@ function StraightABStrategy:draw(data)
     StraightABStrategy:superClass().draw(self, data)
 end
 
+---Gets the guidance drive data for straight ab lines
+---@param guidanceNode number
+---@param data table
 function StraightABStrategy:getGuidanceData(guidanceNode, data)
     --    if self.vehicle.turningActive then
     --        return StraightABStrategy:superClass().getGuidanceData(self, guidanceNode, data)

@@ -1,3 +1,10 @@
+---
+-- GuidanceSteering
+--
+-- Main class for Guidance Steering
+--
+-- Copyright (c) Wopster, 2019
+
 GuidanceSteering = {}
 
 local GuidanceSteering_mt = Class(GuidanceSteering)

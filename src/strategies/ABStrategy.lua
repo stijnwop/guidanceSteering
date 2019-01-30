@@ -1,8 +1,7 @@
---
+---
 -- ABStrategy
 --
--- Authors: Wopster
--- Description: Base class for AB based strategies.
+-- Base class for AB based strategies.
 --
 -- Copyright (c) Wopster, 2018
 

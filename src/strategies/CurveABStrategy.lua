@@ -1,8 +1,7 @@
---
+---
 -- CurveABStrategy
 --
--- Authors: Wopster
--- Description: Strategy class for AB curve points.
+-- Strategy class for AB curve points.
 --
 -- Copyright (c) Wopster, 2018
 
