@@ -378,7 +378,7 @@ function GlobalPositioningSystem:onUpdate(dt)
 
         local snapDirectionMultiplier = 1
         if angle < 1.5708 then
-            -- If small than 90 deg we swap
+            -- If smaller than 90 deg we swap
             snapDirectionMultiplier = -snapDirectionMultiplier
         end
 
