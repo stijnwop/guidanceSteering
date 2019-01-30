@@ -61,8 +61,9 @@
 
         <text name="guidanceSteering_setting_pointA" text="Set A"/>
         <text name="guidanceSteering_setting_pointB" text="Set B"/>
-        <text name="guidanceSteering_setting_newTrack" text="New track"/>
+        <text name="guidanceSteering_setting_newTrack" text="Create track"/>
         <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
 
     </texts>
 </l10n>

@@ -1,12 +1,3 @@
---
--- Created by IntelliJ IDEA.
--- User: Wopereis
--- Date: 1/5/2019
--- Time: 1:54 PM
--- To change this template use File | Settings | File Templates.
---
-
-
 GuidanceSteeringMenu = {}
 local GuidanceSteeringMenu_mt = Class(GuidanceSteeringMenu, TabbedMenu)
 
@@ -95,5 +86,3 @@ GuidanceSteeringMenu.TAB_UV = {
 GuidanceSteeringMenu.L10N_SYMBOL = {
     BUTTON_BACK = "button_back",
 }
-
-

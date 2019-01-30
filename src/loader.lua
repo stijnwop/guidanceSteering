@@ -66,6 +66,8 @@ function loadedMission(mission, node)
         return
     end
 
+    guidanceSteering:onMissionLoading(mission)
+
     if mission.cancelLoading then
         return
     end

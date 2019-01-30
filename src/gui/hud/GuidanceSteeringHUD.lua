@@ -2,7 +2,6 @@ GuidanceSteeringHUD = {}
 
 local GuidanceSteeringHUD_mt = Class(GuidanceSteeringHUD)
 
-
 function GuidanceSteeringHUD:new(mission, gameInfoDisplay, i18n)
     local instance = setmetatable({}, GuidanceSteeringHUD_mt)
 

@@ -7,10 +7,13 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
     STRATEGY_METHOD = "guidanceSteeringStrategyMethodElement",
     TRACK = "guidanceSteeringTrackElement",
     CARDINALS = "guidanceSteeringCardinalsElement",
-
+    -- Text box
+    TRACK_TEXT_INPUT = "guidanceSteeringTrackNameElement",
     -- Buttons
     POINT_A_BUTTON = "guidanceSteeringPointAButton",
-    POINT_B_BUTTON = "guidanceSteeringPointBButton"
+    POINT_B_BUTTON = "guidanceSteeringPointBButton",
+    -- Warning box
+    HELP_BOX = "settingsHelpBoxText"
 }
 
 function GuidanceSteeringStrategyFrame:new(i18n)
@@ -43,6 +46,7 @@ function GuidanceSteeringStrategyFrame:initialize()
     end
 
     self.guidanceSteeringCardinalsElement:setTexts(cardinals)
+    self.guidanceSteeringTrackNameElement:setText("Track name")
 end
 
 -- Todo: create custom button element
@@ -77,29 +81,6 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
     if self.allowSave then
-        local vehicle = g_guidanceSteering.ui:getVehicle()
-        if vehicle ~= nil then
-            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-            local data = spec.guidanceData
-            Logger.info("Auto save: ", self.guidanceSteeringTrackElement:getState())
-
-            local saveData = {}
-
-            saveData.strategy = self.guidanceSteeringStrategyElement:getState()
-            saveData.method = self.guidanceSteeringStrategyMethodElement:getState()
-            saveData.width = data.width
-            saveData.offsetWidth = data.offsetWidth
-            saveData.snapDirection = data.snapDirection
-            saveData.driveTarget = data.driveTarget
-
-            local id = self.guidanceSteeringTrackElement:getState()
-            if g_currentMission:getIsServer() then
-                g_guidanceSteering:saveTrack(id, saveData)
-                vehicle:updateGuidanceData(data, false, false)
-            else
-                g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, saveData))
-            end
-        end
 
         self.allowSave = false
     end
@@ -119,22 +100,92 @@ end
 
 function GuidanceSteeringStrategyFrame:onClickNewTrack()
     local state = self.guidanceSteeringTrackElement:getState() + 1
+    local name = self.guidanceSteeringTrackNameElement:getText()
 
-    Logger.info("Create: ", self.guidanceSteeringTrackElement:getState())
-    g_guidanceSteering:createTrack(("Some name %s"):format(state))
+    -- Reset
+    self:setWarningMessage("")
+
+    -- might check if the name already exists
+    if g_guidanceSteering:getTrackNameExist(name) then
+        self:setWarningMessage("Already exists")
+        return
+    end
+
+    Logger.info("Create: ", name)
+    g_guidanceSteering:createTrack(name)
+    -- Save current track data
+    self:onClickSaveTrack()
 
     self:displayTrackElement()
     self.guidanceSteeringTrackElement:setState(state)
 end
 
 function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
+    -- Reset
+    self:setWarningMessage("")
 
     Logger.info("Remove: ", self.guidanceSteeringTrackElement:getState())
     local state = self.guidanceSteeringTrackElement:getState()
     g_guidanceSteering:deleteTrack(state)
 
     self:displayTrackElement()
-    self.guidanceSteeringTrackElement:setState(state - 1)
+    self:onClickLoadTrack(state - 1)
+end
+
+function GuidanceSteeringStrategyFrame:onClickSaveTrack()
+    local vehicle = g_guidanceSteering.ui:getVehicle()
+    if vehicle ~= nil then
+        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local data = spec.guidanceData
+        Logger.info("Save: ", self.guidanceSteeringTrackElement:getState())
+
+        local track = {}
+
+        track.name = self.guidanceSteeringTrackNameElement:getText()
+        track.strategy = self.guidanceSteeringStrategyElement:getState()
+        track.method = self.guidanceSteeringStrategyMethodElement:getState()
+        track.width = data.width
+        track.offsetWidth = data.offsetWidth
+        track.snapDirection = data.snapDirection
+        track.driveTarget = data.driveTarget
+
+        local id = self.guidanceSteeringTrackElement:getState()
+        if g_currentMission:getIsServer() then
+            g_guidanceSteering:saveTrack(id, track)
+            vehicle:updateGuidanceData(data, false, false)
+        else
+            g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, track))
+        end
+    end
+end
+
+function GuidanceSteeringStrategyFrame:onClickLoadTrack(state)
+    local track = g_guidanceSteering:getTrack(state)
+
+    if track ~= nil then
+        local vehicle = g_guidanceSteering.ui:getVehicle()
+        if vehicle ~= nil then
+            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local data = spec.guidanceData
+
+            self.guidanceSteeringTrackNameElement:setText(track.name)
+            self.guidanceSteeringStrategyElement:setState(track.strategy)
+            self.guidanceSteeringStrategyMethodElement:setState(track.method)
+
+            -- First request reset to make sure the current track is clear
+            vehicle:updateGuidanceData(nil, false, true)
+
+            data.width = track.width
+            data.offsetWidth = track.offsetWidth
+            data.snapDirection = track.snapDirection
+            data.driveTarget = track.driveTarget
+
+            -- Now we send a creation event
+            vehicle:updateGuidanceData(data, true, false)
+
+            self:onDisplayElementsChanged()
+        end
+    end
 end
 
 function GuidanceSteeringStrategyFrame:onClickSetPointA()
@@ -143,10 +194,13 @@ end
 function GuidanceSteeringStrategyFrame:onClickSetPointB()
 end
 
+function GuidanceSteeringStrategyFrame:onEnterPressedTrackName()
+end
+
 --- Functions
 
-function GuidanceSteeringStrategyFrame:buildDataTable(current)
-
+function GuidanceSteeringStrategyFrame:setWarningMessage(message)
+    self.settingsHelpBoxText:setText(message)
 end
 
 function GuidanceSteeringStrategyFrame:onDisplayElementsChanged()
@@ -170,7 +224,7 @@ end
 
 function GuidanceSteeringStrategyFrame:displayTrackElement()
     local texts = {}
-    for id, t in ipairs(g_guidanceSteering.savedTracks) do
+    for _, t in ipairs(g_guidanceSteering.savedTracks) do
         table.insert(texts, t.name)
     end
 

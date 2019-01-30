@@ -30,6 +30,42 @@ function GuidanceSteering:delete()
     self.ui:delete()
 end
 
+function GuidanceSteering:onMissionLoading(mission)
+    if not mission:getIsServer() then
+        return
+    end
+
+    if mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml") then
+        local xmlFile = loadXMLFile("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
+        if xmlFile ~= nil then
+            local i = 0
+            while true do
+                local key = ("guidanceSteering.tracks.track(%d)"):format(i)
+                if not hasXMLProperty(xmlFile, key) then
+                    break
+                end
+
+                local track = {}
+
+                track.name = getXMLString(xmlFile, key .. "#name")
+                track.strategy = getXMLInt(xmlFile, key .. "#strategy")
+                track.method = getXMLInt(xmlFile, key .. "#method")
+                track.width = getXMLFloat(xmlFile, key .. "#width")
+                track.offsetWidth = getXMLFloat(xmlFile, key .. "#offsetWidth")
+
+                track.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. "#snapDirection")) }
+                track.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. "#driveTarget")) }
+
+                ListUtil.addElementToList(self.savedTracks, track)
+
+                i = i + 1
+            end
+
+            delete(xmlFile)
+        end
+    end
+end
+
 function GuidanceSteering:onMissionLoaded(mission)
     self.ui:load()
 end
@@ -71,7 +107,6 @@ function GuidanceSteering:createTrack(name)
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
         ListUtil.addElementToList(self.savedTracks, entry)
-        Logger.info("add", entry)
     end
 end
 
@@ -79,6 +114,10 @@ function GuidanceSteering:saveTrack(id, data)
     local entry = self.savedTracks[id]
 
     if entry ~= nil then
+        if data.name ~= entry.name then
+            entry.name = data.name
+        end
+
         entry.strategy = data.strategy
         entry.method = data.method
         entry.width = data.width
@@ -95,6 +134,16 @@ end
 
 function GuidanceSteering:getTrack(id)
     return self.savedTracks[id]
+end
+
+function GuidanceSteering:getTrackNameExist(name)
+    for _, track in pairs(self.savedTracks) do
+        if track.name == name then
+            return true
+        end
+    end
+
+    return false
 end
 
 function GuidanceSteering.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
