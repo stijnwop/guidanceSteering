@@ -19,10 +19,11 @@ end
 function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getGuidanceStrategy", GlobalPositioningSystem.getGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
-    SpecializationUtil.registerFunction(vehicleType, "setGuidanceData", GlobalPositioningSystem.setGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "updateGuidanceData", GlobalPositioningSystem.updateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "pushABPoint", GlobalPositioningSystem.pushABPoint)
-    SpecializationUtil.registerFunction(vehicleType, "registerMultiPurposeActionEvents", GlobalPositioningSystem.registerMultiPurposeActionEvents)
+    SpecializationUtil.registerFunction(vehicleType, "onResetGuidanceData", GlobalPositioningSystem.onResetGuidanceData)
+    SpecializationUtil.registerFunction(vehicleType, "onCreateGuidanceData", GlobalPositioningSystem.onCreateGuidanceData)
+    SpecializationUtil.registerFunction(vehicleType, "onUpdateGuidanceData", GlobalPositioningSystem.onUpdateGuidanceData)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
@@ -44,31 +45,35 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
 end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
-    if self.isClient and isActiveForInputIgnoreSelection then
+    if self.isClient then
         local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-        if not self:getIsAIActive() and spec.hasGuidanceSystem then
-            local nonDrawnActionEvents = {}
-            local function insert(_, actionEventId)
-                table.insert(nonDrawnActionEvents, actionEventId)
+        self:clearActionEventsTable(spec.actionEvents)
+
+        if self:getIsActiveForInput(true, true) then
+            if not self:getIsAIActive() and spec.hasGuidanceSystem then
+                local nonDrawnActionEvents = {}
+                local function insert(_, actionEventId)
+                    table.insert(nonDrawnActionEvents, actionEventId)
+                end
+
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SETPOINT, self, GlobalPositioningSystem.actionEventSetABPoint, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SET_AUTO_WIDTH, self, GlobalPositioningSystem.actionEventSetAutoWidth, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_MINUS_WIDTH, self, GlobalPositioningSystem.actionEventMinusWidth, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_PLUS_WIDTH, self, GlobalPositioningSystem.actionEventPlusWidth, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_LEFT, self, GlobalPositioningSystem.actionEventShiftLeft, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_RIGHT, self, GlobalPositioningSystem.actionEventShiftRight, false, true, false, true, nil, nil, true))
+
+                for _, actionEventId in ipairs(nonDrawnActionEvents) do
+                    g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+                    g_inputBinding:setActionEventTextVisibility(actionEventId, false)
+                end
+
+                local _, actionEventIdToggleUI = self:addActionEvent(spec.actionEvents, InputAction.GS_SHOW_UI, self, GlobalPositioningSystem.actionEventOnToggleUI, false, true, false, true, nil, nil, true)
+                g_inputBinding:setActionEventTextVisibility(actionEventIdToggleUI, true)
+                g_inputBinding:setActionEventTextPriority(actionEventIdToggleUI, GS_PRIO_LOW)
             end
-
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SETPOINT, self, GlobalPositioningSystem.actionEventSetABPoint, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SET_AUTO_WIDTH, self, GlobalPositioningSystem.actionEventSetAutoWidth, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_MINUS_WIDTH, self, GlobalPositioningSystem.actionEventMinusWidth, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_PLUS_WIDTH, self, GlobalPositioningSystem.actionEventPlusWidth, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_LEFT, self, GlobalPositioningSystem.actionEventShiftLeft, false, true, false, true, nil, nil, true))
-            insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHIFT_RIGHT, self, GlobalPositioningSystem.actionEventShiftRight, false, true, false, true, nil, nil, true))
-
-            for _, actionEventId in ipairs(nonDrawnActionEvents) do
-                g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
-                g_inputBinding:setActionEventTextVisibility(actionEventId, false)
-            end
-
-            local _, actionEventIdToggleUI = self:addActionEvent(spec.actionEvents, InputAction.GS_SHOW_UI, self, GlobalPositioningSystem.actionEventOnToggleUI, false, true, false, true, nil, nil, true)
-            g_inputBinding:setActionEventTextVisibility(actionEventIdToggleUI, true)
-            g_inputBinding:setActionEventTextPriority(actionEventIdToggleUI, GS_PRIO_LOW)
         end
     end
 end
@@ -163,13 +168,13 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
     spec.guidanceData.snapDirectionForwards = true
+    spec.guidanceData.isCreated = false
 
     spec.ui = g_guidanceSteering.ui
     spec.dirtyFlag = self:getNextDirtyFlag()
 
-    self:registerMultiPurposeActionEvents()
+    GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
-    spec.isCreated = false
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
@@ -183,7 +188,7 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
             local data = GuidanceUtil.readGuidanceDataObject(streamId)
 
             -- sync guidance data
-            self:updateGuidanceData(false, data, true)
+            self:updateGuidanceData(data, false, false, true)
 
             -- sync settings
             spec.showGuidanceLines = streamReadBool(streamId)
@@ -349,9 +354,10 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     -- Only compute when the vehicle is moving
     if drivingDirection ~= 0 then
-        local distance = self.lastMovedDistance
-
-        spec.abDistanceCounter = spec.abDistanceCounter + distance
+        if spec.lineStrategy:getHasABDependentDirection() then
+            local distance = self.lastMovedDistance
+            spec.abDistanceCounter = spec.abDistanceCounter + distance
+        end
 
         data.movingForwards = self:getIsDrivingForward()
 
@@ -367,11 +373,12 @@ function GlobalPositioningSystem:onUpdate(dt)
         local dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(guidanceNode, lineDirX, 0, lineDirZ))
         --                local dirX, dirZ = lineDirX, lineDirZ
 
-        local angle = math.acos(driveDirX * dirX + driveDirZ * dirZ) -- dot towards point
+        local dot = MathUtil.clamp(driveDirX * dirX + driveDirZ * dirZ, GlobalPositioningSystem.DIRECTION_LEFT, GlobalPositioningSystem.DIRECTION_RIGHT) -- dot towards point
+        local angle = math.acos(dot)
 
         local snapDirectionMultiplier = 1
-        -- 90 deg
         if angle < 1.5708 then
+            -- If small than 90 deg we swap
             snapDirectionMultiplier = -snapDirectionMultiplier
         end
 
@@ -490,11 +497,6 @@ function GlobalPositioningSystem:getGuidanceStrategy()
     return spec.lineStrategy
 end
 
-function GlobalPositioningSystem:setGuidanceData(guidanceData)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.guidanceData = guidanceData
-end
-
 function GlobalPositioningSystem:pushABPoint(noEventSend)
     ABPointPushedEvent.sendEvent(self, noEventSend)
 
@@ -502,26 +504,20 @@ function GlobalPositioningSystem:pushABPoint(noEventSend)
     spec.lineStrategy:pushABPoint(spec.guidanceData)
 end
 
-function GlobalPositioningSystem:updateGuidanceData(doReset, guidanceData, noEventSend)
-    GuidanceDataChangedEvent.sendEvent(self, doReset, guidanceData, noEventSend)
+---updateGuidanceData
+---@param guidanceData table
+---@param isCreation boolean
+---@param isReset boolean
+---@param noEventSend boolean
+function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, isReset, noEventSend)
+    GuidanceDataChangedEvent.sendEvent(self, guidanceData, isCreation, isReset, noEventSend)
 
-    Logger.info("[updateGuidanceData]: resetting = ", doReset)
-
-    if doReset then
-        GlobalPositioningSystem.resetGuidanceData(self)
+    if isCreation then
+        self:onCreateGuidanceData()
+    elseif isReset then
+        self:onResetGuidanceData()
     else
-        Logger.info("[updateGuidanceData]: guidanceData = ", guidanceData)
-
-        if guidanceData ~= nil then
-            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-            local data = spec.guidanceData
-
-            data.width = guidanceData.width
-            data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
-            data.snapDirectionForwards = guidanceData.snapDirectionForwards
-            data.snapDirection = guidanceData.snapDirection
-            data.alphaRad = guidanceData.alphaRad
-        end
+        self:onUpdateGuidanceData(guidanceData)
     end
 end
 
@@ -551,9 +547,6 @@ function GlobalPositioningSystem.computeGuidanceTarget(self)
         driveDirX, driveDirZ = -driveDirX, -driveDirZ
     end
 
-    --Logger.info("snapDirectionForwards", data.movingForwards)
-    --Logger.info("dir", { driveDirX, driveDirZ })
-
     -- Guidance driveTarget
     data.driveTarget = {
         transX, -- x translation of target
@@ -569,14 +562,19 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
     local data = spec.guidanceData
 
     local guidanceNode = spec.guidanceTargetNode
-    if spec.lineStrategy:getHasABDependentDirection()
-            and spec.lineStrategy:getIsABDirectionPossible()
-            and not data.movingForwards then
-        guidanceNode = spec.guidanceNode -- inverse line
-    end
 
+    local transX, transY, transZ = unpack(data.driveTarget)
     local dirX, _, dirZ = localDirectionToWorld(guidanceNode, 0, 0, 1)
-    local transX, _, transZ = unpack(data.driveTarget)
+
+    if spec.lineStrategy:getHasABDependentDirection()
+            and spec.lineStrategy:getIsABDirectionPossible() then
+        if not data.movingForwards then
+            guidanceNode = spec.guidanceNode -- inverse line
+        end
+
+        local strategyData = spec.lineStrategy:getGuidanceData(guidanceNode, data)
+        transX, transY, transZ, dirX, dirZ = unpack(strategyData)
+    end
 
     local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
     -- Snap to terrain when settings is active
@@ -600,22 +598,53 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
         z
     }
 
-    -- Update clients
-    self:updateGuidanceData(false, data)
-    spec.lineStrategy:delete()
-    data.isCreated = true -- Todo: current placeholder
-    Logger.info("Calculated snapdirection with data:", data)
+    self:updateGuidanceData(data, true, false)
 end
 
-function GlobalPositioningSystem.resetGuidanceData(self)
+function GlobalPositioningSystem:onCreateGuidanceData()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    -- Reset distance counter
     spec.abDistanceCounter = 0
+    -- Delete AB points
+    spec.lineStrategy:delete()
+
+    local data = spec.guidanceData
+    data.isCreated = true
+
+    Logger.info("onCreateGuidanceData")
+end
+
+function GlobalPositioningSystem:onResetGuidanceData()
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    -- Reset distance counter
+    spec.abDistanceCounter = 0
+    -- Delete AB points
     spec.lineStrategy:delete()
 
     local data = spec.guidanceData
     data.isCreated = false
     data.snapDirection = { 0, 0, 0, 0 }
     data.snapDirectionForwards = not data.isReverseDriving -- Todo: we might want to save this
+
+    Logger.info("onResetGuidanceData")
+end
+
+function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
+    if guidanceData == nil then
+        return
+    end
+
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local data = spec.guidanceData
+    data.width = guidanceData.width
+    data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
+    data.snapDirectionForwards = guidanceData.snapDirectionForwards
+    data.snapDirection = guidanceData.snapDirection
+    data.alphaRad = guidanceData.alphaRad
+
+    Logger.info("onUpdateGuidanceData")
 end
 
 function GlobalPositioningSystem.guideSteering(vehicle, dt)
@@ -698,19 +727,19 @@ function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, input
     local data = spec.guidanceData
     data.offsetWidth = 0
     data.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
-    self:updateGuidanceData(false, data)
+    self:updateGuidanceData(data, false, false)
 end
 
 function GlobalPositioningSystem.actionEventMinusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = math.max(0, spec.guidanceData.width - 0.05)
-    self:updateGuidanceData(false, spec.guidanceData)
+    self:updateGuidanceData(spec.guidanceData, false, false)
 end
 
 function GlobalPositioningSystem.actionEventPlusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.guidanceData.width = spec.guidanceData.width + 0.05
-    self:updateGuidanceData(false, spec.guidanceData)
+    self:updateGuidanceData(spec.guidanceData, false, false)
 end
 
 function GlobalPositioningSystem.actionEventShiftLeft(self, actionName, inputValue, callbackState, isAnalog)
@@ -740,12 +769,12 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
     Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
 end
 
-function GlobalPositioningSystem:registerMultiPurposeActionEvents()
+function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local event = MultiPurposeActionEvent:new(4)
 
     event:addAction(function()
-        self:updateGuidanceData(true)
+        self:updateGuidanceData(nil, false, true)
         Logger.info("Resetting AB line strategy")
         return true
     end)

@@ -9,29 +9,32 @@ function GuidanceDataChangedEvent:emptyNew()
     return self
 end
 
-function GuidanceDataChangedEvent:new(vehicle, doReset, data)
+function GuidanceDataChangedEvent:new(vehicle, data, isCreation, isReset)
     local self = GuidanceDataChangedEvent:emptyNew()
 
     self.vehicle = vehicle
-    self.doReset = doReset
     self.data = data
+    self.isCreation = isCreation
+    self.isReset = isReset
 
     return self
 end
 
 function GuidanceDataChangedEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
-    streamWriteBool(streamId, self.doReset)
-    if not self.doReset then
+    streamWriteBool(streamId, self.isCreation)
+    streamWriteBool(streamId, self.isReset)
+    if not self.isReset then
         GuidanceUtil.writeGuidanceDataObject(streamId, self.data)
     end
 end
 
 function GuidanceDataChangedEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
-    self.doReset = streamReadBool(streamId)
+    self.isCreation = streamReadBool(streamId)
+    self.isReset = streamReadBool(streamId)
 
-    if not self.doReset then
+    if not self.isReset then
         self.data = GuidanceUtil.readGuidanceDataObject(streamId)
     end
 
@@ -43,15 +46,15 @@ function GuidanceDataChangedEvent:run(connection)
         g_server:broadcastEvent(self, false, connection, self.vehicle)
     end
 
-    self.vehicle:updateGuidanceData(self.doReset, self.data, true)
+    self.vehicle:updateGuidanceData(self.data, self.isCreation, self.isReset, true)
 end
 
-function GuidanceDataChangedEvent.sendEvent(vehicle, doReset, data, noEventSend)
+function GuidanceDataChangedEvent.sendEvent(vehicle, data, isCreation, isReset, noEventSend)
     if noEventSend == nil or noEventSend == false then
         if g_server ~= nil then
-            g_server:broadcastEvent(GuidanceDataChangedEvent:new(vehicle, doReset, data), nil, nil, vehicle)
+            g_server:broadcastEvent(GuidanceDataChangedEvent:new(vehicle, data, isCreation, isReset), nil, nil, vehicle)
         else
-            g_client:getServerConnection():sendEvent(GuidanceDataChangedEvent:new(vehicle, doReset, data))
+            g_client:getServerConnection():sendEvent(GuidanceDataChangedEvent:new(vehicle, data, isCreation, isReset))
         end
     end
 end
