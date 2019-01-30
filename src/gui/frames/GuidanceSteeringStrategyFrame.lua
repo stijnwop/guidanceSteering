@@ -107,7 +107,7 @@ function GuidanceSteeringStrategyFrame:onClickNewTrack()
 
     -- might check if the name already exists
     if g_guidanceSteering:getTrackNameExist(name) then
-        self:setWarningMessage("Already exists")
+        self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(name))
         return
     end
 
