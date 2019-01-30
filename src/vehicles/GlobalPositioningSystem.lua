@@ -174,7 +174,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.startLane = 0
     spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
-    spec.guidanceData.snapDirectionForwards = true
     spec.guidanceData.isCreated = false
 
     spec.ui = g_guidanceSteering.ui
@@ -607,7 +606,6 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
     local x = transX + offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirZ
     local z = transZ - offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirX
 
-    data.snapDirectionForwards = data.movingForwards
     -- Line direction and translation xz axis
     data.snapDirection = {
         dirX,
@@ -644,7 +642,6 @@ function GlobalPositioningSystem:onResetGuidanceData()
     local data = spec.guidanceData
     data.isCreated = false
     data.snapDirection = { 0, 0, 0, 0 }
-    data.snapDirectionForwards = not data.isReverseDriving -- Todo: we might want to save this
 
     Logger.info("onResetGuidanceData")
 end
@@ -658,7 +655,6 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     local data = spec.guidanceData
     data.width = guidanceData.width
     data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
-    data.snapDirectionForwards = guidanceData.snapDirectionForwards
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
 

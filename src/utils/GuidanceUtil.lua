@@ -58,7 +58,7 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
     streamWriteFloat32(streamId, data.width)
     streamWriteInt8(streamId, data.snapDirectionMultiplier)
-    streamWriteBool(streamId, data.snapDirectionForwards)
+    streamWriteBool(streamId, data.isCreated)
     streamWriteFloat32(streamId, data.alphaRad)
 
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapX, paramsXZ)
@@ -83,7 +83,7 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
 
     data.width = streamReadFloat32(streamId)
     data.snapDirectionMultiplier = streamReadInt8(streamId)
-    data.snapDirectionForwards = streamReadBool(streamId)
+    data.isCreated = streamReadBool(streamId)
     data.alphaRad = streamReadFloat32(streamId)
 
     --local snapX = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
