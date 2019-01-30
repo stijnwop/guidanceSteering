@@ -70,7 +70,7 @@ end
 ---@param data table
 function ABStrategy:draw(data)
     local lines = { ABStrategy.ABLines["middle"] }
-    local step = 1
+    local skipStep = 1
     local numSteps = ABStrategy.NUM_STEPS
     --local drawBotherLines = self:getIsGuidancePossible()
     local drawBotherLines = data.isCreated
@@ -90,11 +90,25 @@ function ABStrategy:draw(data)
         local dirZ = z - a[3]
         local length = MathUtil.vector2Length(dirX, dirZ)
         numSteps = math.max(math.floor(length) - 1, 0)
-        step = 2
+        skipStep = 2
     end
 
     local lineXDir = data.snapDirectionMultiplier * lineDirX
     local lineZDir = data.snapDirectionMultiplier * lineDirZ
+
+    local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, r, g, b)
+        if step >= numSteps then
+            return
+        end
+
+        local x1 = lx + stepSize * step * dirX
+        local z1 = lz + stepSize * step * dirZ
+        local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
+
+        setTextBold(true)
+        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.018), 0, r, g, b)
+        drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, r, g, b)
+    end
 
     for _, line in pairs(lines) do
         local lineX = x + data.width * lineDirZ * (data.alphaRad + line.position / 2)
@@ -102,18 +116,7 @@ function ABStrategy:draw(data)
 
         local r, g, b = unpack(line.rgb)
 
-        for l = 1, numSteps, step do
-            local x1 = lineX + ABStrategy.STEP_SIZE * l * lineXDir
-            local z1 = lineZ + ABStrategy.STEP_SIZE * l * lineZDir
-            local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
-            local x2 = lineX + ABStrategy.STEP_SIZE * (l + 1) * lineXDir
-            local z2 = lineZ + ABStrategy.STEP_SIZE * (l + 1) * lineZDir
-            local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + ABStrategy.GROUND_CLEARANCE_OFFSET
-
-            setTextBold(true)
-            GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.018), 0, r, g, b)
-            GuidanceUtil.renderTextAtWorldPosition(x2, y2, z2, ".", getCorrectTextSize(0.018), 0, r, g, b)
-        end
+        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, r, g, b)
     end
 end
 
