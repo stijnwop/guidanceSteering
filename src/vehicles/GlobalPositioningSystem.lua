@@ -414,12 +414,23 @@ function GlobalPositioningSystem:onUpdate(dt)
         if isOnField then
             local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
             local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
-            local lookAheadStepDistance = 11 * speedMultiplier -- m
+            local lookAheadStepDistance = distanceToTurn + 2 -- m
             local distanceToHeadLand, isDistanceOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
 
             --Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
             --Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
 
+            if distanceToHeadLand <= distanceToTurn then
+                local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
+                -- if stop mode
+                if drivable_spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
+                    self:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
+                end
+
+                if spec.lastIsNotOnField and spec.lastIsNotOnField ~= not isOnField then
+                    spec.lastIsNotOnField = false
+                end
+            end
         end
     end
 end
@@ -786,7 +797,7 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
     event:addAction(function()
         if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
-            g_currentMission:showBlinkingWarning("Drive 10m in other to set point B. Current traveled distance: " .. tostring(spec.abDistanceCounter), 4000)
+            g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_dropDistance"):format(spec.abDistanceCounter), 4000)
             return false
         end
 

@@ -20,6 +20,9 @@
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Snap to terrain angle"/>
         <text name="input_GS_TURN_STEERING" text="Set steering direction"/>
 
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Drive at least 15m in order to set point B. Current traveled distance: %.2f"/>
+
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Guidance settings"/>
         <text name="guidanceSteering_ui_strategy" text="Guidance strategy"/>
