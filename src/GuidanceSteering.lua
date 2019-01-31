@@ -47,14 +47,16 @@ function GuidanceSteering:onMissionLoading(mission)
 
                 local track = {}
 
+                track.id = getXMLInt(xmlFile, key .. "#id")
                 track.name = getXMLString(xmlFile, key .. "#name")
                 track.strategy = getXMLInt(xmlFile, key .. "#strategy")
                 track.method = getXMLInt(xmlFile, key .. "#method")
-                track.width = getXMLFloat(xmlFile, key .. "#width")
-                track.offsetWidth = getXMLFloat(xmlFile, key .. "#offsetWidth")
 
-                track.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. "#snapDirection")) }
-                track.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. "#driveTarget")) }
+                track.guidanceData = {}
+                track.guidanceData.width = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3)
+                track.guidanceData.offsetWidth = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3)
+                track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
+                track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
 
                 ListUtil.addElementToList(self.savedTracks, track)
 
@@ -76,14 +78,16 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     if self.savedTracks ~= nil then
         for i, track in ipairs(self.savedTracks) do
             local key = ("guidanceSteering.tracks.track(%d)"):format(i - 1)
+
+            Logger.info(i, track)
             setXMLInt(xmlFile, key .. "#id", i)
             setXMLString(xmlFile, key .. "#name", track.name)
             setXMLInt(xmlFile, key .. "#strategy", track.strategy)
             setXMLInt(xmlFile, key .. "#method", track.method)
-            setXMLFloat(xmlFile, key .. "#width", track.width)
-            setXMLFloat(xmlFile, key .. "#offsetWidth", track.offsetWidth)
-            setXMLString(xmlFile, key .. "#snapDirection", table.concat(track.snapDirection, " "))
-            setXMLString(xmlFile, key .. "#driveTarget", table.concat(track.driveTarget, " "))
+            setXMLFloat(xmlFile, key .. ".guidanceData#width", track.guidanceData.width)
+            setXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth", track.guidanceData.offsetWidth)
+            setXMLString(xmlFile, key .. ".guidanceData#snapDirection", table.concat(track.guidanceData.snapDirection, " "))
+            setXMLString(xmlFile, key .. ".guidanceData#driveTarget", table.concat(track.guidanceData.driveTarget, " "))
         end
     end
 end
@@ -94,15 +98,20 @@ end
 function GuidanceSteering:draw(dt)
 end
 
-function GuidanceSteering:createTrack(name)
+function GuidanceSteering:createTrack(id, name)
+    -- event
+
     local entry = {
+        id = id,
         name = name,
         strategy = 0,
         method = 0,
-        width = 0,
-        offsetWidth = 0,
-        snapDirection = { 0, 0, 0, 0 },
-        driveTarget = { 0, 0, 0, 0, 0 }
+        guidanceData = {
+            width = 0,
+            offsetWidth = 0,
+            snapDirection = { 0, 0, 0, 0 },
+            driveTarget = { 0, 0, 0, 0, 0 }
+        }
     }
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
@@ -111,6 +120,8 @@ function GuidanceSteering:createTrack(name)
 end
 
 function GuidanceSteering:saveTrack(id, data)
+    -- event
+
     local entry = self.savedTracks[id]
 
     if entry ~= nil then
@@ -120,14 +131,17 @@ function GuidanceSteering:saveTrack(id, data)
 
         entry.strategy = data.strategy
         entry.method = data.method
-        entry.width = data.width
-        entry.offsetWidth = data.offsetWidth
-        entry.snapDirection = data.snapDirection
-        entry.driveTarget = data.driveTarget
+
+        entry.guidanceData.width = data.guidanceData.width
+        entry.guidanceData.offsetWidth = data.guidanceData.offsetWidth
+        entry.guidanceData.snapDirection = data.guidanceData.snapDirection
+        entry.guidanceData.driveTarget = data.guidanceData.driveTarget
     end
 end
 
 function GuidanceSteering:deleteTrack(id)
+    -- event
+
     local entry = self.savedTracks[id]
     ListUtil.removeElementFromList(self.savedTracks, entry)
 end

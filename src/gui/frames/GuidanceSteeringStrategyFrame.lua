@@ -99,7 +99,7 @@ end
 --- Buttons
 
 function GuidanceSteeringStrategyFrame:onClickNewTrack()
-    local state = self.guidanceSteeringTrackElement:getState() + 1
+    local id = self.guidanceSteeringTrackElement:getState() + 1
     local name = self.guidanceSteeringTrackNameElement:getText()
 
     -- Reset
@@ -112,12 +112,10 @@ function GuidanceSteeringStrategyFrame:onClickNewTrack()
     end
 
     Logger.info("Create: ", name)
-    g_guidanceSteering:createTrack(name)
-    -- Save current track data
-    self:onClickSaveTrack()
+    g_guidanceSteering:createTrack(id, name)
 
     self:displayTrackElement()
-    self.guidanceSteeringTrackElement:setState(state)
+    self.guidanceSteeringTrackElement:setState(id)
 end
 
 function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
@@ -139,20 +137,21 @@ function GuidanceSteeringStrategyFrame:onClickSaveTrack()
         local data = spec.guidanceData
         Logger.info("Save: ", self.guidanceSteeringTrackElement:getState())
 
-        local track = {}
+        local state = self.guidanceSteeringTrackElement:getState()
+        local track = g_guidanceSteering:getTrack(state)
 
         track.name = self.guidanceSteeringTrackNameElement:getText()
         track.strategy = self.guidanceSteeringStrategyElement:getState()
         track.method = self.guidanceSteeringStrategyMethodElement:getState()
-        track.width = data.width
-        track.offsetWidth = data.offsetWidth
-        track.snapDirection = data.snapDirection
-        track.driveTarget = data.driveTarget
+
+        track.guidanceData.width = data.width
+        track.guidanceData.offsetWidth = data.offsetWidth
+        track.guidanceData.snapDirection = data.snapDirection
+        track.guidanceData.driveTarget = data.driveTarget
 
         local id = self.guidanceSteeringTrackElement:getState()
         if g_currentMission:getIsServer() then
             g_guidanceSteering:saveTrack(id, track)
-            vehicle:updateGuidanceData(data, false, false)
         else
             g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, track))
         end
@@ -175,10 +174,10 @@ function GuidanceSteeringStrategyFrame:onClickLoadTrack(state)
             -- First request reset to make sure the current track is clear
             vehicle:updateGuidanceData(nil, false, true)
 
-            data.width = track.width
-            data.offsetWidth = track.offsetWidth
-            data.snapDirection = track.snapDirection
-            data.driveTarget = track.driveTarget
+            data.width = track.guidanceData.width
+            data.offsetWidth = track.guidanceData.offsetWidth
+            data.snapDirection = track.guidanceData.snapDirection
+            data.driveTarget = track.guidanceData.driveTarget
 
             -- Now we send a creation event
             vehicle:updateGuidanceData(data, true, false)
