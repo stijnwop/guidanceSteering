@@ -1,3 +1,10 @@
+--
+-- ABPointPushedEvent
+--
+-- AB point push event to handle point creation on other clients.
+--
+-- Copyright (c) Wopster, 2019
+
 ABPointPushedEvent = {}
 local ABPointPushedEvent_mt = Class(ABPointPushedEvent, Event)
 

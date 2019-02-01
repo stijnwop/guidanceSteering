@@ -1,3 +1,10 @@
+--
+-- GuidanceDataChangedEvent
+--
+-- Data changed event to sync guidance data with server.
+--
+-- Copyright (c) Wopster, 2019
+
 GuidanceDataChangedEvent = {}
 local GuidanceDataChangedEvent_mt = Class(GuidanceDataChangedEvent, Event)
 
@@ -38,6 +45,7 @@ function GuidanceDataChangedEvent:readStream(streamId, connection)
         self.data = GuidanceUtil.readGuidanceDataObject(streamId)
     end
 
+    --g_currentMission.accessHandler:canFarmAccess(self:getActiveFarm())
     self:run(connection)
 end
 

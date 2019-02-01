@@ -17,7 +17,6 @@ GlobalPositioningSystem.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
 GlobalPositioningSystem.DIRECTION_LEFT = -1
 GlobalPositioningSystem.DIRECTION_RIGHT = 1
 GlobalPositioningSystem.AB_DROP_DISTANCE = 15
-GlobalPositioningSystem.MAX_TRACKS = 2 ^ 6
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
@@ -180,7 +179,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.dirtyFlag = self:getNextDirtyFlag()
 
     GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
-
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
@@ -235,7 +233,7 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
-            spec.shiftParallelDirection = streamReadInt8(streamId)
+            spec.shiftParallelDirection = streamReadUIntN(streamId, 2)
         end
     end
     -- end
@@ -253,7 +251,7 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
 
             streamWriteBool(streamId, spec.shiftParallel)
-            streamWriteInt8(streamId, spec.shiftParallelDirection)
+            streamWriteUIntN(streamId, spec.shiftParallelDirection, 2)
         end
     end
     --end
@@ -531,6 +529,7 @@ function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, is
 
     if isCreation then
         self:onCreateGuidanceData()
+        self:onUpdateGuidanceData(guidanceData)
     elseif isReset then
         self:onResetGuidanceData()
     else
@@ -670,6 +669,11 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     -- data
     local data = spec.guidanceData
+
+    if not spec.printOnce then
+        Logger.info("server->", spec.guidanceData)
+        spec.printOnce = true
+    end
     local guidanceNode = spec.guidanceNode
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
     local dX, dY, dZ = unpack(data.driveTarget)

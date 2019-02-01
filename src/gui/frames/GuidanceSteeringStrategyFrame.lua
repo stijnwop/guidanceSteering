@@ -34,7 +34,6 @@ function GuidanceSteeringStrategyFrame:copyAttributes(src)
 end
 
 function GuidanceSteeringStrategyFrame:initialize()
-    --self.guidanceSteeringStrategyMethodElement.onLeftButtonClicked = Utils.appendedFunction(self.guidanceSteeringStrategyMethodElement.onLeftButtonClicked, self.onDisplayElementsChanged)
     self.guidanceSteeringStrategyElement:setTexts({
         self.i18n:getText("guidanceSteering_strategy_abStraight"),
     })
@@ -48,18 +47,6 @@ function GuidanceSteeringStrategyFrame:initialize()
     self.guidanceSteeringCardinalsElement:setTexts(cardinals)
     self.guidanceSteeringTrackNameElement:setText("Track name")
 end
-
--- Todo: create custom button element
---
---function GuidanceSteeringStrategyFrame:onLeftButtonClicked()
---    GuidanceSteeringStrategyFrame:superClass().onLeftButtonClicked(self)
---
---end
---
---function GuidanceSteeringStrategyFrame:onRightButtonClicked()
---    GuidanceSteeringStrategyFrame:superClass().onLeftButtonClicked(self)
---
---end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
     GuidanceSteeringStrategyFrame:superClass().onFrameOpen(self)
@@ -81,7 +68,6 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
     if self.allowSave then
-
         self.allowSave = false
     end
 end
@@ -102,7 +88,7 @@ function GuidanceSteeringStrategyFrame:onClickNewTrack()
     local id = self.guidanceSteeringTrackElement:getState() + 1
     local name = self.guidanceSteeringTrackNameElement:getText()
 
-    -- Reset
+    -- Reset warning
     self:setWarningMessage("")
 
     -- might check if the name already exists
@@ -111,23 +97,23 @@ function GuidanceSteeringStrategyFrame:onClickNewTrack()
         return
     end
 
-    Logger.info("Create: ", name)
-    g_guidanceSteering:createTrack(id, name)
+    g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, name, true))
 
     self:displayTrackElement()
     self.guidanceSteeringTrackElement:setState(id)
 end
 
 function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
-    -- Reset
+    -- Reset warning
     self:setWarningMessage("")
 
-    Logger.info("Remove: ", self.guidanceSteeringTrackElement:getState())
-    local state = self.guidanceSteeringTrackElement:getState()
-    g_guidanceSteering:deleteTrack(state)
+    local id = self.guidanceSteeringTrackElement:getState()
+    Logger.info("Remove: ", id)
+
+    g_client:getServerConnection():sendEvent(TrackDeleteEvent:new(id))
 
     self:displayTrackElement()
-    self:onClickLoadTrack(state - 1)
+    self:onClickLoadTrack(id - 1)
 end
 
 function GuidanceSteeringStrategyFrame:onClickSaveTrack()
@@ -137,8 +123,8 @@ function GuidanceSteeringStrategyFrame:onClickSaveTrack()
         local data = spec.guidanceData
         Logger.info("Save: ", self.guidanceSteeringTrackElement:getState())
 
-        local state = self.guidanceSteeringTrackElement:getState()
-        local track = g_guidanceSteering:getTrack(state)
+        local id = self.guidanceSteeringTrackElement:getState()
+        local track = g_guidanceSteering:getTrack(id)
 
         track.name = self.guidanceSteeringTrackNameElement:getText()
         track.strategy = self.guidanceSteeringStrategyElement:getState()
@@ -149,17 +135,12 @@ function GuidanceSteeringStrategyFrame:onClickSaveTrack()
         track.guidanceData.snapDirection = data.snapDirection
         track.guidanceData.driveTarget = data.driveTarget
 
-        local id = self.guidanceSteeringTrackElement:getState()
-        if g_currentMission:getIsServer() then
-            g_guidanceSteering:saveTrack(id, track)
-        else
-            g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, track))
-        end
+        g_client:getServerConnection():sendEvent(TrackChangedEvent:new(id, track.name, false, track))
     end
 end
 
-function GuidanceSteeringStrategyFrame:onClickLoadTrack(state)
-    local track = g_guidanceSteering:getTrack(state)
+function GuidanceSteeringStrategyFrame:onClickLoadTrack(id)
+    local track = g_guidanceSteering:getTrack(id)
 
     if track ~= nil then
         local vehicle = g_guidanceSteering.ui:getVehicle()

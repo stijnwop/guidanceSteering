@@ -57,10 +57,18 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
 
     streamWriteFloat32(streamId, data.width)
-    streamWriteInt8(streamId, data.snapDirectionMultiplier)
-    streamWriteBool(streamId, data.isCreated)
-    streamWriteFloat32(streamId, data.alphaRad)
+    streamWriteFloat32(streamId, data.offsetWidth)
+    streamWriteBool(streamId, data.snapDirectionMultiplier ~= nil)
+    if data.snapDirectionMultiplier ~= nil then
+        streamWriteUIntN(streamId, data.snapDirectionMultiplier, 2)
+    end
 
+    --streamWriteBool(streamId, data.isCreated) -- todo: fix for track creation
+    streamWriteBool(streamId, data.alphaRad ~= nil)
+    -- Todo: think we don't need this
+    if data.alphaRad ~= nil then
+        streamWriteFloat32(streamId, data.alphaRad)
+    end
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapX, paramsXZ)
     --NetworkUtil.writeCompressedWorldPosition(streamId, snapZ, paramsXZ)
     --
@@ -82,9 +90,18 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     --local paramsXZ = g_currentMission.vehicleXZPosCompressionParams
 
     data.width = streamReadFloat32(streamId)
-    data.snapDirectionMultiplier = streamReadInt8(streamId)
-    data.isCreated = streamReadBool(streamId)
-    data.alphaRad = streamReadFloat32(streamId)
+    data.offsetWidth = streamReadFloat32(streamId)
+
+    if streamReadBool(streamId) then
+        data.snapDirectionMultiplier = streamReadUIntN(streamId, 2)
+    end
+
+    --data.isCreated = streamReadBool(streamId)
+    --Logger.info("is is created?", data.isCreated)
+
+    if streamReadBool(streamId) then
+        data.alphaRad = streamReadFloat32(streamId)
+    end
 
     --local snapX = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
     --local snapZ = NetworkUtil.readCompressedWorldPosition(streamId, paramsXZ)
