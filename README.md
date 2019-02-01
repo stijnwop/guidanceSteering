@@ -32,7 +32,7 @@ Tip: unfold and lower the vehicle in order to get the best results!
 #### Increase/descrease width
 Hit alt + plus and minus in order to change the width
 
-***PLEASE NOTE that this only works after the track creation!***
+***_Please note that this only works after the track creation!_***
 
 #### Terrain angle snapping
 If you're not able to create straight lines yourself you can enable angle snapping in the menu. This will align the AB lines with the terrain.
@@ -46,6 +46,10 @@ Currently it auto stops at the headland when cruise control is enabled. This fea
 ## MP
 This version should work in MP, but keep in mind it might have bugs.
 
+### Dev tips:
+To quickly zip the dev mod without the needed extra's, use the zip.bat. 
+
+***_Please note: the zip.bat requires the application 7zip to be installed!_***
 
 ## Copyright
 Copyright (c) 2019 Stijn Wopereis
