@@ -7,6 +7,9 @@
 
 GuidanceSteering = {}
 
+GuidanceSteering.SEND_NUM_BITS = 6 -- 2 ^ 6 = 64 max
+GuidanceSteering.MAX_NUM_TRACKS = 2 ^ GuidanceSteering.SEND_NUM_BITS
+
 local GuidanceSteering_mt = Class(GuidanceSteering)
 
 function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputManager, messageCenter, settingsModel)
@@ -30,41 +33,30 @@ function GuidanceSteering:delete()
     self.ui:delete()
 end
 
-function GuidanceSteering:onMissionLoading(mission)
-    if not mission:getIsServer() then
-        return
-    end
-
-    if mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml") then
-        local xmlFile = loadXMLFile("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
-        if xmlFile ~= nil then
-            local i = 0
-            while true do
-                local key = ("guidanceSteering.tracks.track(%d)"):format(i)
-                if not hasXMLProperty(xmlFile, key) then
-                    break
-                end
-
-                local track = {}
-
-                track.id = getXMLInt(xmlFile, key .. "#id")
-                track.name = getXMLString(xmlFile, key .. "#name")
-                track.strategy = getXMLInt(xmlFile, key .. "#strategy")
-                track.method = getXMLInt(xmlFile, key .. "#method")
-
-                track.guidanceData = {}
-                track.guidanceData.width = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3)
-                track.guidanceData.offsetWidth = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3)
-                track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
-                track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
-
-                ListUtil.addElementToList(self.savedTracks, track)
-
-                i = i + 1
-            end
-
-            delete(xmlFile)
+function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
+    local i = 0
+    while true do
+        local key = ("guidanceSteering.tracks.track(%d)"):format(i)
+        if not hasXMLProperty(xmlFile, key) then
+            break
         end
+
+        local track = {}
+
+        track.id = getXMLInt(xmlFile, key .. "#id")
+        track.name = getXMLString(xmlFile, key .. "#name")
+        track.strategy = getXMLInt(xmlFile, key .. "#strategy")
+        track.method = getXMLInt(xmlFile, key .. "#method")
+
+        track.guidanceData = {}
+        track.guidanceData.width = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3)
+        track.guidanceData.offsetWidth = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3)
+        track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
+        track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
+
+        ListUtil.addElementToList(self.savedTracks, track)
+
+        i = i + 1
     end
 end
 
@@ -92,6 +84,42 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     end
 end
 
+function GuidanceSteering:onReadStream(streamId, connection)
+    Logger.info("readStream")
+    if connection:getIsServer() then
+        local numTracks = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS)
+
+        for i = 1, numTracks do
+            local track = {}
+            track.id = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS)
+            track.name = streamReadString(streamId)
+            track.strategy = streamReadUIntN(streamId, 2)
+            track.method = streamReadUIntN(streamId, 2)
+
+            track.guidanceData = GuidanceUtil.readGuidanceDataObject(streamId)
+
+            Logger.info(i, track)
+            self.savedTracks[i] = track
+        end
+    end
+end
+
+function GuidanceSteering:onWriteStream(streamId, connection)
+    Logger.info("writeStream")
+    if not connection:getIsServer() then
+        streamWriteUIntN(streamId, #self.savedTracks, GuidanceSteering.SEND_NUM_BITS)
+
+        for _, track in pairs(self.savedTracks) do
+            streamWriteUIntN(streamId, track.id, GuidanceSteering.SEND_NUM_BITS)
+            streamWriteString(streamId, track.name)
+            streamWriteUIntN(streamId, track.strategy, 2)
+            streamWriteUIntN(streamId, track.method, 2)
+
+            GuidanceUtil.writeGuidanceDataObject(streamId, track.guidanceData)
+        end
+    end
+end
+
 function GuidanceSteering:update(dt)
 end
 
@@ -99,10 +127,15 @@ function GuidanceSteering:draw(dt)
 end
 
 function GuidanceSteering:createTrack(id, name)
-    -- event
+    Logger.info("Creating track: ", name)
+
+    if id > GuidanceSteering.MAX_NUM_TRACKS then
+        return
+    end
 
     local entry = {
         id = id,
+        farmId = 0, -- Todo: make tracks farm dependent
         name = name,
         strategy = 0,
         method = 0,
@@ -120,9 +153,12 @@ function GuidanceSteering:createTrack(id, name)
 end
 
 function GuidanceSteering:saveTrack(id, data)
-    -- event
+    if id > GuidanceSteering.MAX_NUM_TRACKS then
+        return
+    end
 
     local entry = self.savedTracks[id]
+    Logger.info("Saving track: ", entry.name)
 
     if entry ~= nil then
         if data.name ~= entry.name then
@@ -140,9 +176,10 @@ function GuidanceSteering:saveTrack(id, data)
 end
 
 function GuidanceSteering:deleteTrack(id)
-    -- event
-
     local entry = self.savedTracks[id]
+
+    Logger.info("Deleting track: ", entry.name)
+
     ListUtil.removeElementFromList(self.savedTracks, entry)
 end
 

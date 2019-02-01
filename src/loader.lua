@@ -9,6 +9,7 @@ local directory = g_currentModDirectory
 local modName = g_currentModName
 
 source(Utils.getFilename("src/events/TrackChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
 source(Utils.getFilename("src/events/ABPointPushedEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
 source(Utils.getFilename("src/events/SettingsChangedEvent.lua", directory))
@@ -42,16 +43,20 @@ end
 function init()
     FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, unload)
 
-    Mission00.load = Utils.prependedFunction(Mission00.load, load)
+    Mission00.load = Utils.prependedFunction(Mission00.load, loadMission)
     Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, loadedMission)
 
     FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
+
+    -- Networking
+    SavegameSettingsEvent.readStream = Utils.appendedFunction(SavegameSettingsEvent.readStream, readStream)
+    SavegameSettingsEvent.writeStream = Utils.appendedFunction(SavegameSettingsEvent.writeStream, writeStream)
 
     VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, validateVehicleTypes)
     StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, addGPSConfigurationUtil)
 end
 
-function load(mission)
+function loadMission(mission)
     assert(g_guidanceSteering == nil)
 
     guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter, g_settingsScreen.settingsModel)
@@ -66,7 +71,15 @@ function loadedMission(mission, node)
         return
     end
 
-    guidanceSteering:onMissionLoading(mission)
+    if mission:getIsServer() then
+        if mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml") then
+            local xmlFile = loadXMLFile("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
+            if xmlFile ~= nil then
+                guidanceSteering:onMissionLoadFromSavegame(xmlFile)
+                delete(xmlFile)
+            end
+        end
+    end
 
     if mission.cancelLoading then
         return
@@ -101,6 +114,22 @@ function saveToXMLFile(missionInfo)
             delete(xmlFile)
         end
     end
+end
+
+function readStream(e, streamId, connection)
+    if not isEnabled() then
+        return
+    end
+
+    guidanceSteering:onReadStream(streamId, connection)
+end
+
+function writeStream(e, streamId, connection)
+    if not isEnabled() then
+        return
+    end
+
+    guidanceSteering:onWriteStream(streamId, connection)
 end
 
 function validateVehicleTypes(vehicleTypeManager)
