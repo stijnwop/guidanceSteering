@@ -45,7 +45,7 @@
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_e"/>
         </actionBinding>
         <actionBinding action="GS_SET_AUTO_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_z"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_r"/>
         </actionBinding>
         <actionBinding action="GS_MINUS_WIDTH">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus"/>
