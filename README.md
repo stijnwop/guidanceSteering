@@ -7,7 +7,7 @@ If you are planning to use a copy of the current development branch, please unde
 
 [Latest BETA release](https://github.com/stijnwop)
 
-## How it works
+## How the basics works
 Be aware that this version doesn´t support the full feature package yet!
 
 #### Open the menu
@@ -39,6 +39,13 @@ If you're not able to create straight lines yourself you can enable angle snappi
 
 #### Toggle guidance steering
 Once a track is created hit alt + x to toggle the steering.
+
+#### Headland control
+Currently it auto stops at the headland when cruise control is enabled. This feature and headland turning is still being worked on.
+
+## MP
+This version should work in MP, but keep in mind it might have bugs.
+
 
 ## Copyright
 Copyright (c) 2019 Stijn Wopereis
