@@ -54,3 +54,5 @@ To quickly zip the dev mod without the needed extra's, use the zip.bat.
 ## Copyright
 Copyright (c) 2019 Stijn Wopereis
 All rights reserved.
+
+Special thanks to workflowsen for creating the icon! 
