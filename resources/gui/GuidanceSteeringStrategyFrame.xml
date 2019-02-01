@@ -56,7 +56,7 @@
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_currentTrack"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
-                <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringTrackNameElement" onEnterPressed="onEnterPressedTrackName" toolTipElementId="trackNameBoxText" toolTipText="$l10n_toolTip_savegameName" maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName" imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen">
+                <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringTrackNameElement" onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName" maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName" imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen">
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ui_savegameName"/>
                 </GuiElement>
             </GuiElement>
