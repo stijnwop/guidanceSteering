@@ -10,6 +10,9 @@ If you are planning to use a copy of the current development branch, please unde
 ## How the basics works
 Be aware that this version doesn´t support the full feature package yet!
 
+### Buying GPS
+Before you're able to use GPS you have to buy the configuration in the shop!
+
 #### Open the menu
 In order to open the menu hit ctrl + s.
 
