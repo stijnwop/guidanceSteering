@@ -800,11 +800,22 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
     end)
 
     event:addAction(function()
+        if spec.guidanceData.width <= 0 then
+            g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_setWidth"), 2000)
+            return false
+        end
+
         self:pushABPoint()
+
         return true
     end)
 
     event:addAction(function()
+        if spec.guidanceData.width <= 0 then
+            g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_setWidth"), 2000)
+            return false
+        end
+
         if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
             g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_dropDistance"):format(spec.abDistanceCounter), 4000)
             return false
