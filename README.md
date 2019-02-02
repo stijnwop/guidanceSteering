@@ -11,7 +11,7 @@ If you are planning to use a copy of the current development branch, please unde
 Be aware that this version doesn´t support the full feature package yet!
 
 ### Buying GPS
-Before you're able to use GPS you have to buy the configuration in the shop!
+To be able to use the GPS you first need to buy the technology for your vehicle. Either buy a new vehicle and add the GPS or drive your current vehicle to the shop and add it.
 
 #### Open the menu
 In order to open the menu hit ctrl + s.
