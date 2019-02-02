@@ -23,9 +23,7 @@ Hit alt + e once in order to reset the AB creation.
 
 Hit alt + e once more in order to set point A.
 
-Hit alt + e once more in order to set point B.
-
-Hit alt + e again and it will create the track.
+Hit alt + e once more in order to set point B which will create the track!
 
 #### Auto width
 Hit alt + r in order to calculate the width of your vehicle.
