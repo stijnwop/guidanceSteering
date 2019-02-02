@@ -18,12 +18,13 @@ ABStrategy.METHODS = {
 }
 
 local RGB_WHITE = { 1, 1, 1 }
+local RGB_GREEN = { 0, 1, 0 }
 local RGB_BLUE = { 0, 0, .7 }
 
 ABStrategy.ABLines = {
-    ["left"] = { position = -1, rgb = RGB_BLUE },
-    ["middle"] = { position = 0, rgb = RGB_WHITE },
-    ["right"] = { position = 1, rgb = RGB_BLUE },
+    ["left"] = { position = -1, rgb = RGB_BLUE, rgbActive = RGB_BLUE },
+    ["middle"] = { position = 0, rgb = RGB_WHITE, rgbActive = RGB_GREEN },
+    ["right"] = { position = 1, rgb = RGB_BLUE, rgbActive = RGB_BLUE },
 }
 
 ABStrategy.STEP_SIZE = 1 -- 1m each line
@@ -67,7 +68,8 @@ end
 
 ---Draw
 ---@param data table
-function ABStrategy:draw(data)
+---@param guidanceSteeringIsActive boolean
+function ABStrategy:draw(data, guidanceSteeringIsActive)
     local lines = { ABStrategy.ABLines["middle"] }
     local skipStep = 1
     local numSteps = ABStrategy.NUM_STEPS
@@ -113,7 +115,8 @@ function ABStrategy:draw(data)
         local lineX = x + data.width * lineDirZ * (data.alphaRad + line.position / 2)
         local lineZ = z - data.width * lineDirX * (data.alphaRad + line.position / 2)
 
-        local r, g, b = unpack(line.rgb)
+        local rgb = guidanceSteeringIsActive and line.rgbActive or line.rgb
+        local r, g, b = unpack(rgb)
 
         drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, r, g, b)
     end

@@ -32,8 +32,8 @@ function CardinalStrategy:update(dt)
     CardinalStrategy:superClass().update(self, dt)
 end
 
-function CardinalStrategy:draw(data)
-    CardinalStrategy:superClass().draw(self, data)
+function CardinalStrategy:draw(data, guidanceSteeringIsActive)
+    CardinalStrategy:superClass().draw(self, data, guidanceSteeringIsActive)
 end
 
 ---Gets the guidance drive data for the given cardinals

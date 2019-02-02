@@ -452,7 +452,7 @@ function GlobalPositioningSystem:onDraw()
 
     if spec.guidanceIsActive then
         if spec.showGuidanceLines then
-            spec.lineStrategy:draw(spec.guidanceData)
+            spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive)
         end
     end
 end
