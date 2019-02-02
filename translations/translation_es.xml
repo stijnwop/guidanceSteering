@@ -3,7 +3,7 @@
     <translationContributors>Vanquish081</translationContributors>
 
     <texts>
-        <text name="configuration_buyableGPS" text="Dirección de Guiado"/>
+        <text name="configuration_buyableGPS" text="Sistema GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="No"/>
         <text name="configuration_buyableGPS_withGPS" text="Si"/>
 
