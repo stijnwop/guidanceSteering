@@ -342,11 +342,12 @@ function GlobalPositioningSystem:onUpdate(dt)
         return
     end
 
+    local data = spec.guidanceData
+
     if spec.shiftParallel then
-        GlobalPositioningSystem.shiftParallel(data, dt, spec.shiftParallelDirection)
+        GlobalPositioningSystem.shiftParallel(self, data, dt, spec.shiftParallelDirection)
     end
 
-    local data = spec.guidanceData
     local guidanceNode = spec.guidanceNode
     local lastSpeed = self:getLastSpeed()
 
@@ -357,7 +358,7 @@ function GlobalPositioningSystem:onUpdate(dt)
     local x, y, z, driveDirX, driveDirZ = unpack(data.driveTarget)
 
     -- Only compute when the vehicle is moving
-    if drivingDirection ~= 0 then
+    if drivingDirection ~= 0 or spec.shiftParallel then
         if spec.lineStrategy:getHasABDependentDirection() then
             local distance = self.lastMovedDistance
             spec.abDistanceCounter = spec.abDistanceCounter + distance
@@ -724,7 +725,7 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
 end
 
-function GlobalPositioningSystem.shiftParallel(data, dt, direction)
+function GlobalPositioningSystem.shiftParallel(self, data, dt, direction)
     local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
@@ -734,6 +735,8 @@ function GlobalPositioningSystem.shiftParallel(data, dt, direction)
 
     -- Todo: store what we offset?
     data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
+
+    self:updateGuidanceData(data, false, false)
 end
 
 --- Action events
