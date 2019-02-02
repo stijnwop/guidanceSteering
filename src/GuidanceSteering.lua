@@ -236,7 +236,12 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
     if inputValue ~= 0 then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
         if spec ~= nil and spec.hasGuidanceSystem and spec.lastInputValues.guidanceSteeringIsActive then
-            spec.lastInputValues.guidanceSteeringIsActive = false
+            if not isAnalog then
+                spec.lastInputValues.guidanceSteeringIsActive = false
+            else
+                -- When dealing with a controller or steering wheel look at the input value.
+                spec.lastInputValues.guidanceSteeringIsActive = not (math.abs(inputValue) > 0.5)
+            end
         end
     end
 end
