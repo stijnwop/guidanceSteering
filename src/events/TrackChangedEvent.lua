@@ -56,7 +56,6 @@ function TrackChangedEvent:readStream(streamId, connection)
     if not self.createEmpty then
         local track = {}
 
-        track.id = self.id
         track.name = self.name
         track.strategy = streamReadInt8(streamId)
         track.method = streamReadInt8(streamId)

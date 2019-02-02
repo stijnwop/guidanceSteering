@@ -43,7 +43,6 @@ function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
 
         local track = {}
 
-        track.id = getXMLInt(xmlFile, key .. "#id")
         track.name = getXMLString(xmlFile, key .. "#name")
         track.strategy = getXMLInt(xmlFile, key .. "#strategy")
         track.method = getXMLInt(xmlFile, key .. "#method")
@@ -91,7 +90,6 @@ function GuidanceSteering:onReadStream(streamId, connection)
 
         for i = 1, numTracks do
             local track = {}
-            track.id = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS)
             track.name = streamReadString(streamId)
             track.strategy = streamReadUIntN(streamId, 2)
             track.method = streamReadUIntN(streamId, 2)
@@ -110,7 +108,6 @@ function GuidanceSteering:onWriteStream(streamId, connection)
         streamWriteUIntN(streamId, #self.savedTracks, GuidanceSteering.SEND_NUM_BITS)
 
         for _, track in pairs(self.savedTracks) do
-            streamWriteUIntN(streamId, track.id, GuidanceSteering.SEND_NUM_BITS)
             streamWriteString(streamId, track.name)
             streamWriteUIntN(streamId, track.strategy, 2)
             streamWriteUIntN(streamId, track.method, 2)
@@ -134,7 +131,6 @@ function GuidanceSteering:createTrack(id, name)
     end
 
     local entry = {
-        id = id,
         farmId = 0, -- Todo: make tracks farm dependent
         name = name,
         strategy = 0,
@@ -185,6 +181,10 @@ end
 
 function GuidanceSteering:getTrack(id)
     return self.savedTracks[id]
+end
+
+function GuidanceSteering:getNewTrackId()
+    return ListUtil.size(self.savedTracks) + 1
 end
 
 function GuidanceSteering:getTrackNameExist(name)
