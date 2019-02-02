@@ -7,6 +7,7 @@
         <en>Guidance Steering</en>
         <de>Guidance Steering</de>
         <it>Guidance Steering</it>
+        <es>Dirección de Guiado</es>
     </title>
 
     <description>
@@ -19,6 +20,9 @@
         <it>
             <![CDATA[Direzione di guida.]]>
         </it>
+        <es>
+            <![CDATA[Dirección de Guiado.]]>
+        </es>
     </description>
 
     <l10n filenamePrefix="translations/translation"/>
