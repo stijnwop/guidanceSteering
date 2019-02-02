@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Vanquish081</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="Dirección de Guiado"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="No"/>
+        <text name="configuration_buyableGPS_withGPS" text="Si"/>
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="Mostrar Menú GPS"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Ancho Auto"/>
+        <text name="input_GS_SHIFT_RESET" text="Resetear Giro"/>
+        <text name="input_GS_SHIFT_LEFT" text="Desplazar a la Izq."/>
+        <text name="input_GS_SHIFT_RIGHT" text="Desplazar a la Der."/>
+        <text name="input_GS_PLUS_WIDTH" text="Aumentar Ancho"/>
+        <text name="input_GS_MINUS_WIDTH" text="Disminuir Ancho"/>
+        <text name="input_GS_ENABLE_STEERING" text="Guías de Dirección"/>
+        <text name="input_GS_SETPOINT" text="Fijar punto de guía"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Ajustar al ángulo del terreno"/>
+        <text name="input_GS_TURN_STEERING" text="Fijar dirección"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Conduzca al menos 15 m para establecer el punto B. Distancia recorrida actual: %.2f"/>
+        <text name="guidanceSteering_warning_setWidth" text="Por favor fije antes el ancho de trabajo!"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Ajustes de GPS"/>
+        <text name="guidanceSteering_ui_strategy" text="Estrategia GPS"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB Recto"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Curva"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Cabecera"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Ayuda visual mostrando líneas de guía"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Ajustar la dirección al ángulo del terreno"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Deje que el GPS guíe la dirección."/>
+        <text name="guidanceSteering_tooltip_width" text="Fijar el ancho de su vehículo"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Fijar el ancho incSet the width increment to increase/decrease the width"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Determine qué estrategia utilizar para crear las líneas de guía."/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Determinar qué método de estrategia utilizar"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Seleccione la pista actual a utilizar"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Fijar los puntos cardinales"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Nombre de Pista: %s ya existe!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Mostrar lineas"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Ajuste del ángulo del terreno"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Habilitar dirección de guiada"/>
+        <text name="guidanceSteering_setting_width" text="Ancho"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="Incrementar Ancho"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
+        <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Línea de Estrategia"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Método de línea"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Pista Actual"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Fijar A"/>
+        <text name="guidanceSteering_setting_pointB" text="Fijar B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Crear pista"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Borrar pista"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Guardar pista"/>
+
+    </texts>
+</l10n>
+
