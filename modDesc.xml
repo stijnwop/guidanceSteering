@@ -51,7 +51,7 @@
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus"/>
         </actionBinding>
         <actionBinding action="GS_PLUS_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_plus"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_equals"/>
         </actionBinding>
         <actionBinding action="GS_ENABLE_STEERING">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
