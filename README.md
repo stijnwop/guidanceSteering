@@ -55,7 +55,7 @@ To quickly zip the dev mod without the needed extra's, use the zip.bat.
 ***_Please note: the zip.bat requires the application 7zip to be installed!_***
 
 ## Copyright
-Copyright (c) 2019 Wopster / Stijn Wopereis
+Copyright (c) 2019 Wopster
 All rights reserved.
 
 Special thanks to workflowsen for creating the icon! 
