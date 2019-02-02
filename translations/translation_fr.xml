@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Fullpowershift, Farmer1602</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="Systeme de guidage"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Sans"/>
+        <text name="configuration_buyableGPS_withGPS" text="Avec"/>
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="Afficher le menu de guidage"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
+        <text name="input_GS_SHIFT_RESET" text="Réinitialiser le decalage"/>
+        <text name="input_GS_SHIFT_LEFT" text="Decaler sur la gauche"/>
+        <text name="input_GS_SHIFT_RIGHT" text="Decaler sur la droite"/>
+        <text name="input_GS_PLUS_WIDTH" text="Augmenter la largeur"/>
+        <text name="input_GS_MINUS_WIDTH" text="Reduire la largeur"/>
+        <text name="input_GS_ENABLE_STEERING" text="Guidage automatique"/>
+        <text name="input_GS_SETPOINT" text="Determiner un point de guidage"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Alignement sur l'angle du terrain"/>
+        <text name="input_GS_TURN_STEERING" text="Definir la direction"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance"
+              text="Parcourez au moins 15 m pour atteindre le point B. Distance parcourue actuellement: %.2f"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Reglages"/>
+        <text name="guidanceSteering_ui_strategy" text="Strategie"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB ligne"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB courbe"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Rubrique"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Afficher les lignes de guidage"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aligner sur l'angle du terrain"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laisser le guidage gerer la direction"/>
+        <text name="guidanceSteering_tooltip_width" text="Selectionnez la largeur de travail"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Détermine quel mode de guidage utiliser pour créer les lignes"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Détermine le mode de guidage souhaité"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Sélectionne la ligne de guidage actuelle"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Sélectionne les points cardinaux"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="La ligne: %s existe deja!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Afficher les lignes"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Aligner sur l'angle du terrain"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage automatique"/>
+        <text name="guidanceSteering_setting_width" text="Largeur"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="Precision de largeur de travail"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
+        <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Mode de guidage"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Type"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Ligne actuelle"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Determiner A"/>
+        <text name="guidanceSteering_setting_pointB" text="Determiner B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Creer"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Supprimer"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
+    </texts>
+</l10n>
+
