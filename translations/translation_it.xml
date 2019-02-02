@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>zed636</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="GPS" /> <!-- Global Positioning System -->
+        <text name="configuration_buyableGPS_withoutGPS" text="No" /> <!-- No -->
+        <text name="configuration_buyableGPS_withGPS" text="Si" /> <!-- Yes -->
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="Mostra menu GPS" /> <!-- Show guidance steering menu -->
+        <text name="input_GS_SET_AUTO_WIDTH" text="Larghezza automatica" /> <!-- Auto width -->
+        <text name="input_GS_SHIFT_RESET" text="Ripristino spostamento" /> <!-- Reset shift -->
+        <text name="input_GS_SHIFT_LEFT" text="Sposta la traccia a sinistra" /> <!-- Shift track left -->
+        <text name="input_GS_SHIFT_RIGHT" text="Sposta la traccia a destra" /> <!-- Shift track right -->
+        <text name="input_GS_PLUS_WIDTH" text="Aumenta la larghezza" /> <!-- Increase width -->
+        <text name="input_GS_MINUS_WIDTH" text="Diminuisci larghezza" /> <!-- Decrease width -->
+        <text name="input_GS_ENABLE_STEERING" text="Aggancia GPS" /> <!-- Steering guidance -->
+        <text name="input_GS_SETPOINT" text="Imposta il punto di direzione" /> <!-- Set guidance point -->
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Aggancia all'angolo del terreno" /> <!-- Snap to terrain angle -->
+        <text name="input_GS_TURN_STEERING" text="Imposta la direzione dello sterzo" /> <!-- Set steering direction -->
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f" /> <!-- Drive at least 15m in order to set point B. Current traveled distance: %.2f -->
+        <text name="guidanceSteering_warning_setWidth" text="Si prega di impostare prima una larghezza di lavoro!" /> <!-- Please set a working width first! -->
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Impostazioni di guida" /> <!-- Guidance settings -->
+        <text name="guidanceSteering_ui_strategy" text="Strategia di guida" /> <!-- Guidance strategy -->
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB dritto" /> <!-- AB Straight -->
+        <text name="guidanceSteering_strategy_abCurve" text="AB curvo" /> <!-- AB Curve -->
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B" /> <!-- A+B -->
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B" /> <!-- Auto B -->
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+testata" /> <!-- A+Heading -->
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Supporta le tue visuali mostrando le linee di guida" /> <!-- Support your visuals by showing the guidance lines -->
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aggancia la direzione all'angolo del terreno" /> <!-- Snap the direction to the terrain angle -->
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Lascia che il GPS guidi lo sterzo" /> <!-- Let the GPS guide the steering -->
+        <text name="guidanceSteering_tooltip_width" text="Imposta la larghezza del tuo veicolo" /> <!-- Set the width of your vehicle -->
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Imposta l'incremento della larghezza per aumentare / diminuire la larghezza" /> <!-- Set the width increment to increase/decrease the width -->
+
+        <text name="guidanceSteering_tooltip_strategy" text="Determina quale strategia utilizzare per creare le linee guida" /> <!-- Determine which strategy to use to create the guidance lines -->
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Determina quale metodo di strategia usare" /> <!-- Determine which strategy method to use -->
+        <text name="guidanceSteering_tooltip_currentTrack" text="Seleziona la traccia corrente da usare" /> <!-- Select the current track to use -->
+        <text name="guidanceSteering_tooltip_cardinals" text="Imposta i punti cardinali" /> <!-- Set the cardinal points -->
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Traccia il nome: %s esiste già!" /> <!-- Track name: %s already exists! -->
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Mostra linee" /> <!-- Show lines -->
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l'angolo del terreno" /> <!-- Snap terrain angle -->
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Abilita la guida di orientamento" /> <!-- Enable guidance steering -->
+        <text name="guidanceSteering_setting_width" text="Larghezza" /> <!-- Width -->
+        <text name="guidanceSteering_setting_widthInCrement" text="Incremento di larghezza" /> <!-- Width increment -->
+        <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica" /> <!-- Auto width -->
+        <text name="guidanceSteering_setting_cardinals" text="Punto cardinale" /> <!-- Cardinal point -->
+
+        <text name="guidanceSteering_setting_strategy" text="Strategia di linea" /> <!-- Line strategy -->
+        <text name="guidanceSteering_setting_strategyMethod" text="Metodo di linea" /> <!-- Line method -->
+        <text name="guidanceSteering_setting_currentTrack" text="Traccia attuale" /> <!-- Current track -->
+
+        <text name="guidanceSteering_setting_pointA" text="Imposta A" /> <!-- Set A -->
+        <text name="guidanceSteering_setting_pointB" text="Imposta A" /> <!-- Set B -->
+        <text name="guidanceSteering_setting_newTrack" text="Crea traccia" /> <!-- Create track -->
+        <text name="guidanceSteering_setting_removeTrack" text="Rimuovi traccia" /> <!-- Remove track -->
+        <text name="guidanceSteering_setting_saveTrack" text="Salva traccia" /> <!-- Save track -->
+
+    </texts>
+</l10n>
+
