@@ -21,7 +21,8 @@
         <text name="input_GS_TURN_STEERING" text="Fijar dirección"/>
 
         <!--Warnings-->
-        <text name="guidanceSteering_warning_dropDistance" text="Conduzca al menos 15 m para establecer el punto B. Distancia recorrida actual: %.2f"/>
+        <text name="guidanceSteering_warning_dropDistance"
+              text="Conduzca al menos 15 m para establecer el punto B. Distancia recorrida actual: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Por favor fije antes el ancho de trabajo!"/>
 
         <!--GUI-->

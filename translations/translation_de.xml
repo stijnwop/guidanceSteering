@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>workflowsen</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="Global Positioning System"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Nein"/>
+        <text name="configuration_buyableGPS_withGPS" text="Ja"/>
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="Zeige Guidance Steering Menü"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Automatische Breite"/>
+        <text name="input_GS_SHIFT_RESET" text="Verschiebung zurücksetzen"/>
+        <text name="input_GS_SHIFT_LEFT" text="Nach links verschieben"/>
+        <text name="input_GS_SHIFT_RIGHT" text="Nach rechts verschieben"/>
+        <text name="input_GS_PLUS_WIDTH" text="Breite erhöhen"/>
+        <text name="input_GS_MINUS_WIDTH" text="Breite verringern"/>
+        <text name="input_GS_ENABLE_STEERING" text="Automatische Führung aktivieren"/>
+        <text name="input_GS_SETPOINT" text="Punkt setzen"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="An Geländewinkel ausrichten"/>
+        <text name="input_GS_TURN_STEERING" text="Lenkrichtung einstellen"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Fahre mindestens 15m, um den Punkt B zu setzten. Aktuelle Distanz: %.2f"/>
+        <text name="guidanceSteering_warning_setWidth" text="Bitte zuerst die Arbeitsbreite definieren!"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Anpassungen"/>
+        <text name="guidanceSteering_ui_strategy" text="Strategie"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB Gerade"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Kruve"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Richtung"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Visualle Unterstützung durch Führungslinien"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richtet die Lenkung zum Geländewinkel aus"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Steuerung wird vom GPS übernommen"/>
+        <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgeräts ein"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Einstellung der Arbeitsbreite. Verbreitern oder verringern"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Bestimmt welcher Führungsmodus zum Erstellen von Linien verwendet werden soll"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Bestimmt den gewünschten Führungsmodus"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Wählt die aktuelle Spur aus"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Bestimmt den Kardinalpunkt"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname: %s existiert bereits!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Zeige Linien"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="An Geländewinkel ausrichten"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktiviere Guidance Steering"/>
+        <text name="guidanceSteering_setting_width" text="Breite"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="Präzision der Arbeitsbreite"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Automatische Breite"/>
+        <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Führungsmodus"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Linien-Typ"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Aktuelle Spur"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Set A"/>
+        <text name="guidanceSteering_setting_pointB" text="Set B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Erstellen"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Löschen"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Speichern"/>
+    </texts>
+</l10n>
