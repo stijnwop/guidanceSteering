@@ -791,7 +791,7 @@ end
 
 function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    local event = MultiPurposeActionEvent:new(4)
+    local event = MultiPurposeActionEvent:new(3)
 
     event:addAction(function()
         self:updateGuidanceData(nil, false, true)
@@ -812,12 +812,9 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
         self:pushABPoint()
 
-        return true
-    end)
-
-    event:addAction(function()
-        GlobalPositioningSystem.computeGuidanceDirection(self)
         Logger.info("Generating AB line strategy")
+        GlobalPositioningSystem.computeGuidanceDirection(self)
+
         return true
     end)
 
