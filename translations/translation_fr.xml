@@ -23,6 +23,10 @@
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
               text="Parcourez au moins 15 m pour atteindre le point B. Distance parcourue actuellement: %.2f"/>
+        <!--TODO-->
+        <text name="guidanceSteering_warning_setWidth" text="Please set a working width first!"/>
+        <!--TODO-->
+        <text name="guidanceSteering_warning_createTrackFirst" text="Please create or load a track first before enabling guidance steering!"/>
 
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Reglages"/>

@@ -23,6 +23,8 @@
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Fahre mindestens 15m, um den Punkt B zu setzten. Aktuelle Distanz: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Bitte zuerst die Arbeitsbreite definieren!"/>
+        <!--TODO-->
+        <text name="guidanceSteering_warning_createTrackFirst" text="Please create or load a track first before enabling guidance steering!"/>
 
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Anpassungen"/>

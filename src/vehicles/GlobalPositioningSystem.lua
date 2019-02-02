@@ -671,10 +671,6 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     -- data
     local data = spec.guidanceData
 
-    if not spec.printOnce then
-        Logger.info("server->", spec.guidanceData)
-        spec.printOnce = true
-    end
     local guidanceNode = spec.guidanceNode
     local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
     local dX, dY, dZ = unpack(data.driveTarget)
@@ -787,9 +783,12 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     self.spec_drivable.allowPlayerControl = self.guidanceSteeringIsActive
 
-    spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
-
-    Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
+    if not spec.guidanceData.isCreated then
+        g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
+    else
+        spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
+        Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
+    end
 end
 
 function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
