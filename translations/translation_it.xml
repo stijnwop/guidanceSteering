@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Wopster</translationContributors>
+    <translationContributors>zed636</translationContributors>
 
     <texts>
         <text name="configuration_buyableGPS" text="GPS" /> <!-- Global Positioning System -->
