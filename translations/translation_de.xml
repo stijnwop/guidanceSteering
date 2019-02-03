@@ -24,21 +24,21 @@
         <text name="guidanceSteering_warning_dropDistance" text="Fahre mindestens 15m, um den Punkt B zu setzten. Aktuelle Distanz: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Bitte zuerst die Arbeitsbreite definieren!"/>
         <!--TODO-->
-        <text name="guidanceSteering_warning_createTrackFirst" text="Please create or load a track first before enabling guidance steering!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Bitte erstelle oder lade zuerst eine Spur bevor du automatische Führung aktivierst!"/>
 
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Anpassungen"/>
         <text name="guidanceSteering_ui_strategy" text="Strategie"/>
 
         <text name="guidanceSteering_strategy_abStraight" text="AB Gerade"/>
-        <text name="guidanceSteering_strategy_abCurve" text="AB Kruve"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Kurve"/>
 
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Richtung"/>
 
         <!--Tooltips-->
-        <text name="guidanceSteering_tooltip_showLines" text="Visualle Unterstützung durch Führungslinien"/>
+        <text name="guidanceSteering_tooltip_showLines" text="Visuelle Unterstützung durch Führungslinien"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richtet die Lenkung zum Geländewinkel aus"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Steuerung wird vom GPS übernommen"/>
         <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgeräts ein"/>
