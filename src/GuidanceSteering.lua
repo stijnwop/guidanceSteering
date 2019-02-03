@@ -23,6 +23,7 @@ function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputMa
     self.modDirectory = modDirectory
     self.modName = modName
     self.savedTracks = {}
+    self.listeners = {}
 
     self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, gui, inputManager, messageCenter, settingsModel)
 
@@ -123,8 +124,24 @@ end
 function GuidanceSteering:draw(dt)
 end
 
+function GuidanceSteering:subscribe(listener)
+    if not ListUtil.hasListElement(self.listeners, listener) then
+        ListUtil.addElementToList(self.listeners, listener)
+    end
+end
+
+function GuidanceSteering:unsubscribe(listener)
+    ListUtil.removeElementFromList(self.listeners, listener)
+end
+
+function GuidanceSteering:onTrackChanged(trackId)
+    for _, listener in pairs(self.listeners) do
+        listener:onTrackChanged(trackId)
+    end
+end
+
 function GuidanceSteering:createTrack(id, name)
-    Logger.info("Creating track: ", name)
+    Logger.info("Creating track: " .. id, name)
 
     if id > GuidanceSteering.MAX_NUM_TRACKS then
         return
@@ -145,6 +162,8 @@ function GuidanceSteering:createTrack(id, name)
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
         ListUtil.addElementToList(self.savedTracks, entry)
+        -- Call listeners
+        self:onTrackChanged(id)
     end
 end
 
@@ -174,9 +193,13 @@ end
 function GuidanceSteering:deleteTrack(id)
     local entry = self.savedTracks[id]
 
-    Logger.info("Deleting track: ", entry.name)
+    Logger.info("Deleting track: ", id)
+    if entry ~= nil then
+        ListUtil.removeElementFromList(self.savedTracks, entry)
 
-    ListUtil.removeElementFromList(self.savedTracks, entry)
+        -- Call listeners
+        self:onTrackChanged(ListUtil.size(self.savedTracks) - 1)
+    end
 end
 
 function GuidanceSteering:getTrack(id)

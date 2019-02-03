@@ -54,6 +54,8 @@ end
 function GuidanceSteeringStrategyFrame:onFrameOpen()
     GuidanceSteeringStrategyFrame:superClass().onFrameOpen(self)
 
+    self.guidanceSteering:subscribe(self)
+
     local vehicle = self.guidanceSteering.ui:getVehicle()
 
     if vehicle ~= nil then
@@ -61,6 +63,7 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
         self.currentTrackId = self.guidanceSteeringTrackElement:getState()
+        Logger.info("Current: ", self.currentTrackId)
 
         self.allowSave = true
     end
@@ -71,15 +74,13 @@ end
 function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
-    if self.allowSave then
-        local trackId = self.guidanceSteeringTrackElement:getState()
+    local trackId = self.guidanceSteeringTrackElement:getState()
 
-        if self.currentTrackId ~= trackId then
-            self:loadTrack(trackId)
-        end
-
-        self.allowSave = false
+    if self.currentTrackId ~= trackId then
+        self:loadTrack(trackId)
     end
+
+    self.guidanceSteering:unsubscribe(self)
 end
 
 --- Get the frame's main content element's screen size.
@@ -108,9 +109,6 @@ function GuidanceSteeringStrategyFrame:onClickNewTrack()
     end
 
     self:createTrack(trackId, name)
-
-    self:displayTrackElement()
-    self.guidanceSteeringTrackElement:setState(trackId)
 end
 
 function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
@@ -123,8 +121,6 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
         Logger.info("Removing track: ", trackId)
 
         self:deleteTrack(trackId)
-        self:displayTrackElement()
-        self:onClickLoadTrack(trackId - 1)
     end
 end
 
@@ -148,14 +144,14 @@ function GuidanceSteeringStrategyFrame:onClickSaveTrack()
             track.guidanceData.snapDirection = data.snapDirection
             track.guidanceData.driveTarget = data.driveTarget
 
-            Logger.info("Saving track: ", trackId)
+            Logger.info("Saving track: " .. trackId, track)
             self:saveTrack(trackId, track)
         end
     end
 end
 
-function GuidanceSteeringStrategyFrame:onClickLoadTrack(id)
-    local track = self.guidanceSteering:getTrack(id)
+function GuidanceSteeringStrategyFrame:onClickLoadTrack(trackId)
+    local track = self.guidanceSteering:getTrack(trackId)
 
     if track ~= nil then
         self.guidanceSteeringTrackNameElement:setText(track.name)
@@ -163,8 +159,11 @@ function GuidanceSteeringStrategyFrame:onClickLoadTrack(id)
         self.guidanceSteeringStrategyMethodElement:setState(track.method)
 
         self:onDisplayElementsChanged()
+        -- After the new list is updated set the current track.
+        self.guidanceSteeringTrackElement:setState(trackId)
     end
 end
+
 
 function GuidanceSteeringStrategyFrame:onClickSetPointA()
 end
@@ -177,6 +176,11 @@ end
 
 --- Functions
 
+---Called by the GuidanceSteering class
+function GuidanceSteeringStrategyFrame:onTrackChanged(trackId)
+    self:onClickLoadTrack(trackId)
+end
+
 function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     local track = self.guidanceSteering:getTrack(trackId)
 
@@ -186,6 +190,8 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
         if vehicle ~= nil then
             local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
             local data = spec.guidanceData
+
+            Logger.info("Loading track: ", trackId)
 
             -- First request reset to make sure the current track is clear
             vehicle:updateGuidanceData(nil, false, true)
