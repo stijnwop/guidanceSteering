@@ -56,8 +56,9 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uitlijnen met de terreinhoeken"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Schakel stuurbegeleiding in"/>
         <text name="guidanceSteering_setting_width" text="Werkbreedte"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Werkbreedte-verhoging"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Werkbreedte-verhoging"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische werkbreedte"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Pas werkbreedte aan"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinaal punt"/>
 
         <text name="guidanceSteering_setting_strategy" text="Lijn strategie"/>
@@ -69,6 +70,5 @@
         <text name="guidanceSteering_setting_newTrack" text="Maak een nieuw spoor"/>
         <text name="guidanceSteering_setting_removeTrack" text="Verwijder Spoor"/>
         <text name="guidanceSteering_setting_saveTrack" text="Bewaar spoor"/>
-
     </texts>
 </l10n>
