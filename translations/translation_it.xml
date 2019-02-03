@@ -45,7 +45,7 @@
               text="Aggancia la direzione all'angolo del terreno"/> <!-- Snap the direction to the terrain angle -->
         <text name="guidanceSteering_tooltip_enableGuidanceSteering"
               text="Lascia che il GPS guidi lo sterzo"/> <!-- Let the GPS guide the steering -->
-        <text name="guidanceSteering_tooltip_width" text="Imposta la larghezza del tuo attrezzo"/> <!-- Set the width of your vehicle (better implement?) -->
+        <text name="guidanceSteering_tooltip_width" text="Imposta la larghezza del tuo veicolo"/> <!-- Set the width of your vehicle -->
         <text name="guidanceSteering_tooltip_widthInCrement"
               text="Imposta l'incremento della larghezza per aumentare / diminuire la larghezza"/> <!-- Set the width increment to increase/decrease the width -->
 
