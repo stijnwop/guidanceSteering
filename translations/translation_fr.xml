@@ -61,6 +61,7 @@
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
 
         <text name="guidanceSteering_setting_strategy" text="Mode de guidage"/>
