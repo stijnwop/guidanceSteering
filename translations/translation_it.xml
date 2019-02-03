@@ -64,7 +64,7 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l'angolo del terreno"/> <!-- Snap terrain angle -->
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Abilita Guidance Steering"/> <!-- Enable guidance steering -->
         <text name="guidanceSteering_setting_width" text="Larghezza"/> <!-- Width -->
-        <text name="guidanceSteering_setting_widthInCrement" text="Incremento di larghezza"/> <!-- Width increment -->
+        <text name="guidanceSteering_setting_widthIncrement" text="Incremento di larghezza"/> <!-- Width increment -->
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/> <!-- Auto width -->
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/> <!-- Cardinal point -->
 
