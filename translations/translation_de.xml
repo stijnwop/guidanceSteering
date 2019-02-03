@@ -8,7 +8,8 @@
         <text name="configuration_buyableGPS_withGPS" text="Ja"/>
 
         <!--Inputs-->
-        <text name="input_GS_SHOW_UI" text="Zeige Guidance Steering Menü"/>
+
+        <text name="guidanceSteering_setting_widthIncrement" text="Manuelle Breitenanpassung"/>     <text name="input_GS_SHOW_UI" text="Zeige Guidance Steering Menü"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatische Breite"/>
         <text name="input_GS_SHIFT_RESET" text="Verschiebung zurücksetzen"/>
         <text name="input_GS_SHIFT_LEFT" text="Nach links verschieben"/>
@@ -59,6 +60,7 @@
         <text name="guidanceSteering_setting_width" text="Breite"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Präzision der Arbeitsbreite"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische Breite"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Manuelle Breitenanpassung"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
 
         <text name="guidanceSteering_setting_strategy" text="Führungsmodus"/>

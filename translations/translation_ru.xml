@@ -58,6 +58,7 @@
         <text name="guidanceSteering_setting_width" text="Ширина"/>
         <text name="guidanceSteering_setting_widthInCrement" text="Приращение ширины"/>
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
 
         <text name="guidanceSteering_setting_strategy" text="Стратегия линий"/>

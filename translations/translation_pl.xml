@@ -58,6 +58,7 @@
         <text name="guidanceSteering_setting_width" text="Szerokość"/>
         <text name="guidanceSteering_setting_widthInCrement" text="Dodatkowa szerokość"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
         <text name="guidanceSteering_setting_cardinals" text="Punkt główny"/>
 
         <text name="guidanceSteering_setting_strategy" text="Strategia linii"/>

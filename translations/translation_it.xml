@@ -67,6 +67,7 @@
         <text name="guidanceSteering_setting_width" text="Larghezza"/> <!-- Width -->
         <text name="guidanceSteering_setting_widthIncrement" text="Incremento di larghezza"/> <!-- Width increment -->
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/> <!-- Auto width -->
+        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/> <!-- Cardinal point -->
 
         <text name="guidanceSteering_setting_strategy" text="Strategia di linea"/> <!-- Line strategy -->
