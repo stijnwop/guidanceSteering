@@ -15,7 +15,7 @@
         <text name="input_GS_SHIFT_RIGHT" text="Schuif spoor naar Links"/>
         <text name="input_GS_PLUS_WIDTH" text="Vergroot de werkbreedte"/>
         <text name="input_GS_MINUS_WIDTH" text="Verklein de werkbreedte"/>
-        <text name="input_GS_ENABLE_STEERING" text="Stuur begeleiding"/>
+        <text name="input_GS_ENABLE_STEERING" text="Stuurbegeleiding"/>
         <text name="input_GS_SETPOINT" text="Stel een richtpunt in"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uitlijnen met de terreinhoeken"/>
         <text name="input_GS_TURN_STEERING" text="Stel een stuurrichting in"/>
