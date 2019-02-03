@@ -57,7 +57,7 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="An Geländewinkel ausrichten"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktiviere Guidance Steering"/>
         <text name="guidanceSteering_setting_width" text="Breite"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Präzision der Arbeitsbreite"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Präzision der Arbeitsbreite"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische Breite"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
 

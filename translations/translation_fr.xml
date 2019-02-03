@@ -59,7 +59,7 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aligner sur l'angle du terrain"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage automatique"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Précision de largeur de travail"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
 

@@ -56,8 +56,9 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Snap terrain angle"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Enable guidance steering"/>
         <text name="guidanceSteering_setting_width" text="Width"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Width increment"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Width increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto width"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/>
         <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy"/>

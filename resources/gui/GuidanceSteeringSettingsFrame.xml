@@ -48,19 +48,17 @@
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
                     <GuiElement type="button" profile="multiTextOptionRight"/>
                     <GuiElement type="text" profile="multiTextOptionText"/>
-                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthInCrement"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthIncrement"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
 
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthElement"
-                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_width">
-                    <GuiElement type="button" profile="multiTextOptionLeft" onClick="onClickDecreaseWidth" id="guidanceSteeringDecreaseWidthButton"/>
-                    <GuiElement type="button" profile="multiTextOptionRight" onClick="onClickIncreaseWidth" id="guidanceSteeringIncreaseWidthButton"/>
-                    <GuiElement type="text" profile="multiTextOptionText"/>
-                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_width"/>
-                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+
+                <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_width" maxCharacters="30" imeKeyboardType="normal">
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_width"/>
                 </GuiElement>
 
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeWidth" position="-210px 64px" onClick="onClickChangeWidth"
+                            id="guidanceSteeringChangeWidthButton"/>
                 <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px" onClick="onClickAutoWidth"
                             id="guidanceSteeringWidthButton"/>
             </GuiElement>

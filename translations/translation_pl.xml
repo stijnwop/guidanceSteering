@@ -41,7 +41,7 @@
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Wyrównuje kierunek względem kąta terenu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Przekazuje kontrolę kierownicy nawigacji"/>
         <text name="guidanceSteering_tooltip_width" text="Ustawia szerokość twojego pojazdu/maszyny"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Pozwala ręcznie dopasować szerokość"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Pozwala ręcznie dopasować szerokość"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Określa, którą metodę strategii zastosować"/>

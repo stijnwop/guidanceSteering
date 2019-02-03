@@ -58,7 +58,7 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Ajuste del ángulo del terreno"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Habilitar dirección de guiada"/>
         <text name="guidanceSteering_setting_width" text="Ancho"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Incrementar Ancho"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Incrementar Ancho"/>
         <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
 

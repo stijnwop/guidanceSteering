@@ -154,6 +154,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
     spec.lastInputValues.shiftParallel = false
     spec.lastInputValues.shiftParallelDirection = GlobalPositioningSystem.DIRECTION_RIGHT
+    spec.lastInputValues.widthIncrement = 0.1 -- no need to sync this.
 
     spec.guidanceSteeringIsActiveSend = false
     spec.showGuidanceLinesSend = false
@@ -751,13 +752,13 @@ end
 
 function GlobalPositioningSystem.actionEventMinusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.guidanceData.width = math.max(0, spec.guidanceData.width - 0.05)
+    spec.guidanceData.width = math.max(0, spec.guidanceData.width - spec.lastInputValues.widthIncrement)
     self:updateGuidanceData(spec.guidanceData, false, false)
 end
 
 function GlobalPositioningSystem.actionEventPlusWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.guidanceData.width = spec.guidanceData.width + 0.05
+    spec.guidanceData.width = spec.guidanceData.width + spec.lastInputValues.widthIncrement
     self:updateGuidanceData(spec.guidanceData, false, false)
 end
 
