@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Wopster, JoshvZ</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="Global Positioning System"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Nee"/>
+        <text name="configuration_buyableGPS_withGPS" text="Ja"/>
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="laat stuurbegeleidings menu zien"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Automatische werkbreedte"/>
+        <text name="input_GS_SHIFT_RESET" text="Reset spoor"/>
+        <text name="input_GS_SHIFT_LEFT" text="Schuif spoor naar Links"/>
+        <text name="input_GS_SHIFT_RIGHT" text="Schuif spoor naar Links"/>
+        <text name="input_GS_PLUS_WIDTH" text="Vergroot de werkbreedte"/>
+        <text name="input_GS_MINUS_WIDTH" text="Verklein de werkbreedte"/>
+        <text name="input_GS_ENABLE_STEERING" text="stuur begeleiding"/>
+        <text name="input_GS_SETPOINT" text="Stel een richtpunt in"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Snap naar terrein hoek"/>
+        <text name="input_GS_TURN_STEERING" text="Stel een stuur richting in"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Rijd minimaal 15m om een B punt in te stellen. Huidige afgelegde afstand: %.2f"/>
+        <text name="guidanceSteering_warning_setWidth" text="Selecteer eerst een werkBreedte!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Maak of laad eerst een spoor voordat u de besturing van de koers inschakelt!"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Begeleidings instellingen"/>
+        <text name="guidanceSteering_ui_strategy" text="Begeleidings strategie"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB recht"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB krom"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Richting"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Ondersteun uw visuals door de begeleidingslijnen te tonen"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Snap de richting naar de terrein hoek"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="laat GPS het sturen begeleiden"/>
+        <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Selecteer huidig spoor om deze te gebruiken"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="stel de kardinale punten in"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spoor naam: %s bestaat al!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Geef lijnen weer"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Snap terrein hoek"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Schakel stuur begeleiding in"/>
+        <text name="guidanceSteering_setting_width" text="Werkbreedte"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="werkbreedte-verhoging"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Auto werkbreedte"/>
+        <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Lijn strategie"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Lijn methode"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Huidig spoor"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Zet A"/>
+        <text name="guidanceSteering_setting_pointB" text="Zet B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Maak een nieuw spoor"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Verwijder Spoor"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Bewaar spoor"/>
+
+    </texts>
+</l10n>
