@@ -51,7 +51,7 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Fijar los puntos cardinales"/>
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Nombre de Pista: %s ya existe!"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="El Nombre de Pista: %s ya existe!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Mostrar lineas"/>
@@ -60,7 +60,7 @@
         <text name="guidanceSteering_setting_width" text="Ancho"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Incrementar Ancho"/>
         <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
-        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
+        <text name="guidanceSteering_setting_changeWidth" text="Cambiar Ancho"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
 
         <text name="guidanceSteering_setting_strategy" text="Línea de Estrategia"/>
