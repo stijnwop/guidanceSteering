@@ -56,9 +56,9 @@
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Привязывать к углам местности"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Автоподруливание"/>
         <text name="guidanceSteering_setting_width" text="Ширина"/>
-        <text name="guidanceSteering_setting_widthInCrement" text="Величина изменения ширины"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Величина изменения ширины"/>
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
-		    <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
 
         <text name="guidanceSteering_setting_strategy" text="Стратегия линий"/>
