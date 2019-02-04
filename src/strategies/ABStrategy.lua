@@ -156,7 +156,7 @@ function ABStrategy:getTexts(i18n)
     -- Remember the order is important here.
     return {
         i18n:getText("guidanceSteering_strategyMethod_aPlusB"), -- ABStrategy.AB
-        i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
-        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
+        --i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
+        --i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
     }
 end

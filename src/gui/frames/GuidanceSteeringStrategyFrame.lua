@@ -164,11 +164,31 @@ function GuidanceSteeringStrategyFrame:onClickLoadTrack(trackId)
     end
 end
 
-
 function GuidanceSteeringStrategyFrame:onClickSetPointA()
+    local vehicle = self.guidanceSteering.ui:getVehicle()
+
+    if vehicle == nil then
+        return
+    end
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if not spec.lineStrategy:getIsABDirectionPossible() then
+        vehicle:pushABPoint()
+    end
 end
 
 function GuidanceSteeringStrategyFrame:onClickSetPointB()
+    local vehicle = self.guidanceSteering.ui:getVehicle()
+
+    if vehicle == nil then
+        return
+    end
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if spec.lineStrategy:getIsABDirectionPossible() then
+        vehicle:pushABPoint()
+        GlobalPositioningSystem.computeGuidanceDirection(vehicle)
+    end
 end
 
 function GuidanceSteeringStrategyFrame:onEnterPressedTrackName()
