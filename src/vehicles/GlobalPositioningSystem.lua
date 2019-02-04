@@ -25,6 +25,7 @@ end
 function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getGuidanceStrategy", GlobalPositioningSystem.getGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
+    SpecializationUtil.registerFunction(vehicleType, "getGuidanceData", GlobalPositioningSystem.getGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "updateGuidanceData", GlobalPositioningSystem.updateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "pushABPoint", GlobalPositioningSystem.pushABPoint)
     SpecializationUtil.registerFunction(vehicleType, "onResetGuidanceData", GlobalPositioningSystem.onResetGuidanceData)
@@ -142,10 +143,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.abDistanceCounter = 0
     spec.abClickCounter = 0
 
-    -- Headland calculations
-    spec.lastIsNotOnField = false
-    spec.distanceToEnd = 0
-    spec.lastValidGroundPos = { 0, 0, 0 }
+    spec.headlandProcessor = HeadlandProcessor:new(self)
 
     spec.lastInputValues = {}
     spec.lastInputValues.guidanceIsActive = true -- todo: make toggle
@@ -415,29 +413,7 @@ function GlobalPositioningSystem:onUpdate(dt)
     if guidanceSteeringIsActive then
         GlobalPositioningSystem.guideSteering(self, dt)
 
-        local isOnField = self:getIsOnField()
-
-        if isOnField then
-            local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
-            local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
-            local lookAheadStepDistance = distanceToTurn + 2 -- m
-            local distanceToHeadLand, isDistanceOnField = GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
-
-            --Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
-            --Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
-
-            if distanceToHeadLand <= distanceToTurn then
-                local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
-                -- if stop mode
-                if drivable_spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
-                    self:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
-                end
-
-                if spec.lastIsNotOnField and spec.lastIsNotOnField ~= not isOnField then
-                    spec.lastIsNotOnField = false
-                end
-            end
-        end
+        spec.headlandProcessor:handle(dt)
     end
 end
 
@@ -519,6 +495,11 @@ function GlobalPositioningSystem:pushABPoint(noEventSend)
 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.lineStrategy:pushABPoint(spec.guidanceData)
+end
+
+function GlobalPositioningSystem:getGuidanceData()
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    return spec.guidanceData
 end
 
 ---updateGuidanceData

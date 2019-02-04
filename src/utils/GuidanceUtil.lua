@@ -157,45 +157,6 @@ function GuidanceUtil.getDriveDirection(dx, dz)
     return dlx, dlz
 end
 
-function GuidanceUtil.getDistanceToHeadLand(self, x, y, z, lookAheadStepDistance)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-
-    if spec.lastIsNotOnField then
-        local vX, vY, vZ = unpack(spec.lastValidGroundPos)
-        local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
-        return spec.distanceToEnd - dist, not spec.lastIsNotOnField
-    end
-
-    local distanceToHeadLand = lookAheadStepDistance
-    local data = spec.guidanceData
-    local dx, dz = unpack(data.snapDirection)
-
-    local fx = x + lookAheadStepDistance * data.snapDirectionMultiplier * dx
-    local fz = z + lookAheadStepDistance * data.snapDirectionMultiplier * dz
-
-    local bits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
-    local isOnField = bits ~= 0
-
-    if spec.showGuidanceLines then
-        local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
-        DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
-    end
-
-    spec.lastIsNotOnField = not isOnField
-    if isOnField then
-        local distance = self.lastMovedDistance
-        local dirX, dirY, dirZ = localDirectionToWorld(spec.guidanceNode, 0, 0, distance + 0.75)
-        spec.lastValidGroundPos = { x + dirX, y + dirY, z + dirZ }
-    else
-        spec.distanceToEnd = lookAheadStepDistance
-        local vX, vY, vZ = unpack(spec.lastValidGroundPos)
-        local dist = MathUtil.vector3Length(vX - x, vY - y, vZ - z)
-        distanceToHeadLand = spec.distanceToEnd - dist
-    end
-
-    return distanceToHeadLand, isOnField
-end
-
 function GuidanceUtil:computeCatmullRomSpline(t, p0, p1, p2, p3)
     return 0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t ^ 2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t ^ 3)
 end

@@ -17,6 +17,7 @@ source(Utils.getFilename("src/events/SettingsChangedEvent.lua", directory))
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
 source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
+source(Utils.getFilename("src/utils/HeadlandUtil.lua", directory))
 
 source(Utils.getFilename("src/gui/GuidanceSteeringUI.lua", directory))
 source(Utils.getFilename("src/gui/GuidanceSteeringMenu.lua", directory))
@@ -26,6 +27,7 @@ source(Utils.getFilename("src/gui/hud/GuidanceSteeringHUD.lua", directory))
 
 source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
+source(Utils.getFilename("src/misc/HeadlandProcessor.lua", directory))
 source(Utils.getFilename("src/misc/MultiPurposeActionEvent.lua", directory))
 source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 --source(Utils.getFilename("src/misc/LinkedList.lua", directory))
@@ -211,30 +213,38 @@ function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, custo
 
     if storeItemAllowsGuidanceSteering(storeItem) then
         local key = GlobalPositioningSystem.CONFIG_NAME
-        if configurations ~= nil and configurations[key] == nil then
-            local entryNoGPS = {
-                desc = "",
-                price = 0,
-                dailyUpkeep = 0,
-                isDefault = true,
-                index = 1,
-                name = g_i18n:getText("configuration_buyableGPS_withoutGPS"),
-                enabled = false
-            }
+        if configurations ~= nil then
+            -- Dirty stuff.. but the only "solid" way.
+            if configurations[key] == nil then
+                local entryNoGPS = {
+                    desc = "",
+                    price = 0,
+                    dailyUpkeep = 0,
+                    isDefault = true,
+                    index = 1,
+                    name = g_i18n:getText("configuration_buyableGPS_withoutGPS"),
+                    enabled = false
+                }
 
-            local entryGPS = {
-                desc = "",
-                price = 15000,
-                dailyUpkeep = 0,
-                isDefault = false,
-                index = 2,
-                name = g_i18n:getText("configuration_buyableGPS_withGPS"),
-                enabled = true
-            }
+                local entryGPS = {
+                    desc = "",
+                    price = 15000,
+                    dailyUpkeep = 0,
+                    isDefault = false,
+                    index = 2,
+                    name = g_i18n:getText("configuration_buyableGPS_withGPS"),
+                    enabled = true
+                }
 
-            configurations[key] = {}
-            table.insert(configurations[key], entryNoGPS)
-            table.insert(configurations[key], entryGPS)
+                configurations[key] = {}
+                table.insert(configurations[key], entryNoGPS)
+                table.insert(configurations[key], entryGPS)
+            else
+                -- Add enabled values to added xml configurations
+                for id, config in pairs(configurations[key]) do
+                    config.enabled = id > 1
+                end
+            end
         end
     end
 
