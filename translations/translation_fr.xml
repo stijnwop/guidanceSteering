@@ -23,9 +23,7 @@
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
               text="Parcourez au moins 15 m pour atteindre le point B. Distance parcourue actuellement: %.2f"/>
-        <!--TODO-->
         <text name="guidanceSteering_warning_setWidth" text="Veuillez d'abord régler une largeur de travail!"/>
-        <!--TODO-->
         <text name="guidanceSteering_warning_createTrackFirst" text="Veuillez d'abord créer ou charger une trace avant d'activer la direction de guidage.!"/>
 
         <!--GUI-->
@@ -61,7 +59,7 @@
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
-        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
+        <text name="guidanceSteering_setting_changeWidth" text="Ajuster la largeur"/>
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
 
         <text name="guidanceSteering_setting_strategy" text="Mode de guidage"/>
@@ -75,4 +73,3 @@
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
     </texts>
 </l10n>
-
