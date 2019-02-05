@@ -11,14 +11,14 @@
         <text name="input_GS_SHOW_UI" text="Mostra menu Guidance Steering"/> <!-- Show guidance steering menu -->
         <text name="input_GS_SET_AUTO_WIDTH" text="Larghezza automatica"/> <!-- Auto width -->
         <text name="input_GS_SHIFT_RESET" text="Ripristino spostamento"/> <!-- Reset shift -->
-        <text name="input_GS_SHIFT_LEFT" text="Sposta la traccia a sinistra"/> <!-- Shift track left -->
-        <text name="input_GS_SHIFT_RIGHT" text="Sposta la traccia a destra"/> <!-- Shift track right -->
+        <text name="input_GS_SHIFT_LEFT" text="Sposta traccia a sinistra"/> <!-- Shift track left -->
+        <text name="input_GS_SHIFT_RIGHT" text="Sposta traccia a destra"/> <!-- Shift track right -->
         <text name="input_GS_PLUS_WIDTH" text="Aumenta larghezza"/> <!-- Increase width -->
         <text name="input_GS_MINUS_WIDTH" text="Diminuisci larghezza"/> <!-- Decrease width -->
         <text name="input_GS_ENABLE_STEERING" text="Attiva Guidance Steering"/> <!-- Steering guidance -->
         <text name="input_GS_SETPOINT" text="Imposta il punto di direzione"/> <!-- Set guidance point -->
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Aggancia all'angolo del terreno"/> <!-- Snap to terrain angle -->
-        <text name="input_GS_TURN_STEERING" text="Imposta la direzione dello sterzo"/> <!-- Set steering direction -->
+        <text name="input_GS_TURN_STEERING" text="Imposta direzione dello sterzo"/> <!-- Set steering direction -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
@@ -40,14 +40,14 @@
 
         <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines"
-              text="Supporta le tue visuali mostrando le linee di guida"/> <!-- Support your visuals by showing the guidance lines -->
+              text="Aiuta la tua visuale mostrando le linee di guida"/> <!-- Support your visuals by showing the guidance lines -->
         <text name="guidanceSteering_tooltip_terrainAngleSnap"
               text="Aggancia la direzione all'angolo del terreno"/> <!-- Snap the direction to the terrain angle -->
         <text name="guidanceSteering_tooltip_enableGuidanceSteering"
               text="Lascia che il GPS guidi lo sterzo"/> <!-- Let the GPS guide the steering -->
         <text name="guidanceSteering_tooltip_width" text="Imposta la larghezza del tuo veicolo"/> <!-- Set the width of your vehicle -->
         <text name="guidanceSteering_tooltip_widthInCrement"
-              text="Imposta l'incremento della larghezza per aumentare / diminuire la larghezza"/> <!-- Set the width increment to increase/decrease the width -->
+              text="Imposta l'incremento della larghezza per aumentare/diminuire la larghezza"/> <!-- Set the width increment to increase/decrease the width -->
 
         <text name="guidanceSteering_tooltip_strategy"
               text="Determina quale strategia utilizzare per creare le linee guida"/> <!-- Determine which strategy to use to create the guidance lines -->
@@ -57,7 +57,7 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Imposta i punti cardinali"/> <!-- Set the cardinal points -->
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Traccia il nome: %s esiste già!"/> <!-- Track name: %s already exists! -->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Nome della traccia: %s esiste già!"/> <!-- Track name: %s already exists! -->
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Mostra linee"/> <!-- Show lines -->
@@ -66,7 +66,7 @@
         <text name="guidanceSteering_setting_width" text="Larghezza"/> <!-- Width -->
         <text name="guidanceSteering_setting_widthIncrement" text="Incremento di larghezza"/> <!-- Width increment -->
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/> <!-- Auto width -->
-        <text name="guidanceSteering_setting_changeWidth" text="Increment width"/><!--TODO: Increment width-->
+        <text name="guidanceSteering_setting_changeWidth" text="Aumenta larghezza"/> <!-- Increment width -->
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/> <!-- Cardinal point -->
 
         <text name="guidanceSteering_setting_strategy" text="Strategia di linea"/> <!-- Line strategy -->
@@ -81,4 +81,3 @@
 
     </texts>
 </l10n>
-
