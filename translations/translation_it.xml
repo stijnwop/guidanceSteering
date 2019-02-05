@@ -3,7 +3,7 @@
     <translationContributors>zed636</translationContributors>
 
     <texts>
-        <text name="configuration_buyableGPS" text="GPS"/> <!-- Global Positioning System -->
+        <text name="configuration_buyableGPS" text="Sistema di Posizionamento Globale"/> <!-- Global Positioning System -->
         <text name="configuration_buyableGPS_withoutGPS" text="No"/> <!-- No -->
         <text name="configuration_buyableGPS_withGPS" text="Si"/> <!-- Yes -->
 
