@@ -88,8 +88,14 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local state = self.guidanceSteeringWidthInCrementElement:getState()
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
+            -- Todo: cleanup later
+            if guidanceSteeringIsActive and not data.isCreated then
+                g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 4000)
+            else
+                spec.lastInputValues.guidanceSteeringIsActive = guidanceSteeringIsActive
+            end
+
             spec.lastInputValues.showGuidanceLines = showGuidanceLines
-            spec.lastInputValues.guidanceSteeringIsActive = guidanceSteeringIsActive
             spec.lastInputValues.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
             spec.lastInputValues.widthIncrement = math.abs(increment)
 

@@ -50,6 +50,7 @@
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name: %s already exists!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create a track first!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Show lines"/>

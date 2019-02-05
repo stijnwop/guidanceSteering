@@ -135,6 +135,11 @@ function GuidanceSteeringStrategyFrame:onClickSaveTrack()
             local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
             local data = spec.guidanceData
 
+            if not data.isCreated then
+                self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+                return
+            end
+
             track.name = self.guidanceSteeringTrackNameElement:getText()
             track.strategy = self.guidanceSteeringStrategyElement:getState()
             track.method = self.guidanceSteeringStrategyMethodElement:getState()
@@ -204,7 +209,7 @@ end
 function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     local track = self.guidanceSteering:getTrack(trackId)
 
-    if track ~= nil then
+    if self.guidanceSteering:getTrackIsValid(trackId) then
         local vehicle = self.guidanceSteering.ui:getVehicle()
 
         if vehicle ~= nil then

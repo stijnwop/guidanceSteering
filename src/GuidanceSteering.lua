@@ -210,6 +210,23 @@ function GuidanceSteering:getNewTrackId()
     return ListUtil.size(self.savedTracks) + 1
 end
 
+
+function GuidanceSteering:getTrackIsValid(id)
+    local track = self.savedTracks[id]
+
+    if track == nil then
+        return false
+    end
+
+    local valid = track.snapDirection[1] ~= 0
+
+    valid = valid and track.snapDirection[2] ~= 0
+    valid = valid and track.snapDirection[3] ~= 0
+    valid = valid and track.snapDirection[4] ~= 0
+
+    return valid
+end
+
 function GuidanceSteering:getTrackNameExist(name)
     for _, track in pairs(self.savedTracks) do
         if track.name == name then
