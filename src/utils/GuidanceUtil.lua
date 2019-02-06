@@ -16,11 +16,20 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
         ["processRidgeMarkerArea"] = true
     }
 
-    -- Todo: some tools have work area depending on their filltype/sprayType!
+    local activeSprayType
+    if object.getIsSprayTypeActive ~= nil then
+        local sprayerSpec = object:guidanceSteering_getSpecTable("sprayer")
+        for id, sprayType in pairs(sprayerSpec.sprayTypes) do
+            if object:getIsSprayTypeActive(sprayType) then
+                activeSprayType = id
+            end
+        end
+    end
 
     if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
         for _, workArea in pairs(workAreaSpec.workAreas) do
-            if excludedWorkAreas[workArea.functionName] == nil then
+            if excludedWorkAreas[workArea.functionName] == nil and
+                    activeSprayType == nil or workArea.sprayType == activeSprayType then
                 local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
                 local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
                 local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
