@@ -41,22 +41,23 @@
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением"/>
         <text name="guidanceSteering_tooltip_width" text="Установка ширины вашей техники"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается величина изменения для увеличения/уменьшения ширины"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг изменения для увеличения/уменьшения ширины"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Определяется, какой метод стратегии использовать"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Выбрать текущий трек для использования"/>
-        <text name="guidanceSteering_tooltip_cardinals" text="Установка кардинальных точек (соответсвует сторонам горизонта)"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Установка кардинальных точек (соответствует сторонам горизонта)"/>
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Название трека: %s уже существует!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Не удалось сохранить данные трека, сначала создайте сам трек!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Показывать линии"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Привязывать к углам местности"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Автоподруливание"/>
         <text name="guidanceSteering_setting_width" text="Ширина"/>
-        <text name="guidanceSteering_setting_widthIncrement" text="Величина изменения ширины"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Шаг изменения ширины"/>
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
         <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
@@ -73,4 +74,3 @@
 
     </texts>
 </l10n>
-
