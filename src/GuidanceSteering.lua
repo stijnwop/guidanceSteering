@@ -210,7 +210,8 @@ function GuidanceSteering:getNewTrackId()
     return ListUtil.size(self.savedTracks) + 1
 end
 
-
+---Checks if the current track is valid to load
+---@param id number
 function GuidanceSteering:getTrackIsValid(id)
     local track = self.savedTracks[id]
 
@@ -218,12 +219,12 @@ function GuidanceSteering:getTrackIsValid(id)
         return false
     end
 
-    local valid = track.snapDirection[1] ~= 0
+    local valid = true
+    for _, dir in ipairs(track.guidanceData.snapDirection) do
+        valid = valid and dir ~= 0
+    end
 
-    valid = valid and track.snapDirection[2] ~= 0
-    valid = valid and track.snapDirection[3] ~= 0
-    valid = valid and track.snapDirection[4] ~= 0
-
+    -- Some direction can be 0 when position is perfectly straight, but when multiple are 0 the direction is not set.
     return valid
 end
 
