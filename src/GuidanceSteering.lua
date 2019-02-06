@@ -220,8 +220,13 @@ function GuidanceSteering:getTrackIsValid(id)
     end
 
     local valid = true
+    local nInvalid = 0
     for _, dir in ipairs(track.guidanceData.snapDirection) do
-        valid = valid and dir ~= 0
+        valid = valid and dir ~= 0 or nInvalid < 2
+        -- x and z directions can be 0 degrees.
+        if not valid then
+            nInvalid = nInvalid + 1
+        end
     end
 
     -- Some direction can be 0 when position is perfectly straight, but when multiple are 0 the direction is not set.
