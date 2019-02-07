@@ -7,32 +7,54 @@
 
 GuidanceUtil = {}
 
-function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
-    local maxWidth = 0
-    local minWidth = 0
-    local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
-
-    local excludedWorkAreas = {
-        ["processRidgeMarkerArea"] = true
-    }
-
+---Gets the current active spray type when dealing with spray type configurations
+---@param object table
+function GuidanceUtil.getActiveSprayType(object)
     local activeSprayType
+
     if object.getIsSprayTypeActive ~= nil then
         local sprayerSpec = object:guidanceSteering_getSpecTable("sprayer")
         for id, sprayType in pairs(sprayerSpec.sprayTypes) do
             if object:getIsSprayTypeActive(sprayType) then
                 activeSprayType = id
+                break
             end
         end
     end
 
+    return activeSprayType
+end
+
+---Calculates the work width
+---@param guidanceNode number
+---@param object table
+function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+    local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
+    local activeSprayType = GuidanceUtil.getActiveSprayType(object)
+
+    -- Exclude ridged markers from workArea calculation
+    local skipWorkAreas = {
+        ["processRidgeMarkerArea"] = true
+    }
+
+    local function isWorkAreaValid(workArea)
+        if skipWorkAreas[workArea.functionName] ~= nil then
+            return false
+        end
+        if (activeSprayType ~= nil and workArea.sprayType ~= activeSprayType) then
+            return false
+        end
+        return true
+    end
+
+    local maxWidth, minWidth = 0, 0
+
     if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
         for _, workArea in pairs(workAreaSpec.workAreas) do
-            if excludedWorkAreas[workArea.functionName] == nil and
-                    activeSprayType == nil or workArea.sprayType == activeSprayType then
-                local x0, _, _ = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
-                local x1, _, _ = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
-                local x2, _, _ = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
+            if isWorkAreaValid(workArea) then
+                local x0 = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
+                local x1 = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
+                local x2 = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
 
                 maxWidth = math.max(maxWidth, x0, x1, x2)
                 minWidth = math.min(minWidth, x0, x1, x2)
