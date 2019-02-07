@@ -178,6 +178,8 @@ function GuidanceSteeringStrategyFrame:onClickSetPointA()
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if not spec.lineStrategy:getIsABDirectionPossible() then
+        -- First request reset to make sure the current track is clear
+        vehicle:updateGuidanceData(nil, false, true)
         vehicle:pushABPoint()
     end
 end
