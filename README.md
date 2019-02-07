@@ -13,9 +13,11 @@ This version should also work in Multiplayer, but keep in mind it might have bug
 
 
 ## Installation
-Currently the development version is only available via GitHub. Download the latest version from the [release section](https://github.com/stijnwop/guidanceSteering/releases).
+Currently the development version is only available via GitHub. When a release version is avaiable you can download the latest version from the [release section](https://github.com/stijnwop/guidanceSteering/releases).
 
-Windows: Copy the `FS19_guidanceSteering.zip` into your `My Games\FarmingSimulator2019\mods` directory.
+For installing the release:
+
+Windows: Copy the `FS19_guidanceSteering_rc_<version>.zip` into your `My Games\FarmingSimulator2019\mods` directory.
 
 
 ## Documentation
