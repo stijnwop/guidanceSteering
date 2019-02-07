@@ -62,8 +62,6 @@ It's also possible to store the tracks and reload them. Open the second page in 
 ## Developers
 To quickly build a zip of the developer version without the needed extra's, use the `zip.bat`.
 
-_The zip.bat requires the application 7zip to be installed._
-
 
 ## Copyright
 Copyright (c) 2019 [Wopster](https://github.com/stijnwop).
