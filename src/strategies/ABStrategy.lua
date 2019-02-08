@@ -19,7 +19,7 @@ ABStrategy.METHODS = {
 
 local RGB_WHITE = { 1, 1, 1 }
 local RGB_GREEN = { 0, 1, 0 }
-local RGB_BLUE = { 0, 0, .7 }
+local RGB_BLUE = { 0, 0, 1 }
 
 ABStrategy.ABLines = {
     ["left"] = { position = -1, rgb = RGB_BLUE, rgbActive = RGB_BLUE },
@@ -107,7 +107,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
 
         setTextBold(true)
-        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.018), 0, r, g, b)
+        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.02), 0, r, g, b)
         drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, r, g, b)
     end
 

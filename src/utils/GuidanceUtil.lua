@@ -161,7 +161,7 @@ function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOff
         setTextAlignment(RenderText.ALIGN_CENTER)
         setTextColor(0.0, 0.0, 0.0, 0.75)
         renderText(sx, sy - 0.0015 + textOffset, textSize, text)
-        setTextColor(r, g, b, 0.95)
+        setTextColor(r, g, b, 1)
         renderText(sx, sy + textOffset, textSize, text)
         setTextAlignment(RenderText.ALIGN_LEFT)
     end
