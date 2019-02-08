@@ -23,7 +23,7 @@ function GuidanceSteeringStrategyFrame:new(i18n)
 
     self.i18n = i18n
     self.allowSave = false
-    self.currentTrackId = 0
+    self.loadedTrackId = 0
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -62,8 +62,10 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
         local strategy = vehicle:getGuidanceStrategy()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
-        self.currentTrackId = self.guidanceSteeringTrackElement:getState()
-        Logger.info("Current: ", self.currentTrackId)
+        self.loadedTrackId = self.guidanceSteeringTrackElement:getState()
+        Logger.info("Loaded: ", self.loadedTrackId)
+
+        self:onClickLoadTrack(self.loadedTrackId)
 
         self.allowSave = true
     end
@@ -74,13 +76,18 @@ end
 function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
-    local trackId = self.guidanceSteeringTrackElement:getState()
+    if self.allowSave then
+        local trackId = self.guidanceSteeringTrackElement:getState()
 
-    if self.currentTrackId ~= trackId then
-        self:loadTrack(trackId)
+        if self.loadedTrackId ~= 0 and trackId ~= self.loadedTrackId then
+            self:loadTrack(trackId)
+        end
+
+        self.allowSave = false
     end
 
     self.guidanceSteering:unsubscribe(self)
+    self.loadedTrackId = 0
 end
 
 --- Get the frame's main content element's screen size.
@@ -119,8 +126,12 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
 
     if trackId ~= 0 then
         Logger.info("Removing track: ", trackId)
-
         self:deleteTrack(trackId)
+
+        -- Reset loaded track when we are deleting it.
+        if self.loadedTrackId == trackId then
+            self.loadedTrackId = 0
+        end
     end
 end
 
@@ -162,11 +173,11 @@ function GuidanceSteeringStrategyFrame:onClickLoadTrack(trackId)
         self.guidanceSteeringTrackNameElement:setText(track.name)
         self.guidanceSteeringStrategyElement:setState(track.strategy)
         self.guidanceSteeringStrategyMethodElement:setState(track.method)
-
-        self:onDisplayElementsChanged()
-        -- After the new list is updated set the current track.
-        self.guidanceSteeringTrackElement:setState(trackId)
     end
+
+    self:onDisplayElementsChanged()
+    -- After the new list is updated set the current track.
+    self.guidanceSteeringTrackElement:setState(trackId)
 end
 
 function GuidanceSteeringStrategyFrame:onClickSetPointA()

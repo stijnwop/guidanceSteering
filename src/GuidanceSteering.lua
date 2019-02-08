@@ -193,12 +193,13 @@ end
 function GuidanceSteering:deleteTrack(id)
     local entry = self.savedTracks[id]
 
-    Logger.info("Deleting track: ", id)
     if entry ~= nil then
+        Logger.info("Deleting track: ", id)
+
         ListUtil.removeElementFromList(self.savedTracks, entry)
 
         -- Call listeners
-        self:onTrackChanged(ListUtil.size(self.savedTracks) - 1)
+        self:onTrackChanged(ListUtil.size(self.savedTracks))
     end
 end
 
