@@ -1,6 +1,12 @@
-$exclude = @(".idea", ".github", ".gitignore", "zip.bat", "zip-builder.ps1", ".git")
-$path = $(get-location).Path;
-$destination = $path + "\FS19_guidanceSteering_dev.zip"
-$files = Get-ChildItem -Path $path -Exclude $exclude
+$include = @("*.xml", "*.lua", "*.i3d", "*.i3d.shapes", "*.dds", "*.ogg", "README.md")
+$zipfilename = "FS19_guidanceSteering_dev.zip"
 
-Compress-Archive -Path $files -DestinationPath $destination -CompressionLevel Fastest
+if (test-path "$env:ProgramFiles\7-Zip\7z.exe") {
+	set-alias 7z "$env:ProgramFiles\7-Zip\7z.exe"
+	7z a -tzip $zipfilename $include -r -xr!".idea" -xr!"data"
+} elseif (test-path "$env:ProgramFiles\WinRAR\WinRAR.exe") {
+	set-alias winrar "$env:ProgramFiles\WinRAR\WinRAR.exe"
+	winrar a -afzip $zipfilename $include -r -x".idea" -x"data"
+} else {
+	throw "7-Zip or WinRAR is needed!"
+}
