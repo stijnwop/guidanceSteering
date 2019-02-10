@@ -155,15 +155,18 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     return data
 end
 
-function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, textOffset, r, g, b)
+function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, rgb)
     local sx, sy, sz = project(x, y, z)
+
     if sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1 then
+        setTextBold(true)
         setTextAlignment(RenderText.ALIGN_CENTER)
-        setTextColor(0.0, 0.0, 0.0, 0.75)
-        renderText(sx, sy - 0.0015 + textOffset, textSize, text)
-        setTextColor(r, g, b, 1)
-        renderText(sx, sy + textOffset, textSize, text)
+        setTextColor(0, 0, 0, 0.75)
+        renderText(sx, sy - 0.0015, textSize, text)
+        setTextColor(rgb[1], rgb[2], rgb[3], 1)
+        renderText(sx, sy, textSize, text)
         setTextAlignment(RenderText.ALIGN_LEFT)
+        setTextBold(false)
     end
 end
 

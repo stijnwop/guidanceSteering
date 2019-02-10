@@ -1,6 +1,6 @@
 HeadlandProcessor = {}
 
-local mt = Class(HeadlandProcessor)
+local HeadlandProcessor_mt = Class(HeadlandProcessor)
 
 HeadlandProcessor.MODES = {
     OFF = 0,
@@ -10,10 +10,6 @@ HeadlandProcessor.MODES = {
 }
 
 function HeadlandProcessor:new(object, customMt)
-    if customMt == nil then
-        customMt = mt
-    end
-
     local instance = {}
 
     instance.mode = HeadlandProcessor.MODES.STOP
@@ -25,7 +21,7 @@ function HeadlandProcessor:new(object, customMt)
 
     instance.object = object
 
-    setmetatable(instance, customMt)
+    setmetatable(instance, customMt or HeadlandProcessor_mt)
 
     return instance
 end

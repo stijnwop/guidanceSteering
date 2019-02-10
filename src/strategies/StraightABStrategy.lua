@@ -10,11 +10,7 @@ StraightABStrategy = {}
 local StraightABStrategy_mt = Class(StraightABStrategy, ABStrategy)
 
 function StraightABStrategy:new(vehicle, customMt)
-    if customMt == nil then
-        customMt = StraightABStrategy_mt
-    end
-
-    local instance = ABStrategy:new(vehicle, customMt)
+    local instance = ABStrategy:new(vehicle, customMt or StraightABStrategy_mt)
 
     return instance
 end

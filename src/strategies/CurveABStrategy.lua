@@ -24,12 +24,9 @@ CurveABStrategy.NUM_STEPS = 15 -- draw 15
 CurveABStrategy.GROUND_CLEARANCE_OFFSET = .2
 
 function CurveABStrategy:new(customMt)
-    if customMt == nil then
-        customMt = CurveABStrategy_mt
-    end
-
     local instance = {}
-    setmetatable(instance, customMt)
+    
+    setmetatable(instance, customMt or CurveABStrategy_mt)
 
     instance.curvedABPoints = {} -- {id = object pointer, name = render name}
     instance.curve = {}

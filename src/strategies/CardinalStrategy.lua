@@ -15,11 +15,7 @@ CardinalStrategy.WEST = 180
 local CardinalStrategy_mt = Class(CardinalStrategy, ABStrategy)
 
 function CardinalStrategy:new(vehicle, customMt)
-    if customMt == nil then
-        customMt = CardinalStrategy_mt
-    end
-
-    local instance = ABStrategy:new(vehicle, customMt)
+    local instance = ABStrategy:new(vehicle, customMt or CardinalStrategy_mt)
 
     return instance
 end

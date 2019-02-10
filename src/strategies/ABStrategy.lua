@@ -37,10 +37,6 @@ local ABStrategy_mt = Class(ABStrategy)
 ---@param vehicle table
 ---@param customMt table
 function ABStrategy:new(vehicle, customMt)
-    if customMt == nil then
-        customMt = ABStrategy_mt
-    end
-
     local instance = {}
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
 
@@ -48,7 +44,7 @@ function ABStrategy:new(vehicle, customMt)
     instance.turnActive = false
     instance.vehicle = vehicle
 
-    setmetatable(instance, customMt)
+    setmetatable(instance, customMt or ABStrategy_mt)
 
     return instance
 end
@@ -97,7 +93,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
     local lineXDir = data.snapDirectionMultiplier * lineDirX
     local lineZDir = data.snapDirectionMultiplier * lineDirZ
 
-    local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, r, g, b)
+    local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
         end
@@ -106,9 +102,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
         local z1 = lz + stepSize * step * dirZ
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
 
-        setTextBold(true)
-        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", getCorrectTextSize(0.02), 0, r, g, b)
-        drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, r, g, b)
+        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", 0.02, rgb)
+        drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, rgb)
     end
 
     for _, line in pairs(lines) do
@@ -116,9 +111,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
         local lineZ = z - data.width * lineDirX * (data.alphaRad + line.position / 2)
 
         local rgb = guidanceSteeringIsActive and line.rgbActive or line.rgb
-        local r, g, b = unpack(rgb)
 
-        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, r, g, b)
+        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, rgb)
     end
 end
 
