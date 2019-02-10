@@ -801,12 +801,6 @@ function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, input
     self:updateGuidanceData(data, false, false)
 end
 
-function GlobalPositioningSystem.actionEventMinusWidth(self, actionName, inputValue, callbackState, isAnalog)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.guidanceData.width = math.max(0, spec.guidanceData.width - spec.lastInputValues.widthIncrement)
-    self:updateGuidanceData(spec.guidanceData, false, false)
-end
-
 function GlobalPositioningSystem.actionEventWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
