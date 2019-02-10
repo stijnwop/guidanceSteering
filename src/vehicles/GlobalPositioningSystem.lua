@@ -156,6 +156,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
     spec.lastInputValues.shiftParallel = false
     spec.lastInputValues.shiftParallelValue = 0
+    spec.lastInputValues.widthValue = 0
     spec.lastInputValues.widthIncrement = 0.1 -- no need to sync this.
 
     -- Shift control
