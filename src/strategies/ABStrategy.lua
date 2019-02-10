@@ -19,7 +19,7 @@ ABStrategy.METHODS = {
 
 local RGB_WHITE = { 1, 1, 1 }
 local RGB_GREEN = { 0, 1, 0 }
-local RGB_BLUE = { 0, 0, 1 }
+local RGB_BLUE = { 0.9913, 0.3940, 0.007 }
 
 ABStrategy.ABLines = {
     ["left"] = { position = -1, rgb = RGB_BLUE, rgbActive = RGB_BLUE },
