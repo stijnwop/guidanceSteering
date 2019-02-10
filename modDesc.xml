@@ -38,11 +38,9 @@
         <action name="GS_SHOW_UI" axisType="HALF"/>
         <action name="GS_SETPOINT" axisType="HALF"/>
         <action name="GS_SET_AUTO_WIDTH" axisType="HALF"/>
-        <action name="GS_MINUS_WIDTH" axisType="HALF"/>
-        <action name="GS_PLUS_WIDTH" axisType="HALF"/>
+        <action name="GS_AXIS_WIDTH" axisType="HALF"/>
+        <action name="GS_AXIS_SHIFT" axisType="HALF"/>
         <action name="GS_ENABLE_STEERING" axisType="HALF"/>
-        <action name="GS_SHIFT_LEFT" axisType="HALF"/>
-        <action name="GS_SHIFT_RIGHT" axisType="HALF"/>
     </actions>
 
     <inputBinding>
@@ -55,20 +53,16 @@
         <actionBinding action="GS_SET_AUTO_WIDTH">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_r"/>
         </actionBinding>
-        <actionBinding action="GS_MINUS_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus"/>
-        </actionBinding>
-        <actionBinding action="GS_PLUS_WIDTH">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_equals"/>
-        </actionBinding>
         <actionBinding action="GS_ENABLE_STEERING">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
         </actionBinding>
-        <actionBinding action="GS_SHIFT_LEFT">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pagedown"/>
+        <actionBinding action="GS_AXIS_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_equals" axisComponent="+"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus" axisComponent="-"/>
         </actionBinding>
-        <actionBinding action="GS_SHIFT_RIGHT">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pageup"/>
+        <actionBinding action="GS_AXIS_SHIFT">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pageup" axisComponent="+"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pagedown" axisComponent="-"/>
         </actionBinding>
     </inputBinding>
 </modDesc>

@@ -10,11 +10,11 @@
         <!--Inputs-->
         <text name="input_GS_SHOW_UI" text="Afficher le menu de guidage"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
-        <text name="input_GS_SHIFT_RESET" text="Réinitialiser le décalage"/>
-        <text name="input_GS_SHIFT_LEFT" text="Décaler sur la gauche"/>
-        <text name="input_GS_SHIFT_RIGHT" text="Décaler sur la droite"/>
-        <text name="input_GS_PLUS_WIDTH" text="Augmenter la largeur"/>
-        <text name="input_GS_MINUS_WIDTH" text="Réduire la largeur"/>
+
+        <!--TODO: input_GS_AXIS_SHIFT-->
+        <text name="input_GS_AXIS_SHIFT" text="Shift track"/> <!-- Shift track -->
+        <text name="input_GS_AXIS_WIDTH" text="Change width"/> <!-- Change width -->
+
         <text name="input_GS_ENABLE_STEERING" text="Guidage automatique"/>
         <text name="input_GS_SETPOINT" text="Déterminer un point de guidage"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Alignement sur l'angle du terrain"/>

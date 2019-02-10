@@ -10,11 +10,11 @@
         <!--Inputs-->
 		<text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
 		<text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
-		<text name="input_GS_SHIFT_RESET" text="Zresetuj przesunięcie"/>
-		<text name="input_GS_SHIFT_LEFT" text="Przesuń ścieżkę w lewo"/>
-		<text name="input_GS_SHIFT_RIGHT" text="Przesuń ścieżkę w prawo"/>
-		<text name="input_GS_PLUS_WIDTH" text="Zwiększ szerokość"/>
-		<text name="input_GS_MINUS_WIDTH" text="Zmniejsz szerokość"/>
+
+		<!--TODO: input_GS_AXIS_SHIFT-->
+		<text name="input_GS_AXIS_SHIFT" text="Shift track"/> <!-- Shift track -->
+		<text name="input_GS_AXIS_WIDTH" text="Change width"/> <!-- Change width -->
+
 		<text name="input_GS_ENABLE_STEERING" text="Automatyczne sterowanie"/>
 		<text name="input_GS_SETPOINT" text="Ustaw punkt nawigacji"/>
 		<text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Wyrównaj do kąta terenu"/>
@@ -70,6 +70,5 @@
 		<text name="guidanceSteering_setting_newTrack" text="Stwórz ścieżkę"/>
 		<text name="guidanceSteering_setting_removeTrack" text="Usuń ścieżkę"/>
 		<text name="guidanceSteering_setting_saveTrack" text="Zapisz ścieżkę"/>
-
 	</texts>
 </l10n>

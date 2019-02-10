@@ -10,11 +10,11 @@
         <!--Inputs-->
         <text name="input_GS_SHOW_UI" text="Mostrar Menú GPS"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Ancho Auto"/>
-        <text name="input_GS_SHIFT_RESET" text="Resetear Giro"/>
-        <text name="input_GS_SHIFT_LEFT" text="Desplazar a la Izq."/>
-        <text name="input_GS_SHIFT_RIGHT" text="Desplazar a la Der."/>
-        <text name="input_GS_PLUS_WIDTH" text="Aumentar Ancho"/>
-        <text name="input_GS_MINUS_WIDTH" text="Disminuir Ancho"/>
+
+        <!--TODO: input_GS_AXIS_SHIFT-->
+        <text name="input_GS_AXIS_SHIFT" text="Shift track"/> <!-- Shift track -->
+        <text name="input_GS_AXIS_WIDTH" text="Change width"/> <!-- Change width -->
+
         <text name="input_GS_ENABLE_STEERING" text="Guías de Dirección"/>
         <text name="input_GS_SETPOINT" text="Fijar punto de guía"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Ajustar al ángulo del terreno"/>
@@ -24,7 +24,6 @@
         <text name="guidanceSteering_warning_dropDistance"
               text="Conduzca al menos 15 m para establecer el punto B. Distancia recorrida actual: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Por favor fije antes el ancho de trabajo!"/>
-        <!--TODO-->
         <text name="guidanceSteering_warning_createTrackFirst" text="Por favor crea o carga una pista primero, antes de activar el sistema GPS!"/>
 
         <!--GUI-->
@@ -72,7 +71,6 @@
         <text name="guidanceSteering_setting_newTrack" text="Crear pista"/>
         <text name="guidanceSteering_setting_removeTrack" text="Borrar pista"/>
         <text name="guidanceSteering_setting_saveTrack" text="Guardar pista"/>
-
     </texts>
 </l10n>
 
