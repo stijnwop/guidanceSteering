@@ -11,9 +11,8 @@
 		<text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
 		<text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
 
-		<!--TODO: input_GS_AXIS_SHIFT-->
-		<text name="input_GS_AXIS_SHIFT" text="Shift track"/> <!-- Shift track -->
-		<text name="input_GS_AXIS_WIDTH" text="Change width"/> <!-- Change width -->
+		<text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/>
+		<text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/>
 
 		<text name="input_GS_ENABLE_STEERING" text="Automatyczne sterowanie"/>
 		<text name="input_GS_SETPOINT" text="Ustaw punkt nawigacji"/>
