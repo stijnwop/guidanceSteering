@@ -786,8 +786,13 @@ end
 
 --- Action events
 function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
-    --local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    --spec.ui:onToggleUI()
+    if not self.isClient then
+        return
+    end
+
+    if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
+        g_guidanceSteering.ui:onToggleUI()
+    end
 end
 
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
