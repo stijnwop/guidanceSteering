@@ -1,4 +1,4 @@
---
+---
 -- ABPoint
 --
 -- AB point class to handle AB points.
