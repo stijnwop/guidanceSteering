@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>FarmingClub.cz Jaroslav (Wales) Pavlata</translationContributors>
+
+    <texts>
+        <text name="configuration_buyableGPS" text="Navigační systém GPS"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Ne"/>
+        <text name="configuration_buyableGPS_withGPS" text="Ano"/>
+
+        <!--Inputs-->
+        <text name="input_GS_SHOW_UI" text="Zobrazit menu GPS"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Auto šířka"/>
+
+        <text name="input_GS_AXIS_SHIFT_1" text="Posunout stopu doprava"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Posunout stopu doleva"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Zvýšit šířku"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Snížit šířku"/>
+
+        <text name="input_GS_SHIFT_RESET" text="Resetovat posun"/>
+        <text name="input_GS_ENABLE_STEERING" text="Systém řízení GPS"/>
+        <text name="input_GS_SETPOINT" text="Nastavit orientační bod"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uchopit úhel terénu"/>
+        <text name="input_GS_TURN_STEERING" text="Nastavit směr řízení"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Pro nastavení bodu B jeďte nejméně 15 m. Momentální ujetá vzdálenost: %.2f"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="Nastavení navigace"/>
+        <text name="guidanceSteering_ui_strategy" text="Strategie navigace"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB rovně"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB křivka"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Heading"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Podporujte své vizualizace zobrazením vodítek"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Uchopte směr úhlu terénu"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Nechte řídit systém GPS za Vás!"/>
+        <text name="guidanceSteering_tooltip_width" text="Nastavte šířku vašeho vozidla"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Nastavte přírůstek šířky pro zvýšení / snížení šířky"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Určete, kterou strategii použijete k vytvoření vodítek"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Určete, kterou strategii použijete"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Vyberte aktuální stopu, kterou chcete použít"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Nastavte hlavní body"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Název stopy: %s již existuje!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Zobrazit vodítka"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Uchopit úhel terénu"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktivovat systém GPS"/>
+        <text name="guidanceSteering_setting_width" text="Šířka"/>
+        <text name="guidanceSteering_setting_widthInCrement" text="Nárust šířky"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Auto šířka"/>
+        <text name="guidanceSteering_setting_cardinals" text="Hlavní bod"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Strategie vodítek"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Metoda vodítek"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Aktuální stopa"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Nastavit A"/>
+        <text name="guidanceSteering_setting_pointB" text="Nastavit B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Vytvořit stopu"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Odstranit stopu"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Uložit stopu"/>
+    </texts>
+</l10n>

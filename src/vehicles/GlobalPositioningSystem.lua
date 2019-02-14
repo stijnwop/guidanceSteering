@@ -20,7 +20,7 @@ GlobalPositioningSystem.AB_DROP_DISTANCE = 15
 
 -- For changing width and shifting the track
 GlobalPositioningSystem.MAX_INPUT_MULTIPLIER = 10
-GlobalPositioningSystem.INPUT_MULTIPLIER_STEP = 0.003
+GlobalPositioningSystem.INPUT_MULTIPLIER_STEP = 0.004
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
