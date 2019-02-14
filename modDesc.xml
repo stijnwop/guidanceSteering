@@ -38,9 +38,9 @@
         <action name="GS_SHOW_UI" axisType="HALF"/>
         <action name="GS_SETPOINT" axisType="HALF"/>
         <action name="GS_SET_AUTO_WIDTH" axisType="HALF"/>
-        <action name="GS_AXIS_WIDTH" axisType="HALF"/>
-        <action name="GS_AXIS_SHIFT" axisType="HALF"/>
         <action name="GS_ENABLE_STEERING" axisType="HALF"/>
+        <action name="GS_AXIS_WIDTH" axisType="FULL"/>
+        <action name="GS_AXIS_SHIFT" axisType="FULL"/>
     </actions>
 
     <inputBinding>

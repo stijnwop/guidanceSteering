@@ -12,8 +12,10 @@
         <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
 
         <!--TODO: input_GS_AXIS_SHIFT-->
-        <text name="input_GS_AXIS_SHIFT" text="Changer de ligne"/> <!-- Shift track -->
-        <text name="input_GS_AXIS_WIDTH" text="Modifier la largeur"/> <!-- Change width -->
+        <text name="input_GS_AXIS_SHIFT_1" text="Shift track right"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Shift track left"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Increase track width"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Decrease track width"/>
 
         <text name="input_GS_ENABLE_STEERING" text="Guidage automatique"/>
         <text name="input_GS_SETPOINT" text="Déterminer un point de guidage"/>

@@ -20,7 +20,7 @@ GlobalPositioningSystem.AB_DROP_DISTANCE = 15
 
 -- For changing width and shifting the track
 GlobalPositioningSystem.MAX_INPUT_MULTIPLIER = 10
-GlobalPositioningSystem.INPUT_MULTIPLIER_STEP = 0.003
+GlobalPositioningSystem.INPUT_MULTIPLIER_STEP = 0.004
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
@@ -192,10 +192,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
     spec.guidanceData.isCreated = false
-
-    if self.isClient then
-        spec.ui = g_guidanceSteering.ui
-    end
 
     spec.dirtyFlag = self:getNextDirtyFlag()
 
@@ -525,19 +521,19 @@ end
 
 function GlobalPositioningSystem:onLeaveVehicle()
     if self.isClient then
-        if self:getHasGuidanceSystem() then
-            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-            spec.ui:setVehicle(nil)
+        if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
+            if g_guidanceSteering.ui:getVehicle() == self then
+                g_guidanceSteering.ui:setVehicle(nil)
+            end
         end
     end
 end
 
 function GlobalPositioningSystem:onEnterVehicle()
     if self.isClient then
-        if self:getHasGuidanceSystem() then
-            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-            if spec.ui:getVehicle() ~= self then
-                spec.ui:setVehicle(self)
+        if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
+            if g_guidanceSteering.ui:getVehicle() ~= g_currentMission.controlledVehicle then
+                g_guidanceSteering.ui:setVehicle(g_currentMission.controlledVehicle)
             end
         end
     end
@@ -596,6 +592,7 @@ end
 ---@param noEventSend boolean
 function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, isReset, noEventSend)
     -- Todo: with multiple clients somehow every wehicle is still being hit.
+    Logger.info("We got called -> eventSend: ", noEventSend)
 
     GuidanceDataChangedEvent.sendEvent(self, guidanceData, isCreation, isReset, noEventSend)
 
@@ -789,8 +786,13 @@ end
 
 --- Action events
 function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    spec.ui:onToggleUI()
+    if not self.isClient then
+        return
+    end
+
+    if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
+        g_guidanceSteering.ui:onToggleUI()
+    end
 end
 
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)

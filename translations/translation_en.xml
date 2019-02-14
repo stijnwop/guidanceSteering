@@ -11,8 +11,10 @@
         <text name="input_GS_SHOW_UI" text="Show guidance steering menu"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Auto width"/>
 
-        <text name="input_GS_AXIS_SHIFT" text="Shift track"/>
-        <text name="input_GS_AXIS_WIDTH" text="Change width"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="Shift track right"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Shift track left"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Increase track width"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Decrease track width"/>
 
         <text name="input_GS_ENABLE_STEERING" text="Steering guidance"/>
         <text name="input_GS_SETPOINT" text="Set guidance point"/>
@@ -72,4 +74,3 @@
         <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
     </texts>
 </l10n>
-
