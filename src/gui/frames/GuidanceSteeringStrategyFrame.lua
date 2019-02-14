@@ -229,7 +229,7 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
             local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
             local data = spec.guidanceData
 
-            Logger.info("Loading track: ", trackId)
+            Logger.info("Loading track for client: ", trackId)
 
             -- First request reset to make sure the current track is clear
             vehicle:updateGuidanceData(nil, false, true)

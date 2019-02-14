@@ -58,7 +58,7 @@ function GuidanceDataChangedEvent:run(connection)
 end
 
 function GuidanceDataChangedEvent.sendEvent(vehicle, data, isCreation, isReset, noEventSend)
-    if noEventSend == nil or noEventSend == false then
+    if noEventSend == nil or not noEventSend then
         if g_server ~= nil then
             g_server:broadcastEvent(GuidanceDataChangedEvent:new(vehicle, data, isCreation, isReset), nil, nil, vehicle)
         else

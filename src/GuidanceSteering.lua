@@ -144,6 +144,7 @@ function GuidanceSteering:createTrack(id, name)
     Logger.info("Creating track: " .. id, name)
 
     if id > GuidanceSteering.MAX_NUM_TRACKS then
+        Logger.warning("Maximum of saved tracks reached!")
         return
     end
 
@@ -168,14 +169,12 @@ function GuidanceSteering:createTrack(id, name)
 end
 
 function GuidanceSteering:saveTrack(id, data)
-    if id > GuidanceSteering.MAX_NUM_TRACKS then
-        return
-    end
-
     local entry = self.savedTracks[id]
-    Logger.info("Saving track: ", entry.name)
 
     if entry ~= nil then
+        Logger.info("Saving track: ", id)
+        Logger.info("Saving track data: ", data)
+
         if data.name ~= entry.name then
             entry.name = data.name
         end
