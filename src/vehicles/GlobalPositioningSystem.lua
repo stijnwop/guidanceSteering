@@ -40,6 +40,7 @@ end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "loadDynamicallyPartsFromXML", GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML)
 end
 
 function GlobalPositioningSystem.registerEventListeners(vehicleType)
@@ -199,6 +200,16 @@ function GlobalPositioningSystem:onLoad(savegame)
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local parts = self.spec_dynamicallyLoadedParts.parts
+
+    if parts ~= nil then
+        for _, part in pairs(parts) do
+            if part.linkNode ~= nil then
+                setVisibility(part.linkNode, spec.hasGuidanceSystem)
+            end
+        end
+    end
 end
 
 function GlobalPositioningSystem:onReadStream(streamId, connection)
@@ -517,6 +528,21 @@ function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, sup
     end
 
     return superFunc(vehicle)
+end
+
+function GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML(vehicle, superFunc, dynamicallyLoadedPart, xmlFile, key)
+    local ret = superFunc(vehicle, dynamicallyLoadedPart, xmlFile, key)
+    if ret then
+        local function isSharedStarFire(path)
+            return path:lower() == "$data/shared/assets/starfire.i3d"
+        end
+
+        if isSharedStarFire(dynamicallyLoadedPart.filename) then
+            dynamicallyLoadedPart.linkNode = I3DUtil.indexToObject(vehicle.components, Utils.getNoNil(getXMLString(xmlFile, key .. "#linkNode"), "0>"), vehicle.i3dMappings)
+        end
+    end
+
+    return ret
 end
 
 function GlobalPositioningSystem:onLeaveVehicle()
