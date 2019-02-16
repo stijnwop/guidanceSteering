@@ -27,7 +27,8 @@
               text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f"/> <!-- Drive at least 15m in order to set point B. Current traveled distance: %.2f -->
         <text name="guidanceSteering_warning_setWidth"
               text="Si prega di impostare prima una larghezza di lavoro!"/> <!-- Please set a working width first! -->
-        <text name="guidanceSteering_warning_createTrackFirst" text="Si prega di creare o caricare una traccia prima di abilitare Guidance Steering!"/> <!-- Please create or load a track first before enabling guidance steering! -->
+        <text name="guidanceSteering_warning_createTrackFirst"
+              text="Si prega di creare o caricare una traccia prima di abilitare Guidance Steering!"/> <!-- Please create or load a track first before enabling guidance steering! -->
 
         <!-- GUI -->
         <text name="guidanceSteering_ui_settings" text="Impostazioni Guidance Steering"/> <!-- Guidance settings -->
