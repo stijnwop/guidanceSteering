@@ -11,8 +11,10 @@
         <text name="input_GS_SHOW_UI" text="Zeige Guidance Steering Menü"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatische Breite"/>
 
-        <text name="input_GS_AXIS_SHIFT" text="Verschiebung"/>
-        <text name="input_GS_AXIS_WIDTH" text="Breite ändern"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="Nach rechts verschieben"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Nach links verschieben"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Breite erhöhen"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Breite verringern"/>
 
         <text name="input_GS_ENABLE_STEERING" text="Automatische Führung aktivieren"/>
         <text name="input_GS_SETPOINT" text="Punkt setzen"/>

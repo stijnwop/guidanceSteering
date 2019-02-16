@@ -11,9 +11,10 @@
         <text name="input_GS_SHOW_UI" text="Показать меню автоподруливания"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Автоширина"/>
 
-        <!--TODO: input_GS_AXIS_SHIFT-->
-        <text name="input_GS_AXIS_SHIFT" text="Shift track"/> <!-- Shift track -->
-        <text name="input_GS_AXIS_WIDTH" text="Change width"/> <!-- Change width -->
+        <text name="input_GS_AXIS_SHIFT_1" text="Смещение трека вправо"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Смещение трека влево"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Увеличить ширину трека"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Уменьшить ширину трека"/>
 
         <text name="input_GS_ENABLE_STEERING" text="Включить автоподруливание"/>
         <text name="input_GS_SETPOINT" text="Установить управляющую точку"/>
@@ -22,7 +23,7 @@
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Проедьте не менее 15 м, чтобы установить точку B. Текущее пройденное расстояние: %.2f"/>
-        <text name="guidanceSteering_warning_setWidth" text="Пожалуйста, сначала установите рабочую ширину!"/>
+        <text name="guidanceSteering_warning_setWidth" text="Пожалуйста, сначала установите рабочую ширину агрегата!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Пожалуйста, сначала создайте или загрузите трек, прежде чем включить навигацию!"/>
 
         <!--GUI-->
@@ -40,7 +41,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Поддерживает вас визуально, показывая навигационные линии"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением"/>
-        <text name="guidanceSteering_tooltip_width" text="Установка ширины вашей техники"/>
+        <text name="guidanceSteering_tooltip_width" text="Установка ширины вашего агрегата"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг изменения для увеличения/уменьшения ширины"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>

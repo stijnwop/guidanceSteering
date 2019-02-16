@@ -44,7 +44,7 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
         if (activeSprayType ~= nil and workArea.sprayType ~= activeSprayType) then
             return false
         end
-        return true
+        return workArea.type ~= WorkAreaType.AUXILIARY
     end
 
     local maxWidth, minWidth = 0, 0
