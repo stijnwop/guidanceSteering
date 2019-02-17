@@ -288,6 +288,10 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
                 -- When dealing with a controller or steering wheel look at the input value.
                 spec.lastInputValues.guidanceSteeringIsActive = not (math.abs(inputValue) > 0.5)
             end
+
+            if not spec.lastInputValues.guidanceSteeringIsActive then
+                vehicle:onSteeringStateChanged(false)
+            end
         end
     end
 end

@@ -36,6 +36,7 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "onResetGuidanceData", GlobalPositioningSystem.onResetGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onCreateGuidanceData", GlobalPositioningSystem.onCreateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onUpdateGuidanceData", GlobalPositioningSystem.onUpdateGuidanceData)
+    SpecializationUtil.registerFunction(vehicleType, "onSteeringStateChanged", GlobalPositioningSystem.onSteeringStateChanged)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
@@ -132,6 +133,18 @@ function GlobalPositioningSystem:onLoad(savegame)
             setRotation(node, 0, math.rad(180), 0)
         end
         return node
+    end
+
+    if self.isClient then
+        local xmlFile = loadXMLFile("GuidanceSounds", Utils.getFilename("resources/sounds.xml", g_guidanceSteering.modDirectory))
+        if xmlFile ~= nil then
+            spec.samples = {}
+            spec.samples.activate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "activate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+            spec.samples.deactivate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "deactivate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+            spec.samples.warning = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "warning", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+
+            delete(xmlFile)
+        end
     end
 
     spec.guidanceNode = createGuideNode("guidance_node", false)
@@ -297,6 +310,11 @@ function GlobalPositioningSystem:onDelete()
     delete(spec.guidanceTargetNode)
 
     -- Remove sounds
+    if self.isClient then
+        for _, sample in pairs(spec.samples) do
+            g_soundManager:deleteSample(sample)
+        end
+    end
 end
 
 function GlobalPositioningSystem.updateNetworkInputs(self)
@@ -755,6 +773,17 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     Logger.info("onUpdateGuidanceData")
 end
 
+function GlobalPositioningSystem:onSteeringStateChanged(isActive)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    local sample = spec.samples.activate
+    if not isActive then
+        sample = spec.samples.deactivate
+    end
+
+    g_soundManager:playSample(sample)
+end
+
 function GlobalPositioningSystem.guideSteering(vehicle, dt)
     if vehicle.isHired then
         -- Disallow when AI is active
@@ -855,6 +884,7 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
         g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
     else
         spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
+        self:onSteeringStateChanged(spec.lastInputValues.guidanceSteeringIsActive)
         Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
     end
 end
