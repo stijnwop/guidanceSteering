@@ -56,6 +56,13 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onEnterVehicle", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onHeadlandStart", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onHeadlandEnd", GlobalPositioningSystem)
+end
+
+function GlobalPositioningSystem.registerEvents(vehicleType)
+    SpecializationUtil.registerEvent(vehicleType, "onHeadlandStart")
+    SpecializationUtil.registerEvent(vehicleType, "onHeadlandEnd")
 end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
@@ -311,9 +318,7 @@ function GlobalPositioningSystem:onDelete()
 
     -- Remove sounds
     if self.isClient then
-        for _, sample in pairs(spec.samples) do
-            g_soundManager:deleteSample(sample)
-        end
+        g_soundManager:deleteSamples(spec.samples)
     end
 end
 
@@ -774,6 +779,10 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
 end
 
 function GlobalPositioningSystem:onSteeringStateChanged(isActive)
+    if not self.isClient then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     local sample = spec.samples.activate
@@ -782,6 +791,25 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
     end
 
     g_soundManager:playSample(sample)
+end
+
+function GlobalPositioningSystem:onHeadlandStart()
+    if not self.isClient then
+        return
+    end
+
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    g_soundManager:playSample(spec.samples.warning)
+end
+
+function GlobalPositioningSystem:onHeadlandEnd()
+    if not self.isClient then
+        return
+    end
+
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    g_soundManager:stopSample(spec.samples.warning)
 end
 
 function GlobalPositioningSystem.guideSteering(vehicle, dt)

@@ -20,6 +20,8 @@ function HeadlandProcessor:new(object, customMt)
     instance.lastValidGroundPos = { 0, 0, 0 }
 
     instance.object = object
+    instance.raiseWarningEventAllowed = false
+    instance.warningSoundPlaying = false
 
     setmetatable(instance, customMt or HeadlandProcessor_mt)
 
@@ -44,6 +46,19 @@ function HeadlandProcessor:handle(dt)
     local object = self.object
     local isOnField = object:getIsOnField()
 
+    if self.raiseWarningEventAllowed then
+        if not self.warningSoundPlaying then
+            SpecializationUtil.raiseEvent(self.object, "onHeadlandStart")
+        end
+        self.raiseWarningEventAllowed = false
+        self.warningSoundPlaying = true
+    else
+        if self.warningSoundPlaying then
+            SpecializationUtil.raiseEvent(self.object, "onHeadlandEnd")
+            self.warningSoundPlaying = false
+        end
+    end
+
     if isOnField then
         local lastSpeed = object:getLastSpeed()
 
@@ -59,11 +74,15 @@ function HeadlandProcessor:handleAutoStop(isOnField, lastSpeed)
 
     local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
     local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
-    local lookAheadStepDistance = distanceToTurn + 2 -- m
+    local lookAheadStepDistance = distanceToTurn + 5 -- m
     local distanceToHeadLand, isDistanceOnField = HeadlandUtil.getDistanceToHeadLand(self, self.object, x, y, z, lookAheadStepDistance)
 
     --Logger.info(("lookAheadStepDistance: %.1f (owned: %s)"):format(lookAheadStepDistance, tostring(isDistanceOnField)))
     --Logger.info(("End of field distance: %.1f (owned: %s)"):format(distanceToHeadLand, tostring(isDistanceOnField)))
+
+    if distanceToHeadLand <= distanceToTurn + (lookAheadStepDistance * 0.5) and not isDistanceOnField then
+        self.raiseWarningEventAllowed = true
+    end
 
     if distanceToHeadLand <= distanceToTurn then
         local drivable_spec = self.object:guidanceSteering_getSpecTable("drivable")
