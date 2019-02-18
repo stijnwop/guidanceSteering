@@ -18,7 +18,6 @@ source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
 source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
 source(Utils.getFilename("src/utils/HeadlandUtil.lua", directory))
 source(Utils.getFilename("src/utils/stream.lua", directory))
-source(Utils.getFilename("src/utils/GuidanceFSMUtil.lua", directory))
 
 source(Utils.getFilename("src/gui/GuidanceSteeringUI.lua", directory))
 source(Utils.getFilename("src/gui/GuidanceSteeringMenu.lua", directory))
@@ -29,6 +28,7 @@ source(Utils.getFilename("src/gui/hud/GuidanceSteeringHUD.lua", directory))
 source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
 source(Utils.getFilename("src/misc/FSM.lua", directory))
+source(Utils.getFilename("src/misc/FSMContext.lua", directory))
 source(Utils.getFilename("src/misc/states/FollowLineState.lua", directory))
 
 source(Utils.getFilename("src/misc/HeadlandProcessor.lua", directory))

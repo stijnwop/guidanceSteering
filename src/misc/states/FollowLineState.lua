@@ -19,6 +19,16 @@ function FollowLineState:new(object, custom_mt)
     return instance
 end
 
+function FollowLineState:onEntry()
+    -- On entry transition
+    Logger.info("onEntry")
+end
+
+function FollowLineState:onExit()
+    -- On exit transition
+    Logger.info("onExit")
+end
+
 function FollowLineState:update(dt)
     local object = self.object
     local spec = object:guidanceSteering_getSpecTable("globalPositioningSystem")
