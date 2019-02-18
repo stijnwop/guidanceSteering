@@ -12,41 +12,46 @@ FSM.STATE_EMPTY = -1
 local FSM_mt = Class(FSM)
 
 ---Creates a new finite state machine instance
----@param states table
+---@param initialState table
 ---@param custom_mt table
-function FSM:new(states, custom_mt)
+function FSM:new(initialState, custom_mt)
     local instance = {}
 
     setmetatable(instance, custom_mt or FSM_mt)
 
     -- This includes all the states
     -- Each state has an identifier which can be called by getId()
-    instance.states = states or {}
+    instance.states = {}
+    instance.initialState = initialState
+    instance.state = initialState
     instance.activeState = FSM.STATE_EMPTY
 
     return instance
+end
+
+function FSM:transition(state)
+    --local oldState = self.state
+
+    self.state = state
+end
+
+function FSM:getCurrentState()
+    return self.state
+end
+
+function FSM:getInitialState()
+    return self.initialState
+end
+
+---Resets the initial state
+function FSM:reset()
+    self.state = self:getInitialState()
 end
 
 ---Sets the current states
 ---@param states table
 function FSM:setStates(states)
     self.states = states
-end
-
----Resets the activate state
-function FSM:reset()
-    self.activeState = FSM.STATE_EMPTY
-end
-
----Sets the active state
----@param state number
-function FSM:setState(state)
-    self.activeState = self.states[state]
-end
-
----Gets the current active state
-function FSM:getState()
-    return self.activeState
 end
 
 ---Updates the active state
