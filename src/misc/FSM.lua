@@ -30,9 +30,17 @@ function FSM:new(initialState, custom_mt)
 end
 
 function FSM:transition(state)
-    --local oldState = self.state
+    local oldState = self.state
 
+    -- We transition to a new state
+    oldState:onExit()
+
+    self:setCurrentState(state)
+end
+
+function FSM:setCurrentState(state)
     self.state = state
+    self.state:onEntry()
 end
 
 function FSM:getCurrentState()
@@ -57,9 +65,5 @@ end
 ---Updates the active state
 ---@param dt number
 function FSM:update(dt)
-    if self.activeState == FSM.STATE_EMPTY then
-        return
-    end
-
-    self.activeState:update(dt)
+    self.state:update(dt)
 end
