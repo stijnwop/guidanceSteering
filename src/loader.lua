@@ -31,6 +31,7 @@ source(Utils.getFilename("src/misc/FSM.lua", directory))
 source(Utils.getFilename("src/misc/FSMContext.lua", directory))
 source(Utils.getFilename("src/misc/states/FollowLineState.lua", directory))
 source(Utils.getFilename("src/misc/states/OnHeadlandState.lua", directory))
+source(Utils.getFilename("src/misc/states/StoppedState.lua", directory))
 
 source(Utils.getFilename("src/misc/HeadlandProcessor.lua", directory))
 source(Utils.getFilename("src/misc/MultiPurposeActionEvent.lua", directory))
