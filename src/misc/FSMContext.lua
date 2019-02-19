@@ -15,13 +15,14 @@ function FSMContext.createStateMachine(initialState)
     return fsm
 end
 
-function FSMContext:new(object)
+function FSMContext.createGuidanceStateMachine(object)
     local initialState = FollowLineState:new(object)
     local fsm = FSMContext.createStateMachine(initialState)
 
     local states = {
         [FSMContext.STATES.FOLLOW_LINE_STATE] = initialState,
-        [FSMContext.STATES.ON_HEADLAND_STATE] = OnHeadlandState:new(object)
+        [FSMContext.STATES.ON_HEADLAND_STATE] = OnHeadlandState:new(object),
+        [FSMContext.STATES.STOPPED_STATE] = StoppedState:new(object)
     }
 
     fsm:setStates(states)
