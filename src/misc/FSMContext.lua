@@ -1,25 +1,27 @@
 FSMContext = {}
 
-FSMContext.MODES = {
-    FOLLOW_LINE_STATE = 0,
-    ON_HEADLAND_STATE = 1,
-    STOPPED_STATE = 2,
-    TURNING_STATE = 3,
-    END_TURNING_STATE = 4
+FSMContext.STATES = {
+    STATE_EMPTY = 0,
+    FOLLOW_LINE_STATE = 1,
+    ON_HEADLAND_STATE = 2,
+    STOPPED_STATE = 3,
+    TURNING_STATE = 4,
+    END_TURNING_STATE = 5
 }
 
-function FSMContext.createStateMachine()
-    local fsm = FSM:new()
+function FSMContext.createStateMachine(initialState)
+    local fsm = FSM:new(initialState)
 
     return fsm
 end
 
 function FSMContext:new(object)
-    local fsm = FSMContext.createStateMachine()
     local initialState = FollowLineState:new(object)
+    local fsm = FSMContext.createStateMachine(initialState)
 
     local states = {
-        [FSMContext.MODES.FOLLOW_LINE_STATE] = initialState
+        [FSMContext.STATES.FOLLOW_LINE_STATE] = initialState,
+        [FSMContext.STATES.ON_HEADLAND_STATE] = OnHeadlandState:new(object)
     }
 
     fsm:setStates(states)
