@@ -550,10 +550,6 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     if guidanceSteeringIsActive then
         spec.stateMachine:update(dt)
-
-        --GlobalPositioningSystem.guideSteering(self, dt)
-        --
-        --spec.headlandProcessor:handle(dt)
     end
 end
 
@@ -909,7 +905,6 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local tZ = z1 + step * lineZDir
 
     if spec.showGuidanceLines then
-        DebugUtil.drawDebugCircle(snapX, dY, snapZ, .5, 10, { 1, 0, 0 })
         DebugUtil.drawDebugCircle(tX, dY + .2, tZ, .5, 10, { 0, 1, 0 })
     end
 
