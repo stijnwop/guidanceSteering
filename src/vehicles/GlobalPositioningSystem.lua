@@ -232,7 +232,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
-    spec.stateMachine = FSMContext:new(self)
+    spec.stateMachine = FSMContext.createGuidanceStateMachine(self)
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
