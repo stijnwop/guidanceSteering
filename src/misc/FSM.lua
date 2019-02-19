@@ -24,7 +24,6 @@ function FSM:new(initialState, custom_mt)
     instance.states = {}
     instance.initialState = initialState
     instance.state = initialState
-    instance.activeState = FSM.STATE_EMPTY
 
     return instance
 end
@@ -39,8 +38,8 @@ function FSM:transition(state)
 end
 
 function FSM:setCurrentState(state)
+    state:onEntry()
     self.state = state
-    self.state:onEntry()
 end
 
 function FSM:getCurrentState()
@@ -65,5 +64,10 @@ end
 ---Updates the active state
 ---@param dt number
 function FSM:update(dt)
-    self.state:update(dt)
+    local stateContext = self.state:update(dt)
+
+    if stateContext ~= FSMContext.STATES.STATE_EMPTY then
+        local state = self.states[stateContext]
+        self:transition(state)
+    end
 end
