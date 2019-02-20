@@ -9,12 +9,14 @@ FollowLineState = {}
 
 local FollowLineState_mt = Class(FollowLineState)
 
-function FollowLineState:new(object, custom_mt)
+function FollowLineState:new(id, object, custom_mt)
     local instance = {}
 
     setmetatable(instance, custom_mt or FollowLineState_mt)
 
+    instance.id = id
     instance.object = object
+    instance.initialDetectedHeadland = false
     instance.lastIsNotOnField = false
     instance.distanceToEnd = 0
     instance.lastValidGroundPos = { 0, 0, 0 }
@@ -22,9 +24,14 @@ function FollowLineState:new(object, custom_mt)
     return instance
 end
 
+function FollowLineState:getId()
+    return self.id
+end
+
 function FollowLineState:onEntry()
     -- On entry transition
     Logger.info("FollowLineState: onEntry")
+    self.initialDetectedHeadland = self:detectedHeadland(self.object:getIsOnField(), 0)
     self.lastIsNotOnField = false
     self.distanceToEnd = 0
     self.lastValidGroundPos = { 0, 0, 0 }
@@ -42,6 +49,11 @@ function FollowLineState:update(dt)
 
     local isOnField = object:getIsOnField()
 
+    -- We start the guidance when facing to the field edge
+    if self.initialDetectedHeadland then
+        -- We return until we got back on the field again.
+    end
+
     if isOnField then
         local lastSpeed = object:getLastSpeed()
 
@@ -50,7 +62,7 @@ function FollowLineState:update(dt)
         end
     end
 
-    return FSMContext.STATES.STATE_EMPTY
+    return FSM.ANY_STATE
 end
 
 function FollowLineState:detectedHeadland(isOnField, lastSpeed)
