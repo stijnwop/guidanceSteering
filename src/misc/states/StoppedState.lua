@@ -9,14 +9,19 @@ StoppedState = {}
 
 local StoppedState_mt = Class(StoppedState)
 
-function StoppedState:new(object, custom_mt)
+function StoppedState:new(id, object, custom_mt)
     local instance = {}
 
     setmetatable(instance, custom_mt or StoppedState_mt)
 
+    instance.id = id
     instance.object = object
 
     return instance
+end
+
+function StoppedState:getId()
+    return self.id
 end
 
 function StoppedState:onEntry()
@@ -28,6 +33,8 @@ function StoppedState:onEntry()
     if spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
         self.object:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
     end
+
+    -- Todo: stop actual guidance steering
 end
 
 function StoppedState:onExit()
@@ -38,5 +45,5 @@ end
 function StoppedState:update(dt)
     -- Force zero accelerating because the steering still can be active.
     DriveUtil.accelerateInDirection(self.object, 0, dt)
-    return FSMContext.STATES.STATE_EMPTY
+    return FSM.ANY_STATE
 end
