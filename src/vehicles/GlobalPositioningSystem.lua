@@ -852,6 +852,7 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
 
+    spec.stateMachine:reset()
     Logger.info("onUpdateGuidanceData")
 end
 
