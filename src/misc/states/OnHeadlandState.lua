@@ -16,15 +16,20 @@ OnHeadlandState.MODES = {
 
 local OnHeadlandState_mt = Class(OnHeadlandState)
 
-function OnHeadlandState:new(object, custom_mt)
+function OnHeadlandState:new(id, object, custom_mt)
     local instance = {}
 
     setmetatable(instance, custom_mt or OnHeadlandState_mt)
 
+    instance.id = id
     instance.object = object
     instance.mode = OnHeadlandState.MODES.OFF
 
     return instance
+end
+
+function OnHeadlandState:getId()
+    return self.id
 end
 
 function OnHeadlandState:onEntry()
@@ -47,5 +52,5 @@ function OnHeadlandState:update(dt)
         end
     end
 
-    return FSMContext.STATES.STATE_EMPTY
+    return FSM.ANY_STATE
 end
