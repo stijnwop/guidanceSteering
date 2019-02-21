@@ -55,7 +55,7 @@ end
 
 local function log(level, input, ...)
     local levelText = Logger.levelsText[level]
-    local p = ("[%s]: " .. input):format(levelText)
+    local p = ("[GS %s]: " .. input):format(levelText)
 
     if (... ~= nil) then
         p = print(print_r(..., p))
