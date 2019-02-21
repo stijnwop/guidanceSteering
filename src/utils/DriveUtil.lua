@@ -10,14 +10,55 @@ DriveUtil = {}
 DriveUtil.MOVING_DIRECTION_FORWARDS = 1
 DriveUtil.MOVING_DIRECTION_BACKWARDS = -1
 DriveUtil.HIT_THRESHOLD = 100000
+DriveUtil.TARGET_STEP = 5 -- m
+
+function DriveUtil.guideSteering(vehicle, dt)
+    if vehicle.isHired then
+        -- Disallow when AI is active
+        return
+    end
+
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local drivable_spec = vehicle:guidanceSteering_getSpecTable("drivable")
+
+    local data = spec.guidanceData
+
+    local dX, dY, dZ = unpack(data.driveTarget)
+    local snapDirX, snapDirZ = unpack(data.snapDirection)
+    local lineXDir = data.snapDirectionMultiplier * snapDirX
+    local lineZDir = data.snapDirectionMultiplier * snapDirZ
+    -- Calculate target points
+    local x = dX + data.width * snapDirZ * data.alphaRad
+    local z = dZ - data.width * snapDirX * data.alphaRad
+    local tX = x + DriveUtil.TARGET_STEP * lineXDir
+    local tZ = z + DriveUtil.TARGET_STEP * lineZDir
+
+    if spec.showGuidanceLines then
+        DebugUtil.drawDebugCircle(tX, dY + .2, tZ, .5, 10, { 0, 1, 0 })
+    end
+
+    local pX, _, pZ = worldToLocal(spec.guidanceNode, tX, dY, tZ)
+
+    DriveUtil.driveToPoint(vehicle, dt, pX, pZ)
+
+    -- lock max speed to working tool
+    local speed = vehicle:getSpeedLimit(true)
+    if drivable_spec.cruiseControl.state == Drivable.CRUISECONTROL_STATE_ACTIVE then
+        speed = math.min(speed, drivable_spec.cruiseControl.speed)
+    end
+
+    vehicle:getMotor():setSpeedLimit(speed)
+
+    DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
+end
 
 ---driveToPoint
 ---@param self table
 ---@param dt number
 ---@param tX number
 ---@param tZ number
-function DriveUtil.driveToPoint(self, dt, tX, tZ)
-    if self.firstTimeRun then
+function DriveUtil.driveToPoint(vehicle, dt, tX, tZ)
+    if vehicle.firstTimeRun then
         local halfX = tX * 0.5
         local halfZ = tZ * 0.5
 
@@ -31,34 +72,34 @@ function DriveUtil.driveToPoint(self, dt, tX, tZ)
         local rotTime = 0
         if hasIntersection and math.abs(f2) < DriveUtil.HIT_THRESHOLD then
             local radius = tX * f2
-            rotTime = self.wheelSteeringDuration * (math.atan(1 / radius) / math.atan(1 / self.maxTurningRadius))
+            rotTime = vehicle.wheelSteeringDuration * (math.atan(1 / radius) / math.atan(1 / vehicle.maxTurningRadius))
         end
 
         local targetRotTime = 0
         if rotTime >= 0 then
-            targetRotTime = math.min(rotTime, self.maxRotTime)
+            targetRotTime = math.min(rotTime, vehicle.maxRotTime)
         else
-            targetRotTime = math.max(rotTime, self.minRotTime)
+            targetRotTime = math.max(rotTime, vehicle.minRotTime)
         end
 
-        if targetRotTime > self.rotatedTime then
-            self.rotatedTime = math.min(self.rotatedTime + dt * self:getAISteeringSpeed(), targetRotTime)
+        if targetRotTime > vehicle.rotatedTime then
+            vehicle.rotatedTime = math.min(vehicle.rotatedTime + dt * vehicle:getAISteeringSpeed(), targetRotTime)
         else
-            self.rotatedTime = math.max(self.rotatedTime - dt * self:getAISteeringSpeed(), targetRotTime)
+            vehicle.rotatedTime = math.max(vehicle.rotatedTime - dt * vehicle:getAISteeringSpeed(), targetRotTime)
         end
     end
 end
 
 ---driveInDirection
----@param self table
+---@param vehicle table
 ---@param dt number
 ---@param steeringAngleLimit number
 ---@param movingDirection number
 ---@param lx number
 ---@param lz number
-function DriveUtil.driveInDirection(self, dt, steeringAngleLimit, movingDirection, lx, lz)
+function DriveUtil.driveInDirection(vehicle, dt, steeringAngleLimit, movingDirection, lx, lz)
     if lx ~= nil and lz ~= nil then
-        local data = self.guidanceData
+        local data = vehicle.guidanceData
         local dot = lz
         local moveForwards = movingDirection == DriveUtil.MOVING_DIRECTION_FORWARDS
         local angle = math.deg(math.acos(dot)) * data.snapDirectionMultiplier * movingDirection
@@ -77,16 +118,16 @@ function DriveUtil.driveInDirection(self, dt, steeringAngleLimit, movingDirectio
         local targetRotTime
         if turnLeft then
             --rotate to the left
-            targetRotTime = self.maxRotTime * math.min(angle / steeringAngleLimit, 1)
+            targetRotTime = vehicle.maxRotTime * math.min(angle / steeringAngleLimit, 1)
         else
             --rotate to the right
-            targetRotTime = self.minRotTime * math.min(angle / steeringAngleLimit, 1)
+            targetRotTime = vehicle.minRotTime * math.min(angle / steeringAngleLimit, 1)
         end
 
-        if targetRotTime > self.rotatedTime then
-            self.rotatedTime = math.min(self.rotatedTime + dt * self:getAISteeringSpeed(), targetRotTime)
+        if targetRotTime > vehicle.rotatedTime then
+            vehicle.rotatedTime = math.min(vehicle.rotatedTime + dt * vehicle:getAISteeringSpeed(), targetRotTime)
         else
-            self.rotatedTime = math.max(self.rotatedTime - dt * self:getAISteeringSpeed(), targetRotTime)
+            vehicle.rotatedTime = math.max(vehicle.rotatedTime - dt * vehicle:getAISteeringSpeed(), targetRotTime)
         end
     end
 end
