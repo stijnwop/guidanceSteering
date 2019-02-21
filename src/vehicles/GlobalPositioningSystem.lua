@@ -168,13 +168,9 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = true
     spec.autoInvertOffset = false
-
     spec.shiftParallel = false
 
     spec.abDistanceCounter = 0
-
-    -- Processor to handle actions on the headland
-    spec.headlandProcessor = HeadlandProcessor:new(self)
 
     spec.lastInputValues = {}
     spec.lastInputValues.guidanceIsActive = true
@@ -511,7 +507,7 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     local drivingDirection = self:getDrivingDirection()
     local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
-    local x, y, z, driveDirX, driveDirZ = unpack(data.driveTarget)
+    local x, _, z, driveDirX, driveDirZ = unpack(data.driveTarget)
 
     -- Only compute when the vehicle is moving
     if drivingDirection ~= 0 or spec.shiftParallel then
@@ -878,6 +874,7 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
 end
 
 function GlobalPositioningSystem:onHeadlandStart()
+    -- Todo: do we need it.
     if not self.isClient then
         return
     end
@@ -888,6 +885,7 @@ function GlobalPositioningSystem:onHeadlandStart()
 end
 
 function GlobalPositioningSystem:onHeadlandEnd()
+    -- Todo: do we need it.
     if not self.isClient then
         return
     end
