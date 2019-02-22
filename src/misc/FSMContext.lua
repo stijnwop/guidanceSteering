@@ -22,7 +22,8 @@ function FSMContext.createGuidanceStateMachine(object)
     local states = {
         [context.FOLLOW_LINE_STATE] = initialState,
         [context.ON_HEADLAND_STATE] = OnHeadlandState:new(context.ON_HEADLAND_STATE, object),
-        [context.STOPPED_STATE] = StoppedState:new(context.STOPPED_STATE, object)
+        [context.STOPPED_STATE] = StoppedState:new(context.STOPPED_STATE, object),
+        [context.TURNING_STATE] = TurningState:new(context.TURNING_STATE, object)
     }
 
     fsm:setStates(states)
