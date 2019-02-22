@@ -23,7 +23,7 @@ function GuidanceSteeringStrategyFrame:new(i18n)
 
     self.i18n = i18n
     self.allowSave = false
-    self.loadedTrackId = 0
+    self.lastLoadedTrackId = 0
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -62,10 +62,13 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
         local strategy = vehicle:getGuidanceStrategy()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
-        self.loadedTrackId = self.guidanceSteeringTrackElement:getState()
-        Logger.info("Loaded: ", self.loadedTrackId)
+        self.guidanceSteeringTrackElement:setState(self.lastLoadedTrackId)
 
-        self:onClickLoadTrack(self.loadedTrackId)
+        Logger.info("Loaded: ", self.lastLoadedTrackId)
+
+        if self.lastLoadedTrackId ~= 0 then
+            self:onClickLoadTrack(self.lastLoadedTrackId)
+        end
 
         self.allowSave = true
     end
@@ -79,15 +82,15 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
     if self.allowSave then
         local trackId = self.guidanceSteeringTrackElement:getState()
 
-        if self.loadedTrackId ~= 0 and trackId ~= self.loadedTrackId then
+        if trackId ~= self.lastLoadedTrackId then
             self:loadTrack(trackId)
+            self.lastLoadedTrackId = trackId
         end
 
         self.allowSave = false
     end
 
     self.guidanceSteering:unsubscribe(self)
-    self.loadedTrackId = 0
 end
 
 --- Get the frame's main content element's screen size.
