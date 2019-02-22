@@ -45,23 +45,22 @@ end
 
 function FollowLineState:update(dt)
     local object = self.object
-
-    GlobalPositioningSystem.guideSteering(object, dt)
-
     local isOnField = object:getIsOnField()
 
-    -- We start the guidance when facing to the field edge
-    if isOnField and self.initialDetectedHeadland then
-        -- We return until we got back on the field again.
-        if not self:detectedHeadland(object:getLastSpeed()) then
-            self.initialDetectedHeadland = false
-        end
-
-        return FSM.ANY_STATE
-    end
+    DriveUtil.guideSteering(object, dt)
 
     if isOnField then
-        if self:detectedHeadland(object:getLastSpeed()) then
+        local detectedHeadland = self:detectedHeadland(object:getLastSpeed())
+        -- We start the guidance when facing to the field edge
+        if self.initialDetectedHeadland then
+            if not detectedHeadland then
+                self.initialDetectedHeadland = false
+            end
+            -- We return until we got back on the field again.
+            return FSM.ANY_STATE
+        end
+
+        if detectedHeadland then
             return FSMContext.STATES.ON_HEADLAND_STATE
         end
     end
