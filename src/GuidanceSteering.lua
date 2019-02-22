@@ -163,6 +163,12 @@ function GuidanceSteering:createTrack(id, name)
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
         ListUtil.addElementToList(self.savedTracks, entry)
+
+        -- sort
+        table.sort(self.savedTracks, function(lhs, rhs)
+            return lhs.name < rhs.name
+        end)
+
         -- Call listeners
         self:onTrackChanged(id)
     end
