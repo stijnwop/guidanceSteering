@@ -214,6 +214,10 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
     spec.guidanceData.isCreated = false
 
+    if self.isClient then
+        spec.guidanceData.lastLoadedTrackId = 0
+    end
+
     spec.dirtyFlag = self:getNextDirtyFlag()
 
     GlobalPositioningSystem.registerMultiPurposeActionEvents(self)

@@ -23,7 +23,6 @@ function GuidanceSteeringStrategyFrame:new(i18n)
 
     self.i18n = i18n
     self.allowSave = false
-    self.lastLoadedTrackId = 0
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -60,14 +59,15 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
 
     if vehicle ~= nil then
         local strategy = vehicle:getGuidanceStrategy()
+        local data = vehicle:getGuidanceData()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
-        self.guidanceSteeringTrackElement:setState(self.lastLoadedTrackId)
+        self.guidanceSteeringTrackElement:setState(data.lastLoadedTrackId)
 
-        Logger.info("Loaded: ", self.lastLoadedTrackId)
+        Logger.info("Loaded: ", data.lastLoadedTrackId)
 
-        if self.lastLoadedTrackId ~= 0 then
-            self:onClickLoadTrack(self.lastLoadedTrackId)
+        if data.lastLoadedTrackId ~= 0 then
+            self:onClickLoadTrack(data.lastLoadedTrackId)
         end
 
         self.allowSave = true
@@ -81,10 +81,12 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
 
     if self.allowSave then
         local trackId = self.guidanceSteeringTrackElement:getState()
+        local vehicle = self.guidanceSteering.ui:getVehicle()
+        local data = vehicle:getGuidanceData()
 
-        if trackId ~= self.lastLoadedTrackId then
+        if trackId ~= data.lastLoadedTrackId then
             self:loadTrack(trackId)
-            self.lastLoadedTrackId = trackId
+            data.lastLoadedTrackId = trackId
         end
 
         self.allowSave = false
@@ -136,6 +138,7 @@ function GuidanceSteeringStrategyFrame:getVehicleTrackData()
             return nil
         end
 
+        track.farmId = vehicle:getOwnerFarmId()
         track.guidanceData = {}
         track.guidanceData.width = data.width
         track.guidanceData.offsetWidth = data.offsetWidth
