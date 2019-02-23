@@ -42,9 +42,12 @@ Hit `alt + R` (or use the menu) in order to detect the width of your vehicle.
 Unfold and lower the vehicle to get the best results.
 
 ### Increase/descrease width
-Hit `alt + plus` and `alt + minus` in order to change the width manually.
+Hit `alt + plus` and `alt + minus` in order to change the width manually. In the menu you can set the increment width in order to speed up the process.
 
 _Please note that this only works after the track creation!_
+
+### Shift track
+Hit `alt + page up` and `alt + page down` in order to shift the track left and right. If you hold down the key the shifting of the track will speed up.
 
 ### Terrain angle snapping
 If you're not able to create straight lines yourself you can enable angle snapping in the menu. This will align the AB lines with the terrain.
@@ -58,6 +61,20 @@ Currently the automatic steering stops at the headland when cruise control is en
 ### Store and load tracks
 It's also possible to store the tracks and reload them. Open the second page in the menu in order to do it.
 
+### Visuals
+On the vanilla John Deere vehicles the starfires visibility is toggled when you choose to buy the GPS system.
+If you want the same effect on your mod vehicles you can configure the configuration yourself in the xml:
+
+~~~ xml
+<buyableGPSConfigurations>
+  <buyableGPSConfiguration name="NO_TEXT" price="0">
+          <objectChange node="NODE_NAME" visibilityActive="false" visibilityInactive="true" />
+  </buyableGPSConfiguration>
+  <buyableGPSConfiguration name="YES_TEXT" price="15000">
+          <objectChange node="NODE_NAME" visibilityActive="true" visibilityInactive="false" />
+  </buyableGPSConfiguration>
+</buyableGPSConfigurations>
+~~~
 
 ## Developers
 To quickly build a zip of the developer version without the needed extra's, use the `zip.bat`.
