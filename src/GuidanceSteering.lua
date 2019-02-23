@@ -7,7 +7,7 @@
 
 GuidanceSteering = {}
 
-GuidanceSteering.SEND_NUM_BITS = 6 -- 2 ^ 6 = 64 max
+GuidanceSteering.SEND_NUM_BITS = 7 -- 2 ^ 7 = 128 max
 GuidanceSteering.MAX_NUM_TRACKS = 2 ^ GuidanceSteering.SEND_NUM_BITS
 
 local GuidanceSteering_mt = Class(GuidanceSteering)
@@ -85,9 +85,8 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
 end
 
 function GuidanceSteering:onReadStream(streamId, connection)
-    Logger.info("readStream")
     if connection:getIsServer() then
-        local numTracks = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS)
+        local numTracks = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS) + 1
 
         for i = 1, numTracks do
             local track = {}
@@ -97,18 +96,17 @@ function GuidanceSteering:onReadStream(streamId, connection)
 
             track.guidanceData = GuidanceUtil.readGuidanceDataObject(streamId)
 
-            Logger.info(i, track)
             self.savedTracks[i] = track
+            Logger.info(i, track)
         end
     end
 end
 
 function GuidanceSteering:onWriteStream(streamId, connection)
-    Logger.info("writeStream")
     if not connection:getIsServer() then
-        streamWriteUIntN(streamId, #self.savedTracks, GuidanceSteering.SEND_NUM_BITS)
+        streamWriteUIntN(streamId, #self.savedTracks - 1, GuidanceSteering.SEND_NUM_BITS)
 
-        for _, track in pairs(self.savedTracks) do
+        for _, track in ipairs(self.savedTracks) do
             streamWriteString(streamId, track.name)
             streamWriteUIntN(streamId, track.strategy, 2)
             streamWriteUIntN(streamId, track.method, 2)
@@ -124,47 +122,46 @@ end
 function GuidanceSteering:draw(dt)
 end
 
+---Add listener
+---@param listener table
 function GuidanceSteering:subscribe(listener)
     if not ListUtil.hasListElement(self.listeners, listener) then
         ListUtil.addElementToList(self.listeners, listener)
     end
 end
 
+---Remove listener
+---@param listener table
 function GuidanceSteering:unsubscribe(listener)
     ListUtil.removeElementFromList(self.listeners, listener)
 end
 
-function GuidanceSteering:onTrackChanged(trackId)
+---Notify listeners on track change
+---@param id number
+function GuidanceSteering:onTrackChanged(id)
     for _, listener in pairs(self.listeners) do
-        listener:onTrackChanged(trackId)
+        listener:onTrackChanged(id)
     end
 end
 
-function GuidanceSteering:createTrack(id, name)
-    Logger.info("Creating track: " .. id, name)
+---Private method to create a new track
+---@param id number
+---@param data table
+local function _createTrack(self, id, data)
+    Logger.info("Creating track: " .. id, data.name)
 
     if id > GuidanceSteering.MAX_NUM_TRACKS then
-        Logger.warning("Maximum of saved tracks reached!")
+        Logger.warning(("Maximum of %s saved tracks reached!"):format(GuidanceSteering.MAX_NUM_TRACKS))
         return
     end
 
-    local entry = {
-        farmId = 0, -- Todo: make tracks farm dependent
-        name = name,
-        strategy = 0,
-        method = 0,
-        guidanceData = {
-            width = 0,
-            offsetWidth = 0,
-            snapDirection = { 0, 0, 0, 0 },
-            driveTarget = { 0, 0, 0, 0, 0 }
-        }
-    }
+    local entry = ListUtil.copyTable(data)
+    entry.farmId = 0 -- Todo: make tracks farm dependent
 
     if not ListUtil.hasListElement(self.savedTracks, entry) then
         ListUtil.addElementToList(self.savedTracks, entry)
 
-        -- sort
+        -- Sort by name
         table.sort(self.savedTracks, function(lhs, rhs)
             return lhs.name < rhs.name
         end)
@@ -174,29 +171,40 @@ function GuidanceSteering:createTrack(id, name)
     end
 end
 
+---Private method to save a track
+---@param id number
+---@param data table
+local function _saveTrack(self, id, data)
+    Logger.info("Saving " .. id .. " with track data: ", data)
+    local track = self:getTrack(id)
+
+    if track.name ~= data.name then
+        track.name = data.name
+    end
+
+    track.strategy = data.strategy
+    track.method = data.method
+    track.guidanceData.width = data.guidanceData.width
+    track.guidanceData.offsetWidth = data.guidanceData.offsetWidth
+    track.guidanceData.snapDirection = data.guidanceData.snapDirection
+    track.guidanceData.driveTarget = data.guidanceData.driveTarget
+end
+
+---Facade to handle saving or creating tracks
+---@param id number
+---@param data table
 function GuidanceSteering:saveTrack(id, data)
-    local entry = self.savedTracks[id]
-
-    if entry ~= nil then
-        Logger.info("Saving track: ", id)
-        Logger.info("Saving track data: ", data)
-
-        if data.name ~= entry.name then
-            entry.name = data.name
-        end
-
-        entry.strategy = data.strategy
-        entry.method = data.method
-
-        entry.guidanceData.width = data.guidanceData.width
-        entry.guidanceData.offsetWidth = data.guidanceData.offsetWidth
-        entry.guidanceData.snapDirection = data.guidanceData.snapDirection
-        entry.guidanceData.driveTarget = data.guidanceData.driveTarget
+    if self:hasTrack(id) then
+        _saveTrack(self, id, data)
+    else
+        _createTrack(self, id, data)
     end
 end
 
+---Deletes the track at the given index
+---@param id number
 function GuidanceSteering:deleteTrack(id)
-    local entry = self.savedTracks[id]
+    local entry = self:getTrack(id)
 
     if entry ~= nil then
         Logger.info("Deleting track: ", id)
@@ -208,18 +216,27 @@ function GuidanceSteering:deleteTrack(id)
     end
 end
 
+---Gets the track table by the given index
+---@param id number
 function GuidanceSteering:getTrack(id)
     return self.savedTracks[id]
 end
 
+---Return true if the track exits, false otherwise
+---@param id number
+function GuidanceSteering:hasTrack(id)
+    return self.savedTracks[id] ~= nil
+end
+
+---Returns the next index
 function GuidanceSteering:getNewTrackId()
     return ListUtil.size(self.savedTracks) + 1
 end
 
 ---Checks if the current track is valid to load
 ---@param id number
-function GuidanceSteering:getTrackIsValid(id)
-    local track = self.savedTracks[id]
+function GuidanceSteering:isTrackValid(id)
+    local track = self:getTrack(id)
 
     if track == nil then
         return false
@@ -239,9 +256,12 @@ function GuidanceSteering:getTrackIsValid(id)
     return valid
 end
 
-function GuidanceSteering:getTrackNameExist(name)
-    for _, track in pairs(self.savedTracks) do
-        if track.name == name then
+---Checks if the given name exists on a different track
+---@param id number
+---@param name string
+function GuidanceSteering:isExistingTrack(id, name)
+    for trackId, track in pairs(self.savedTracks) do
+        if trackId ~= id and track.name == name then
             return true
         end
     end

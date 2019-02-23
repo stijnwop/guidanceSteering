@@ -49,30 +49,29 @@
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout3">
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringTrackElement"
-                            toolTipElementId="settingsHelpBoxText" onClick="onClickLoadTrack" toolTipText="$l10n_guidanceSteering_tooltip_currentTrack">
+                            toolTipElementId="settingsHelpBoxText" onClick="onClickLoadTrack"
+                            toolTipText="$l10n_guidanceSteering_tooltip_currentTrack">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
                     <GuiElement type="button" profile="multiTextOptionRight"/>
                     <GuiElement type="text" profile="multiTextOptionText"/>
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_currentTrack"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
-                <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringTrackNameElement" onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName" maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName" imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen">
+                <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringTrackNameElement"
+                            onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName"
+                            maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName"
+                            imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen">
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ui_savegameName"/>
                 </GuiElement>
             </GuiElement>
 
             <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" position="450px -250px" id="flowLayout">
-                <GuiElement type="button" profile="guidanceButtonSmallLeft" text="$l10n_guidanceSteering_setting_newTrack"
-                            onClick="onClickNewTrack"
-                            id="guidanceSteeringNewTrackButton"/>
+                <GuiElement type="button" profile="guidanceButtonSmallLeft" text="$l10n_guidanceSteering_setting_saveTrack"
+                            onClick="onClickSaveTrack"
+                            id="guidanceSteeringSaveButton"/>
                 <GuiElement type="button" profile="guidanceButtonSmallRight" text="$l10n_guidanceSteering_setting_removeTrack"
                             onClick="onClickRemoveTrack"
                             id="guidanceSteeringRemoveTrackButton"/>
-            </GuiElement>
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -300px" id="boxLayout4">
-                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_saveTrack"
-                            onClick="onClickSaveTrack"
-                            id="guidanceSteeringSaveButton"/>
             </GuiElement>
         </GuiElement>
 

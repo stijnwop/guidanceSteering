@@ -64,10 +64,6 @@ function GuidanceSteeringUI:onToggleUI()
     end
 end
 
-function GuidanceSteeringUI:dataChanged(data)
-    --self.hud:setWidthText(data.width)
-end
-
 function GuidanceSteeringUI:setVehicle(vehicle)
     self.vehicle = vehicle
     --self.hud:toggle(vehicle ~= nil)

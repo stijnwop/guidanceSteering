@@ -103,24 +103,6 @@ function GuidanceSteeringStrategyFrame:getMainElementPosition()
     return self.container.absPosition
 end
 
---- Buttons
-
-function GuidanceSteeringStrategyFrame:onClickNewTrack()
-    local trackId = self.guidanceSteering:getNewTrackId()
-    local name = self.guidanceSteeringTrackNameElement:getText()
-
-    -- Reset warning
-    self:setWarningMessage("")
-
-    -- might check if the name already exists
-    if self.guidanceSteering:getTrackNameExist(name) then
-        self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(name))
-        return
-    end
-
-    self:createTrack(trackId, name)
-end
-
 function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
     -- Reset warning
     self:setWarningMessage("")
@@ -138,33 +120,60 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
     end
 end
 
+function GuidanceSteeringStrategyFrame:getVehicleTrackData()
+    local track = {}
+
+    track.name = self.guidanceSteeringTrackNameElement:getText()
+    track.strategy = self.guidanceSteeringStrategyElement:getState()
+    track.method = self.guidanceSteeringStrategyMethodElement:getState()
+
+    local vehicle = self.guidanceSteering.ui:getVehicle()
+    if vehicle ~= nil then
+        local data = vehicle:getGuidanceData()
+
+        if not data.isCreated then
+            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            return nil
+        end
+
+        track.guidanceData = {}
+        track.guidanceData.width = data.width
+        track.guidanceData.offsetWidth = data.offsetWidth
+        track.guidanceData.snapDirection = data.snapDirection
+        track.guidanceData.driveTarget = data.driveTarget
+    end
+
+    return track
+end
+
 function GuidanceSteeringStrategyFrame:onClickSaveTrack()
     local trackId = self.guidanceSteeringTrackElement:getState()
     local track = self.guidanceSteering:getTrack(trackId)
+    local name = self.guidanceSteeringTrackNameElement:getText()
+    local isNewTrack = track ~= nil and name ~= track.name
 
-    if track ~= nil then
-        local vehicle = self.guidanceSteering.ui:getVehicle()
+    if track ~= nil and not isNewTrack then
+        local trackData = self:getVehicleTrackData()
+        if trackData ~= nil then
+            Logger.info("Saving track: " .. trackId, trackData)
+            self:saveTrack(trackId, trackData)
+        end
+    else
+        -- Get a new Id
+        trackId = self.guidanceSteering:getNewTrackId()
+        local trackData = self:getVehicleTrackData()
+        -- Reset warning
+        self:setWarningMessage("")
 
-        if vehicle ~= nil then
-            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-            local data = spec.guidanceData
+        -- might check if the name already exists
+        if self.guidanceSteering:isExistingTrack(trackId, trackData.name) then
+            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(trackData.name))
+            return
+        end
 
-            if not data.isCreated then
-                self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
-                return
-            end
-
-            track.name = self.guidanceSteeringTrackNameElement:getText()
-            track.strategy = self.guidanceSteeringStrategyElement:getState()
-            track.method = self.guidanceSteeringStrategyMethodElement:getState()
-
-            track.guidanceData.width = data.width
-            track.guidanceData.offsetWidth = data.offsetWidth
-            track.guidanceData.snapDirection = data.snapDirection
-            track.guidanceData.driveTarget = data.driveTarget
-
-            Logger.info("Saving track: " .. trackId, track)
-            self:saveTrack(trackId, track)
+        if trackData ~= nil then
+            Logger.info("Creating track: " .. trackId, trackData)
+            self:saveTrack(trackId, trackData)
         end
     end
 end
@@ -225,13 +234,11 @@ end
 function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     local track = self.guidanceSteering:getTrack(trackId)
 
-    if self.guidanceSteering:getTrackIsValid(trackId) then
+    if self.guidanceSteering:isTrackValid(trackId) then
         local vehicle = self.guidanceSteering.ui:getVehicle()
 
         if vehicle ~= nil then
-            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-            local data = spec.guidanceData
-
+            local data = vehicle:getGuidanceData()
             Logger.info("Loading track for client: ", trackId)
 
             -- First request reset to make sure the current track is clear
@@ -248,12 +255,8 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     end
 end
 
-function GuidanceSteeringStrategyFrame:createTrack(trackId, name)
-    g_client:getServerConnection():sendEvent(TrackChangedEvent:new(trackId, name, true))
-end
-
 function GuidanceSteeringStrategyFrame:saveTrack(trackId, track)
-    g_client:getServerConnection():sendEvent(TrackChangedEvent:new(trackId, track.name, false, track))
+    g_client:getServerConnection():sendEvent(TrackSaveEvent:new(trackId, track))
 end
 
 function GuidanceSteeringStrategyFrame:deleteTrack(trackId)
