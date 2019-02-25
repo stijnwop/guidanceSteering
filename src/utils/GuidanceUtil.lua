@@ -30,8 +30,11 @@ end
 ---@param object table
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
-    local activeSprayType = GuidanceUtil.getActiveSprayType(object)
+    if workAreaSpec == nil or workAreaSpec.workAreas == nil then
+        return 0
+    end
 
+    local activeSprayType = GuidanceUtil.getActiveSprayType(object)
     -- Exclude ridged markers from workArea calculation
     local skipWorkAreas = {
         ["processRidgeMarkerArea"] = true
@@ -41,28 +44,42 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
         if skipWorkAreas[workArea.functionName] ~= nil then
             return false
         end
+
         if (activeSprayType ~= nil and workArea.sprayType ~= activeSprayType) then
             return false
         end
+
         return workArea.type ~= WorkAreaType.AUXILIARY
     end
 
-    local maxWidth, minWidth = 0, 0
-
-    if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
-        for _, workArea in pairs(workAreaSpec.workAreas) do
-            if isWorkAreaValid(workArea) then
-                local x0 = localToLocal(guidanceNode, workArea.start, 0, 0, 0)
-                local x1 = localToLocal(guidanceNode, workArea.width, 0, 0, 0)
-                local x2 = localToLocal(guidanceNode, workArea.height, 0, 0, 0)
-
-                maxWidth = math.max(maxWidth, x0, x1, x2)
-                minWidth = math.min(minWidth, x0, x1, x2)
-            end
+    local function toLocalArea(workArea)
+        if not isWorkAreaValid(workArea) then
+            return nil -- will GC table value cause ipairs
         end
+
+        local x0 = localToLocal(workArea.start, guidanceNode, 0, 0, 0)
+        local x1 = localToLocal(workArea.width, guidanceNode, 0, 0, 0)
+        local x2 = localToLocal(workArea.height, guidanceNode, 0, 0, 0)
+
+        return { x0, x1, x2 }
     end
 
-    local width = math.abs(maxWidth) + math.abs(minWidth)
+    local areaWidths = stream(workAreaSpec.workAreas):map(toLocalArea):toList()
+    local maxWidth = stream(areaWidths):reduce(0, function(r, e)
+        return math.max(r, unpack(e))
+    end)
+    local minWidth = stream(areaWidths):reduce(math.huge, function(r, e)
+        return math.min(r, unpack(e))
+    end)
+
+    local width = maxWidth + math.abs(minWidth)
+    local leftMarker, rightMarker = object:getAIMarkers()
+    if leftMarker ~= nil and rightMarker ~= nil then
+        local lx = localToLocal(leftMarker, guidanceNode, 0, 0, 0)
+        local rx = localToLocal(rightMarker, guidanceNode, 0, 0, 0)
+
+        width = math.min(math.abs(lx - rx), width)
+    end
 
     return MathUtil.round(width, 3)
 end
