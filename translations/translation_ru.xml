@@ -42,6 +42,7 @@
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением"/>
         <text name="guidanceSteering_tooltip_width" text="Установка ширины вашего агрегата"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг изменения для увеличения/уменьшения ширины"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>
@@ -62,6 +63,9 @@
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
         <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
 
         <text name="guidanceSteering_setting_strategy" text="Стратегия линий"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Метод линий"/>

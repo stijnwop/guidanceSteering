@@ -7,9 +7,12 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     SNAP_TERRAIN_ANGLE = "guidanceSteeringSnapAngleElement",
     ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
     WIDTH = "guidanceSteeringWidthElement",
+    OFFSET = "guidanceSteeringOffsetWidthElement",
     WIDTH_INCREMENT = "guidanceSteeringWidthInCrementElement",
     AUTO_WIDTH_BUTTON = "guidanceSteeringWidthButton",
     CHANGE_WIDTH_BUTTON = "guidanceSteeringChangeWidthButton",
+    CHANGE_OFFSET_BUTTON = "guidanceSteeringChangeOffsetWidthButton",
+    RESET_OFFSET_BUTTON = "guidanceSteeringResetOffsetWidthButton",
 }
 GuidanceSteeringSettingsFrame.INCREMENTS = {
     0.01,
@@ -30,6 +33,7 @@ function GuidanceSteeringSettingsFrame:new(i18n)
     self.i18n = i18n
 
     self.currentWidth = 0
+    self.currentOffset = 0
     self.currentWidthIncrement = 0
 
     self.allowSave = false
@@ -66,8 +70,10 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.guidanceSteeringShowLinesElement:setIsChecked(spec.showGuidanceLines)
         self.guidanceSteeringSnapAngleElement:setIsChecked(spec.guidanceTerrainAngleIsActive)
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
-        self.guidanceSteeringWidthElement:setText(tostring(data.width))
         self.currentWidth = data.width
+        self.currentOffset = data.offsetWidth
+        self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
+        self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
 
         self.allowSave = true
     end
@@ -99,8 +105,9 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             spec.lastInputValues.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
             spec.lastInputValues.widthIncrement = math.abs(increment)
 
-            if data.width ~= self.currentWidth then
+            if data.width ~= self.currentWidth or data.offsetWidth ~= self.currentOffset then
                 data.width = self.currentWidth
+                data.offsetWidth = self.currentOffset
 
                 vehicle:updateGuidanceData(data, false, false)
             end
@@ -116,6 +123,7 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
     if vehicle ~= nil then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
         self.currentWidth = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
+        self.currentOffset = 0
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
     end
 end
@@ -126,6 +134,19 @@ function GuidanceSteeringSettingsFrame:onClickChangeWidth()
 
     self.currentWidth = math.max(self.currentWidth + increment, 0)
     self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
+end
+
+function GuidanceSteeringSettingsFrame:onClickResetOffsetWidth()
+    self.currentOffset = 0
+end
+
+function GuidanceSteeringSettingsFrame:onClickChangeOffsetWidth()
+    local state = self.guidanceSteeringWidthInCrementElement:getState()
+    local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+    local threshold = self.currentWidth * 0.5
+    self.currentOffset = MathUtil.clamp(self.currentOffset + increment, -threshold, threshold)
+    self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
 end
 
 --- Get the frame's main content element's screen size.

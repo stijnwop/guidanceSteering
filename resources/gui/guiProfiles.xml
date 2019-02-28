@@ -64,7 +64,7 @@
     <Profile name="guidanceButton" extends="ingameMenuSettingsPauseButton">
         <Value name="screenAlign" value="bottomLeft" />
         <Value name="positionOrigin" value="bottomLeft" />
-        <Value name="margin" value="26px 15px 26px 15px" />
+        <Value name="margin" value="26px 12.5px 26px 12.5px" />
         <Value name="iconSize" value="0px 0px" />
         <Value name="position" value="0px 0px" />
         <Value name="textBold" value="false" />
@@ -73,11 +73,11 @@
 
     <Profile name="guidanceButtonSmallLeft" extends="guidanceButton">
         <Value name="size" value="156px 45px" />
-        <Value name="margin" value="30px 15px 2px 15px" />
+        <Value name="margin" value="30px 12.5px 2px 12.5px" />
     </Profile>
 
     <Profile name="guidanceButtonSmallRight" extends="guidanceButton">
         <Value name="size" value="156px 45px" />
-        <Value name="margin" value="2px 15px 30px 15px" />
+        <Value name="margin" value="2px 12.5px 30px 12.5px" />
     </Profile>
 </GUIProfiles>

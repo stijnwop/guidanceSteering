@@ -9,7 +9,6 @@
 
         <GuiElement type="bitmap" profile="ingameMenuSettingsBox" position="130px -124px" id="container">
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="50px -50px" id="boxLayout">
-
                 <!--Option to enable steering-->
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" id="guidanceSteeringEnableSteeringElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_enableGuidanceSteering">
@@ -39,7 +38,6 @@
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_terrainAngleSnap"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
-
             </GuiElement>
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout">
@@ -52,7 +50,6 @@
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
 
-
                 <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_width" maxCharacters="30" imeKeyboardType="normal">
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_width"/>
                 </GuiElement>
@@ -61,6 +58,14 @@
                             id="guidanceSteeringChangeWidthButton"/>
                 <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px" onClick="onClickAutoWidth"
                             id="guidanceSteeringWidthButton"/>
+
+                <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringOffsetWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_offsetWidth" maxCharacters="30" imeKeyboardType="normal">
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_offsetWidth"/>
+                </GuiElement>
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeOffsetWidth" position="-210px 64px" onClick="onClickChangeOffsetWidth"
+                            id="guidanceSteeringChangeOffsetWidthButton"/>
+                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_resetOffsetWidth" position="-210px 64px" onClick="onClickResetOffsetWidth"
+                            id="guidanceSteeringResetOffsetWidthButton"/>
             </GuiElement>
         </GuiElement>
 

@@ -42,6 +42,7 @@
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Snap the direction to the terrain angle"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Let the GPS guide the steering"/>
         <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines"/>
@@ -61,6 +62,9 @@
         <text name="guidanceSteering_setting_widthIncrement" text="Width increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto width"/>
         <text name="guidanceSteering_setting_changeWidth" text="Increment width"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
         <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy"/>

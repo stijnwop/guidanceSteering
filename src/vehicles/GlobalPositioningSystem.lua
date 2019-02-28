@@ -832,8 +832,14 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local lineXDir = data.snapDirectionMultiplier * snapDirX
     local lineZDir = data.snapDirectionMultiplier * snapDirZ
     -- Calculate target points
-    local x1 = dX + data.width * snapDirZ * data.alphaRad
-    local z1 = dZ - data.width * snapDirX * data.alphaRad
+    local beta = data.alphaRad
+    if data.offsetWidth ~= 0 then
+        beta = data.alphaRad - 1 * data.offsetWidth / data.width
+    end
+
+    local x1 = dX + data.width * snapDirZ * beta
+    local z1 = dZ - data.width * snapDirX * beta
+
     local step = 5 -- m
     local tX = x1 + step * lineXDir
     local tZ = z1 + step * lineZDir
@@ -885,8 +891,8 @@ end
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
-    data.offsetWidth = 0
     data.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
+    data.offsetWidth = 0
     self:updateGuidanceData(data, false, false)
 end
 

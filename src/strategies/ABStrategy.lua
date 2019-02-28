@@ -20,6 +20,7 @@ ABStrategy.METHODS = {
 local RGB_WHITE = { 1, 1, 1 }
 local RGB_GREEN = { 0, 1, 0 }
 local RGB_BLUE = { 0.9913, 0.3940, 0.007 }
+local RGB_RED = { 1, 0, 0 }
 
 ABStrategy.ABLines = {
     ["left"] = { position = -1, rgb = RGB_BLUE, rgbActive = RGB_BLUE },
@@ -107,12 +108,21 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
     end
 
     for _, line in pairs(lines) do
-        local lineX = x + data.width * lineDirZ * (data.alphaRad + line.position / 2)
-        local lineZ = z - data.width * lineDirX * (data.alphaRad + line.position / 2)
+        local beta = data.alphaRad + line.position / 2
+        local lineX = x + data.width * lineDirZ * beta
+        local lineZ = z - data.width * lineDirX * beta
 
         local rgb = guidanceSteeringIsActive and line.rgbActive or line.rgb
 
         drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, rgb)
+    end
+
+    if data.offsetWidth ~= 0 then
+        local beta = data.alphaRad - 1 * data.offsetWidth / data.width
+        local lineX = x + data.width * lineDirZ * beta
+        local lineZ = z - data.width * lineDirX * beta
+
+        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, RGB_RED)
     end
 end
 
