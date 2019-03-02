@@ -44,7 +44,7 @@
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Ajustar la dirección al ángulo del terreno"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Deje que el GPS guíe la dirección."/>
         <text name="guidanceSteering_tooltip_width" text="Fijar el ancho de su vehículo"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Fijar lineas de compensación del vehículo"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Fijar el ancho a incremetar por aumento/disminución del ancho."/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine qué estrategia utilizar para crear las líneas de guía."/>
@@ -64,9 +64,9 @@
         <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
         <text name="guidanceSteering_setting_changeWidth" text="Cambiar Ancho"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
-        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
-        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
-        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Ancho de compensación"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Resetear compensación"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Cambiar compensación"/>
 
         <text name="guidanceSteering_setting_strategy" text="Línea de Estrategia"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Método de línea"/>
