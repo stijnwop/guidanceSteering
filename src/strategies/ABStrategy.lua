@@ -118,7 +118,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
     end
 
     if data.offsetWidth ~= 0 then
-        local beta = data.alphaRad - 1 * data.offsetWidth / data.width
+        local beta = data.alphaRad - 1 * data.snapDirectionMultiplier * data.offsetWidth / data.width
         local lineX = x + data.width * lineDirZ * beta
         local lineZ = z - data.width * lineDirX * beta
 

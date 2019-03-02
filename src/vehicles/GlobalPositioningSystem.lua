@@ -835,7 +835,7 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     -- Calculate target points
     local beta = data.alphaRad
     if data.offsetWidth ~= 0 then
-        beta = data.alphaRad - 1 * data.offsetWidth / data.width
+        beta = data.alphaRad - 1 * data.snapDirectionMultiplier * data.offsetWidth / data.width
     end
 
     local x1 = dX + data.width * snapDirZ * beta
