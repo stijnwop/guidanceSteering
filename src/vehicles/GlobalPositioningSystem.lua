@@ -593,15 +593,18 @@ function GlobalPositioningSystem:onEnterVehicle()
 end
 
 function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
-    local width = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+    local width, offset = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
     for _, implement in pairs(object.spec_attacherJoints.attachedImplements) do
         if implement.object ~= nil then
-            width = math.max(width, GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object))
+            local implementWidth, implementOffset = GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object)
+
+            width = math.max(width, implementWidth)
+            offset = math.min(offset, implementOffset)
         end
     end
 
-    return width
+    return width, offset
 end
 
 function GlobalPositioningSystem:getHasGuidanceSystem()
@@ -891,8 +894,9 @@ end
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
-    data.width = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
-    data.offsetWidth = 0
+    local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
+    data.width = width
+    data.offsetWidth = offset
     self:updateGuidanceData(data, false, false)
 end
 

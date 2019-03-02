@@ -122,8 +122,9 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
 
     if vehicle ~= nil then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-        self.currentWidth = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
-        self.currentOffset = 0
+        local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
+        self.currentWidth = width
+        self.currentOffset = offset
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
     end
 end

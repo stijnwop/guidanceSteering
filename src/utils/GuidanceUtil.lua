@@ -31,7 +31,7 @@ end
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
     if workAreaSpec == nil or workAreaSpec.workAreas == nil then
-        return 0
+        return 0, 0
     end
 
     local activeSprayType = GuidanceUtil.getActiveSprayType(object)
@@ -81,7 +81,12 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
         width = math.min(math.abs(lx - rx), width)
     end
 
-    return MathUtil.round(width, 3)
+    local offset = (minWidth + maxWidth) * 0.5
+    if math.abs(offset) < 0.1 then
+        offset = 0
+    end
+
+    return MathUtil.round(width, 3), MathUtil.round(offset, 3)
 end
 
 ---Writes the guidance data with compressed values
