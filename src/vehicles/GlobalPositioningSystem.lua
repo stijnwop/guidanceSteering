@@ -775,6 +775,7 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
     data.width = guidanceData.width
+    data.offsetWidth = guidanceData.offsetWidth
     data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
