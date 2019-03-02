@@ -93,7 +93,7 @@ function GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
     -- Compress width to int cause we round on the 3th decimal
     streamWriteUInt16(streamId, math.floor(data.width * 1000))
-    streamWriteUInt16(streamId, math.floor(data.offsetWidth * 1000))
+    streamWriteFloat32(streamId, data.offsetWidth)
 
     streamWriteBool(streamId, data.snapDirectionMultiplier ~= nil)
     if data.snapDirectionMultiplier ~= nil then
@@ -128,7 +128,7 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     local data = {}
 
     data.width = streamReadUInt16(streamId) / 1000
-    data.offsetWidth = streamReadUInt16(streamId) / 1000
+    data.offsetWidth = streamReadFloat32(streamId)
 
     if streamReadBool(streamId) then
         data.snapDirectionMultiplier = streamReadUIntN(streamId, 2)

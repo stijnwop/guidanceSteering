@@ -723,9 +723,8 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
 
     dirX, dirZ = math.sin(angleRad), math.cos(angleRad)
 
-    local offsetFactor = 1.0 -- Todo: offset
-    local x = transX + offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirZ
-    local z = transZ - offsetFactor * data.snapDirectionMultiplier * data.offsetWidth * dirX
+    local x = transX + data.snapDirectionMultiplier * data.offsetWidth * dirZ
+    local z = transZ - data.snapDirectionMultiplier * data.offsetWidth * dirX
 
     -- Line direction and translation xz axis
     data.snapDirection = {
@@ -835,7 +834,7 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     -- Calculate target points
     local beta = data.alphaRad
     if data.offsetWidth ~= 0 then
-        beta = data.alphaRad - 1 * data.snapDirectionMultiplier * data.offsetWidth / data.width
+        beta = data.alphaRad - data.snapDirectionMultiplier * data.offsetWidth / data.width
     end
 
     local x1 = dX + data.width * snapDirZ * beta
