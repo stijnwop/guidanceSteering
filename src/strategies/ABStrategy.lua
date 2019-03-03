@@ -29,7 +29,7 @@ ABStrategy.ABLines = {
 }
 
 ABStrategy.STEP_SIZE = 1 -- 1m each line
-ABStrategy.NUM_STEPS = 15 -- draw 15
+ABStrategy.NUM_STEPS = 10 -- draw 10
 ABStrategy.GROUND_CLEARANCE_OFFSET = .2
 
 local ABStrategy_mt = Class(ABStrategy)
@@ -69,7 +69,7 @@ end
 function ABStrategy:draw(data, guidanceSteeringIsActive)
     local lines = { ABStrategy.ABLines["middle"] }
     local skipStep = 1
-    local numSteps = ABStrategy.NUM_STEPS
+    local numSteps = data.lineDistance + ABStrategy.NUM_STEPS
     --local drawBotherLines = self:getIsGuidancePossible()
     local drawBotherLines = data.isCreated
     local x, _, z, lineDirX, lineDirZ = unpack(data.driveTarget)
@@ -94,13 +94,15 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
     local lineXDir = data.snapDirectionMultiplier * lineDirX
     local lineZDir = data.snapDirectionMultiplier * lineDirZ
 
+    local offset = data.lineDistance * 0.5
+
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
         end
 
-        local x1 = lx + stepSize * step * dirX
-        local z1 = lz + stepSize * step * dirZ
+        local x1 = lx - offset * dirX + stepSize * step * dirX
+        local z1 = lz - offset * dirZ + stepSize * step * dirZ
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
 
         GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", 0.02, rgb)

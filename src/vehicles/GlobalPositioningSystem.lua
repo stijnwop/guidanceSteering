@@ -58,6 +58,7 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onHeadlandStart", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onHeadlandEnd", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onPostAttachImplement", GlobalPositioningSystem)
 end
 
 function GlobalPositioningSystem.registerEvents(vehicleType)
@@ -216,6 +217,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     if self.isClient then
         spec.guidanceData.lastLoadedTrackId = 0
+        spec.guidanceData.lineDistance = 0
     end
 
     spec.dirtyFlag = self:getNextDirtyFlag()
@@ -592,10 +594,31 @@ function GlobalPositioningSystem:onEnterVehicle()
     end
 end
 
+function GlobalPositioningSystem:onPostAttachImplement()
+    if self.isClient then
+        if self:getHasGuidanceSystem() then
+            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local length = self.sizeLength
+
+            local function toLength(implement)
+                local object = implement.object
+                return object ~= nil and object.sizeLength or 0
+            end
+
+            local lengths = stream(self:getAttachedImplements()):map(toLength):toList()
+            length = stream(lengths):reduce(self.sizeLength, function(r, e)
+                return r + e
+            end)
+
+            spec.guidanceData.lineDistance = length
+        end
+    end
+end
+
 function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
     local width, offset = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
-    for _, implement in pairs(object.spec_attacherJoints.attachedImplements) do
+    for _, implement in pairs(self:getAttachedImplements()) do
         if implement.object ~= nil then
             local implementWidth, implementOffset = GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object)
 
