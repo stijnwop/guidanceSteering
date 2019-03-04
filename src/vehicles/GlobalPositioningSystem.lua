@@ -624,7 +624,11 @@ function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
             local implementWidth, implementOffset = GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object)
 
             width = math.max(width, implementWidth)
-            offset = math.min(offset, implementOffset)
+            if implementOffset < 0 then
+                offset = math.min(offset, implementOffset)
+            else
+                offset = math.max(offset, implementOffset)
+            end
         end
     end
 
