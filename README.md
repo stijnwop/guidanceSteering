@@ -52,6 +52,9 @@ In the menu you can set the offset line. If the offset is not `0` a red line wil
 ### Shift track
 Hit `alt + page up` and `alt + page down` in order to shift the track left and right. If you hold down the key the shifting of the track will speed up.
 
+### Realign track
+Hit `alt + home` in order to realign the track with the vehicle.
+
 ### Terrain angle snapping
 If you're not able to create straight lines yourself you can enable angle snapping in the menu. This will align the AB lines with the terrain.
 

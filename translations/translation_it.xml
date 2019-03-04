@@ -11,6 +11,7 @@
         <text name="input_GS_SHOW_UI" text="Mostra menu Guidance Steering"/> <!-- Show guidance steering menu -->
         <text name="input_GS_SET_AUTO_WIDTH" text="Larghezza automatica"/> <!-- Auto width -->
 
+        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Sposta traccia a destra"/> <!-- Shift track right -->
         <text name="input_GS_AXIS_SHIFT_2" text="Sposta traccia a sinistra"/> <!-- Shift track left -->
         <text name="input_GS_AXIS_WIDTH_1" text="Aumenta larghezza traccia"/> <!-- Increase track width -->

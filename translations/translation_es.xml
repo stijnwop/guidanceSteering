@@ -11,7 +11,7 @@
         <text name="input_GS_SHOW_UI" text="Mostrar Menú GPS"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Ancho Auto"/>
 
-        <!--TODO: input_GS_AXIS_SHIFT-->
+        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Mover hacia la derecha"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Mover hacia la izquierda"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Aumentar ancho de trabajo"/>

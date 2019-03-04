@@ -41,6 +41,7 @@
         <action name="GS_ENABLE_STEERING" axisType="HALF"/>
         <action name="GS_AXIS_WIDTH" axisType="FULL"/>
         <action name="GS_AXIS_SHIFT" axisType="FULL"/>
+        <action name="GS_AXIS_REALIGN" axisType="HALF"/>
     </actions>
 
     <inputBinding>
@@ -63,6 +64,9 @@
         <actionBinding action="GS_AXIS_SHIFT">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pageup" axisComponent="+"/>
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pagedown" axisComponent="-"/>
+        </actionBinding>
+        <actionBinding action="GS_AXIS_REALIGN">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_home"/>
         </actionBinding>
     </inputBinding>
 </modDesc>

@@ -84,6 +84,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_WIDTH, self, GlobalPositioningSystem.actionEventWidth, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -383,7 +384,7 @@ function GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
             spec.shiftControl.changeCurrentDelay = spec.shiftControl.changeDelay
 
             local dir = MathUtil.sign(lastShiftParallelValue)
-            GlobalPositioningSystem.shiftParallel(data, dt, dir)
+            GlobalPositioningSystem.shiftTrackParallel(data, dt, dir)
 
             spec.shiftControl.forceFinalPush = true
         end
@@ -891,16 +892,34 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
 end
 
-function GlobalPositioningSystem.shiftParallel(data, dt, direction)
+---Shifts the created track parallel
+---@param data table
+---@param dt number
+---@param direction number
+function GlobalPositioningSystem.shiftTrackParallel(data, dt, direction)
     local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
-    -- Todo: take self.guidanceData.offsetWidth in account?
-    lineX = lineX + (snapFactor * dt / 1000 * lineDirZ) * direction
-    lineZ = lineZ + (snapFactor * dt / 1000 * lineDirX) * direction
+    lineX = lineX + (snapFactor * dt * 0.001 * lineDirZ) * direction
+    lineZ = lineZ + (snapFactor * dt * 0.001 * lineDirX) * direction
 
-    -- Todo: store what we offset?
     data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
+end
+
+---Realigns the created track to the current drive target
+---@param self table
+---@param data table
+function GlobalPositioningSystem.realignTrack(self, data)
+    local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
+    local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+    local transX, _, transZ = unpack(data.driveTarget)
+
+    lineX = transX + snapFactor * data.offsetWidth * lineDirZ
+    lineZ = transZ - snapFactor * data.offsetWidth * lineDirX
+
+    data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
+
+    self:updateGuidanceData(data, false, false)
 end
 
 --- Action events
@@ -933,6 +952,17 @@ function GlobalPositioningSystem.actionEventShift(self, actionName, inputValue, 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.lastInputValues.shiftParallel = true
     spec.lastInputValues.shiftParallelValue = inputValue
+end
+
+function GlobalPositioningSystem.actionEventRealign(self, actionName, inputValue, callbackState, isAnalog)
+    local data = self:getGuidanceData()
+
+    if not data.isCreated then
+        g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
+        return
+    end
+
+    GlobalPositioningSystem.realignTrack(self, data)
 end
 
 function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputValue, callbackState, isAnalog)

@@ -11,6 +11,7 @@
         <text name="input_GS_SHOW_UI" text="Show guidance steering menu"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Auto width"/>
 
+        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Shift track right"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Shift track left"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Increase track width"/>
@@ -24,7 +25,7 @@
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Drive at least 15m in order to set point B. Current traveled distance: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Please set a working width first!"/>
-        <text name="guidanceSteering_warning_createTrackFirst" text="Please create or load a track first before enabling guidance steering!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Please create or load a track first!"/>
 
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Guidance settings"/>
