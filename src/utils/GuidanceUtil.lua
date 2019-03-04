@@ -30,7 +30,7 @@ end
 ---@param object table
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
-    if workAreaSpec == nil or workAreaSpec.workAreas == nil then
+    if workAreaSpec == nil or #workAreaSpec.workAreas == 0 then
         return 0, 0
     end
 
