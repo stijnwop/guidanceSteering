@@ -130,6 +130,7 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
         self.currentWidth = width
         self.currentOffset = offset
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
+        self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
     end
 end
 
