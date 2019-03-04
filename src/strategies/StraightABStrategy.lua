@@ -23,8 +23,8 @@ function StraightABStrategy:update(dt)
     StraightABStrategy:superClass().update(self, dt)
 end
 
-function StraightABStrategy:draw(data, guidanceSteeringIsActive)
-    StraightABStrategy:superClass().draw(self, data, guidanceSteeringIsActive)
+function StraightABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
+    StraightABStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
 ---Gets the guidance drive data for straight ab lines

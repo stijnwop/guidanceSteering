@@ -44,6 +44,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Polepsza twoją widoczność poprzez pokazanie linii pomocniczych"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Wyrównuje kierunek względem kąta terenu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Przekazuje kontrolę kierownicy nawigacji"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
         <text name="guidanceSteering_tooltip_width" text="Ustawia szerokość twojego pojazdu/maszyny"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Ustawia korekcję toru jazdy dla twojego pojazdu"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Pozwala ręcznie dopasować szerokość"/>
@@ -60,6 +61,7 @@
         <text name="guidanceSteering_setting_showLines" text="Pokaż linie"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Wyrównaj do kąta terenu"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Włącz nawigację"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Szerokość"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Korekcja szerokości"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>

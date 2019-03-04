@@ -164,6 +164,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = false
+    spec.autoInvertOffset = false
 
     spec.shiftParallel = false
 
@@ -177,6 +178,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.guidanceTerrainAngleIsActive = false
+    spec.lastInputValues.autoInvertOffset = false
     spec.lastInputValues.shiftParallel = false
     spec.lastInputValues.shiftParallelValue = 0
     spec.lastInputValues.widthValue = 0
@@ -201,6 +203,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.showGuidanceLinesSent = false
     spec.guidanceIsActiveSent = false
     spec.shiftParallelSent = false
+    spec.autoInvertOffsetSent = false
 
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
@@ -254,6 +257,7 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
+            spec.autoInvertOffset = streamReadBool(streamId)
         end
     end
 end
@@ -273,6 +277,7 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
             streamWriteBool(streamId, spec.guidanceIsActive)
             streamWriteBool(streamId, spec.guidanceSteeringIsActive)
             streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
+            streamWriteBool(streamId, spec.autoInvertOffset)
         end
     end
 end
@@ -287,6 +292,7 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
+            spec.autoInvertOffset = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
         end
     end
@@ -303,6 +309,7 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.guidanceIsActive)
             streamWriteBool(streamId, spec.guidanceSteeringIsActive)
             streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
+            streamWriteBool(streamId, spec.autoInvertOffset)
 
             streamWriteBool(streamId, spec.shiftParallel)
         end
@@ -336,6 +343,7 @@ function GlobalPositioningSystem.updateNetworkInputs(self)
     spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
     spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
     spec.guidanceTerrainAngleIsActive = spec.lastInputValues.guidanceTerrainAngleIsActive
+    spec.autoInvertOffset = spec.lastInputValues.autoInvertOffset
     spec.shiftParallel = spec.lastInputValues.shiftParallel
 
     -- Reset
@@ -345,6 +353,7 @@ function GlobalPositioningSystem.updateNetworkInputs(self)
             or spec.showGuidanceLines ~= spec.showGuidanceLinesSent
             or spec.guidanceIsActive ~= spec.guidanceIsActiveSent
             or spec.guidanceTerrainAngleIsActive ~= spec.guidanceTerrainAngleIsActiveSent
+            or spec.autoInvertOffset ~= spec.autoInvertOffsetSent
             or spec.shiftParallel ~= spec.shiftParallelSent
             or spec.shiftParallelDirection ~= spec.shiftParallelDirectionSent
     then
@@ -352,6 +361,7 @@ function GlobalPositioningSystem.updateNetworkInputs(self)
         spec.showGuidanceLinesSent = spec.showGuidanceLines
         spec.guidanceIsActiveSent = spec.guidanceIsActive
         spec.guidanceTerrainAngleIsActiveSent = spec.guidanceTerrainAngleIsActive
+        spec.autoInvertOffsetSent = spec.autoInvertOffset
         spec.shiftParallelSent = spec.shiftParallel
         spec.shiftParallelDirectionSent = spec.shiftParallelDirection
 
@@ -546,7 +556,7 @@ function GlobalPositioningSystem:onDraw()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec.guidanceIsActive then
         if spec.showGuidanceLines then
-            spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive)
+            spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
         end
     end
 end
@@ -865,7 +875,8 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     -- Calculate target points
     local beta = data.alphaRad
     if data.offsetWidth ~= 0 then
-        beta = data.alphaRad - data.snapDirectionMultiplier * data.offsetWidth / data.width
+        local snapFactor = spec.autoInvertOffset and data.snapDirectionMultiplier or 1.0
+        beta = data.alphaRad - snapFactor * data.offsetWidth / data.width
     end
 
     local x1 = dX + data.width * snapDirZ * beta

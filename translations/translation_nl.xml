@@ -42,6 +42,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Ondersteun uw visuals door de begeleidingslijnen te tonen"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richt de stuurrichting naar de terreinhoek"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laat GPS het sturen begeleiden"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
@@ -58,6 +59,7 @@
         <text name="guidanceSteering_setting_showLines" text="Geef lijnen weer"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uitlijnen met de terreinhoeken"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Schakel stuurbegeleiding in"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Werkbreedte"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Werkbreedte-verhoging"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische werkbreedte"/>

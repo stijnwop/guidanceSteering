@@ -43,6 +43,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Afficher les lignes de guidage"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aligner sur l'angle du terrain"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laisser le guidage gérer la direction"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage du véhicule"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
@@ -59,6 +60,7 @@
         <text name="guidanceSteering_setting_showLines" text="Afficher les lignes"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aligner sur l'angle du terrain"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage automatique"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>

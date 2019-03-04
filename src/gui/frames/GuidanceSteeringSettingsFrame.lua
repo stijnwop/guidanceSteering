@@ -6,6 +6,7 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     SHOW_LINES = "guidanceSteeringShowLinesElement",
     SNAP_TERRAIN_ANGLE = "guidanceSteeringSnapAngleElement",
     ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
+    AUTO_INVERT_OFFSET = "guidanceSteeringAutoInvertOffsetElement",
     WIDTH = "guidanceSteeringWidthElement",
     OFFSET = "guidanceSteeringOffsetWidthElement",
     WIDTH_INCREMENT = "guidanceSteeringWidthInCrementElement",
@@ -70,6 +71,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.guidanceSteeringShowLinesElement:setIsChecked(spec.showGuidanceLines)
         self.guidanceSteeringSnapAngleElement:setIsChecked(spec.guidanceTerrainAngleIsActive)
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
+        self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
         self.currentWidth = data.width
         self.currentOffset = data.offsetWidth
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
@@ -91,6 +93,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local showGuidanceLines = self.guidanceSteeringShowLinesElement:getIsChecked()
             local guidanceSteeringIsActive = self.guidanceSteeringEnableSteeringElement:getIsChecked()
             local guidanceTerrainAngleIsActive = self.guidanceSteeringSnapAngleElement:getIsChecked()
+            local autoInvertOffset = self.guidanceSteeringAutoInvertOffsetElement:getIsChecked()
             local state = self.guidanceSteeringWidthInCrementElement:getState()
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
@@ -103,6 +106,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 
             spec.lastInputValues.showGuidanceLines = showGuidanceLines
             spec.lastInputValues.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
+            spec.lastInputValues.autoInvertOffset = autoInvertOffset
             spec.lastInputValues.widthIncrement = math.abs(increment)
 
             if data.width ~= self.currentWidth or data.offsetWidth ~= self.currentOffset then

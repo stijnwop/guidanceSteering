@@ -41,6 +41,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Podporujte své vizualizace zobrazením vodítek"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Uchopte směr úhlu terénu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Nechte řídit systém GPS za Vás!"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
         <text name="guidanceSteering_tooltip_width" text="Nastavte šířku vašeho vozidla"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Nastavte přírůstek šířky pro zvýšení / snížení šířky"/>
@@ -57,6 +58,7 @@
         <text name="guidanceSteering_setting_showLines" text="Zobrazit vodítka"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uchopit úhel terénu"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktivovat systém GPS"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Šířka"/>
         <text name="guidanceSteering_setting_widthInCrement" text="Nárust šířky"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto šířka"/>

@@ -66,7 +66,8 @@ end
 ---Draw
 ---@param data table
 ---@param guidanceSteeringIsActive boolean
-function ABStrategy:draw(data, guidanceSteeringIsActive)
+---@param autoInvertOffset boolean
+function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
     local lines = { ABStrategy.ABLines["middle"] }
     local skipStep = 1
     local numSteps = data.lineDistance + ABStrategy.NUM_STEPS
@@ -120,7 +121,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive)
     end
 
     if data.offsetWidth ~= 0 then
-        local beta = data.alphaRad - data.snapDirectionMultiplier * data.offsetWidth / data.width
+        local snapFactor = autoInvertOffset and data.snapDirectionMultiplier or 1.0
+        local beta = data.alphaRad - snapFactor * data.offsetWidth / data.width
         local lineX = x + data.width * lineDirZ * beta
         local lineZ = z - data.width * lineDirX * beta
 

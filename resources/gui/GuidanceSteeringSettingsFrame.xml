@@ -38,6 +38,16 @@
                     <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_terrainAngleSnap"/>
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
+
+                <!--Option to auto invert offset-->
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" id="guidanceSteeringAutoInvertOffsetElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_autoInvertOffset">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="multiTextOptionText"/>
+                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_autoInvertOffset"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionBg"/>
+                </GuiElement>
             </GuiElement>
 
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout">
