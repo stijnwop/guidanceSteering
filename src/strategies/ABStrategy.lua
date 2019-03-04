@@ -95,7 +95,10 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
     local lineXDir = data.snapDirectionMultiplier * lineDirX
     local lineZDir = data.snapDirectionMultiplier * lineDirZ
 
-    local offset = data.lineDistance * 0.5
+    local offset = 0
+    if drawBotherLines then
+        offset = data.lineDistance * 0.5
+    end
 
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
