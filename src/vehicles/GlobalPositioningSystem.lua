@@ -618,7 +618,7 @@ end
 function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
     local width, offset = GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
 
-    for _, implement in pairs(self:getAttachedImplements()) do
+    for _, implement in pairs(object:getAttachedImplements()) do
         if implement.object ~= nil then
             local implementWidth, implementOffset = GlobalPositioningSystem.getActualWorkWidth(guidanceNode, implement.object)
 
