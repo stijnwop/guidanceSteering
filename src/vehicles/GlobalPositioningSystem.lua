@@ -916,7 +916,7 @@ function GlobalPositioningSystem.shiftTrackParallel(data, dt, direction)
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
     local dirX, dirZ = lineDirX, lineDirZ
-    if math.abs(dirX - dirZ) < 0.00001 then
+    if (math.abs(dirX) - math.abs(dirZ)) < 0.00001 then
         dirX = dirX + 1 -- avoid multiply by 0.
     end
 
