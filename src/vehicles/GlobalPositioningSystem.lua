@@ -915,8 +915,13 @@ function GlobalPositioningSystem.shiftTrackParallel(data, dt, direction)
     local snapFactor = Utils.getNoNil(data.snapDirectionMultiplier, 1.0)
     local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
-    lineX = lineX + (snapFactor * dt * 0.001 * lineDirZ) * direction
-    lineZ = lineZ + (snapFactor * dt * 0.001 * lineDirX) * direction
+    local dirX, dirZ = lineDirX, lineDirZ
+    if math.abs(dirX - dirZ) < 0.00001 then
+        dirX = dirX + 1 -- avoid multiply by 0.
+    end
+
+    lineX = lineX + ((snapFactor * dt * 0.001 * dirZ) * direction)
+    lineZ = lineZ + ((snapFactor * dt * 0.001 * dirX) * direction)
 
     data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
 end
