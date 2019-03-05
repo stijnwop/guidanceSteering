@@ -33,8 +33,8 @@ end
 ---@param predicate function
 function BaseStream:map(predicate)
     local result = {}
-    for i, element in ipairs(self.list) do
-        result[i] = predicate(element)
+    for _, element in ipairs(self.list) do
+        result[#result + 1] = predicate(element)
     end
     self.list = result
     return self
