@@ -995,13 +995,19 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     self.spec_drivable.allowPlayerControl = self.guidanceSteeringIsActive
 
+    if spec.guidanceData.width <= 0 then
+        g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_setWidth"), 2000)
+        return
+    end
+
     if not spec.guidanceData.isCreated then
         g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
-    else
-        spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
-        self:onSteeringStateChanged(spec.lastInputValues.guidanceSteeringIsActive)
-        Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
+        return
     end
+
+    spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
+    self:onSteeringStateChanged(spec.lastInputValues.guidanceSteeringIsActive)
+    Logger.info("guidanceSteeringIsActive", spec.lastInputValues.guidanceSteeringIsActive)
 end
 
 function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
