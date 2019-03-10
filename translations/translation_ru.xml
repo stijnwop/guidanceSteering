@@ -11,7 +11,7 @@
         <text name="input_GS_SHOW_UI" text="Показать меню автоподруливания"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Автоширина"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
+        <text name="input_GS_AXIS_REALIGN" text="Перестроить трек"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Смещение трека вправо"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Смещение трека влево"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Увеличить ширину трека"/>
@@ -42,10 +42,10 @@
         <text name="guidanceSteering_tooltip_showLines" text="Поддерживает вас визуально, показывая навигационные линии"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением"/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Автоматически инвертировать смещение при развороте"/>
         <text name="guidanceSteering_tooltip_width" text="Установка ширины вашего агрегата"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг изменения для увеличения/уменьшения ширины"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Установка смещение вашей техники"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг увеличения/уменьшения рабочей ширины и смещения"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Определяется, какой метод стратегии использовать"/>
@@ -60,15 +60,15 @@
         <text name="guidanceSteering_setting_showLines" text="Показывать линии"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Привязывать к углам местности"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Автоподруливание"/>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
-        <text name="guidanceSteering_setting_width" text="Ширина"/>
-        <text name="guidanceSteering_setting_widthIncrement" text="Шаг изменения ширины"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Реверсивное смещение"/>
+        <text name="guidanceSteering_setting_width" text="Рабочая ширина"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Шаг изменения ширины/смещения"/>
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
         <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
-        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
-        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
-        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Величина смещения"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Обнулить смещение"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Изменить смещение"/>
 
         <text name="guidanceSteering_setting_strategy" text="Стратегия линий"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Метод линий"/>
