@@ -163,7 +163,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceIsActive = true -- todo: make toggle
     spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
-    spec.guidanceTerrainAngleIsActive = false
+    spec.guidanceTerrainAngleIsActive = true
     spec.autoInvertOffset = false
 
     spec.shiftParallel = false
@@ -177,7 +177,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.lastInputValues.guidanceIsActive = true -- todo: make toggle
     spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
-    spec.lastInputValues.guidanceTerrainAngleIsActive = false
+    spec.lastInputValues.guidanceTerrainAngleIsActive = true
     spec.lastInputValues.autoInvertOffset = false
     spec.lastInputValues.shiftParallel = false
     spec.lastInputValues.shiftParallelValue = 0
@@ -202,6 +202,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceSteeringIsActiveSent = false
     spec.showGuidanceLinesSent = false
     spec.guidanceIsActiveSent = false
+    spec.guidanceTerrainAngleIsActiveSent = false
     spec.shiftParallelSent = false
     spec.autoInvertOffsetSent = false
 
