@@ -284,8 +284,8 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
     Drivable.actionEventSteer = Utils.overwrittenFunction(Drivable.actionEventSteer, GuidanceSteering.actionEventSteer)
 end
 
-function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
-    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, ...)
+    superFunc(vehicle, actionName, inputValue, ...)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec ~= nil and spec.hasGuidanceSystem and spec.guidanceSteeringIsActive then
@@ -293,8 +293,8 @@ function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, 
     end
 end
 
-function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
-    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
+    superFunc(vehicle, actionName, inputValue, ...)
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec ~= nil and spec.hasGuidanceSystem and spec.guidanceSteeringIsActive then
@@ -302,8 +302,8 @@ function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, input
     end
 end
 
-function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog)
-    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog)
+function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, ...)
+    superFunc(vehicle, actionName, inputValue, ...)
 
     if inputValue ~= 0 then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
