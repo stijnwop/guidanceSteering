@@ -302,8 +302,8 @@ function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, input
     end
 end
 
-function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, ...)
-    superFunc(vehicle, actionName, inputValue, ...)
+function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog, ...)
+    superFunc(vehicle, actionName, inputValue, callbackState, isAnalog, ...)
 
     if inputValue ~= 0 then
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
