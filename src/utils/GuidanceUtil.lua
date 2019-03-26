@@ -30,55 +30,60 @@ end
 ---@param object table
 function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
+
+    local calculateWorkAreas = true
     if workAreaSpec == nil or #workAreaSpec.workAreas == 0 then
-        return 0, 0
+        calculateWorkAreas = false
     end
 
-    local activeSprayType = GuidanceUtil.getActiveSprayType(object)
-    -- Exclude ridged markers from workArea calculation
-    local skipWorkAreas = {
-        ["processRidgeMarkerArea"] = true
-    }
+    local maxWidth, minWidth = 0, 0
 
-    local function isWorkAreaValid(workArea)
-        if skipWorkAreas[workArea.functionName] ~= nil then
-            return false
+    if calculateWorkAreas then
+        local activeSprayType = GuidanceUtil.getActiveSprayType(object)
+        -- Exclude ridged markers from workArea calculation
+        local skipWorkAreas = {
+            ["processRidgeMarkerArea"] = true
+        }
+
+        local function isWorkAreaValid(workArea)
+            if skipWorkAreas[workArea.functionName] ~= nil then
+                return false
+            end
+
+            if (activeSprayType ~= nil and workArea.sprayType ~= activeSprayType) then
+                return false
+            end
+
+            return workArea.type ~= WorkAreaType.AUXILIARY
         end
 
-        if (activeSprayType ~= nil and workArea.sprayType ~= activeSprayType) then
-            return false
+        local function toLocalArea(workArea)
+            if not isWorkAreaValid(workArea) then
+                return nil -- will GC table value cause ipairs
+            end
+
+            local x0 = localToLocal(workArea.start, guidanceNode, 0, 0, 0)
+            local x1 = localToLocal(workArea.width, guidanceNode, 0, 0, 0)
+            local x2 = localToLocal(workArea.height, guidanceNode, 0, 0, 0)
+
+            return { x0, x1, x2 }
         end
 
-        return workArea.type ~= WorkAreaType.AUXILIARY
+        local areaWidths = stream(workAreaSpec.workAreas):map(toLocalArea):toList()
+        maxWidth = stream(areaWidths):reduce(0, function(r, e)
+            return math.max(r, unpack(e))
+        end)
+        minWidth = stream(areaWidths):reduce(math.huge, function(r, e)
+            return math.min(r, unpack(e))
+        end)
     end
-
-    local function toLocalArea(workArea)
-        if not isWorkAreaValid(workArea) then
-            return nil -- will GC table value cause ipairs
-        end
-
-        local x0 = localToLocal(workArea.start, guidanceNode, 0, 0, 0)
-        local x1 = localToLocal(workArea.width, guidanceNode, 0, 0, 0)
-        local x2 = localToLocal(workArea.height, guidanceNode, 0, 0, 0)
-
-        return { x0, x1, x2 }
-    end
-
-    local areaWidths = stream(workAreaSpec.workAreas):map(toLocalArea):toList()
-    local maxWidth = stream(areaWidths):reduce(0, function(r, e)
-        return math.max(r, unpack(e))
-    end)
-    local minWidth = stream(areaWidths):reduce(math.huge, function(r, e)
-        return math.min(r, unpack(e))
-    end)
 
     local width = maxWidth + math.abs(minWidth)
     local leftMarker, rightMarker = object:getAIMarkers()
     if leftMarker ~= nil and rightMarker ~= nil then
         local lx = localToLocal(leftMarker, guidanceNode, 0, 0, 0)
         local rx = localToLocal(rightMarker, guidanceNode, 0, 0, 0)
-
-        width = math.min(math.abs(lx - rx), width)
+        width = math.max(math.abs(lx - rx), width)
     end
 
     local offset = (minWidth + maxWidth) * 0.5
