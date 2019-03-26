@@ -6,6 +6,7 @@
     <title>
         <en>Guidance Steering</en>
         <de>Guidance Steering</de>
+        <fr>Guidance Steering</fr>
         <it>Guidance Steering</it>
         <es>Dirección de Guiado</es>
     </title>
@@ -17,6 +18,9 @@
         <de>
             <![CDATA[Guidance Steering.]]>
         </de>
+        <fr>
+            <![CDATA[Guidage Direction.]]>
+        </fr>
         <it>
             <![CDATA[Direzione di guida.]]>
         </it>
