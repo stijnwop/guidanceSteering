@@ -2,6 +2,8 @@
 
 ![For Farming Simulator 19](https://img.shields.io/badge/Farming%20Simulator-19-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
 
+## Publishing
+Only Wopster is allowed to publish any of this code as a mod to any mod site, or file sharing site. The code is open for your own use, but give credit where due. I will not accept support for any version of Guidance Steering that is obtained from a sketchy mod website. This really holds back the development and adds no value or fun for me!
 
 ## Warning!
 Please be aware that this is a ***DEVELOPMENT VERSION***!
@@ -10,7 +12,6 @@ Please be aware that this is a ***DEVELOPMENT VERSION***!
 
 #### Multiplayer
 This version should also work in Multiplayer, but keep in mind it might have bugs.
-
 
 ## Installation
 Currently the development version is only available via GitHub. When a release version is avaiable you can download the latest version from the [release section](https://github.com/stijnwop/guidanceSteering/releases).
