@@ -5,16 +5,21 @@
 --
 -- Copyright (c) Wopster, 2019
 
+---@class FSM
+---@field public state AbstractState
+---@field public states AbstractState[]
 FSM = {}
 
+---@type number The any state.
 FSM.ANY_STATE = -1
 
 local FSM_mt = Class(FSM)
 
 ---Creates a new finite state machine instance
----@param initialState table
----@param states table
+---@param initialState AbstractState
+---@param states AbstractState[]
 ---@param custom_mt table
+---@return FSM
 function FSM:new(initialState, states, custom_mt)
     local instance = {}
 
@@ -29,7 +34,7 @@ function FSM:new(initialState, states, custom_mt)
     return instance
 end
 
----_callListeners
+---Calls all listener functions.
 ---@param listeners table
 ---@param functionName string
 local function _callListeners(listeners, functionName)
@@ -39,7 +44,7 @@ local function _callListeners(listeners, functionName)
 end
 
 ---Calls the onExit function from the current state
----@param state table
+---@param state AbstractState
 local function _callOnExit(state)
     state:onExit()
 
@@ -49,7 +54,7 @@ local function _callOnExit(state)
 end
 
 ---Calls the onEntry function for the next state
----@param state table
+---@param state AbstractState
 local function _callOnEntry(state)
     state:onEntry()
 
@@ -59,7 +64,7 @@ local function _callOnEntry(state)
 end
 
 ---Transitions to new state
----@param toState table the state we transition to.
+---@param toState AbstractState the state we transition to.
 function FSM:transition(toState)
     local fromState = self.state
 
@@ -73,7 +78,7 @@ function FSM:transition(toState)
 end
 
 ---Sets the current state
----@param state table
+---@param state AbstractState
 function FSM:setCurrentState(state)
     self.state = state
 end
@@ -84,6 +89,7 @@ function FSM:getCurrentState()
 end
 
 ---Returns the initial state of the state machine
+---@return AbstractState
 function FSM:getInitialState()
     return self.initialState
 end
@@ -95,7 +101,7 @@ function FSM:reset()
 end
 
 ---Sets the possible states
----@param states table
+---@param states AbstractState[]
 function FSM:setStates(states)
     self.states = states
 end

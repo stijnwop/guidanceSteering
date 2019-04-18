@@ -5,28 +5,29 @@
 --
 -- Copyright (c) Wopster, 2019
 
+---@class TurningState
 TurningState = {}
 
-local TurningState_mt = Class(TurningState)
+local TurningState_mt = Class(TurningState, AbstractState)
 
+---Creates a new turning state.
+---@param id number
+---@param object table
+---@param custom_mt table
+---@return TurningState
 function TurningState:new(id, object, custom_mt)
-    local instance = {}
+    local self = AbstractState:new(id, object, custom_mt or TurningState_mt)
 
-    setmetatable(instance, custom_mt or TurningState_mt)
+    self.turnLeft = true
+    self.turnSegments = {}
 
-    instance.id = id
-    instance.object = object
-    instance.turnLeft = true
-    instance.turnSegments = {}
-
-    return instance
+    return self
 end
 
-function TurningState:getId()
-    return self.id
-end
-
+---@see AbstractState#onEntry
 function TurningState:onEntry()
+    TurningState:superClass().onEntry(self)
+
     -- On entry transition
     Logger.info("TurningState: onEntry")
 
@@ -34,11 +35,17 @@ function TurningState:onEntry()
     -- Get starting point and build
 end
 
+---@see AbstractState#onExit
 function TurningState:onExit()
+    TurningState:superClass().onExit(self)
+
     -- On exit transition
     Logger.info("TurningState: onExit")
 end
 
+---@see AbstractState#update
 function TurningState:update(dt)
+    TurningState:superClass().update(self, dt)
+
     return FSM.ANY_STATE
 end
