@@ -5,45 +5,53 @@
 --
 -- Copyright (c) Wopster, 2019
 
+---@class FollowLineState
 FollowLineState = {}
 
-local FollowLineState_mt = Class(FollowLineState)
+local FollowLineState_mt = Class(FollowLineState, AbstractState)
 
+---Creates a new follow line state.
+---@param id number
+---@param object table
+---@param custom_mt table
+---@return FollowLineState
 function FollowLineState:new(id, object, custom_mt)
-    local instance = {}
+    local self = AbstractState:new(id, object, custom_mt or FollowLineState_mt)
 
-    setmetatable(instance, custom_mt or FollowLineState_mt)
+    self.initialDetectedHeadland = false
+    self.lastIsNotOnField = false
+    self.distanceToEnd = 0
+    self.actDistance = 9 -- Todo: make configurable
+    self.lastValidGroundPos = { 0, 0, 0 }
 
-    instance.id = id
-    instance.object = object
-    instance.initialDetectedHeadland = false
-    instance.lastIsNotOnField = false
-    instance.distanceToEnd = 0
-    instance.actDistance = 9 -- Todo: make configurable
-    instance.lastValidGroundPos = { 0, 0, 0 }
-
-    return instance
+    return self
 end
 
-function FollowLineState:getId()
-    return self.id
-end
-
+---@see AbstractState#onEntry
 function FollowLineState:onEntry()
+    FollowLineState:superClass().onEntry(self)
+
     -- On entry transition
     Logger.info("FollowLineState: onEntry")
+
     self.initialDetectedHeadland = self:detectedHeadland(0)
     self.lastIsNotOnField = false
     self.distanceToEnd = 0
     self.lastValidGroundPos = { 0, 0, 0 }
 end
 
+---@see AbstractState#onExit
 function FollowLineState:onExit()
+    FollowLineState:superClass().onExit(self)
+
     -- On exit transition
     Logger.info("FollowLineState: onExit")
 end
 
+---@see AbstractState#update
 function FollowLineState:update(dt)
+    FollowLineState:superClass().update(self, dt)
+
     local object = self.object
     local isOnField = object:getIsOnField()
 
@@ -70,6 +78,7 @@ end
 
 ---Returns true when it detected headland, false otherwise.
 ---@param lastSpeed number
+---@return boolean true when distance to headland equals or is smaller than the distance to act, false otherwise.
 function FollowLineState:detectedHeadland(lastSpeed)
     local data = self.object:getGuidanceData()
     local x, y, z = unpack(data.driveTarget)
