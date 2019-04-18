@@ -859,11 +859,7 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    if isActive then
-        spec.stateMachine:setState(FSMContext.FOLLOW_LINE_STATE)
-    else
-        spec.stateMachine:reset()
-    end
+    spec.stateMachine:reset()
 
     local sample = spec.samples.activate
     if not isActive then
