@@ -55,7 +55,7 @@ function OnHeadlandState:update(dt)
     OnHeadlandState:superClass().update(self, dt)
 
     local mode = self.mode
-    if mode ~= HeadlandProcessor.MODES.OFF then
+    if mode ~= OnHeadlandState.MODES.OFF then
         if mode == OnHeadlandState.MODES.STOP then
             return FSMContext.STATES.STOPPED_STATE
         end
