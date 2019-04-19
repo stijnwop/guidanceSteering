@@ -38,6 +38,10 @@ function FollowLineState:onEntry()
     self.lastIsNotOnField = false
     self.distanceToEnd = 0
     self.lastValidGroundPos = { 0, 0, 0 }
+
+    -- Reset some vehicle spec data for sounds.
+    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+    spec.playHeadLandWarning = false
 end
 
 ---@see AbstractState#onExit
@@ -89,7 +93,8 @@ function FollowLineState:detectedHeadland(lastSpeed)
     local distanceToHeadLand, isDistanceOnField = HeadlandUtil.getDistanceToHeadLand(self, self.object, x, y, z, lookAheadStepDistance)
 
     if distanceToHeadLand <= distanceToAct + (lookAheadStepDistance * 0.5) and not isDistanceOnField then
-        --self.raiseWarningEventAllowed = true
+        local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+        spec.playHeadLandWarning = true
     end
 
     return distanceToHeadLand <= distanceToAct
