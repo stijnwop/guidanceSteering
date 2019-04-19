@@ -169,6 +169,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceTerrainAngleIsActive = true
     spec.autoInvertOffset = false
     spec.shiftParallel = false
+    spec.headlandMode = OnHeadlandState.MODES.OFF
 
     spec.abDistanceCounter = 0
 

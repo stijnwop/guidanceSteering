@@ -8,7 +8,7 @@
 ---@class OnHeadlandState
 OnHeadlandState = {}
 
----@type number[] The headland states.
+---@type number<string, number> The headland states.
 OnHeadlandState.MODES = {
     OFF = 0,
     STOP = 1,
@@ -38,8 +38,8 @@ function OnHeadlandState:onEntry()
     -- On entry transition
     Logger.info("OnHeadlandState: onEntry")
 
-    -- Todo: look up current mode
-    self.mode = OnHeadlandState.MODES.STOP
+    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+    self.mode = spec.headlandMode
 end
 
 ---@see AbstractState#onExit

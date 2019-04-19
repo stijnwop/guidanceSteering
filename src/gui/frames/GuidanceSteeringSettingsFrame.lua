@@ -14,6 +14,8 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     CHANGE_WIDTH_BUTTON = "guidanceSteeringChangeWidthButton",
     CHANGE_OFFSET_BUTTON = "guidanceSteeringChangeOffsetWidthButton",
     RESET_OFFSET_BUTTON = "guidanceSteeringResetOffsetWidthButton",
+    HEADLAND_MODE = "guidanceSteeringHeadlandModeElement",
+    HEADLAND_ACT_DISTANCE = "guidanceSteeringHeadlandDistanceElement",
 }
 GuidanceSteeringSettingsFrame.INCREMENTS = {
     0.01,
@@ -36,6 +38,7 @@ function GuidanceSteeringSettingsFrame:new(i18n)
     self.currentWidth = 0
     self.currentOffset = 0
     self.currentWidthIncrement = 0
+    self.currentHeadlandActDistance = 0
 
     self.allowSave = false
 
@@ -58,6 +61,14 @@ function GuidanceSteeringSettingsFrame:initialize()
     end
 
     self.guidanceSteeringWidthInCrementElement:setTexts(increments)
+
+    local headlandModes = {}
+    for _, mode in pairs(OnHeadlandState.MODES) do
+        table.insert(headlandModes, self.i18n:getText(("guidanceSteering_headland_mode_%d"):format(mode)))
+    end
+
+    self.guidanceSteeringHeadlandModeElement:setTexts(headlandModes)
+    self.guidanceSteeringHeadlandDistanceElement:setText(tostring(0))
 end
 
 function GuidanceSteeringSettingsFrame:onFrameOpen()
@@ -74,8 +85,11 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
         self.currentWidth = data.width
         self.currentOffset = data.offsetWidth
+        self.currentHeadlandActDistance = 0 -- Todo: implement
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
+        self.guidanceSteeringHeadlandModeElement:setState(spec.headlandMode + 1)
+        self.guidanceSteeringHeadlandDistanceElement:setText(tostring(self.currentHeadlandActDistance))
 
         self.allowSave = true
     end
@@ -95,6 +109,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local guidanceTerrainAngleIsActive = self.guidanceSteeringSnapAngleElement:getIsChecked()
             local autoInvertOffset = self.guidanceSteeringAutoInvertOffsetElement:getIsChecked()
             local state = self.guidanceSteeringWidthInCrementElement:getState()
+            local headlandMode = self.guidanceSteeringHeadlandModeElement:getState()
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
             -- Todo: cleanup later
@@ -108,6 +123,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             spec.lastInputValues.guidanceTerrainAngleIsActive = guidanceTerrainAngleIsActive
             spec.lastInputValues.autoInvertOffset = autoInvertOffset
             spec.lastInputValues.widthIncrement = math.abs(increment)
+            spec.headlandMode = headlandMode - 1
 
             if data.width ~= nil and data.width ~= self.currentWidth
                     or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentOffset then
