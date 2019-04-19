@@ -55,17 +55,14 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onRegisterActionEvents", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onUpdateTick", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onEnterVehicle", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onHeadlandStart", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onHeadlandEnd", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onPostAttachImplement", GlobalPositioningSystem)
 end
 
 function GlobalPositioningSystem.registerEvents(vehicleType)
-    SpecializationUtil.registerEvent(vehicleType, "onHeadlandStart")
-    SpecializationUtil.registerEvent(vehicleType, "onHeadlandEnd")
 end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
@@ -154,6 +151,9 @@ function GlobalPositioningSystem:onLoad(savegame)
             spec.samples.activate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "activate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
             spec.samples.deactivate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "deactivate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
             spec.samples.warning = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "warning", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+
+            spec.playHeadLandWarning = false
+            spec.isHeadlandWarningSamplePlaying = false
 
             delete(xmlFile)
         end
@@ -310,6 +310,10 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.autoInvertOffset = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
         end
+
+        if connection:getIsServer() then
+            spec.playHeadLandWarning = streamReadBool(streamId)
+        end
     end
 end
 
@@ -325,6 +329,10 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.autoInvertOffset)
 
             streamWriteBool(streamId, spec.shiftParallel)
+        end
+
+        if not connection:getIsServer() then
+            streamWriteBool(streamId, spec.playHeadLandWarning)
         end
     end
 end
@@ -566,6 +574,14 @@ function GlobalPositioningSystem:onUpdate(dt)
 
     if guidanceSteeringIsActive then
         spec.stateMachine:update(dt)
+    end
+end
+
+function GlobalPositioningSystem:onUpdateTick(dt)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    if self.isClient then
+        GlobalPositioningSystem.updateSounds(self, spec, dt)
     end
 end
 
@@ -869,27 +885,6 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
     g_soundManager:playSample(sample)
 end
 
-function GlobalPositioningSystem:onHeadlandStart()
-    -- Todo: do we need it.
-    if not self.isClient then
-        return
-    end
-
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-
-    g_soundManager:playSample(spec.samples.warning)
-end
-
-function GlobalPositioningSystem:onHeadlandEnd()
-    -- Todo: do we need it.
-    if not self.isClient then
-        return
-    end
-
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    g_soundManager:stopSample(spec.samples.warning)
-end
-
 function GlobalPositioningSystem.guideSteering(vehicle, dt)
     if vehicle.isHired then
         -- Disallow when AI is active
@@ -972,6 +967,20 @@ function GlobalPositioningSystem.realignTrack(self, data)
     data.snapDirection = { lineDirX, lineDirZ, lineX, lineZ }
 
     self:updateGuidanceData(data, false, false)
+end
+
+function GlobalPositioningSystem.updateSounds(self, spec, dt)
+    if spec.playHeadLandWarning then
+        if not spec.isHeadlandWarningSamplePlaying then
+            g_soundManager:playSample(spec.samples.warning)
+            spec.isHeadlandWarningSamplePlaying = true
+        end
+    else
+        if spec.isHeadlandWarningSamplePlaying then
+            g_soundManager:stopSample(spec.samples.warning)
+            spec.isHeadlandWarningSamplePlaying = false
+        end
+    end
 end
 
 --- Action events
