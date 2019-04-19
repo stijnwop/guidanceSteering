@@ -35,7 +35,6 @@ source(Utils.getFilename("src/misc/states/OnHeadlandState.lua", directory))
 source(Utils.getFilename("src/misc/states/StoppedState.lua", directory))
 source(Utils.getFilename("src/misc/states/TurningState.lua", directory))
 
-source(Utils.getFilename("src/misc/HeadlandProcessor.lua", directory))
 source(Utils.getFilename("src/misc/MultiPurposeActionEvent.lua", directory))
 source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 --source(Utils.getFilename("src/misc/LinkedList.lua", directory))
