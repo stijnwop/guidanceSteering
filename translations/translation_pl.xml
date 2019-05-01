@@ -8,6 +8,7 @@
         <text name="configuration_buyableGPS_withGPS" text="Tak"/>
 
         <!--Inputs-->
+        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
         <text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
 

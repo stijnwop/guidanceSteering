@@ -85,6 +85,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE, self, GlobalPositioningSystem.actionEventToggleGuidanceSteering, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -439,38 +440,42 @@ function GlobalPositioningSystem:onUpdate(dt)
     local isControlled = self.getIsControlled ~= nil and self:getIsControlled()
 
     -- We don't update when no player is in the vehicle
-    if not spec.hasGuidanceSystem or not isControlled then
+    if not isControlled then
         return
     end
 
-    if not spec.guidanceIsActive then
-        return
-    end
-
+    local hasGuidanceSystem = self:getHasGuidanceSystem()
     if self.isClient then
         if self.getIsEntered ~= nil and self:getIsEntered() then
-            local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
+            if hasGuidanceSystem then
+                local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
 
-            if guidanceSteeringIsActive then
-                if self:getIsActiveForInput(true, true) then
-                    local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
-                    local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
+                if guidanceSteeringIsActive then
+                    if self:getIsActiveForInput(true, true) then
+                        local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
+                        local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
 
-                    drivable_spec.axisForward = axisForward
-                    spec.axisAccelerate = 0
-                    spec.axisBrake = 0
+                        drivable_spec.axisForward = axisForward
+                        spec.axisAccelerate = 0
+                        spec.axisBrake = 0
 
-                    -- Do network update
-                    if drivable_spec.axisForward ~= drivable_spec.axisForwardSend then
-                        drivable_spec.axisForwardSend = drivable_spec.axisForward
-                        self:raiseDirtyFlags(drivable_spec.dirtyFlag)
+                        -- Do network update
+                        if drivable_spec.axisForward ~= drivable_spec.axisForwardSend then
+                            drivable_spec.axisForwardSend = drivable_spec.axisForward
+                            self:raiseDirtyFlags(drivable_spec.dirtyFlag)
+                        end
                     end
                 end
+
+                GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
             end
 
             GlobalPositioningSystem.updateNetworkInputs(self)
-            GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
         end
+    end
+
+    if not hasGuidanceSystem then
+        return
     end
 
     local data = spec.guidanceData
@@ -555,10 +560,8 @@ function GlobalPositioningSystem:onDraw()
     end
 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.guidanceIsActive then
-        if spec.showGuidanceLines then
-            spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
-        end
+    if spec.showGuidanceLines then
+        spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
     end
 end
 
@@ -648,7 +651,7 @@ end
 
 function GlobalPositioningSystem:getHasGuidanceSystem()
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    return spec.hasGuidanceSystem
+    return spec.hasGuidanceSystem and spec.guidanceIsActive
 end
 
 function GlobalPositioningSystem:setGuidanceStrategy(method)
@@ -944,6 +947,13 @@ function GlobalPositioningSystem.realignTrack(self, data)
 end
 
 --- Action events
+function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionName, inputValue, callbackState, isAnalog)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    spec.lastInputValues.guidanceIsActive = not spec.lastInputValues.guidanceIsActive
+end
+
+--- Action events
 function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
     if not self.isClient then
         return
@@ -955,6 +965,10 @@ function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputVa
 end
 
 function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
     local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
@@ -964,18 +978,30 @@ function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, input
 end
 
 function GlobalPositioningSystem.actionEventWidth(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     spec.lastInputValues.widthValue = inputValue
 end
 
 function GlobalPositioningSystem.actionEventShift(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.lastInputValues.shiftParallel = true
     spec.lastInputValues.shiftParallelValue = inputValue
 end
 
 function GlobalPositioningSystem.actionEventRealign(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local data = self:getGuidanceData()
 
     if not data.isCreated then
@@ -987,12 +1013,20 @@ function GlobalPositioningSystem.actionEventRealign(self, actionName, inputValue
 end
 
 function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     spec.multiActionEvent:handle()
 end
 
 function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inputValue, callbackState, isAnalog)
+    if not self:getHasGuidanceSystem() then
+        return
+    end
+
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     self.spec_drivable.allowPlayerControl = self.guidanceSteeringIsActive
 

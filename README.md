@@ -26,6 +26,9 @@ Windows: Copy the `FS19_guidanceSteering_rc_<version>.zip` into your `My Games\F
 ### Buying GPS
 To be able to use the GPS you first need to buy the technology for your vehicle. Either buy a new vehicle and add the GPS or drive your current vehicle to the shop and configure it there.
 
+### Toggle Guidance Steering
+In order to turn guidance steering on and off hit `alt + c`
+
 ### Open the menu
 In order to open the menu hit `ctrl + S`.
 

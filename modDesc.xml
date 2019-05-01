@@ -39,6 +39,7 @@
     </extraSourceFiles>
 
     <actions>
+        <action name="GS_TOGGLE" axisType="HALF"/>
         <action name="GS_SHOW_UI" axisType="HALF"/>
         <action name="GS_SETPOINT" axisType="HALF"/>
         <action name="GS_SET_AUTO_WIDTH" axisType="HALF"/>
@@ -49,6 +50,9 @@
     </actions>
 
     <inputBinding>
+        <actionBinding action="GS_TOGGLE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_c"/>
+        </actionBinding>
         <actionBinding action="GS_SHOW_UI">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_s"/>
         </actionBinding>
