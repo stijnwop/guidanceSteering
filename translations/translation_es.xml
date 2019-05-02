@@ -8,7 +8,7 @@
         <text name="configuration_buyableGPS_withGPS" text="Si"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
+        <text name="input_GS_TOGGLE" text="GS: GPS ON/OFF"/>
         <text name="input_GS_SHOW_UI" text="Mostrar Menú GPS"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Ancho Auto"/>
 
