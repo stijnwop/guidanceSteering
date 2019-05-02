@@ -440,7 +440,7 @@ function GlobalPositioningSystem:onUpdate(dt)
     local isControlled = self.getIsControlled ~= nil and self:getIsControlled()
 
     -- We don't update when no player is in the vehicle
-    if not isControlled then
+    if not spec.hasGuidanceSystem or not isControlled then
         return
     end
 
