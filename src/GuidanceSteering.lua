@@ -49,8 +49,8 @@ function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
         track.method = getXMLInt(xmlFile, key .. "#method")
 
         track.guidanceData = {}
-        track.guidanceData.width = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3)
-        track.guidanceData.offsetWidth = MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3)
+        track.guidanceData.width = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3), GlobalPositioningSystem.DEFAULT_WIDTH)
+        track.guidanceData.offsetWidth = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3), GlobalPositioningSystem.DEFAULT_OFFSET)
         track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
         track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
 

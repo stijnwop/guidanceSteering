@@ -109,7 +109,8 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             spec.lastInputValues.autoInvertOffset = autoInvertOffset
             spec.lastInputValues.widthIncrement = math.abs(increment)
 
-            if data.width ~= self.currentWidth or data.offsetWidth ~= self.currentOffset then
+            if data.width ~= nil and data.width ~= self.currentWidth
+                    or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentOffset then
                 data.width = self.currentWidth
                 data.offsetWidth = self.currentOffset
 

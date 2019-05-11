@@ -14,6 +14,7 @@ GlobalPositioningSystem = {}
 
 GlobalPositioningSystem.CONFIG_NAME = "buyableGPS"
 GlobalPositioningSystem.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
+GlobalPositioningSystem.DEFAULT_OFFSET = 0
 GlobalPositioningSystem.DIRECTION_LEFT = -1
 GlobalPositioningSystem.DIRECTION_RIGHT = 1
 GlobalPositioningSystem.AB_DROP_DISTANCE = 15
@@ -828,8 +829,8 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
 
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local data = spec.guidanceData
-    data.width = guidanceData.width
-    data.offsetWidth = guidanceData.offsetWidth
+    data.width = Utils.getNoNil(guidanceData.width, GlobalPositioningSystem.DEFAULT_WIDTH)
+    data.offsetWidth = Utils.getNoNil(guidanceData.offsetWidth, GlobalPositioningSystem.DEFAULT_OFFSET)
     data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
