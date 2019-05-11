@@ -41,6 +41,7 @@ end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanStartAIVehicle", GlobalPositioningSystem.inj_getCanStartAIVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "loadDynamicallyPartsFromXML", GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML)
 end
 
@@ -566,6 +567,15 @@ function GlobalPositioningSystem:onDraw()
 end
 
 function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, superFunc)
+    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    if spec.guidanceSteeringIsActive then
+        return false
+    end
+
+    return superFunc(vehicle)
+end
+
+function GlobalPositioningSystem.inj_getCanStartAIVehicle(vehicle, superFunc)
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec.guidanceSteeringIsActive then
         return false
