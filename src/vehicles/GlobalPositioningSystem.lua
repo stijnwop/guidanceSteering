@@ -163,7 +163,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceTargetNode = createGuideNode("guidance_reverse_node", true)
 
     spec.lineStrategy = StraightABStrategy:new(self)
-    spec.guidanceIsActive = true -- todo: make toggle
+    spec.guidanceIsActive = true
     spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
     spec.guidanceTerrainAngleIsActive = true
@@ -177,7 +177,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.headlandProcessor = HeadlandProcessor:new(self)
 
     spec.lastInputValues = {}
-    spec.lastInputValues.guidanceIsActive = true -- todo: make toggle
+    spec.lastInputValues.guidanceIsActive = true
     spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.guidanceTerrainAngleIsActive = true
@@ -239,6 +239,7 @@ function GlobalPositioningSystem:onPostLoad(savegame)
 
     if parts ~= nil then
         for _, part in pairs(parts) do
+            -- linkNode field is set by the GlobalPositioningSystem code.
             if part.linkNode ~= nil then
                 setVisibility(part.linkNode, spec.hasGuidanceSystem)
             end
@@ -322,6 +323,7 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
 end
 
 function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
+
 end
 
 function GlobalPositioningSystem:onDelete()
@@ -386,7 +388,6 @@ function GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
     local function pushUpdate()
         if spec.shiftControl.snapDirectionSent ~= data.snapDirection then
             self:updateGuidanceData(data, false, false)
-            Logger.info("Pushing update")
         end
     end
 
@@ -553,11 +554,8 @@ function GlobalPositioningSystem:onUpdate(dt)
 end
 
 function GlobalPositioningSystem:onDraw()
-    if not self.isClient then
-        return
-    end
-
-    if not self:getHasGuidanceSystem() then
+    if not self.isClient
+            or not self:getHasGuidanceSystem() then
         return
     end
 
@@ -700,7 +698,6 @@ end
 ---@param isReset boolean
 ---@param noEventSend boolean
 function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, isReset, noEventSend)
-    -- Todo: with multiple clients somehow every wehicle is still being hit.
     Logger.info("We got called -> eventSend: ", noEventSend)
 
     GuidanceDataChangedEvent.sendEvent(self, guidanceData, isCreation, isReset, noEventSend)
@@ -962,6 +959,10 @@ function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionN
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     spec.lastInputValues.guidanceIsActive = not spec.lastInputValues.guidanceIsActive
+
+    -- Force stop guidance
+    spec.lastInputValues.guidanceSteeringIsActive = false
+    self:onSteeringStateChanged(false)
 end
 
 --- Action events
