@@ -234,6 +234,10 @@ init()
 
 -- Fixes
 
+function Vehicle:guidanceSteering_getModName()
+    return modName
+end
+
 function Vehicle:guidanceSteering_getSpecTable(name)
     local spec = self["spec_" .. modName .. "." .. name]
     if spec ~= nil then

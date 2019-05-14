@@ -245,6 +245,19 @@ function GlobalPositioningSystem:onPostLoad(savegame)
             end
         end
     end
+
+    if spec.hasGuidanceSystem and savegame ~= nil then
+        local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
+
+        spec.lastInputValues.showGuidanceLines = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#showGuidanceLines"), spec.showGuidanceLines)
+        spec.lastInputValues.guidanceIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceIsActive"), spec.guidanceIsActive)
+        spec.lastInputValues.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceTerrainAngleIsActive"), spec.guidanceTerrainAngleIsActive)
+        spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
+
+        local data = spec.guidanceData
+        data.lastLoadedTrackId = Utils.getNoNil(getXMLInt(savegame.xmlFile, key .. "#lastLoadedTrackId"), data.lastLoadedTrackId)
+        data.lineDistance = Utils.getNoNil(getXMLFloat(savegame.xmlFile, key .. "#lineDistance"), data.lineDistance)
+    end
 end
 
 function GlobalPositioningSystem:onReadStream(streamId, connection)
@@ -288,7 +301,6 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
 end
 
 function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connection)
-    --if connection:getIsServer() then
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     if spec.hasGuidanceSystem then
@@ -301,11 +313,9 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.shiftParallel = streamReadBool(streamId)
         end
     end
-    -- end
 end
 
 function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirtyMask)
-    --if not connection:getIsServer() then
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     if spec.hasGuidanceSystem then
@@ -319,11 +329,21 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.shiftParallel)
         end
     end
-    --end
 end
 
 function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
+    if spec.hasGuidanceSystem then
+        setXMLBool(xmlFile, key .. "#showGuidanceLines", spec.showGuidanceLines)
+        setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
+        setXMLBool(xmlFile, key .. "#guidanceTerrainAngleIsActive", spec.guidanceTerrainAngleIsActive)
+        setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
+
+        local data = spec.guidanceData
+        setXMLInt(xmlFile, key .. "#lastLoadedTrackId", data.lastLoadedTrackId)
+        setXMLFloat(xmlFile, key .. "#lineDistance", data.lineDistance)
+    end
 end
 
 function GlobalPositioningSystem:onDelete()
