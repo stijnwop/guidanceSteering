@@ -138,11 +138,9 @@ function validateVehicleTypes(vehicleTypeManager)
     GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
 end
 
-local forcedStoreCategories = {
-    ["TRACTORSS"] = true,
-    ["TRACTORSM"] = true,
-    ["TRACTORSL"] = true,
-    ["TRUCKS"] = true,
+-- StoreItem insertion
+
+local disallowedCategories = {
     ["TELELOADERS"] = false,
     ["TELELOADERVEHICLES"] = false,
     ["FRONTLOADERVEHICLES"] = false,
@@ -152,17 +150,10 @@ local forcedStoreCategories = {
     ["SKIDSTEERS"] = false,
     ["SKIDSTEERVEHICLES"] = false,
     ["ANIMALSVEHICLES"] = false,
-    ["HARVESTERS"] = true,
     ["CUTTERS"] = false,
     ["FORAGEHARVESTERCUTTERS"] = false,
     ["CORNHEADERS"] = false,
-    ["FORAGEHARVESTERS"] = true,
-    ["BEETVEHICLES"] = true,
-    ["POTATOVEHICLES"] = true,
-    ["SPRAYERVEHICLES"] = true,
-    ["COTTONVEHICLES"] = true,
     ["WOODHARVESTING"] = false,
-    ["MOWERVEHICLES"] = true,
     ["ANIMALS"] = false,
     ["CUTTERTRAILERS"] = false,
     ["TRAILERS"] = false,
@@ -189,53 +180,41 @@ local forcedStoreCategories = {
     ["SILOS"] = false,
 }
 
-local function storeItemAllowsGuidanceSteering(storeItem)
-    if forcedStoreCategories[storeItem.categoryName] == nil then
-        if storeItem.specs ~= nil then
-            -- Check for exception vehicles
-            local specs = storeItem.specs
-            local isFuelConsumer = #specs.fuel.consumers > 0
-            local hasWorkingWidth = specs.workingWidth ~= nil
+local entryNoGPS = {
+    desc = "",
+    price = 0,
+    dailyUpkeep = 0,
+    isDefault = true,
+    index = 1,
+    name = g_i18n:getText("configuration_buyableGPS_withoutGPS"),
+    enabled = false
+}
 
-            if isFuelConsumer and hasWorkingWidth then
-                return true
-            end
-        end
+local entryGPS = {
+    desc = "",
+    price = 15000,
+    dailyUpkeep = 0,
+    isDefault = false,
+    index = 2,
+    name = g_i18n:getText("configuration_buyableGPS_withGPS"),
+    enabled = true
+}
 
-        return false
-    end
+local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
+    local isDrivable = hasXMLProperty(xmlFile, "vehicle.drivable")
+    local isMotorized = hasXMLProperty(xmlFile, "vehicle.motorized")
 
-    return forcedStoreCategories[storeItem.categoryName]
+    return disallowedCategories[storeItem.categoryName] == nil and isDrivable and isMotorized
 end
 
 function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
     local configurations = superFunc(xmlFile, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
 
-    if storeItemAllowsGuidanceSteering(storeItem) then
+    if canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
         local key = GlobalPositioningSystem.CONFIG_NAME
+
         if configurations ~= nil then
-            -- Dirty stuff.. but the only "solid" way.
             if configurations[key] == nil then
-                local entryNoGPS = {
-                    desc = "",
-                    price = 0,
-                    dailyUpkeep = 0,
-                    isDefault = true,
-                    index = 1,
-                    name = g_i18n:getText("configuration_buyableGPS_withoutGPS"),
-                    enabled = false
-                }
-
-                local entryGPS = {
-                    desc = "",
-                    price = 15000,
-                    dailyUpkeep = 0,
-                    isDefault = false,
-                    index = 2,
-                    name = g_i18n:getText("configuration_buyableGPS_withGPS"),
-                    enabled = true
-                }
-
                 configurations[key] = {}
                 table.insert(configurations[key], entryNoGPS)
                 table.insert(configurations[key], entryGPS)
