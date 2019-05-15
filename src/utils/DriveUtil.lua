@@ -5,6 +5,7 @@
 --
 -- Copyright (c) Wopster, 2019
 
+---@class DriveUtil
 DriveUtil = {}
 
 DriveUtil.MOVING_DIRECTION_FORWARDS = 1
@@ -12,37 +13,49 @@ DriveUtil.MOVING_DIRECTION_BACKWARDS = -1
 DriveUtil.HIT_THRESHOLD = 100000
 DriveUtil.TARGET_STEP = 5 -- m
 
+---Calculates the direction beta for the target points.
+---@param data table
+---@param autoInvertOffset boolean
+local function getDirectionBeta(data, autoInvertOffset)
+    if data.offsetWidth ~= 0 then
+        local snapFactor = autoInvertOffset and data.snapDirectionMultiplier or 1.0
+        return data.alphaRad - snapFactor * data.offsetWidth / data.width
+    end
+
+    return data.alphaRad
+end
+
+---Guides the given vehicle based on the guidance data.
+---@param vehicle table
+---@param dt number delta time
 function DriveUtil.guideSteering(vehicle, dt)
-    if vehicle.isHired then
+    if vehicle:getIsAIActive() then
         -- Disallow when AI is active
         return
     end
 
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    local drivable_spec = vehicle:guidanceSteering_getSpecTable("drivable")
 
     local data = spec.guidanceData
-
-    local dX, dY, dZ = unpack(data.driveTarget)
+    local driveX, driveY, driveZ = unpack(data.driveTarget)
     local snapDirX, snapDirZ = unpack(data.snapDirection)
-    local lineXDir = data.snapDirectionMultiplier * snapDirX
-    local lineZDir = data.snapDirectionMultiplier * snapDirZ
+    local lineDirX = data.snapDirectionMultiplier * snapDirX
+    local lineDirZ = data.snapDirectionMultiplier * snapDirZ
+
     -- Calculate target points
-    local x = dX + data.width * snapDirZ * data.alphaRad
-    local z = dZ - data.width * snapDirX * data.alphaRad
-    local tX = x + DriveUtil.TARGET_STEP * lineXDir
-    local tZ = z + DriveUtil.TARGET_STEP * lineZDir
+    local beta = getDirectionBeta(data, spec.autoInvertOffset)
+    local x = driveX + data.width * snapDirZ * beta
+    local z = driveZ - data.width * snapDirX * beta
 
-    if spec.showGuidanceLines then
-        DebugUtil.drawDebugCircle(tX, dY + .2, tZ, .5, 10, { 0, 1, 0 })
-    end
+    local targetX = x + DriveUtil.TARGET_STEP * lineDirX
+    local targetZ = z + DriveUtil.TARGET_STEP * lineDirZ
 
-    local pX, _, pZ = worldToLocal(spec.guidanceNode, tX, dY, tZ)
-
-    DriveUtil.driveToPoint(vehicle, dt, pX, pZ)
+    local pointX, _, pointZ = worldToLocal(spec.guidanceNode, targetX, driveY, targetZ)
+    DriveUtil.driveToPoint(vehicle, dt, pointX, pointZ)
 
     -- lock max speed to working tool
     local speed = vehicle:getSpeedLimit(true)
+    local drivable_spec = vehicle:guidanceSteering_getSpecTable("drivable")
     if drivable_spec.cruiseControl.state == Drivable.CRUISECONTROL_STATE_ACTIVE then
         speed = math.min(speed, drivable_spec.cruiseControl.speed)
     end
@@ -52,8 +65,8 @@ function DriveUtil.guideSteering(vehicle, dt)
     DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
 end
 
----driveToPoint
----@param self table
+---Drives the given vehicle to the point.
+---@param vehicle table
 ---@param dt number
 ---@param tX number
 ---@param tZ number
@@ -90,7 +103,7 @@ function DriveUtil.driveToPoint(vehicle, dt, tX, tZ)
     end
 end
 
----driveInDirection
+---Drives the given vehicle in a direction.
 ---@param vehicle table
 ---@param dt number
 ---@param steeringAngleLimit number
@@ -113,8 +126,6 @@ function DriveUtil.driveInDirection(vehicle, dt, steeringAngleLimit, movingDirec
             turnLeft = not turnLeft
         end
 
-        Logger.info("x", { steeringAngle = angle, lz = lz, lx = lx })
-
         local targetRotTime
         if turnLeft then
             --rotate to the left
@@ -132,7 +143,7 @@ function DriveUtil.driveInDirection(vehicle, dt, steeringAngleLimit, movingDirec
     end
 end
 
----accelerateInDirection
+---Accelerates the given vehicle.
 ---@param vehicle table
 ---@param axisForward number
 ---@param dt number
