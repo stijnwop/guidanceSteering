@@ -3,7 +3,7 @@
 ![For Farming Simulator 19](https://img.shields.io/badge/Farming%20Simulator-19-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
 
 ## Publishing
-Only Wopster is allowed to publish any of this code as a mod to any mod site, or file sharing site. The code is open for your own use, but give credit where due. I will not accept support for any version of Guidance Steering that is obtained from a sketchy mod website. This really holds back the development and adds no value or fun for me!
+Only Wopster is allowed to publish any of this code as a mod to any mod site, or file sharing site. The code is open for your own use, but give credit where due. I will not accept support for any 'version' of Guidance Steering that is obtained from a sketchy mod page. Versioning is controlled by me and not by any other page. This confuses people and really holds back the development which results in no fun for me!
 
 ## Warning!
 Please be aware that this is a ***DEVELOPMENT VERSION***!
@@ -13,13 +13,21 @@ Please be aware that this is a ***DEVELOPMENT VERSION***!
 #### Multiplayer
 This version should also work in Multiplayer, but keep in mind it might have bugs.
 
-## Installation
-Currently the development version is only available via GitHub. When a release version is avaiable you can download the latest version from the [release section](https://github.com/stijnwop/guidanceSteering/releases).
+## Installation / Releases
+Currently the development version is only available via GitHub. When a official release version is avaiable you can download the latest version from the [release section](https://github.com/stijnwop/guidanceSteering/releases).
+
+> _Please note: if there's no release version available it means there's no official release yet._
+
+All official releases will be avaiable at the offical Farming Simulator ModHub.
 
 For installing the release:
 
 Windows: Copy the `FS19_guidanceSteering_rc_<version>.zip` into your `My Games\FarmingSimulator2019\mods` directory.
 
+## Developers version
+To quickly build a zip of the developer version without the needed extra's, use the `zip.bat` which is included in this repository.
+
+> _Please note: the batch file requires an installed version of 7Zip or Winrar_
 
 ## Documentation
 
@@ -48,7 +56,7 @@ Unfold and lower the vehicle to get the best results.
 ### Increase/descrease width
 Hit `alt + plus` and `alt + minus` in order to change the width manually. In the menu you can set the increment width in order to speed up the process.
 
-_Please note that this only works after the track creation!_
+> _Please note that this only works after the track creation!_
 
 ### Offset line
 In the menu you can set the offset line. If the offset is not `0` a red line will show up. Use the increment width select box (the one at the top) to set the increment and click on the button `Increment offset` in order to offset your line. If you set the increment to negative it will flip the offset.
@@ -85,10 +93,6 @@ If you want the same effect on your mod vehicles you can configure the configura
   </buyableGPSConfiguration>
 </buyableGPSConfigurations>
 ~~~
-
-## Developers
-To quickly build a zip of the developer version without the needed extra's, use the `zip.bat`.
-
 
 ## Copyright
 Copyright (c) 2019 [Wopster](https://github.com/stijnwop).
