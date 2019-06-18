@@ -8,22 +8,22 @@
         <text name="configuration_buyableGPS_withGPS" text="Tak"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
-        <text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
+        <text name="input_GS_TOGGLE" text="GS: Włącz/Wyłącz GPS"/>
+        <text name="input_GS_SHOW_UI" text="GS: Pokaż menu ustawień nawigacji"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Automatyczna szerokość"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
-        <text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/>
-        <text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Przesuń ścieżkę w prawo"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Przesuń ścieżkę w lewo"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Zwiększ szerokość"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Zmniejsz szerokość"/>
+        <text name="input_GS_AXIS_REALIGN" text="GS: Centrowanie ścieżki"/>
+        <text name="input_GS_AXIS_SHIFT" text="GS: Przesunięcie ścieżki"/>
+        <text name="input_GS_AXIS_WIDTH" text="GS: Zmiana szerokości"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Przesuń ścieżkę w prawo"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Przesuń ścieżkę w lewo"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Zwiększ szerokość"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Zmniejsz szerokość"/>
 
-        <text name="input_GS_ENABLE_STEERING" text="Automatyczne sterowanie"/>
-        <text name="input_GS_SETPOINT" text="Ustaw punkt nawigacji"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Wyrównaj do kąta terenu"/>
-        <text name="input_GS_TURN_STEERING" text="Ustaw kierunek sterowania"/>
+        <text name="input_GS_ENABLE_STEERING" text="GS: Automatyczne sterowanie"/>
+        <text name="input_GS_SETPOINT" text="GS: Ustaw punkt nawigacji"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Wyrównaj do kąta terenu"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Ustaw kierunek sterowania"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Przejedź co najmniej 15m, aby ustawić punkt B. Aktualnie przebyta odległość: %.2f"/>
