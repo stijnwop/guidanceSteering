@@ -47,6 +47,8 @@
         <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width"/>
+		<!-- Headline tooltips-->
+		<text name="guidanceSteering_tooltip_headline_distance" text="Set distance to headline before auto-stop/turn occurs" />
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use"/>
@@ -70,6 +72,8 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
         <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
+		<!-- Headline -->
+		<text name="guidanceSteering_headline_distance" text="Headline Distance" />
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Line method"/>

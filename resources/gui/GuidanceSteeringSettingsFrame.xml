@@ -50,7 +50,7 @@
                 </GuiElement>
             </GuiElement>
 
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout">
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="450px -50px" id="boxLayout" >
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthInCrementElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
@@ -60,23 +60,43 @@
                     <GuiElement type="bitmap" profile="multiTextOptionBg"/>
                 </GuiElement>
 
-                <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_width" maxCharacters="30" imeKeyboardType="normal">
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_width"/>
-                </GuiElement>
+				<GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_width" maxCharacters="30" imeKeyboardType="normal">
+					<GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_width"/>
+				</GuiElement>
 
-                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeWidth" position="-210px 64px" onClick="onClickChangeWidth"
-                            id="guidanceSteeringChangeWidthButton"/>
-                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px" onClick="onClickAutoWidth"
-                            id="guidanceSteeringWidthButton"/>
-
-                <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringOffsetWidthElement" toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_offsetWidth" maxCharacters="30" imeKeyboardType="normal">
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_offsetWidth"/>
-                </GuiElement>
-                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeOffsetWidth" position="-210px 64px" onClick="onClickChangeOffsetWidth"
-                            id="guidanceSteeringChangeOffsetWidthButton"/>
-                <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_resetOffsetWidth" position="-210px 64px" onClick="onClickResetOffsetWidth"
-                            id="guidanceSteeringResetOffsetWidthButton"/>
-            </GuiElement>
+				<GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeWidth" position="-210px 64px" onClick="onClickChangeWidth"
+							id="guidanceSteeringChangeWidthButton">
+							
+				</GuiElement>							
+				<GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px" onClick="onClickAutoWidth"
+							id="guidanceSteeringWidthButton"/>
+					
+				<GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringOffsetWidthElement" toolTipEleme6ntId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_offsetWidth" maxCharacters="30" imeKeyboardType="normal">
+					<GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_offsetWidth"/>
+				</GuiElement>
+				<GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_changeOffsetWidth" position="-210px 64px" onClick="onClickChangeOffsetWidth"
+							id="guidanceSteeringChangeOffsetWidthButton"/>
+				<GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_resetOffsetWidth" position="-210px 64px" onClick="onClickResetOffsetWidth"
+							id="guidanceSteeringResetOffsetWidthButton"/>
+			</GuiElement>
+				
+			<GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="850px -50px" id="boxLayout" >
+			<!--$l10n_guidanceSteering_tooltip_headline_distance-->
+			<!-- positionOrigin="topLeft"  screenAlign="topLeft" profile="ingameMenuSettingsLayout"-->
+				
+				<GuiElement type="numberIncremental" id="guidanceSteeringHeadlineDistanceNumberUpDownElement" size="315px 48px" margin="26px 28px 0px 0px">
+					<GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_headline_distance"/>
+					<GuiElement type="button" profile="multiTextOptionLeft"/ id="guidanceSteeringHeadlineDistanceLeftButtonElement">
+					<GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringHeadlineDistanceElement" maxCharacters="30" imeKeyboardType="normal" position="47px 0px" size="221px 48px" ignoreDisabled="true" />
+					<!-- <GuiElement type="text" profile="multiTextOptionText" id="guidanceSteeringHeadlineDistanceElement"/> -->
+					
+					<!-- <GuiElement type="textInput" disabled="true" profile="ingameMenuGameSettingsTextInput" id="guidanceSteeringHeadlineDistanceElement" toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_headline_distance" maxCharacters="30" imeKeyboardType="normal"> -->
+						<!-- <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_headline_distance"/> -->
+					<!-- </GuiElement> -->
+					<GuiElement type="button" profile="multiTextOptionRight" id="guidanceSteeringHeadlineDistanceRightButtonElement"/>
+				</GuiElement>
+				
+			</GuiElement>
         </GuiElement>
 
         <!-- Tool tip display -->

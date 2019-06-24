@@ -14,6 +14,7 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     CHANGE_WIDTH_BUTTON = "guidanceSteeringChangeWidthButton",
     CHANGE_OFFSET_BUTTON = "guidanceSteeringChangeOffsetWidthButton",
     RESET_OFFSET_BUTTON = "guidanceSteeringResetOffsetWidthButton",
+	HEADLINE_DISTANCE = "guidanceSteeringHeadlineDistanceElement",
 }
 GuidanceSteeringSettingsFrame.INCREMENTS = {
     0.01,
@@ -76,6 +77,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.currentOffset = data.offsetWidth
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
+		-- self.guidanceSteeringHeadlineDistanceElement:setText("0")
 
         self.allowSave = true
     end
