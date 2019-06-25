@@ -14,7 +14,7 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     CHANGE_WIDTH_BUTTON = "guidanceSteeringChangeWidthButton",
     CHANGE_OFFSET_BUTTON = "guidanceSteeringChangeOffsetWidthButton",
     RESET_OFFSET_BUTTON = "guidanceSteeringResetOffsetWidthButton",
-	HEADLINE_DISTANCE = "guidanceSteeringHeadlineDistanceElement",
+	HEADLINE_DISTANCE = "guidanceSteeringHeadlineDistanceNumberUpDownElement",
 }
 GuidanceSteeringSettingsFrame.INCREMENTS = {
     0.01,
@@ -77,7 +77,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.currentOffset = data.offsetWidth
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
-		-- self.guidanceSteeringHeadlineDistanceElement:setText("0")
+		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setIncrement(math.abs(GuidanceSteeringSettingsFrame.INCREMENTS[1]))
 
         self.allowSave = true
     end
@@ -135,6 +135,13 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
     end
+end
+
+function GuidanceSteeringSettingsFrame:onClickChangeIncrement()
+	local state = self.guidanceSteeringWidthInCrementElement:getState()
+    local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+	
+	self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setIncrement(math.abs(increment))
 end
 
 function GuidanceSteeringSettingsFrame:onClickChangeWidth()
