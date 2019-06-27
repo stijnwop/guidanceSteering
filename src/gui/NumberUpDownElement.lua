@@ -342,7 +342,7 @@ if mapping["numberUpDown"] == nil then
 				value = math.min(value, self.max)
 			end
 			self.value = value
-			updateTextElement()
+			self:updateTextElement()
 			
 			if forceEvent then
 				self:raiseCallback("onClickCallback", self.state, self)
@@ -369,7 +369,7 @@ if mapping["numberUpDown"] == nil then
 			self.min = minValue
 			if self.value < minValue then
 				self:setValue(self.min, true)
-				updateTextElement()
+				self:updateTextElement()
 			end
 		else
 			self.min = nil
@@ -385,7 +385,7 @@ if mapping["numberUpDown"] == nil then
 			self.max = maxValue
 			if self.value > maxValue then
 				self.value = maxValue
-				updateTextElement()
+				self:updateTextElement()
 			end
 		else
 			self.max = nil

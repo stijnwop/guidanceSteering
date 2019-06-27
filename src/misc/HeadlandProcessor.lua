@@ -73,7 +73,7 @@ function HeadlandProcessor:handleAutoStop(isOnField, lastSpeed)
     local x, y, z = unpack(data.driveTarget)
 
     local speedMultiplier = 1 + lastSpeed / 100 -- increase break distance
-    local distanceToTurn = 9 * speedMultiplier -- Todo: make configurable
+    local distanceToTurn = data.headlineDistance * speedMultiplier -- Todo: make configurable
     local lookAheadStepDistance = distanceToTurn + 5 -- m
     local distanceToHeadLand, isDistanceOnField = HeadlandUtil.getDistanceToHeadLand(self, self.object, x, y, z, lookAheadStepDistance)
 

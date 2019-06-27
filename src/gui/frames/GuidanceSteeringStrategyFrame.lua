@@ -142,6 +142,7 @@ function GuidanceSteeringStrategyFrame:getVehicleTrackData()
         track.guidanceData = {}
         track.guidanceData.width = data.width
         track.guidanceData.offsetWidth = data.offsetWidth
+		track.guidanceData.headlineDistance = data.headlineDistance
         track.guidanceData.snapDirection = data.snapDirection
         track.guidanceData.driveTarget = data.driveTarget
     end

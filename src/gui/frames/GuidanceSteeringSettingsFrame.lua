@@ -78,6 +78,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
 		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setIncrement(math.abs(GuidanceSteeringSettingsFrame.INCREMENTS[1]))
+		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setValue(data.headlineDistance)
 
         self.allowSave = true
     end
@@ -98,6 +99,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local autoInvertOffset = self.guidanceSteeringAutoInvertOffsetElement:getIsChecked()
             local state = self.guidanceSteeringWidthInCrementElement:getState()
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+			local headlineDistanceValue = self.guidanceSteeringHeadlineDistanceNumberUpDownElement:getValue()
 
             -- Todo: cleanup later
             if guidanceSteeringIsActive and not data.isCreated then
@@ -112,9 +114,11 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             spec.lastInputValues.widthIncrement = math.abs(increment)
 
             if data.width ~= nil and data.width ~= self.currentWidth
-                    or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentOffset then
+                    or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentOffset 
+					or data.headlineDistance ~= nil and data.headlineDistance ~= headlineDistanceValue then
                 data.width = self.currentWidth
                 data.offsetWidth = self.currentOffset
+				data.headlineDistance = headlineDistanceValue
 
                 vehicle:updateGuidanceData(data, false, false)
             end

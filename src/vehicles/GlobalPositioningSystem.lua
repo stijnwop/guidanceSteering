@@ -212,6 +212,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
     spec.guidanceData.offsetWidth = 0
+	spec.guidanceData.headlineDistance = 0
     spec.guidanceData.movingDirection = 1
     spec.guidanceData.isReverseDriving = false
     spec.guidanceData.movingForwards = false
@@ -848,6 +849,7 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     local data = spec.guidanceData
     data.width = Utils.getNoNil(guidanceData.width, GlobalPositioningSystem.DEFAULT_WIDTH)
     data.offsetWidth = Utils.getNoNil(guidanceData.offsetWidth, GlobalPositioningSystem.DEFAULT_OFFSET)
+	data.headlineDistance = Utils.getNoNil(guidanceData.headlineDistance, 0)
     data.snapDirectionMultiplier = guidanceData.snapDirectionMultiplier
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
