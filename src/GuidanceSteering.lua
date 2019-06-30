@@ -51,6 +51,7 @@ function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
         track.guidanceData = {}
         track.guidanceData.width = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3), GlobalPositioningSystem.DEFAULT_WIDTH)
         track.guidanceData.offsetWidth = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3), GlobalPositioningSystem.DEFAULT_OFFSET)
+		track.guidanceData.headlineDistance = MathUtil.round(Utils.getNoNil(getXMLFloat(xmlFile, key .. ".guidanceData#headlineDistance"), 0),3)
         track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
         track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
 
@@ -78,6 +79,7 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
             setXMLInt(xmlFile, key .. "#method", track.method)
             setXMLFloat(xmlFile, key .. ".guidanceData#width", track.guidanceData.width)
             setXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth", track.guidanceData.offsetWidth)
+			setXMLFloat(xmlFile, key .. ".guidanceData#headlineDistance", track.guidanceData.headlineDistance)
             setXMLString(xmlFile, key .. ".guidanceData#snapDirection", table.concat(track.guidanceData.snapDirection, " "))
             setXMLString(xmlFile, key .. ".guidanceData#driveTarget", table.concat(track.guidanceData.driveTarget, " "))
         end
@@ -186,6 +188,7 @@ local function _saveTrack(self, id, data)
     track.method = data.method
     track.guidanceData.width = data.guidanceData.width
     track.guidanceData.offsetWidth = data.guidanceData.offsetWidth
+	track.guidanceData.headlineDistance = data.guidanceData.headlineDistance
     track.guidanceData.snapDirection = data.guidanceData.snapDirection
     track.guidanceData.driveTarget = data.guidanceData.driveTarget
 end
