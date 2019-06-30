@@ -156,14 +156,6 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
     end
 end
 
-function GuidanceSteeringSettingsFrame:onClickChangeWidth()
-    local state = self.guidanceSteeringWidthInCrementElement:getState()
-    local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
-
-    self.currentWidth = math.max(self.currentWidth + increment, 0)
-    self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
-end
-
 function GuidanceSteeringSettingsFrame:onClickResetOffsetWidth()
     self.currentOffset = 0
     self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
