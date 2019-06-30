@@ -54,7 +54,8 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Imposta l'offset del tuo veicolo"/> <!-- Set the offset of your vehicle -->
         <text name="guidanceSteering_tooltip_widthInCrement"
               text="Imposta l'incremento della larghezza per aumentare/diminuire la larghezza"/> <!-- Set the width increment to increase/decrease the width -->
-
+        <text name="guidanceSteering_tooltip_headline_distance" text="Set distance to headline before auto-stop/turn occurs" />
+        
         <text name="guidanceSteering_tooltip_strategy"
               text="Determina quale strategia utilizzare per creare le linee guida"/> <!-- Determine which strategy to use to create the guidance lines -->
         <text name="guidanceSteering_tooltip_strategyMethod"
@@ -79,7 +80,8 @@
         <text name="guidanceSteering_setting_offsetWidth" text="Larghezza offset"/> <!-- Offset width -->
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Azzera offset"/> <!-- Reset offset -->
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Aumenta offset"/> <!-- Increment offset -->
-
+        <text name="guidanceSteering_headline_distance" text="Headline Distance" />
+      
         <text name="guidanceSteering_setting_strategy" text="Strategia di linea"/> <!-- Line strategy -->
         <text name="guidanceSteering_setting_strategyMethod" text="Metodo di linea"/> <!-- Line method -->
         <text name="guidanceSteering_setting_currentTrack" text="Traccia attuale"/> <!-- Current track -->

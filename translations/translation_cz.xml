@@ -46,7 +46,8 @@
         <text name="guidanceSteering_tooltip_width" text="Nastavte šířku vašeho vozidla"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Nastavte přírůstek šířky pro zvýšení / snížení šířky"/>
-
+        <text name="guidanceSteering_tooltip_headline_distance" text="Set distance to headline before auto-stop/turn occurs" />
+      
         <text name="guidanceSteering_tooltip_strategy" text="Určete, kterou strategii použijete k vytvoření vodítek"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Určete, kterou strategii použijete"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Vyberte aktuální stopu, kterou chcete použít"/>
@@ -67,6 +68,7 @@
         <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_headline_distance" text="Headline Distance" />
 
         <text name="guidanceSteering_setting_strategy" text="Strategie vodítek"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Metoda vodítek"/>
