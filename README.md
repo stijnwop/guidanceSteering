@@ -61,6 +61,9 @@ Hit `alt + plus` and `alt + minus` in order to change the width manually. In the
 ### Offset line
 In the menu you can set the offset line. If the offset is not `0` a red line will show up. Use the increment width select box (the one at the top) to set the increment and click on the button `Increment offset` in order to offset your line. If you set the increment to negative it will flip the offset.
 
+### Headline Distance
+In the menu you can set the distance to the headline before stop or turn accures. Use the increment width select box to set the increment and click left or right to adjust distance. Headline distance handles all increment as possitive.
+
 ### Shift track
 Hit `alt + page up` and `alt + page down` in order to shift the track left and right. If you hold down the key the shifting of the track will speed up.
 
