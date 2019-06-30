@@ -121,6 +121,9 @@ if mapping["numberUpDown"] == nil then
 			else
 				self.value = self.value + self.increment
 			end
+			if self.value < 0.009 and self.value > -0.009 then
+				self.value = 0
+			end
 		end
 		self:playSample(GuiSoundPlayer.SOUND_SAMPLES.SLIDER)
 		self:setSoundSuppressed(true)
@@ -147,6 +150,9 @@ if mapping["numberUpDown"] == nil then
 				self.value = self.min
 			else
 				self.value = self.value - self.increment
+			end
+			if self.value < 0.009 and self.value > -0.009 then
+				self.value = 0
 			end
 		end
 		self:playSample(GuiSoundPlayer.SOUND_SAMPLES.SLIDER)

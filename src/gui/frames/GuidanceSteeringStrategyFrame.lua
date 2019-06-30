@@ -250,6 +250,7 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
 
             data.width = track.guidanceData.width
             data.offsetWidth = track.guidanceData.offsetWidth
+			data.headlineDistance = track.guidanceData.headlineDistance
             data.snapDirection = track.guidanceData.snapDirection
             data.driveTarget = track.guidanceData.driveTarget
 

@@ -77,7 +77,11 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.currentOffset = data.offsetWidth
         self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
-		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setIncrement(math.abs(GuidanceSteeringSettingsFrame.INCREMENTS[1]))
+
+		local state = self.guidanceSteeringWidthInCrementElement:getState()
+		local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setIncrement(math.abs(increment))
 		self.guidanceSteeringHeadlineDistanceNumberUpDownElement:setValue(data.headlineDistance)
 
         self.allowSave = true
