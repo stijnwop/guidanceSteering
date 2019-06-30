@@ -86,7 +86,12 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         self.currentWidth = data.width
         self.currentOffset = data.offsetWidth
         self.currentHeadlandActDistance = 0 -- Todo: implement
-        self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
+		
+		local state = self.guidanceSteeringWidthInCrementElement:getState()
+		local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+		self.guidanceSteeringWidthElement:setIncrement(math.abs(increment))
+        self.guidanceSteeringWidthElement:setValue(self.currentWidth)
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
         self.guidanceSteeringHeadlandModeElement:setState(spec.headlandMode + 1)
         self.guidanceSteeringHeadlandDistanceElement:setText(tostring(self.currentHeadlandActDistance))
@@ -146,7 +151,7 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
         local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
         self.currentWidth = width
         self.currentOffset = offset
-        self.guidanceSteeringWidthElement:setText(tostring(self.currentWidth))
+        self.guidanceSteeringWidthElement:setValue(self.currentWidth)
         self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
     end
 end
@@ -171,6 +176,17 @@ function GuidanceSteeringSettingsFrame:onClickChangeOffsetWidth()
     local threshold = self.currentWidth * 0.5
     self.currentOffset = MathUtil.clamp(self.currentOffset + increment, -threshold, threshold)
     self.guidanceSteeringOffsetWidthElement:setText(tostring(self.currentOffset))
+end
+
+function GuidanceSteeringSettingsFrame:onClickChangeIncrement()
+	local state = self.guidanceSteeringWidthInCrementElement:getState()
+    local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
+
+	self.guidanceSteeringWidthElement:setIncrement(math.abs(increment))
+end
+
+function GuidanceSteeringSettingsFrame:onClickWidthChange()
+	self.currentWidth = self.guidanceSteeringWidthElement:getValue()
 end
 
 --- Get the frame's main content element's screen size.

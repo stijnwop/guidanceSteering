@@ -19,6 +19,7 @@ source(Utils.getFilename("src/utils/GuidanceUtil.lua", directory))
 source(Utils.getFilename("src/utils/HeadlandUtil.lua", directory))
 source(Utils.getFilename("src/utils/stream.lua", directory))
 
+source(Utils.getFilename("src/gui/NumberUpDownElement.lua", directory))
 source(Utils.getFilename("src/gui/GuidanceSteeringUI.lua", directory))
 source(Utils.getFilename("src/gui/GuidanceSteeringMenu.lua", directory))
 source(Utils.getFilename("src/gui/frames/GuidanceSteeringSettingsFrame.lua", directory))
