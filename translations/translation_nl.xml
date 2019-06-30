@@ -47,7 +47,8 @@
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
-
+        <text name="guidanceSteering_tooltip_headline_distance" text="Set distance to headline before auto-stop/turn occurs" />
+      
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Selecteer huidig spoor om deze te gebruiken"/>
@@ -69,6 +70,7 @@
         <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_headline_distance" text="Headline Distance" />
 
         <text name="guidanceSteering_setting_strategy" text="Lijn strategie"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Lijn methode"/>
