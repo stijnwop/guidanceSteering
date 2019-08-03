@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Wopster, JoshvZ</translationContributors>
+    <translationContributors>Wopster, JoshvZ, GEZUS95</translationContributors>
 
     <texts>
         <text name="configuration_buyableGPS" text="Global Positioning System"/>
@@ -8,11 +8,11 @@
         <text name="configuration_buyableGPS_withGPS" text="Ja"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
+        <text name="input_GS_TOGGLE" text="Stuurbegeleiding aan/uit schakelen"/>
         <text name="input_GS_SHOW_UI" text="Laat stuurbegeleidings menu zien"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatische werkbreedte"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
+        <text name="input_GS_AXIS_REALIGN" text="Uitlijnen"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Verschuif naar rechts"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Verschuif naar links"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Werkbreedte vergroten"/>
@@ -43,9 +43,9 @@
         <text name="guidanceSteering_tooltip_showLines" text="Ondersteun uw visuals door de begeleidingslijnen te tonen"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richt de stuurrichting naar de terreinhoek"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laat GPS het sturen begeleiden"/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatisch de afwijking omkeren bij het omkeren van je voertuig"/>
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Stel de afwijking van je voertuig in"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
@@ -60,15 +60,15 @@
         <text name="guidanceSteering_setting_showLines" text="Geef lijnen weer"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uitlijnen met de terreinhoeken"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Schakel stuurbegeleiding in"/>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Afwijking omkeren"/>
         <text name="guidanceSteering_setting_width" text="Werkbreedte"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Werkbreedte-verhoging"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische werkbreedte"/>
         <text name="guidanceSteering_setting_changeWidth" text="Pas werkbreedte aan"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinaal punt"/>
-        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
-        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
-        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Afwijking breedte"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Afwijking resetten"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Afwijking aanpassen"/>
 
         <text name="guidanceSteering_setting_strategy" text="Lijn strategie"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Lijn methode"/>
