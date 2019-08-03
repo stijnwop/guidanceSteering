@@ -285,22 +285,21 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
 end
 
 function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, ...)
-    superFunc(vehicle, actionName, inputValue, ...)
-
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-
     if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive then
         spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
     end
+
+    superFunc(vehicle, actionName, inputValue, ...)
 end
 
 function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
-    superFunc(vehicle, actionName, inputValue, ...)
-
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
     if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
+
+    superFunc(vehicle, actionName, inputValue, ...)
 end
 
 function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, inputValue, callbackState, isAnalog, ...)
