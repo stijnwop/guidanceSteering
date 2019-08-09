@@ -215,7 +215,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.isCreated = false
 
     if self.isClient then
-        spec.guidanceData.lastLoadedTrackId = 0
         spec.guidanceData.lineDistance = 0
     end
 
@@ -246,7 +245,6 @@ function GlobalPositioningSystem:onPostLoad(savegame)
         spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
 
         local data = spec.guidanceData
-        data.lastLoadedTrackId = Utils.getNoNil(getXMLInt(savegame.xmlFile, key .. "#lastLoadedTrackId"), data.lastLoadedTrackId)
         data.lineDistance = Utils.getNoNil(getXMLFloat(savegame.xmlFile, key .. "#lineDistance"), data.lineDistance)
     end
 end
@@ -336,7 +334,6 @@ function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
         setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
 
         local data = spec.guidanceData
-        setXMLInt(xmlFile, key .. "#lastLoadedTrackId", data.lastLoadedTrackId)
         setXMLFloat(xmlFile, key .. "#lineDistance", data.lineDistance)
     end
 end
