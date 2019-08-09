@@ -88,11 +88,13 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
 
     if self.allowSave then
         local element = self.rowToTrackId[self.list:getSelectedElement()]
-        local trackId = element.trackId
+        if element ~= nil then
+            local trackId = element.trackId
 
-        if trackId ~= self.lastLoadedTrackId then
-            self:loadTrack(trackId)
-            self.lastLoadedTrackId = trackId
+            if trackId ~= self.lastLoadedTrackId then
+                self:loadTrack(trackId)
+                self.lastLoadedTrackId = trackId
+            end
         end
 
         self.allowSave = false
