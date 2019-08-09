@@ -59,6 +59,9 @@ function OnHeadlandState:update(dt)
         if mode == OnHeadlandState.MODES.STOP then
             return FSMContext.STATES.STOPPED_STATE
         end
+    else
+        -- Enable control when there's no headland mode.
+        DriveUtil.guideSteering(self.object, dt)
     end
 
     return FSM.ANY_STATE
