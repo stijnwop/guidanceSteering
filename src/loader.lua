@@ -12,6 +12,7 @@ source(Utils.getFilename("src/events/TrackSaveEvent.lua", directory))
 source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
 source(Utils.getFilename("src/events/ABPointPushedEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/HeadlandModeChangedEvent.lua", directory))
 
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))

@@ -10,11 +10,14 @@ OnHeadlandState = {}
 
 ---@type number<string, number> The headland states.
 OnHeadlandState.MODES = {
-    OFF = 0,
-    STOP = 1,
-    TURN_LEFT = 2,
-    TURN_RIGHT = 3,
+    OFF = 1,
+    STOP = 2,
+    --TURN_LEFT = 3,
+    --TURN_RIGHT = 4,
 }
+
+OnHeadlandState.DEFAULT_ACT_DISTANCE = 9 -- m
+OnHeadlandState.MAX_ACT_DISTANCE = 100 -- m
 
 local OnHeadlandState_mt = Class(OnHeadlandState, AbstractState)
 
