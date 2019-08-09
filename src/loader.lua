@@ -69,7 +69,7 @@ end
 function loadMission(mission)
     assert(g_guidanceSteering == nil)
 
-    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter, g_settingsScreen.settingsModel)
+    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter)
 
     getfenv(0)["g_guidanceSteering"] = guidanceSteering
 
