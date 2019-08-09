@@ -12,7 +12,7 @@ GuidanceSteering.MAX_NUM_TRACKS = 2 ^ GuidanceSteering.SEND_NUM_BITS
 
 local GuidanceSteering_mt = Class(GuidanceSteering)
 
-function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputManager, messageCenter, settingsModel)
+function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputManager, messageCenter)
     local self = {}
 
     setmetatable(self, GuidanceSteering_mt)
@@ -20,12 +20,19 @@ function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputMa
     self:mergeModTranslations(i18n)
 
     self.isServer = mission:getIsServer()
+    self.isClient = mission:getIsClient()
+
+    self.mission = mission
+
     self.modDirectory = modDirectory
     self.modName = modName
     self.savedTracks = {}
     self.listeners = {}
 
-    self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, gui, inputManager, messageCenter, settingsModel)
+    self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, gui, inputManager, messageCenter)
+
+    BaseMission.onEnterVehicle = Utils.appendedFunction(BaseMission.onEnterVehicle, GuidanceSteering.onEnterVehicle)
+    BaseMission.onLeaveVehicle = Utils.appendedFunction(BaseMission.onLeaveVehicle, GuidanceSteering.onLeaveVehicle)
 
     return self
 end
@@ -35,6 +42,11 @@ function GuidanceSteering:delete()
 end
 
 function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
+    self.showGuidanceLines = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines"), true)
+    self.guidanceIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceIsActive"), true)
+    self.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive"), true)
+    self.autoInvertOffset = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.autoInvertOffset"), false)
+
     local i = 0
     while true do
         local key = ("guidanceSteering.tracks.track(%d)"):format(i)
@@ -67,11 +79,15 @@ end
 function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     setXMLInt(xmlFile, "guidanceSteering#version", 1)
 
+    setXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines", self.showGuidanceLines)
+    setXMLBool(xmlFile, "guidanceSteering.settings.guidanceIsActive", self.guidanceIsActive)
+    setXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive", self.guidanceTerrainAngleIsActive)
+    setXMLBool(xmlFile, "guidanceSteering.settings.autoInvertOffset", self.autoInvertOffset)
+
     if self.savedTracks ~= nil then
         for i, track in ipairs(self.savedTracks) do
             local key = ("guidanceSteering.tracks.track(%d)"):format(i - 1)
 
-            Logger.info(i, track)
             setXMLInt(xmlFile, key .. "#id", i)
             setXMLString(xmlFile, key .. "#name", track.name)
             setXMLInt(xmlFile, key .. "#strategy", track.strategy)
@@ -267,6 +283,60 @@ function GuidanceSteering:isExistingTrack(id, name)
     end
 
     return false
+end
+
+function GuidanceSteering:isShowGuidanceLinesEnabled()
+    return self.showGuidanceLines
+end
+
+function GuidanceSteering:setIsShowGuidanceLinesEnabled(enabled)
+    self.showGuidanceLines = enabled
+end
+
+function GuidanceSteering:isGuidanceEnabled()
+    return self.guidanceIsActive
+end
+
+function GuidanceSteering:setIsGuidanceEnabled(enabled)
+    self.guidanceIsActive = enabled
+end
+
+function GuidanceSteering:isTerrainAngleSnapEnabled()
+    return self.guidanceTerrainAngleIsActive
+end
+
+function GuidanceSteering:setIsTerrainAngleSnapEnabled(enabled)
+    self.guidanceTerrainAngleIsActive = enabled
+end
+
+function GuidanceSteering:isAutoInvertOffsetEnabled()
+    return self.autoInvertOffset
+end
+
+function GuidanceSteering:setIsAutoInvertOffsetEnabled(enabled)
+    self.autoInvertOffset = enabled
+end
+
+---Set the current vehicle for the GS GUI.
+function GuidanceSteering:onEnterVehicle()
+    if self:getIsClient() then
+        local vehicle = self.controlledVehicle
+        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local hasGuidanceSystem = spec ~= nil and spec.hasGuidanceSystem
+
+        if hasGuidanceSystem then
+            local gui = g_guidanceSteering.ui
+            gui:setVehicle(vehicle)
+        end
+    end
+end
+
+---Set remove the vehicle from the GS GUI.
+function GuidanceSteering:onLeaveVehicle()
+    if self:getIsClient() then
+        local gui = g_guidanceSteering.ui
+        gui:setVehicle(nil)
+    end
 end
 
 function GuidanceSteering.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)

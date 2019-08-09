@@ -57,8 +57,6 @@ function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdateTick", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onDraw", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onEnterVehicle", GlobalPositioningSystem)
-    SpecializationUtil.registerEventListener(vehicleType, "onLeaveVehicle", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onPostAttachImplement", GlobalPositioningSystem)
 end
 
@@ -164,9 +162,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.lineStrategy = StraightABStrategy:new(self)
     spec.guidanceIsActive = true
-    spec.showGuidanceLines = true
     spec.guidanceSteeringIsActive = false
-    spec.guidanceTerrainAngleIsActive = true
     spec.autoInvertOffset = false
     spec.shiftParallel = false
     spec.headlandMode = OnHeadlandState.MODES.OFF
@@ -175,9 +171,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.lastInputValues = {}
     spec.lastInputValues.guidanceIsActive = true
-    spec.lastInputValues.showGuidanceLines = true
     spec.lastInputValues.guidanceSteeringIsActive = false
-    spec.lastInputValues.guidanceTerrainAngleIsActive = true
     spec.lastInputValues.autoInvertOffset = false
     spec.lastInputValues.shiftParallel = false
     spec.lastInputValues.shiftParallelValue = 0
@@ -248,9 +242,7 @@ function GlobalPositioningSystem:onPostLoad(savegame)
     if spec.hasGuidanceSystem and savegame ~= nil then
         local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
 
-        spec.lastInputValues.showGuidanceLines = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#showGuidanceLines"), spec.showGuidanceLines)
         spec.lastInputValues.guidanceIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceIsActive"), spec.guidanceIsActive)
-        spec.lastInputValues.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceTerrainAngleIsActive"), spec.guidanceTerrainAngleIsActive)
         spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
 
         local data = spec.guidanceData
@@ -270,10 +262,8 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
             self:updateGuidanceData(data, false, false, true)
 
             -- sync settings
-            spec.showGuidanceLines = streamReadBool(streamId)
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
-            spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
             spec.autoInvertOffset = streamReadBool(streamId)
         end
     end
@@ -290,10 +280,8 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
             GuidanceUtil.writeGuidanceDataObject(streamId, data)
 
             -- sync settings
-            streamWriteBool(streamId, spec.showGuidanceLines)
             streamWriteBool(streamId, spec.guidanceIsActive)
             streamWriteBool(streamId, spec.guidanceSteeringIsActive)
-            streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
             streamWriteBool(streamId, spec.autoInvertOffset)
         end
     end
@@ -304,12 +292,16 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
 
     if spec.hasGuidanceSystem then
         if streamReadBool(streamId) then
-            spec.showGuidanceLines = streamReadBool(streamId)
+            local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
+
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
-            spec.guidanceTerrainAngleIsActive = streamReadBool(streamId)
             spec.autoInvertOffset = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
+
+            if guidanceSteeringIsActive ~= spec.guidanceSteeringIsActive then
+                self:onSteeringStateChanged(spec.guidanceSteeringIsActive)
+            end
         end
 
         if connection:getIsServer() then
@@ -323,10 +315,8 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
 
     if spec.hasGuidanceSystem then
         if streamWriteBool(streamId, bitAND(dirtyMask, spec.dirtyFlag) ~= 0) then
-            streamWriteBool(streamId, spec.showGuidanceLines)
             streamWriteBool(streamId, spec.guidanceIsActive)
             streamWriteBool(streamId, spec.guidanceSteeringIsActive)
-            streamWriteBool(streamId, spec.guidanceTerrainAngleIsActive)
             streamWriteBool(streamId, spec.autoInvertOffset)
 
             streamWriteBool(streamId, spec.shiftParallel)
@@ -342,9 +332,7 @@ function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     if spec.hasGuidanceSystem then
-        setXMLBool(xmlFile, key .. "#showGuidanceLines", spec.showGuidanceLines)
         setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
-        setXMLBool(xmlFile, key .. "#guidanceTerrainAngleIsActive", spec.guidanceTerrainAngleIsActive)
         setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
 
         local data = spec.guidanceData
@@ -372,31 +360,30 @@ end
 function GlobalPositioningSystem.updateNetworkInputs(self)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    spec.showGuidanceLines = spec.lastInputValues.showGuidanceLines
     spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
     spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
-    spec.guidanceTerrainAngleIsActive = spec.lastInputValues.guidanceTerrainAngleIsActive
     spec.autoInvertOffset = spec.lastInputValues.autoInvertOffset
     spec.shiftParallel = spec.lastInputValues.shiftParallel
 
     -- Reset
     spec.lastInputValues.shiftParallel = false
 
-    if spec.guidanceSteeringIsActive ~= spec.guidanceSteeringIsActiveSent
-            or spec.showGuidanceLines ~= spec.showGuidanceLinesSent
+    local steeringChanged = spec.guidanceSteeringIsActive ~= spec.guidanceSteeringIsActiveSent
+    if steeringChanged
             or spec.guidanceIsActive ~= spec.guidanceIsActiveSent
-            or spec.guidanceTerrainAngleIsActive ~= spec.guidanceTerrainAngleIsActiveSent
             or spec.autoInvertOffset ~= spec.autoInvertOffsetSent
             or spec.shiftParallel ~= spec.shiftParallelSent
             or spec.shiftParallelDirection ~= spec.shiftParallelDirectionSent
     then
         spec.guidanceSteeringIsActiveSent = spec.guidanceSteeringIsActive
-        spec.showGuidanceLinesSent = spec.showGuidanceLines
         spec.guidanceIsActiveSent = spec.guidanceIsActive
-        spec.guidanceTerrainAngleIsActiveSent = spec.guidanceTerrainAngleIsActive
         spec.autoInvertOffsetSent = spec.autoInvertOffset
         spec.shiftParallelSent = spec.shiftParallel
         spec.shiftParallelDirectionSent = spec.shiftParallelDirection
+
+        if steeringChanged then
+            self:onSteeringStateChanged(spec.guidanceSteeringIsActive)
+        end
 
         self:raiseDirtyFlags(spec.dirtyFlag)
     end
@@ -592,8 +579,8 @@ function GlobalPositioningSystem:onDraw()
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec.showGuidanceLines then
+    if g_guidanceSteering:isShowGuidanceLinesEnabled() then
+        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
         spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
     end
 end
@@ -629,26 +616,6 @@ function GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML(vehicle, superF
     end
 
     return ret
-end
-
-function GlobalPositioningSystem:onLeaveVehicle()
-    if self.isClient then
-        if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
-            if g_guidanceSteering.ui:getVehicle() == self then
-                g_guidanceSteering.ui:setVehicle(nil)
-            end
-        end
-    end
-end
-
-function GlobalPositioningSystem:onEnterVehicle()
-    if self.isClient then
-        if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
-            if g_guidanceSteering.ui:getVehicle() ~= g_currentMission.controlledVehicle then
-                g_guidanceSteering.ui:setVehicle(g_currentMission.controlledVehicle)
-            end
-        end
-    end
 end
 
 function GlobalPositioningSystem:onPostAttachImplement()
@@ -802,7 +769,7 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
 
     local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
     -- Snap to terrain when settings is active
-    if spec.guidanceTerrainAngleIsActive then
+    if g_guidanceSteering:isTerrainAngleSnapEnabled() then
         local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
         angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
     end
@@ -849,6 +816,8 @@ function GlobalPositioningSystem:onResetGuidanceData()
     data.isCreated = false
     data.snapDirection = { 0, 0, 0, 0 }
 
+    spec.stateMachine:reset()
+    spec.lastInputValues.guidanceSteeringIsActive = false
     Logger.info("onResetGuidanceData")
 end
 
@@ -870,13 +839,13 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
 end
 
 function GlobalPositioningSystem:onSteeringStateChanged(isActive)
-    if not self.isClient then
-        return
-    end
-
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
     spec.stateMachine:reset()
+
+    if not self.isClient then
+        return
+    end
 
     local sample = spec.samples.activate
     if not isActive then
@@ -914,10 +883,6 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
     local step = 5 -- m
     local tX = x1 + step * lineXDir
     local tZ = z1 + step * lineZDir
-
-    if spec.showGuidanceLines then
-        DebugUtil.drawDebugCircle(tX, dY + .2, tZ, .5, 10, { 0, 1, 0 })
-    end
 
     local pX, _, pZ = worldToLocal(guidanceNode, tX, dY, tZ)
 
@@ -992,7 +957,6 @@ function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionN
 
     -- Force stop guidance
     spec.lastInputValues.guidanceSteeringIsActive = false
-    self:onSteeringStateChanged(false)
 end
 
 --- Action events
@@ -1083,7 +1047,6 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
     end
 
     spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
-    self:onSteeringStateChanged(spec.lastInputValues.guidanceSteeringIsActive)
 end
 
 function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
