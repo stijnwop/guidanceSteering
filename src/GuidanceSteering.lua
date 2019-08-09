@@ -204,6 +204,9 @@ local function _saveTrack(self, id, data)
     track.guidanceData.offsetWidth = data.guidanceData.offsetWidth
     track.guidanceData.snapDirection = data.guidanceData.snapDirection
     track.guidanceData.driveTarget = data.guidanceData.driveTarget
+
+    -- Call listeners
+    self:onTrackChanged(id)
 end
 
 ---Facade to handle saving or creating tracks
