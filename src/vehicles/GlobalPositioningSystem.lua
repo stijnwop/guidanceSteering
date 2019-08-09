@@ -254,11 +254,13 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
         local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
         if spec.hasGuidanceSystem then
-            local data = GuidanceUtil.readGuidanceDataObject(streamId)
+            if streamReadBool(streamId) then
+                local data = GuidanceUtil.readGuidanceDataObject(streamId)
 
-            -- sync guidance data
-            self:updateGuidanceData(data, false, false, true)
-
+                -- sync guidance data
+                self:updateGuidanceData(data, false, false, true)
+            end
+            
             -- sync settings
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
@@ -274,8 +276,11 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
         if spec.hasGuidanceSystem then
             local data = spec.guidanceData
 
-            -- sync guidance data
-            GuidanceUtil.writeGuidanceDataObject(streamId, data)
+            streamWriteBool(streamId, data.isCreated)
+            if data.isCreated then
+                -- sync guidance data
+                GuidanceUtil.writeGuidanceDataObject(streamId, data)
+            end
 
             -- sync settings
             streamWriteBool(streamId, spec.guidanceIsActive)
