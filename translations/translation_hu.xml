@@ -80,5 +80,17 @@
         <text name="guidanceSteering_setting_newTrack" text="Lejátszás készítése"/>
         <text name="guidanceSteering_setting_removeTrack" text="Lejátszás törlése"/>
         <text name="guidanceSteering_setting_saveTrack" text="Lejátszás mentése"/>
+
+        <!-- Todo: new below -->
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
     </texts>
 </l10n>
