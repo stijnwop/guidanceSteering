@@ -53,7 +53,6 @@ function GuidanceSteeringSettingsFrame:new(ui, i18n)
     self.currentGuidanceOffset = 0
     self.currentOffsetIncrement = 0
 
-    self.currentHeadlandActDistance = 0
     self.allowSave = false
 
     self:registerControls(GuidanceSteeringSettingsFrame.CONTROLS)
@@ -71,13 +70,13 @@ end
 function GuidanceSteeringSettingsFrame:initialize()
     local headlandModes = {}
     for _, mode in pairs(OnHeadlandState.MODES) do
-        table.insert(headlandModes, self.i18n:getText(("guidanceSteering_headland_mode_%d"):format(mode)))
+        table.insert(headlandModes, self.i18n:getText(("guidanceSteering_headland_mode_%d"):format(mode - 1)))
     end
 
     self.guidanceSteeringHeadlandModeElement:setTexts(headlandModes)
 
     local initialUnit = self:getFormattedUnitLength(0)
-    self.guidanceSteeringHeadlandDistanceElement:setText(initialUnit)
+    self.guidanceSteeringHeadlandDistanceElement:setText(tostring(0))
     self.guidanceSteeringHeadlandDistanceText:setText(initialUnit)
     self.guidanceSteeringWidthText:setText(initialUnit)
     self.guidanceSteeringOffsetWidthText:setText(initialUnit)
@@ -109,12 +108,13 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
 
         self.currentGuidanceWidth = data.width
         self.currentGuidanceOffset = data.offsetWidth
-        self.currentHeadlandActDistance = 0 -- Todo: implement
         self.guidanceSteeringWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceWidth))
         self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
-        self.guidanceSteeringHeadlandModeElement:setState(spec.headlandMode + 1)
-        self.guidanceSteeringHeadlandDistanceElement:setText(self:getFormattedUnitLength(self.currentHeadlandActDistance))
-        self.guidanceSteeringHeadlandDistanceText:setText(self:getFormattedUnitLength(self.currentHeadlandActDistance))
+
+        local currentHeadlandActDistance = spec.headlandActDistance
+        self.guidanceSteeringHeadlandModeElement:setState(spec.headlandMode)
+        self.guidanceSteeringHeadlandDistanceElement:setText(tostring(currentHeadlandActDistance))
+        self.guidanceSteeringHeadlandDistanceText:setText(self:getFormattedUnitLength(currentHeadlandActDistance))
 
         self.allowSave = true
     end
@@ -137,6 +137,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 
             local state = self.guidanceSteeringWidthIncrementElement:getState()
             local headlandMode = self.guidanceSteeringHeadlandModeElement:getState()
+            local headlandActDistance = tonumber(self.guidanceSteeringHeadlandDistanceElement:getText())
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
             -- Todo: cleanup later
@@ -149,7 +150,13 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 
             spec.lastInputValues.autoInvertOffset = g_guidanceSteering:isAutoInvertOffsetEnabled()
             spec.lastInputValues.widthIncrement = math.abs(increment)
-            spec.headlandMode = headlandMode - 1
+
+            if spec.headlandMode ~= headlandMode or spec.headlandActDistance ~= headlandActDistance then
+                spec.headlandMode = headlandMode
+                spec.headlandActDistance = headlandActDistance
+                -- Update other clients
+                g_client:getServerConnection():sendEvent(HeadlandModeChangedEvent:new(vehicle, headlandMode, headlandActDistance))
+            end
 
             if data.width ~= nil and data.width ~= self.currentGuidanceWidth
                     or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentGuidanceOffset then
@@ -257,6 +264,25 @@ function GuidanceSteeringSettingsFrame:changeOffsetWidth(direction)
     self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
 
     self:updateOffsetUVs()
+end
+
+function GuidanceSteeringSettingsFrame:onHeadlandDistanceChanged(_, text)
+    local lastDistance = tonumber(text)
+    local textLenght = utf8Strlen(text)
+
+    if lastDistance == nil and textLenght > 0 then
+        lastDistance = 0
+        self.guidanceSteeringHeadlandDistanceElement:setText(tostring(lastDistance))
+    end
+
+    if lastDistance ~= nil then
+        if lastDistance > OnHeadlandState.MAX_ACT_DISTANCE then
+            lastDistance = OnHeadlandState.MAX_ACT_DISTANCE
+            self.guidanceSteeringHeadlandDistanceElement:setText(tostring(lastDistance))
+        end
+
+        self.guidanceSteeringHeadlandDistanceText:setText(self:getFormattedUnitLength(lastDistance))
+    end
 end
 
 function GuidanceSteeringSettingsFrame:updateOffsetUVs()

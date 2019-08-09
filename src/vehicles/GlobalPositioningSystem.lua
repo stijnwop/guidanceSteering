@@ -165,7 +165,9 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceSteeringIsActive = false
     spec.autoInvertOffset = false
     spec.shiftParallel = false
+
     spec.headlandMode = OnHeadlandState.MODES.OFF
+    spec.headlandActDistance = OnHeadlandState.DEFAULT_ACT_DISTANCE
 
     spec.abDistanceCounter = 0
 
@@ -209,7 +211,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData.snapDirectionMultiplier = 1
     spec.guidanceData.alphaRad = 0
     spec.guidanceData.currentLane = 0
-    spec.guidanceData.startLane = 0
     spec.guidanceData.snapDirection = { 0, 0, 0, 0 }
     spec.guidanceData.driveTarget = { 0, 0, 0, 0, 0 }
     spec.guidanceData.isCreated = false
@@ -260,7 +261,7 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
                 -- sync guidance data
                 self:updateGuidanceData(data, false, false, true)
             end
-            
+
             -- sync settings
             spec.guidanceIsActive = streamReadBool(streamId)
             spec.guidanceSteeringIsActive = streamReadBool(streamId)

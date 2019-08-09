@@ -98,8 +98,8 @@
                         <GuiElement type="bitmap" profile="multiTextOptionBg" />
                     </GuiElement>
                     <GuiElement type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringHeadlandDistanceElement"
-                                toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_headlandDistance" maxCharacters="3"
-                                imeKeyboardType="normal">
+                                toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_headlandDistance" maxCharacters="5"
+                                imeKeyboardType="normal"  onTextChanged="onHeadlandDistanceChanged" >
                         <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_headlandDistance" />
                     </GuiElement>
                 </GuiElement>

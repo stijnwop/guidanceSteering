@@ -21,7 +21,7 @@ function FollowLineState:new(id, object, custom_mt)
     self.initialDetectedHeadland = false
     self.lastIsNotOnField = false
     self.distanceToEnd = 0
-    self.actDistance = 9 -- Todo: make configurable
+    self.actDistance = OnHeadlandState.DEFAULT_ACT_DISTANCE
     self.lastValidGroundPos = { 0, 0, 0 }
 
     return self
@@ -34,13 +34,15 @@ function FollowLineState:onEntry()
     -- On entry transition
     Logger.info("FollowLineState: onEntry")
 
+    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+
     self.initialDetectedHeadland = self:detectedHeadland(0)
     self.lastIsNotOnField = false
     self.distanceToEnd = 0
+    self.actDistance = spec.headlandActDistance
     self.lastValidGroundPos = { 0, 0, 0 }
 
     -- Reset some vehicle spec data for sounds.
-    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
     spec.playHeadLandWarning = false
 end
 
