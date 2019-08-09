@@ -43,9 +43,7 @@ end
 
 function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
     self.showGuidanceLines = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines"), true)
-    self.guidanceIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceIsActive"), true)
     self.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive"), true)
-    self.autoInvertOffset = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.autoInvertOffset"), false)
 
     local i = 0
     while true do
@@ -80,9 +78,7 @@ function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     setXMLInt(xmlFile, "guidanceSteering#version", 1)
 
     setXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines", self.showGuidanceLines)
-    setXMLBool(xmlFile, "guidanceSteering.settings.guidanceIsActive", self.guidanceIsActive)
     setXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive", self.guidanceTerrainAngleIsActive)
-    setXMLBool(xmlFile, "guidanceSteering.settings.autoInvertOffset", self.autoInvertOffset)
 
     if self.savedTracks ~= nil then
         for i, track in ipairs(self.savedTracks) do

@@ -54,7 +54,7 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Bestimmt den Kardinalpunkt"/>
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname: %s existiert bereits!"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname '%s' existiert bereits!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Zeige Linien"/>
