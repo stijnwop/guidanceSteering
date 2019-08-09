@@ -65,7 +65,7 @@ end
 
 ---Unloads and removes the menus.
 function GuidanceSteeringUI:unloadMenu()
-    self.gui:unloadGui("GuidanceSteeringMenu")
+    -- self.gui:unloadGui("GuidanceSteeringMenu")
 
     self.menu:delete()
 end
