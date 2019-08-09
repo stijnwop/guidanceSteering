@@ -1,4 +1,13 @@
+---
+-- GuidanceSteeringMenu
+--
+-- The main menu for GuidanceSteering.
+--
+-- Copyright (c) Wopster, 2019
+
+---@class GuidanceSteeringMenu
 GuidanceSteeringMenu = {}
+
 local GuidanceSteeringMenu_mt = Class(GuidanceSteeringMenu, TabbedMenu)
 
 GuidanceSteeringMenu.CONTROLS = {
@@ -6,14 +15,12 @@ GuidanceSteeringMenu.CONTROLS = {
     PAGE_STRATEGY = "pageStrategy",
 }
 
-local NO_CALLBACK = function() end
-
+---Creates a new instance of the GuidanceSteeringMenu.
+---@return GuidanceSteeringMenu
 function GuidanceSteeringMenu:new(messageCenter, i18n, inputManager)
     local self = TabbedMenu:new(nil, GuidanceSteeringMenu_mt, messageCenter, i18n, inputManager)
 
     self.i18n = i18n
-
-    self.performBackgroundBlur = true
 
     self:registerControls(GuidanceSteeringMenu.CONTROLS)
 
@@ -32,12 +39,11 @@ function GuidanceSteeringMenu:onGuiSetupFinished()
 end
 
 function GuidanceSteeringMenu:setupPages()
-    local predicate = self:makeIsAlwaysVisiblePredicate()
+    local alwaysVisiblePredicate = self:makeIsAlwaysVisiblePredicate()
 
     local orderedPages = {
-        -- default pages, their enabling state predicate functions and tab icon UVs in order
-        { self.pageSettings, predicate, GuidanceSteeringMenu.TAB_UV.SETTINGS },
-        { self.pageStrategy, predicate, GuidanceSteeringMenu.TAB_UV.STRATEGY },
+        { self.pageSettings, alwaysVisiblePredicate, GuidanceSteeringMenu.TAB_UV.SETTINGS },
+        { self.pageStrategy, alwaysVisiblePredicate, GuidanceSteeringMenu.TAB_UV.STRATEGY },
     }
 
     for i, pageDef in ipairs(orderedPages) do
@@ -48,10 +54,6 @@ function GuidanceSteeringMenu:setupPages()
         self:addPageTab(page, g_baseUIFilename, normalizedUVs) -- use the global here because the value changes with resolution settings
     end
 end
-
-------------------------------------------------------------------------------------------------------------------------
--- Setting up
-------------------------------------------------------------------------------------------------------------------------
 
 --- Define default properties and retrieval collections for menu buttons.
 function GuidanceSteeringMenu:setupMenuButtonInfo()
@@ -68,9 +70,6 @@ function GuidanceSteeringMenu:setupMenuButtonInfo()
     }
 end
 
-------------------------------------------------------------------------------------------------------------------------
--- Predicates for showing pages
-------------------------------------------------------------------------------------------------------------------------
 function GuidanceSteeringMenu:makeIsAlwaysVisiblePredicate()
     return function()
         return true
