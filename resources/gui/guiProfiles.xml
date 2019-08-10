@@ -53,7 +53,7 @@
         <Preset name="colorDescriptionText3" value="0.1845 0.1845 0.1845 1" />
         <Preset name="colorDescriptionText4" value="0.6307 0.6307 0.6307 1" />
         <!-- UVs -->
-        <Preset name="colorUVs" value="10px 1010px 4px 4px" /> <!-- small 4 pixel box in D:\code\lsim2019\bin\dataS2\menu\hud\ui_elements_1080p.png -->
+        <Preset name="colorUVs" value="10px 1010px 4px 4px" />
     </Presets>
 
     <Traits>
@@ -62,9 +62,66 @@
         </Trait>
     </Traits>
 
-    <Profile name="guidanceSteeringDialogBg" extends="yesNoDialogBg">
+    <Profile name="guidanceSteeringMenuHeader" extends="uiInGameMenuHeader">
+        <Value name="size" value="1280px 112px" />
+    </Profile>
+    <Profile name="guidanceSteeringMenuHeaderWide" extends="guidanceSteeringMenuHeader">
+        <Value name="size" value="960px 85px" />
+    </Profile>
+    <Profile name="guidanceSteeringHeaderSelector" extends="uiInGameMenuHeaderSelector">
+        <Value name="size" value="1280px 112px" />
+    </Profile>
+    <Profile name="guidanceSteeringHeaderSelectorWide" extends="uiInGameMenuHeaderSelector">
+        <Value name="size" value="960px 85px" />
+    </Profile>
+
+    <Profile name="guidanceSteeringTabButton" extends="uiTabbedMenuPageTabButton">
+        <Value name="size" value="85px 85px" />
+    </Profile>
+
+
+<!--    <Profile name="guidanceSteeringMenuPageTab" extends="listItem">-->
+<!--        <Value name="imageColor" value="$preset_colorListRowBackground"/>-->
+<!--        <Value name="imageFocusedColor" value="$preset_colorMainUI"/>-->
+<!--        <Value name="imageSelectedColor" value="$preset_colorMainUI"/>-->
+<!--        <Value name="size" value="85px 50px" />-->
+<!--        <Value name="position" value="0px 0px"/>-->
+<!--    </Profile>-->
+
+    <Profile name="guidanceSteeringMenuPageTab" extends="uiTabbedMenuPageTab">
+<!--        <Value name="size" value="85px 85px" />-->
+    </Profile>
+
+
+    <Profile name="guidanceSteeringMenuPageTabAlternate" extends="guidanceSteeringMenuPageTab" with="alternateRow" />
+
+
+    <Profile name="guidanceSteeringMenuPageTabWide" extends="uiTabbedMenuPageTab">
+<!--        <Value name="size" value="100px 100px" />-->
+    </Profile>
+
+    <Profile name="guidanceSteeringPagingTabList" extends="uiInGameMenuPagingTabList">
+        <Value name="size" value="1280px 112px" />
+        <Value name="listItemWidth" value="100px"/>
+        <Value name="listItemPadding" value="0px"/>
+        <Value name="listItemHeight" value="112px"/>
+        <Value name="rowBackgroundProfile" value="guidanceSteeringMenuPageTab"/>
+        <Value name="rowBackgroundProfileAlternate" value="guidanceSteeringMenuPageTabAlternate"/>
+    </Profile>
+
+    <Profile name="guidanceSteeringPagingTabListWide" extends="guidanceSteeringPagingTabList">
+        <Value name="size" value="960px 85px" />
+        <Value name="listItemHeight" value="85px"/>
+    </Profile>
+
+    <Profile name="guidanceSteeringDialogBg" extends="framedEmptyPanel" with="anchorMiddleCenter">
+        <Value name="position" value="0px 0px" />
         <Value name="size" value="1280px 720px" />
     </Profile>
+
+<!--    <Profile name="guidanceSteeringDialogBg" extends="dialogBg">-->
+<!--        <Value name="size" value="1280px 720px" />-->
+<!--    </Profile>-->
 
     <Profile name="detailText" extends="textDefault">
         <Value name="textSize" value="28px" />

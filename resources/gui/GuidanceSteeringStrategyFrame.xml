@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUI name="guidanceSteeringStrategy">
-    <GuiElement type="empty" profile="uiInGameMenuFrame" size="1280px 620px" position="0px -75px">
-        <GuiElement type="bitmap" profile="settingsBox" size="1280px 620px" position="0px 0px" positionOrigin="bottomLeft" id="container">
+<!--    <GuiElement type="empty" profile="uiInGameMenuFrame" size="1280px 620px" position="0px -75px">-->
+        <GuiElement type="bitmap" profile="settingsBox" size="1280px 620px" position="0px -12px" positionOrigin="bottomLeft" id="container">
             <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="413px 500px" id="boxLayout">
 
                 <GuiElement position="30px 0px" type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyElement"
@@ -74,5 +74,5 @@
             <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon" />
             <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged" />
         </GuiElement>
-    </GuiElement>
+<!--    </GuiElement>-->
 </GUI>

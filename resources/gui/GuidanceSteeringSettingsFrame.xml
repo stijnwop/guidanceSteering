@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUI name="guidanceSteeringSettings">
-    <GuiElement type="empty" profile="uiInGameMenuFrame" size="1280px 620px" position="0px -75px">
-        <GuiElement type="bitmap" profile="settingsBox" size="1280px 620px" position="0px 0px" positionOrigin="bottomLeft" id="container">
+<!--    <GuiElement type="empty" profile="uiInGameMenuFrame" size="1280px 620px" position="0px -75px">-->
+        <GuiElement type="bitmap" profile="settingsBox" size="1280px 620px" position="0px -12px" positionOrigin="bottomLeft" id="container">
             <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="640px 250px" position="0px 0px" id="boxLayout">
 
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="640px 125px">
@@ -160,5 +160,5 @@
             <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon" />
             <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged" />
         </GuiElement>
-    </GuiElement>
+<!--    </GuiElement>-->
 </GUI>
