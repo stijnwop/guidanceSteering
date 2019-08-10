@@ -80,14 +80,14 @@
         <text name="guidanceSteering_setting_removeTrack" text="Löschen"/>
         <text name="guidanceSteering_setting_saveTrack" text="Speichern"/>
 
-        <text name="guidanceSteering_setting_headlandMode" text="Vorgewende Modus"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="Im Vorgewende Modus kannst du einstellen wie am Vorgewende reagiert wird."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Vorgewendemodus"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Im Vorgewendemodus kannst du einstellen wie am Vorgewende reagiert wird."/>
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Aktuelle Entfernung zum Vorgewende"/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Entfernung zum Vorgewende"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Entferung zum Vorgewende in Metern."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Aus"/>
-        <text name="guidanceSteering_headland_mode_1" text="Ein"/>
+        <text name="guidanceSteering_headland_mode_1" text="Anhalten"/>
         <text name="guidanceSteering_headland_mode_2" text="Links wenden"/>
         <text name="guidanceSteering_headland_mode_3" text="Rechts wenden"/>
     </texts>
