@@ -32,6 +32,14 @@ function GuidanceSteeringMenu:onGuiSetupFinished()
 
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack) -- store to be able to apply it always when assigning menu button info
 
+    local height = g_screenHeight
+    local width = g_screenWidth
+    if width >= 2560 and height >= 1080 then
+        self.header:applyProfile("guidanceSteeringMenuHeaderWide")
+        self.pageSelector:applyProfile("guidanceSteeringHeaderSelectorWide")
+        self.pagingTabList:applyProfile("guidanceSteeringPagingTabListWide")
+    end
+
     self.pageSettings:initialize()
     self.pageStrategy:initialize()
 
