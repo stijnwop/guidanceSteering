@@ -117,6 +117,7 @@
     <Profile name="guidanceSteeringDialogBg" extends="framedEmptyPanel" with="anchorMiddleCenter">
         <Value name="position" value="0px 0px" />
         <Value name="size" value="1280px 720px" />
+        <Value name="imageColor" value="$preset_colorGlassDark" />
     </Profile>
 
 <!--    <Profile name="guidanceSteeringDialogBg" extends="dialogBg">-->
