@@ -322,11 +322,9 @@ function GuidanceSteering:onEnterVehicle()
         local vehicle = self.controlledVehicle
         local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
         local hasGuidanceSystem = spec ~= nil and spec.hasGuidanceSystem
+        local gui = g_guidanceSteering.ui
 
-        if hasGuidanceSystem then
-            local gui = g_guidanceSteering.ui
-            gui:setVehicle(vehicle)
-        end
+        gui:setVehicle(hasGuidanceSystem and vehicle or nil)
     end
 end
 
