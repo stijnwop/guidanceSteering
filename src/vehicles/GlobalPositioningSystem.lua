@@ -939,15 +939,17 @@ function GlobalPositioningSystem.realignTrack(self, data)
 end
 
 function GlobalPositioningSystem.updateSounds(self, spec, dt)
-    if spec.playHeadLandWarning then
-        if not spec.isHeadlandWarningSamplePlaying then
-            g_soundManager:playSample(spec.samples.warning)
-            spec.isHeadlandWarningSamplePlaying = true
-        end
-    else
-        if spec.isHeadlandWarningSamplePlaying then
-            g_soundManager:stopSample(spec.samples.warning)
-            spec.isHeadlandWarningSamplePlaying = false
+    if self == g_currentMission.controlledVehicle then
+        if spec.playHeadLandWarning then
+            if not spec.isHeadlandWarningSamplePlaying then
+                g_soundManager:playSample(spec.samples.warning)
+                spec.isHeadlandWarningSamplePlaying = true
+            end
+        else
+            if spec.isHeadlandWarningSamplePlaying then
+                g_soundManager:stopSample(spec.samples.warning)
+                spec.isHeadlandWarningSamplePlaying = false
+            end
         end
     end
 end
