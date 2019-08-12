@@ -130,6 +130,8 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.axisAccelerate = 0
     spec.axisBrake = 0
+    spec.axisForward = 0
+    spec.axisForwardSent = 0
 
     local rootNode = self.components[1].node
     local componentIndex = getXMLString(self.xmlFile, "vehicle.guidanceSteering#index")
@@ -229,6 +231,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     end
 
     spec.dirtyFlag = self:getNextDirtyFlag()
+    spec.guidanceDirtyFlag = self:getNextDirtyFlag()
 
     GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 end
@@ -312,6 +315,13 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             spec.autoInvertOffset = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
         end
+
+        if streamReadBool(streamId) then
+            spec.axisForward = streamReadUIntN(streamId, 10) / 1023 * 2 - 1
+            if math.abs(spec.axisForward) <  0.00099 then
+                spec.axisForward = 0 -- set to 0 to avoid noise caused by compression
+            end
+        end
     end
 end
 
@@ -327,6 +337,11 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.autoInvertOffset)
 
             streamWriteBool(streamId, spec.shiftParallel)
+        end
+
+        if streamWriteBool(streamId, bitAND(dirtyMask, spec.guidanceDirtyFlag) ~= 0) then
+            local axisForward = (spec.axisForward + 1) / 2 * 1023
+            streamWriteUIntN(streamId, axisForward, 10)
         end
     end
 end
@@ -473,21 +488,21 @@ function GlobalPositioningSystem:onUpdate(dt)
             if hasGuidanceSystem then
                 local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
 
-                if guidanceSteeringIsActive then
-                    if self:getIsActiveForInput(true, true) then
-                        local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
-                        local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
+                if guidanceSteeringIsActive and self:getIsActiveForInput(true, true) then
+                    local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
+                    spec.axisForward = axisForward
 
-                        drivable_spec.axisForward = axisForward
-                        spec.axisAccelerate = 0
-                        spec.axisBrake = 0
+                else
+                    spec.axisForward = 0
+                end
 
-                        -- Do network update
-                        if drivable_spec.axisForward ~= drivable_spec.axisForwardSend then
-                            drivable_spec.axisForwardSend = drivable_spec.axisForward
-                            self:raiseDirtyFlags(drivable_spec.dirtyFlag)
-                        end
-                    end
+                spec.axisAccelerate = 0
+                spec.axisBrake = 0
+
+                -- Do network update
+                if spec.axisForward ~= spec.axisForwardSent then
+                    spec.axisForwardSent = spec.axisForward
+                    self:raiseDirtyFlags(spec.guidanceDirtyFlag)
                 end
 
                 GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
@@ -936,7 +951,7 @@ function GlobalPositioningSystem.guideSteering(vehicle, dt)
 
     vehicle:getMotor():setSpeedLimit(speed)
 
-    DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
+    DriveUtil.accelerateInDirection(vehicle, spec.axisForward, dt)
 end
 
 ---Shifts the created track parallel
