@@ -34,12 +34,11 @@ function FSM:new(initialState, states, custom_mt)
     return instance
 end
 
----Calls all listener functions.
----@param listeners table
----@param functionName string
-local function _callListeners(listeners, functionName)
-    for _, listener in ipairs(listeners) do
-        listener[functionName]()
+---Calls all action functions.
+---@param actions table
+local function _callActions(actions)
+    for _, action in ipairs(actions) do
+        action()
     end
 end
 
@@ -48,8 +47,8 @@ end
 local function _callOnExit(state)
     state:onExit()
 
-    if state.listeners ~= nil then
-        _callListeners(state.listeners, "onExit")
+    if state.exitActions ~= nil then
+        _callActions(state.exitActions)
     end
 end
 
@@ -58,8 +57,8 @@ end
 local function _callOnEntry(state)
     state:onEntry()
 
-    if state.listeners ~= nil then
-        _callListeners(state.listeners, "onEntry")
+    if state.entryActions ~= nil then
+        _callActions(state.entryActions)
     end
 end
 
@@ -86,6 +85,11 @@ end
 ---Returns the current active state
 function FSM:getCurrentState()
     return self.state
+end
+
+---Returns true when the state equals, false otherwise
+function FSM:isInState(state)
+    return state.id == self.state.id
 end
 
 ---Returns the initial state of the state machine
