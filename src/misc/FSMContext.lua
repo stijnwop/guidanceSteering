@@ -1,3 +1,11 @@
+---
+-- FSMContext
+--
+-- Context utility for the Guidance Steering state machines.
+--
+-- Copyright (c) Wopster, 2019
+
+---@class FSMContext
 FSMContext = {}
 
 FSMContext.STATES = {
@@ -8,25 +16,16 @@ FSMContext.STATES = {
     END_TURNING_STATE = 4
 }
 
-function FSMContext.createStateMachine(initialState)
-    local fsm = FSM:new(initialState)
-
-    return fsm
-end
-
+---Creates the guidance state machine for the given object.
+---@param object table
+---@return FSM
 function FSMContext.createGuidanceStateMachine(object)
-    local context = FSMContext.STATES
-    local initialState = FollowLineState:new(context.FOLLOW_LINE_STATE, object)
-    local fsm = FSMContext.createStateMachine(initialState)
+    local engine = StateEngine:new()
 
-    local states = {
-        [context.FOLLOW_LINE_STATE] = initialState,
-        [context.ON_HEADLAND_STATE] = OnHeadlandState:new(context.ON_HEADLAND_STATE, object),
-        [context.STOPPED_STATE] = StoppedState:new(context.STOPPED_STATE, object),
-        [context.TURNING_STATE] = TurningState:new(context.TURNING_STATE, object)
-    }
+    engine:add(FSMContext.STATES.FOLLOW_LINE_STATE, FollowLineState:new(FSMContext.STATES.FOLLOW_LINE_STATE, object))
+    engine:add(FSMContext.STATES.ON_HEADLAND_STATE, OnHeadlandState:new(FSMContext.STATES.ON_HEADLAND_STATE, object))
+    engine:add(FSMContext.STATES.STOPPED_STATE, StoppedState:new(FSMContext.STATES.STOPPED_STATE, object))
+    engine:add(FSMContext.STATES.TURNING_STATE, TurningState:new(FSMContext.STATES.TURNING_STATE, object))
 
-    fsm:setStates(states)
-
-    return fsm
+    return engine:createFSM(FSMContext.STATES.FOLLOW_LINE_STATE)
 end

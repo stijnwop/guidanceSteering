@@ -30,6 +30,7 @@ source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
 source(Utils.getFilename("src/misc/FSM.lua", directory))
 source(Utils.getFilename("src/misc/FSMContext.lua", directory))
+source(Utils.getFilename("src/misc/StateEngine.lua", directory))
 source(Utils.getFilename("src/misc/states/AbstractState.lua", directory))
 source(Utils.getFilename("src/misc/states/FollowLineState.lua", directory))
 source(Utils.getFilename("src/misc/states/OnHeadlandState.lua", directory))
