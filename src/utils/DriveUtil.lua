@@ -62,7 +62,7 @@ function DriveUtil.guideSteering(vehicle, dt)
 
     vehicle:getMotor():setSpeedLimit(speed)
 
-    DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
+    DriveUtil.accelerateInDirection(vehicle, spec.axisForward, dt)
 end
 
 ---Drives the given vehicle to the point.
@@ -154,7 +154,7 @@ function DriveUtil.accelerateInDirection(vehicle, axisForward, dt)
     if vehicle:getIsMotorStarted()
             and vehicle:getMotorStartTime() <= g_currentMission.time then
         acceleration = axisForward
-        if math.abs(acceleration) > 0.8 then
+        if math.abs(acceleration) > 0 then
             vehicle:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
         end
 

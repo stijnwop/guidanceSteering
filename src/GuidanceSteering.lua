@@ -353,7 +353,7 @@ end
 
 function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, ...)
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive then
+    if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive and vehicle.getShuttleDriveDirection == nil then
         spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
     end
 
@@ -362,7 +362,7 @@ end
 
 function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
     local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive then
+    if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive and vehicle.getShuttleDriveDirection == nil then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
 

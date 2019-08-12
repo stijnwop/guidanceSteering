@@ -125,6 +125,8 @@ function GlobalPositioningSystem:onLoad(savegame)
 
     spec.axisAccelerate = 0
     spec.axisBrake = 0
+    spec.axisForward = 0
+    spec.axisForwardSent = 0
 
     local rootNode = self.components[1].node
     local componentIndex = getXMLString(self.xmlFile, "vehicle.guidanceSteering#index")
@@ -220,6 +222,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     end
 
     spec.dirtyFlag = self:getNextDirtyFlag()
+    spec.guidanceDirtyFlag = self:getNextDirtyFlag()
 
     GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
@@ -308,6 +311,13 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
             end
         end
 
+        if streamReadBool(streamId) then
+            spec.axisForward = streamReadUIntN(streamId, 10) / 1023 * 2 - 1
+            if math.abs(spec.axisForward) < 0.00099 then
+                spec.axisForward = 0 -- set to 0 to avoid noise caused by compression
+            end
+        end
+
         if connection:getIsServer() then
             spec.playHeadLandWarning = streamReadBool(streamId)
         end
@@ -324,6 +334,11 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
             streamWriteBool(streamId, spec.autoInvertOffset)
 
             streamWriteBool(streamId, spec.shiftParallel)
+        end
+
+        if streamWriteBool(streamId, bitAND(dirtyMask, spec.guidanceDirtyFlag) ~= 0) then
+            local axisForward = (spec.axisForward + 1) / 2 * 1023
+            streamWriteUIntN(streamId, axisForward, 10)
         end
 
         if not connection:getIsServer() then
@@ -469,22 +484,19 @@ function GlobalPositioningSystem:onUpdate(dt)
         if self.getIsEntered ~= nil and self:getIsEntered() then
             if hasGuidanceSystem then
                 local guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
+                if guidanceSteeringIsActive and self:getIsActiveForInput(true, true) then
+                    spec.axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
+                else
+                    spec.axisForward = 0
+                end
 
-                if guidanceSteeringIsActive then
-                    if self:getIsActiveForInput(true, true) then
-                        local drivable_spec = self:guidanceSteering_getSpecTable("drivable")
-                        local axisForward = MathUtil.clamp((spec.axisAccelerate - spec.axisBrake), -1, 1)
+                spec.axisAccelerate = 0
+                spec.axisBrake = 0
 
-                        drivable_spec.axisForward = axisForward
-                        spec.axisAccelerate = 0
-                        spec.axisBrake = 0
-
-                        -- Do network update
-                        if drivable_spec.axisForward ~= drivable_spec.axisForwardSend then
-                            drivable_spec.axisForwardSend = drivable_spec.axisForward
-                            self:raiseDirtyFlags(drivable_spec.dirtyFlag)
-                        end
-                    end
+                -- Do network update
+                if spec.axisForward ~= spec.axisForwardSent then
+                    spec.axisForwardSent = spec.axisForward
+                    self:raiseDirtyFlags(spec.guidanceDirtyFlag)
                 end
 
                 GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
@@ -856,51 +868,6 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
     end
 
     g_soundManager:playSample(sample)
-end
-
-function GlobalPositioningSystem.guideSteering(vehicle, dt)
-    if vehicle.isHired then
-        -- Disallow when AI is active
-        return
-    end
-
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
-    -- data
-    local data = spec.guidanceData
-
-    local guidanceNode = spec.guidanceNode
-    local snapDirX, snapDirZ, snapX, snapZ = unpack(data.snapDirection)
-    local dX, dY, dZ = unpack(data.driveTarget)
-    local lineXDir = data.snapDirectionMultiplier * snapDirX
-    local lineZDir = data.snapDirectionMultiplier * snapDirZ
-    -- Calculate target points
-    local beta = data.alphaRad
-    if data.offsetWidth ~= 0 then
-        local snapFactor = spec.autoInvertOffset and data.snapDirectionMultiplier or 1.0
-        beta = data.alphaRad - snapFactor * data.offsetWidth / data.width
-    end
-
-    local x1 = dX + data.width * snapDirZ * beta
-    local z1 = dZ - data.width * snapDirX * beta
-
-    local step = 5 -- m
-    local tX = x1 + step * lineXDir
-    local tZ = z1 + step * lineZDir
-
-    local pX, _, pZ = worldToLocal(guidanceNode, tX, dY, tZ)
-
-    DriveUtil.driveToPoint(vehicle, dt, pX, pZ)
-
-    local drivable_spec = vehicle:guidanceSteering_getSpecTable("drivable")
-    -- lock max speed to working tool
-    local speed, _ = vehicle:getSpeedLimit(true)
-    if drivable_spec.cruiseControl.state == Drivable.CRUISECONTROL_STATE_ACTIVE then
-        speed = math.min(speed, drivable_spec.cruiseControl.speed)
-    end
-
-    vehicle:getMotor():setSpeedLimit(speed)
-
-    DriveUtil.accelerateInDirection(vehicle, drivable_spec.axisForward, dt)
 end
 
 ---Shifts the created track parallel
