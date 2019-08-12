@@ -22,7 +22,26 @@ function AbstractState:new(id, object, custom_mt)
     self.id = id
     self.object = object
 
+    self.entryActions = {}
+    self.exitActions = {}
+
     return self
+end
+
+---Adds onEntry actions.
+---@param action function
+function AbstractState:addEntryAction(action)
+    if action ~= nil then
+        table.insert(self.entryActions, action)
+    end
+end
+
+---Adds onExit actions.
+---@param action function
+function AbstractState:addExitAction(action)
+    if action ~= nil then
+        table.insert(self.exitActions, action)
+    end
 end
 
 ---Gets the current state id.
