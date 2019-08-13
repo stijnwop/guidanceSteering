@@ -160,6 +160,8 @@
         <Value name="position" value="0px 0px" />
         <Value name="textBold" value="false" />
         <Value name="textSize" value="16px" />
+        <Value name="iconColor" value="$preset_colorWhite" />
+        <Value name="iconHighlightedColor" value="$preset_colorMainUI" />
     </Profile>
 
     <Profile name="guidanceButtonDetail" extends="guidanceButton">
