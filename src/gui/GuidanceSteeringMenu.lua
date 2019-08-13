@@ -13,6 +13,7 @@ local GuidanceSteeringMenu_mt = Class(GuidanceSteeringMenu, TabbedMenu)
 GuidanceSteeringMenu.CONTROLS = {
     PAGE_SETTINGS = "pageSettings",
     PAGE_STRATEGY = "pageStrategy",
+    DIALOG_BACKGROUND = "dialogBackground",
 }
 
 ---Creates a new instance of the GuidanceSteeringMenu.
@@ -32,9 +33,8 @@ function GuidanceSteeringMenu:onGuiSetupFinished()
 
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack) -- store to be able to apply it always when assigning menu button info
 
-    local height = g_screenHeight
-    local width = g_screenWidth
-    if width >= 2560 and height >= 1080 then
+    if g_screenWidth >= 2560 and g_screenHeight >= 1080 then
+        self.dialogBackground:applyProfile("guidanceSteeringDialogBgWide")
         self.header:applyProfile("guidanceSteeringMenuHeaderWide")
         self.pageSelector:applyProfile("guidanceSteeringHeaderSelectorWide")
         self.pagingTabList:applyProfile("guidanceSteeringPagingTabListWide")
@@ -61,6 +61,12 @@ function GuidanceSteeringMenu:setupPages()
         local normalizedUVs = getNormalizedUVs(iconUVs)
         self:addPageTab(page, g_baseUIFilename, normalizedUVs) -- use the global here because the value changes with resolution settings
     end
+end
+
+function GuidanceSteeringMenu:onOpen()
+    GuidanceSteeringMenu:superClass().onOpen(self)
+
+    self.inputDisableTime = 200
 end
 
 --- Define default properties and retrieval collections for menu buttons.

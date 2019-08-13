@@ -60,69 +60,87 @@
         <Trait name="debugging">
             <Value name="debugEnabled" value="true" />
         </Trait>
+        <Trait name="anchorTopLeft">
+            <Value name="screenAlign" value="topLeft" />
+            <Value name="positionOrigin" value="topLeft" />
+        </Trait>
+        <Trait name="anchorTopCenter">
+            <Value name="screenAlign" value="topCenter" />
+            <Value name="positionOrigin" value="topCenter" />
+        </Trait>
     </Traits>
 
-    <Profile name="guidanceSteeringMenuHeader" extends="uiInGameMenuHeader">
-        <Value name="size" value="1280px 112px" />
+    <Profile name="guidanceSteeringDialogBg" extends="dialogBg">
+        <Value name="size" value="1280px 720px" />
     </Profile>
+
+    <Profile name="guidanceSteeringDialogBgWide" extends="dialogBg">
+        <Value name="size" value="1280px 758px" />
+    </Profile>
+
+    <Profile name="guidanceSteeringMenuHeader" extends="emptyPanel" with="anchorTopCenter">
+        <Value name="size" value="1280px 112px" />
+        <Value name="alignmentX" value="left" />
+        <Value name="alignmentY" value="bottom" />
+        <Value name="imageColor" value="$preset_colorGlassVeryLight" />
+        <Value name="flowDirection" value="horizontal" />
+        <Value name="wrapAround" value="true" />
+        <Value name="lateralFlowSize" value="112px" />
+        <Value name="fitToElements" value="true" />
+        <Value name="autoValidateLayout" value="true" />
+        <Value name="hasFrame" value="false" />
+    </Profile>
+
     <Profile name="guidanceSteeringMenuHeaderWide" extends="guidanceSteeringMenuHeader">
-        <Value name="size" value="960px 85px" />
+        <Value name="size" value="1280px 150px" />
+        <Value name="lateralFlowSize" value="150px" />
     </Profile>
-    <Profile name="guidanceSteeringHeaderSelector" extends="uiInGameMenuHeaderSelector">
+
+    <Profile name="guidanceSteeringHeaderSelector" extends="multiTextOptionSettings">
         <Value name="size" value="1280px 112px" />
     </Profile>
-    <Profile name="guidanceSteeringHeaderSelectorWide" extends="uiInGameMenuHeaderSelector">
-        <Value name="size" value="960px 85px" />
+
+    <Profile name="guidanceSteeringHeaderSelectorWide" extends="multiTextOptionSettings">
+        <Value name="size" value="1280px 150px" />
+    </Profile>
+
+    <Profile name="guidanceSteeringPagingButtonLeft" extends="uiInGameMenuPagingButtonLeft">
+    </Profile>
+
+    <Profile name="guidanceSteeringPagingButtonRight" extends="uiInGameMenuPagingButtonRight">
     </Profile>
 
     <Profile name="guidanceSteeringTabButton" extends="uiTabbedMenuPageTabButton">
-        <Value name="size" value="85px 85px" />
     </Profile>
 
-
-<!--    <Profile name="guidanceSteeringMenuPageTab" extends="listItem">-->
-<!--        <Value name="imageColor" value="$preset_colorListRowBackground"/>-->
-<!--        <Value name="imageFocusedColor" value="$preset_colorMainUI"/>-->
-<!--        <Value name="imageSelectedColor" value="$preset_colorMainUI"/>-->
-<!--        <Value name="size" value="85px 50px" />-->
-<!--        <Value name="position" value="0px 0px"/>-->
-<!--    </Profile>-->
-
-    <Profile name="guidanceSteeringMenuPageTab" extends="uiTabbedMenuPageTab">
-<!--        <Value name="size" value="85px 85px" />-->
+    <Profile name="guidanceSteeringMenuPageTab" extends="listItem">
+        <Value name="size" value="100px 100px" />
+        <Value name="margin" value="0px 0px 0px 0px" />
+        <Value name="position" value="0px 0px" />
     </Profile>
-
 
     <Profile name="guidanceSteeringMenuPageTabAlternate" extends="guidanceSteeringMenuPageTab" with="alternateRow" />
 
-
-    <Profile name="guidanceSteeringMenuPageTabWide" extends="uiTabbedMenuPageTab">
-<!--        <Value name="size" value="100px 100px" />-->
-    </Profile>
-
-    <Profile name="guidanceSteeringPagingTabList" extends="uiInGameMenuPagingTabList">
+    <Profile name="guidanceSteeringPagingTabList" extends="list" with="anchorTopLeft">
         <Value name="size" value="1280px 112px" />
-        <Value name="listItemWidth" value="100px"/>
-        <Value name="listItemPadding" value="0px"/>
-        <Value name="listItemHeight" value="112px"/>
-        <Value name="rowBackgroundProfile" value="guidanceSteeringMenuPageTab"/>
-        <Value name="rowBackgroundProfileAlternate" value="guidanceSteeringMenuPageTabAlternate"/>
+        <Value name="position" value="0px 0px" />
+        <Value name="itemsPerRow" value="6" />
+        <Value name="listItemHeight" value="112px" />
+        <Value name="listItemWidth" value="100px" />
+        <Value name="listItemPadding" value="0px" />
+        <Value name="listItemSpacing" value="0px" />
+        <Value name="fixedHeight" value="false" />
+        <Value name="fixedWidth" value="false" />
+        <Value name="margin" value="0px 0px 0px 0px" />
+        <Value name="rowBackgroundProfile" value="guidanceSteeringMenuPageTab" />
+        <Value name="rowBackgroundProfileAlternate" value="guidanceSteeringMenuPageTabAlternate" />
     </Profile>
 
     <Profile name="guidanceSteeringPagingTabListWide" extends="guidanceSteeringPagingTabList">
-        <Value name="size" value="960px 85px" />
-        <Value name="listItemHeight" value="85px"/>
+        <Value name="size" value="1280px 150px" />
+        <Value name="listItemHeight" value="150px" />
+        <Value name="listItemWidth" value="132px" />
     </Profile>
-
-    <Profile name="guidanceSteeringDialogBg" extends="framedEmptyPanel" with="anchorMiddleCenter">
-        <Value name="position" value="0px 0px" />
-        <Value name="size" value="1280px 720px" />
-        <Value name="imageColor" value="$preset_colorGlassDark" />
-    </Profile>
-
-<!--    <Profile name="guidanceSteeringDialogBg" extends="dialogBg">-->
-<!--        <Value name="size" value="1280px 720px" />-->
-<!--    </Profile>-->
 
     <Profile name="detailText" extends="textDefault">
         <Value name="textSize" value="28px" />
