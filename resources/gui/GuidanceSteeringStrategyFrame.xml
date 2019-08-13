@@ -44,9 +44,15 @@
                 <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ui_savegameName" />
             </GuiElement>
 
-            <GuiElement position="30px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_newTrack" onClick="onClickCreateTrack" />
-            <GuiElement position="30px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_saveTrack" onClick="onClickSaveTrack" />
-            <GuiElement position="30px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_removeTrack" onClick="onClickRemoveTrack" />
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="413px 83px">
+                <GuiElement position="30px 0px" type="button" profile="guidanceButtonDetailRight" id="guidanceSteeringCreateTrackButton" onClick="onClickCreateTrack" />
+                <GuiElement position="30px 0px" type="button" profile="guidanceButtonDetailLeft" id="guidanceSteeringSaveTrackButton" onClick="onClickSaveTrack" />
+                <GuiElement position="30px 0px" type="button" profile="guidanceButtonDetailLeft" id="guidanceSteeringRemoveTrackButton" onClick="onClickRemoveTrack" />
+            </GuiElement>
+
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="413px 83px">
+                <GuiElement position="30px 0px" type="button" profile="guidanceButtonDetailRight" id="guidanceSteeringRotateTrackButton" onClick="onClickRotateTrack" />
+            </GuiElement>
 
         </GuiElement>
 

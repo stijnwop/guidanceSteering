@@ -20,6 +20,10 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
     -- Buttons
     POINT_A_BUTTON = "guidanceSteeringPointAButton",
     POINT_B_BUTTON = "guidanceSteeringPointBButton",
+    CREATE_TRACK = "guidanceSteeringCreateTrackButton",
+    SAVE_TRACK = "guidanceSteeringSaveTrackButton",
+    REMOVE_TRACK = "guidanceSteeringRemoveTrackButton",
+    ROTATE_TRACK = "guidanceSteeringRotateTrackButton",
     -- Warning box
     HELP_BOX = "settingsHelpBoxText",
 
@@ -30,11 +34,12 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
 
 ---Creates a new instance of the GuidanceSteeringStrategyFrame.
 ---@return GuidanceSteeringStrategyFrame
-function GuidanceSteeringStrategyFrame:new(i18n)
+function GuidanceSteeringStrategyFrame:new(ui, i18n)
     local self = TabbedMenuFrameElement:new(nil, GuidanceSteeringStrategyFrame_mt)
 
     self.guidanceSteering = g_guidanceSteering
 
+    self.ui = ui
     self.i18n = i18n
     self.allowSave = false
     self.rowToTrackId = {}
@@ -49,6 +54,7 @@ end
 function GuidanceSteeringStrategyFrame:copyAttributes(src)
     GuidanceSteeringStrategyFrame:superClass().copyAttributes(self, src)
 
+    self.ui = src.ui
     self.i18n = src.i18n
 end
 
@@ -65,6 +71,23 @@ function GuidanceSteeringStrategyFrame:initialize()
 
     self.guidanceSteeringCardinalsElement:setTexts(cardinals)
     self.guidanceSteeringTrackNameElement:setText("Track name")
+
+    self:build()
+end
+
+function GuidanceSteeringStrategyFrame:build()
+    local uiFilename = self.ui.uiFilename
+
+    -- Buttons
+    self.guidanceSteeringCreateTrackButton:setImageFilename(nil, uiFilename)
+    self.guidanceSteeringSaveTrackButton:setImageFilename(nil, uiFilename)
+    self.guidanceSteeringRemoveTrackButton:setImageFilename(nil, uiFilename)
+    self.guidanceSteeringRotateTrackButton:setImageFilename(nil, uiFilename)
+
+    self.guidanceSteeringCreateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.CREATE_TRACK))
+    self.guidanceSteeringSaveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.SAVE_TRACK))
+    self.guidanceSteeringRemoveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.REMOVE_TRACK))
+    self.guidanceSteeringRotateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.ROTATE_TRACK))
 end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
@@ -229,6 +252,20 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
     end
 end
 
+function GuidanceSteeringStrategyFrame:onClickRotateTrack()
+    local vehicle = self.guidanceSteering.ui:getVehicle()
+    if vehicle ~= nil then
+        local data = vehicle:getGuidanceData()
+
+        if not data.isCreated then
+            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            return
+        end
+
+        GlobalPositioningSystem.rotateTrack(vehicle, data)
+    end
+end
+
 function GuidanceSteeringStrategyFrame:getVehicleTrackData()
     local track = {}
 
@@ -360,5 +397,12 @@ function GuidanceSteeringStrategyFrame:displayMethodElements()
         self.guidanceSteeringCardinalsElement:setVisible(method == ABStrategy.A_PLUS_HEADING)
     end
 end
+
+GuidanceSteeringStrategyFrame.UVS = {
+    REMOVE_TRACK = { 780, 0, 65, 65 },
+    CREATE_TRACK = { 780, 65, 65, 65 },
+    SAVE_TRACK = { 845, 65, 65, 65 },
+    ROTATE_TRACK = { 325, 65, 65, 65 },
+}
 
 GuidanceSteeringStrategyFrame.L10N_SYMBOL = {}

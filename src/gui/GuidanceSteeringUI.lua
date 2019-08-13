@@ -53,7 +53,7 @@ end
 ---Loads the menus.
 function GuidanceSteeringUI:loadMenu()
     local settingsFrame = GuidanceSteeringSettingsFrame:new(self, self.i18n)
-    local strategyFrame = GuidanceSteeringStrategyFrame:new(self.i18n)
+    local strategyFrame = GuidanceSteeringStrategyFrame:new(self, self.i18n)
 
     self.menu = GuidanceSteeringMenu:new(self.messageCenter, self.i18n, self.inputManager)
 
