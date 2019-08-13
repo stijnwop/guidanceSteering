@@ -905,6 +905,20 @@ function GlobalPositioningSystem.realignTrack(self, data)
     self:updateGuidanceData(data, false, false)
 end
 
+---Rotates the created track 90 degrees.
+---@param self table
+---@param data table
+function GlobalPositioningSystem.rotateTrack(self, data)
+    local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
+
+    local dirX = -lineDirZ
+    local dirZ = lineDirX
+
+    data.snapDirection = { dirX, dirZ, lineX, lineZ }
+
+    self:updateGuidanceData(data, false, false)
+end
+
 function GlobalPositioningSystem.updateSounds(self, spec, dt)
     if self == g_currentMission.controlledVehicle then
         if spec.playHeadLandWarning then
