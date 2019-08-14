@@ -43,17 +43,17 @@ end
 
 --- Create the elements for the HUD.
 function GuidanceSteeringHUD:createElements()
+    local rightX = 1 - g_safeFrameOffsetX -- right of screen.
     local topRightX, topRightY = SpeedMeterDisplay.getBackgroundPosition(1)
-    local centerX = topRightX + self.speedMeterDisplay:getWidth() * 0.5
     local marginWidth, marginHeight = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.SIZE.BOX_MARGIN)
 
-    local y = self:createBox(self.uiFilename, centerX - marginWidth, topRightY - marginHeight) - marginHeight
+    local y = self:createBox(self.uiFilename, rightX, topRightY - marginHeight) - marginHeight
 end
 
 --- Create the box with the HUD icons.
 function GuidanceSteeringHUD:createBox(hudAtlasPath, x, y)
     local boxWidth, boxHeight = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.SIZE.BOX)
-    local posX = x + boxWidth
+    local posX = x - boxWidth * 0.5
 
     local iconWidth, iconHeight = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.SIZE.ICON)
 
