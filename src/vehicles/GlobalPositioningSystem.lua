@@ -38,6 +38,7 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "onCreateGuidanceData", GlobalPositioningSystem.onCreateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onUpdateGuidanceData", GlobalPositioningSystem.onUpdateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onSteeringStateChanged", GlobalPositioningSystem.onSteeringStateChanged)
+    SpecializationUtil.registerFunction(vehicleType, "onHeadlandStateChanged", GlobalPositioningSystem.onHeadlandStateChanged)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
@@ -870,6 +871,20 @@ function GlobalPositioningSystem:onSteeringStateChanged(isActive)
     end
 
     g_soundManager:playSample(sample)
+end
+
+---Called when headland mode or acting distance changed.
+---@param headlandMode number
+---@param headlandActDistance number
+function GlobalPositioningSystem:onHeadlandStateChanged(headlandMode, headlandActDistance)
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+
+    spec.headlandMode = headlandMode
+    spec.headlandActDistance = headlandActDistance
+
+    if self.isServer then
+        spec.stateMachine:requestStateUpdate()
+    end
 end
 
 ---Shifts the created track parallel

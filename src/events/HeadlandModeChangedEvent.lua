@@ -44,8 +44,7 @@ end
 function HeadlandModeChangedEvent:run(connection)
     local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    spec.headlandMode = self.mode
-    spec.headlandActDistance = self.distance
+    self.vehicle:onHeadlandStateChanged(spec.headlandMode, spec.headlandActDistance)
 
     -- Send from server to all clients
     if not connection:getIsServer() then
