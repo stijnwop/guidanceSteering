@@ -36,9 +36,10 @@ end
 
 ---Calls all action functions.
 ---@param actions table
-local function _callActions(actions)
+---@param state AbstractState
+local function _callActions(actions, state)
     for _, action in ipairs(actions) do
-        action()
+        action(state)
     end
 end
 
@@ -48,7 +49,7 @@ local function _callOnExit(state)
     state:onExit()
 
     if state.exitActions ~= nil then
-        _callActions(state.exitActions)
+        _callActions(state.exitActions, state)
     end
 end
 
@@ -58,7 +59,7 @@ local function _callOnEntry(state)
     state:onEntry()
 
     if state.entryActions ~= nil then
-        _callActions(state.entryActions)
+        _callActions(state.entryActions, state)
     end
 end
 
@@ -74,6 +75,16 @@ function FSM:transition(toState)
 
     -- We enter the new state
     _callOnEntry(toState)
+end
+
+---Current state needs update.
+function FSM:requestStateUpdate()
+    local state = self:getCurrentState()
+
+    -- We call the state update actions.
+    if state.updateActions ~= nil then
+        _callActions(state.updateActions, state)
+    end
 end
 
 ---Sets the current state

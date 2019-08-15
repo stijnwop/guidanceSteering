@@ -45,6 +45,16 @@ function StateEngine:addExitAction(stateId, action)
     end
 end
 
+---Adds an update action to the given state.
+---@param stateId number
+---@param action function
+function StateEngine:addUpdateAction(stateId, action)
+    local state = self.states[stateId]
+    if state ~= nil then
+        state:addUpdateAction(action)
+    end
+end
+
 --- Create an instance of a FSM that uses this state engine.
 --- The initial state of the FSM will be the initialState specified here.
 ---@param initialStateId number

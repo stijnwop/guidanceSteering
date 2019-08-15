@@ -24,6 +24,7 @@ function AbstractState:new(id, object, custom_mt)
 
     self.entryActions = {}
     self.exitActions = {}
+    self.updateActions = {}
 
     return self
 end
@@ -41,6 +42,14 @@ end
 function AbstractState:addExitAction(action)
     if action ~= nil then
         table.insert(self.exitActions, action)
+    end
+end
+
+---Adds state update actions.
+---@param action function
+function AbstractState:addUpdateAction(action)
+    if action ~= nil then
+        table.insert(self.updateActions, action)
     end
 end
 
