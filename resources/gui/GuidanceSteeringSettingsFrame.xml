@@ -138,7 +138,7 @@
                 </GuiElement>
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
                     <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringOffsetIncrementElement"
-                                toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
+                                toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetIncrement">
                         <GuiElement type="button" profile="multiTextOptionLeft" />
                         <GuiElement type="button" profile="multiTextOptionRight" />
                         <GuiElement type="text" profile="multiTextOptionText" />

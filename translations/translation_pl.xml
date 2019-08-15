@@ -49,6 +49,7 @@
         <text name="guidanceSteering_tooltip_width" text="Ustawia szerokość twojego pojazdu/maszyny"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Ustawia korekcję toru jazdy dla twojego pojazdu"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Ustawia wartość o jaką zmienisz szerokość roboczą i korekcję toru jazdy"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Określa, którą metodę strategii zastosować"/>

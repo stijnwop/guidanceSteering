@@ -54,6 +54,7 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Imposta l'offset del tuo veicolo"/> <!-- Set the offset of your vehicle -->
         <text name="guidanceSteering_tooltip_widthInCrement"
               text="Imposta l'incremento della larghezza per aumentare/diminuire la larghezza"/> <!-- Set the width increment to increase/decrease the width -->
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy"
               text="Determina quale strategia utilizzare per creare le linee guida"/> <!-- Determine which strategy to use to create the guidance lines -->

@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Járműszélesség beállítása"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Eltolás beállítása"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Szélesség beállítása növelése/csökkentése"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Határozza meg, hogy melyik módot kell használni az irányvonalak létrehozásához"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Határozza meg, hogy melyik módszert használja"/>

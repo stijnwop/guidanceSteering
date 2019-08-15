@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Установка ширины вашего агрегата"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Установка смещение вашей техники"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг увеличения/уменьшения рабочей ширины и смещения"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Определяется, какой метод стратегии использовать"/>

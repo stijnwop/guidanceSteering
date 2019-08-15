@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgeräts ein"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Einstellung der Arbeitsbreite. Verbreitern oder verringern"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Bestimmt welcher Führungsmodus zum Erstellen von Linien verwendet werden soll"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bestimmt den gewünschten Führungsmodus"/>

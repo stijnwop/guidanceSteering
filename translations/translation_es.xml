@@ -48,6 +48,7 @@
         <text name="guidanceSteering_tooltip_width" text="Fijar el ancho de su vehículo"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Fijar lineas de compensación del vehículo"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Fijar el ancho a incremetar por aumento/disminución del ancho."/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine qué estrategia utilizar para crear las líneas de guía."/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determinar qué método de estrategia utilizar"/>

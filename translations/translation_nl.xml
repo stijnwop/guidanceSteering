@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Stel de afwijking van je voertuig in"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>
