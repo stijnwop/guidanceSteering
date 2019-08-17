@@ -157,7 +157,6 @@ function DriveUtil.accelerateInDirection(vehicle, axisForward, dt)
         if math.abs(acceleration) > 0 then
             vehicle:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
         end
-
         if spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
             acceleration = 1.0
         end

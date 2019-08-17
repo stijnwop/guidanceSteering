@@ -322,6 +322,13 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
         if connection:getIsServer() then
             spec.playHeadLandWarning = streamReadBool(streamId)
         end
+
+        if streamReadBool(streamId) then
+            spec.axisForward = streamReadUIntN(streamId, 10) / 1023 * 2 - 1
+            if math.abs(spec.axisForward) < 0.00099 then
+                spec.axisForward = 0 -- set to 0 to avoid noise caused by compression
+            end
+        end
     end
 end
 
