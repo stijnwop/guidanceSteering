@@ -834,7 +834,10 @@ function GlobalPositioningSystem:onResetGuidanceData()
     data.isCreated = false
     data.snapDirection = { 0, 0, 0, 0 }
 
-    spec.stateMachine:reset()
+    if self.isServer then
+        spec.stateMachine:reset()
+    end
+
     spec.lastInputValues.guidanceSteeringIsActive = false
     Logger.info("onResetGuidanceData")
 end
@@ -852,25 +855,27 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     data.snapDirection = guidanceData.snapDirection
     data.alphaRad = guidanceData.alphaRad
 
-    spec.stateMachine:reset()
+    if self.isServer then
+        spec.stateMachine:reset()
+    end
     Logger.info("onUpdateGuidanceData")
 end
 
 function GlobalPositioningSystem:onSteeringStateChanged(isActive)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
-    spec.stateMachine:reset()
-
-    if not self.isClient then
-        return
+    if self.isServer then
+        spec.stateMachine:reset()
     end
 
-    local sample = spec.samples.activate
-    if not isActive then
-        sample = spec.samples.deactivate
-    end
+    if self.isClient then
+        local sample = spec.samples.activate
+        if not isActive then
+            sample = spec.samples.deactivate
+        end
 
-    g_soundManager:playSample(sample)
+        g_soundManager:playSample(sample)
+    end
 end
 
 ---Called when headland mode or acting distance changed.
