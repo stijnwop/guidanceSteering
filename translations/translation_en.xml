@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use"/>
@@ -54,8 +55,8 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name: %s already exists!"/>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create a track first!"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name '%s' already exists!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create or load a track first!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Show lines"/>
@@ -80,5 +81,16 @@
         <text name="guidanceSteering_setting_newTrack" text="Create track"/>
         <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
         <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
     </texts>
 </l10n>

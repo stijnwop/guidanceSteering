@@ -48,6 +48,7 @@
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage du véhicule"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Détermine quel mode de guidage utiliser pour créer les lignes"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Détermine le mode de guidage souhaité"/>
@@ -80,5 +81,17 @@
         <text name="guidanceSteering_setting_newTrack" text="Créer"/>
         <text name="guidanceSteering_setting_removeTrack" text="Supprimer"/>
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
+
+        <!-- Todo: new below -->
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
     </texts>
 </l10n>

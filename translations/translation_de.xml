@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>workflowsen</translationContributors>
+    <translationContributors>workflowsen, $nickers</translationContributors>
 
     <texts>
         <text name="configuration_buyableGPS" text="Global Positioning System"/>
@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgeräts ein"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Einstellung der Arbeitsbreite. Verbreitern oder verringern"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Bestimmt welcher Führungsmodus zum Erstellen von Linien verwendet werden soll"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bestimmt den gewünschten Führungsmodus"/>
@@ -54,7 +55,7 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Bestimmt den Kardinalpunkt"/>
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname: %s existiert bereits!"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname '%s' existiert bereits!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Zeige Linien"/>
@@ -79,5 +80,16 @@
         <text name="guidanceSteering_setting_newTrack" text="Erstellen"/>
         <text name="guidanceSteering_setting_removeTrack" text="Löschen"/>
         <text name="guidanceSteering_setting_saveTrack" text="Speichern"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Vorgewendemodus"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Im Vorgewendemodus kannst du einstellen wie am Vorgewende reagiert wird."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Entfernung zum Vorgewende"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Entferung zum Vorgewende in Metern."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Aus"/>
+        <text name="guidanceSteering_headland_mode_1" text="Anhalten"/>
+        <text name="guidanceSteering_headland_mode_2" text="Links wenden"/>
+        <text name="guidanceSteering_headland_mode_3" text="Rechts wenden"/>
     </texts>
 </l10n>

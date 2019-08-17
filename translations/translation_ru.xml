@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Установка ширины вашего агрегата"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Установка смещение вашей техники"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Устанавливается шаг увеличения/уменьшения рабочей ширины и смещения"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Определяется, какой метод стратегии использовать"/>
@@ -80,5 +81,17 @@
         <text name="guidanceSteering_setting_newTrack" text="Создать трек"/>
         <text name="guidanceSteering_setting_removeTrack" text="Удалить трек"/>
         <text name="guidanceSteering_setting_saveTrack" text="Сохранить трек"/>
+
+        <!-- Todo: new below -->
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
     </texts>
 </l10n>

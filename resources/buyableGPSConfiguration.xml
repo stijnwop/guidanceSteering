@@ -1,0 +1,8 @@
+<buyableGPSConfigurations>
+  <buyableGPSConfiguration name="configuration_buyableGPS_withoutGPS" price="0" isDefault="true"
+    enabled="false">
+  </buyableGPSConfiguration>
+  <buyableGPSConfiguration name="configuration_buyableGPS_withGPS" price="15000" isDefault="false"
+    enabled="true">
+  </buyableGPSConfiguration>
+</buyableGPSConfigurations>

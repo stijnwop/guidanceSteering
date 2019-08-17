@@ -12,6 +12,7 @@ source(Utils.getFilename("src/events/TrackSaveEvent.lua", directory))
 source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
 source(Utils.getFilename("src/events/ABPointPushedEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/HeadlandModeChangedEvent.lua", directory))
 
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
@@ -27,7 +28,15 @@ source(Utils.getFilename("src/gui/hud/GuidanceSteeringHUD.lua", directory))
 
 source(Utils.getFilename("src/GuidanceSteering.lua", directory))
 
-source(Utils.getFilename("src/misc/HeadlandProcessor.lua", directory))
+source(Utils.getFilename("src/misc/FSM.lua", directory))
+source(Utils.getFilename("src/misc/FSMContext.lua", directory))
+source(Utils.getFilename("src/misc/StateEngine.lua", directory))
+source(Utils.getFilename("src/misc/states/AbstractState.lua", directory))
+source(Utils.getFilename("src/misc/states/FollowLineState.lua", directory))
+source(Utils.getFilename("src/misc/states/OnHeadlandState.lua", directory))
+source(Utils.getFilename("src/misc/states/StoppedState.lua", directory))
+source(Utils.getFilename("src/misc/states/TurningState.lua", directory))
+
 source(Utils.getFilename("src/misc/MultiPurposeActionEvent.lua", directory))
 source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 --source(Utils.getFilename("src/misc/LinkedList.lua", directory))
@@ -37,6 +46,7 @@ source(Utils.getFilename("src/strategies/StraightABStrategy.lua", directory))
 --source(Utils.getFilename("src/strategies/CurveABStrategy.lua", directory))
 
 local guidanceSteering
+local guidanceConfigurations = {}
 
 local function isEnabled()
     return guidanceSteering ~= nil
@@ -61,11 +71,31 @@ end
 function loadMission(mission)
     assert(g_guidanceSteering == nil)
 
-    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter, g_settingsScreen.settingsModel)
+    guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter)
 
     getfenv(0)["g_guidanceSteering"] = guidanceSteering
 
     addModEventListener(guidanceSteering)
+
+    local xmlFile = loadXMLFile("ConfigurationXML", directory .. "resources/buyableGPSConfiguration.xml")
+    if xmlFile ~= nil then
+        for i = 1, 2 do
+            local key = ("buyableGPSConfigurations.buyableGPSConfiguration(%d)"):format(i - 1)
+
+            local config = {}
+            config.desc = ""
+            config.isDefault = getXMLBool(xmlFile, key .. "#isDefault")
+            config.dailyUpkeep = 0
+            config.index = i
+            config.price = getXMLInt(xmlFile, key .. "#price")
+            config.name = g_i18n:getText(getXMLString(xmlFile, key .. "#name"))
+            config.enabled = getXMLBool(xmlFile, key .. "#enabled")
+
+            table.insert(guidanceConfigurations, config)
+        end
+
+        delete(xmlFile)
+    end
 end
 
 function loadedMission(mission, node)
@@ -180,26 +210,6 @@ local disallowedCategories = {
     ["SILOS"] = false,
 }
 
-local entryNoGPS = {
-    desc = "",
-    price = 0,
-    dailyUpkeep = 0,
-    isDefault = true,
-    index = 1,
-    name = g_i18n:getText("configuration_buyableGPS_withoutGPS"),
-    enabled = false
-}
-
-local entryGPS = {
-    desc = "",
-    price = 15000,
-    dailyUpkeep = 0,
-    isDefault = false,
-    index = 2,
-    name = g_i18n:getText("configuration_buyableGPS_withGPS"),
-    enabled = true
-}
-
 local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
     local isDrivable = hasXMLProperty(xmlFile, "vehicle.drivable")
     local isMotorized = hasXMLProperty(xmlFile, "vehicle.motorized")
@@ -215,9 +225,7 @@ function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, custo
 
         if configurations ~= nil then
             if configurations[key] == nil then
-                configurations[key] = {}
-                table.insert(configurations[key], entryNoGPS)
-                table.insert(configurations[key], entryGPS)
+                configurations[key] = guidanceConfigurations
             else
                 -- Add enabled values to added xml configurations
                 for id, config in pairs(configurations[key]) do

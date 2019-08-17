@@ -47,6 +47,7 @@
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Stel de afwijking van je voertuig in"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>
@@ -79,5 +80,17 @@
         <text name="guidanceSteering_setting_newTrack" text="Maak een nieuw spoor"/>
         <text name="guidanceSteering_setting_removeTrack" text="Verwijder Spoor"/>
         <text name="guidanceSteering_setting_saveTrack" text="Bewaar spoor"/>
+
+        <!-- Todo: new below -->
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
     </texts>
 </l10n>
