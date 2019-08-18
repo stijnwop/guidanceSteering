@@ -84,6 +84,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE, self, GlobalPositioningSystem.actionEventToggleGuidanceSteering, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_SHOW_LINES, self, GlobalPositioningSystem.actionEventShowLines, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -95,6 +96,14 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 g_inputBinding:setActionEventTextPriority(actionEventIdToggleUI, GS_PRIO_LOW)
             end
         end
+    end
+end
+
+function GlobalPositioningSystem.actionEventShowLines(self, actionName, inputValue, callbackState, isAnalog)
+    if g_guidanceSteering:isShowGuidanceLinesEnabled() then
+        g_guidanceSteering:setIsShowGuidanceLinesEnabled(false)
+    else
+        g_guidanceSteering:setIsShowGuidanceLinesEnabled(true)
     end
 end
 
