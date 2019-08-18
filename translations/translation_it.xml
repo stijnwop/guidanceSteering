@@ -92,15 +92,15 @@
         <text name="guidanceSteering_setting_saveTrack" text="Salva traccia"/> <!-- Save track -->
 
         <!-- Todo: new below -->
-        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Modalità testata"/> <!-- Headland mode -->
+        <text name="guidanceSteering_tooltip_headlandMode" text="Con la modalità testata puoi selezionare la strategia di funzionamento sulla testata"/> <!-- With the headland mode you can set the acting strategy on the headland. -->
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distanza attivazione testata"/> <!-- Headland act distance -->
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distanza in metri per attivare prima di avvicinarsi alla testata."/> <!-- Distance in meters to act before approaching the headland. -->
 
-        <text name="guidanceSteering_headland_mode_0" text="Off"/>
-        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
-        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
-        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+        <text name="guidanceSteering_headland_mode_0" text="Spento"/> <!-- Off -->
+        <text name="guidanceSteering_headland_mode_1" text="Ferma"/> <!-- Stop -->
+        <text name="guidanceSteering_headland_mode_2" text="Svolta a sinistra"/> <!-- Turn left -->
+        <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/> <!-- Turn right -->
     </texts>
 </l10n>
