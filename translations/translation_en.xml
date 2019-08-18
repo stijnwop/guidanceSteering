@@ -72,6 +72,7 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
         <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert Offset"/>        
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Line method"/>
