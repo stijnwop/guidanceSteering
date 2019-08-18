@@ -9,11 +9,23 @@
         <fr>Guidance Steering</fr>
         <it>Guidance Steering</it>
         <es>Dirección de Guiado</es>
+        <cz>Řízené navádění</cz>
     </title>
 
     <description>
-        <en>
-            <![CDATA[Guidance Steering.]]>
+<en>
+            <![CDATA[
+Guidance Steering.
+
+Shortcuts
+- Show GPS Menu: left CTRL + S
+- Set new track: left CTRL + E
+- Automatic width: left CTRL + R
+- Enable GPS: left CTRL + W
+- Decrease width: left ALT + [-] (Numpad)
+- Increase width: left ALT + [+] (Numpad)
+- Shift track left: left ALT + PAGEUP
+- Shift track right: left ALT + PAGEDOWN]]>
         </en>
         <de>
             <![CDATA[Guidance Steering.]]>
@@ -27,6 +39,20 @@
         <es>
             <![CDATA[Dirección de Guiado.]]>
         </es>
+        <cz>
+            <![CDATA[
+Řízené navádění GPS
+
+Klávesové skratky
+- Zobraziť GPS Menu: ľavé CTRL + S
+- Nastaviť bod: ľavé CTRL + E
+- Automatická šírka: ľavé CTRL + R
+- Zapnúť GPS: ľavé CTRL + W
+- Žuženie šírky: ľavý ALT + [-] (Numpad)
+- Rozšírenie šírky: ľavý ALT + [+] (Numpad)
+- Posun riadka doľava: ľavý ALT + PAGEUP
+- Posun riadka doprava: ľavý ALT + PAGEDOWN]]>
+        </cz>     
     </description>
 
     <l10n filenamePrefix="translations/translation"/>
