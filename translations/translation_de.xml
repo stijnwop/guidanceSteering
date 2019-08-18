@@ -43,11 +43,11 @@
         <text name="guidanceSteering_tooltip_showLines" text="Visuelle Unterstützung durch Führungslinien"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richtet die Lenkung zum Geländewinkel aus"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Steuerung wird vom GPS übernommen"/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Versatz beim Wenden automatisch umgekehren"/>
         <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgeräts ein"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Versatz einstellen"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Einstellung der Arbeitsbreite. Verbreitern oder verringern"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Einstellung des Verstatzes. Verbreitern oder verringern"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Einstellung des Versatzes. Links oder Rechts verschieben"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Bestimmt welcher Führungsmodus zum Erstellen von Linien verwendet werden soll"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bestimmt den gewünschten Führungsmodus"/>
@@ -61,17 +61,17 @@
         <text name="guidanceSteering_setting_showLines" text="Zeige Linien"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="An Geländewinkel ausrichten"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktiviere Guidance Steering"/>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Versatz automatisch umkehren"/>
         <text name="guidanceSteering_setting_width" text="Breite"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Präzision der Arbeitsbreite"/>
-        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Präzision des Versatzes"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische Breite"/>
-        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Versatz umkehren"/>
         <text name="guidanceSteering_setting_changeWidth" text="Manuelle Breitenanpassung"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
-        <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
-        <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
-        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Versatz einstellen"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Versatz zurücksetzen"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Versatz einstellen"/>
 
         <text name="guidanceSteering_setting_strategy" text="Führungsmodus"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Linien-Typ"/>
