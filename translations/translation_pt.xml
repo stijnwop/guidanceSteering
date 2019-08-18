@@ -81,8 +81,8 @@
         <text name="guidanceSteering_setting_newTrack" text="Criar faixa"/>
         <text name="guidanceSteering_setting_removeTrack" text="Remover faixa"/>
         <text name="guidanceSteering_setting_saveTrack" text="Gravar faixa"/>
-	   
-	    <text name="guidanceSteering_setting_headlandMode" text="Modo de cabeceira"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Modo de cabeceira"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Com o modo cabeceira você pode definir a estratégia de atuação na cabeceira."/>
 
         <text name="guidanceSteering_setting_headlandDistance" text="Distância do ato da cabeceira"/>

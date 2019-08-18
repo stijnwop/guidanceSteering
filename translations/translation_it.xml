@@ -91,7 +91,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Rimuovi traccia"/> <!-- Remove track -->
         <text name="guidanceSteering_setting_saveTrack" text="Salva traccia"/> <!-- Save track -->
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Modalità testata"/> <!-- Headland mode -->
         <text name="guidanceSteering_tooltip_headlandMode" text="Con la modalità testata puoi selezionare la strategia di funzionamento sulla testata"/> <!-- With the headland mode you can set the acting strategy on the headland. -->
 
