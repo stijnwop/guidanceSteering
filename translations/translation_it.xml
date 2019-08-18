@@ -74,6 +74,7 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversione offset"/> <!-- Offset reversal -->
         <text name="guidanceSteering_setting_width" text="Larghezza"/> <!-- Width -->
         <text name="guidanceSteering_setting_widthIncrement" text="Incremento di larghezza"/> <!-- Width increment -->
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/> <!-- Auto width -->
         <text name="guidanceSteering_setting_changeWidth" text="Aumenta larghezza"/> <!-- Increment width -->
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/> <!-- Cardinal point -->

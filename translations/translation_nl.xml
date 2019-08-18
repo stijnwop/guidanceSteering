@@ -64,6 +64,7 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Afwijking omkeren"/>
         <text name="guidanceSteering_setting_width" text="Werkbreedte"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Werkbreedte-verhoging"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische werkbreedte"/>
         <text name="guidanceSteering_setting_changeWidth" text="Pas werkbreedte aan"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinaal punt"/>

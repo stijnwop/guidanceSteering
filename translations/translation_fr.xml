@@ -65,6 +65,7 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversion du décalage"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
         <text name="guidanceSteering_setting_changeWidth" text="Ajuster la largeur"/>
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
