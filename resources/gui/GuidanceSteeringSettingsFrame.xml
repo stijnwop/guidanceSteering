@@ -147,7 +147,7 @@
                     </GuiElement>
                 </GuiElement>
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="button" profile="guidanceButton" text="Invert offset" position="-210px 64px"
+                    <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_invertOffset" position="-210px 64px"
                                 onClick="onClickInvertOffset" />
                 </GuiElement>
             </GuiElement>

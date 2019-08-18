@@ -68,6 +68,7 @@
         <text name="guidanceSteering_setting_widthIncrement" text="Zmiana wartości"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Popraw szerokość"/>
         <text name="guidanceSteering_setting_cardinals" text="Punkt główny"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Korekcja boczna"/>
