@@ -142,7 +142,7 @@
                         <GuiElement type="button" profile="multiTextOptionLeft" />
                         <GuiElement type="button" profile="multiTextOptionRight" />
                         <GuiElement type="text" profile="multiTextOptionText" />
-                        <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthIncrement" />
+                        <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetIncrement" />
                         <GuiElement type="bitmap" profile="multiTextOptionBg" />
                     </GuiElement>
                 </GuiElement>
