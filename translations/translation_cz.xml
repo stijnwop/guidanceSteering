@@ -2,7 +2,7 @@
 <l10n>
     <translationContributors>FarmingClub.cz Jaroslav (Wales) Pavlata, the.geremy</translationContributors>
 
-     <texts>
+    <texts>
         <text name="configuration_buyableGPS" text="Navigační systém GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Ne"/>
         <text name="configuration_buyableGPS_withGPS" text="Ano"/>
@@ -26,7 +26,7 @@
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Pro nastavení bodu B jeďte nejméně 15 m. Momentální ujetá vzdálenost: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Nejprve prosím nastavte pracovní šířku!"/>
-        <text name="guidanceSteering_warning_createTrackFirst" text="Nejprve prosím vytvořte nebo nahrajte stopu!"/>        
+        <text name="guidanceSteering_warning_createTrackFirst" text="Nejprve prosím vytvořte nebo nahrajte stopu!"/>
 
         <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Nastavení navigace"/>
@@ -56,21 +56,21 @@
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Název stopy: %s již existuje!"/>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Nepodařilo se uložit data o stopě, prosím vytvořte nebo nahrajte stopu jako první!"/>        
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Nepodařilo se uložit data o stopě, prosím vytvořte nebo nahrajte stopu jako první!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Zobrazit vodítka"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uchopit úhel terénu"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktivovat systém GPS"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Prohození odsazení"/>
-        <text name="guidanceSteering_setting_width" text="Šířka"/>       
+        <text name="guidanceSteering_setting_width" text="Šířka"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Hodnota změny šířky"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Hodnota změny odsazení"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto šířka"/>
         <text name="guidanceSteering_setting_invertOffset" text="Přehodit odsazení"/>
         <text name="guidanceSteering_setting_cardinals" text="Hlavní bod"/>
-        <text name="guidanceSteering_setting_changeWidth" text="Nárust šířky"/>         
-        <text name="guidanceSteering_setting_offsetWidth" text="Šířka odsazení"/>        
+        <text name="guidanceSteering_setting_changeWidth" text="Nárust šířky"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Šířka odsazení"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Vynuluj odsazení"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Změna odsazení"/>
 
@@ -84,7 +84,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Odstranit stopu"/>
         <text name="guidanceSteering_setting_saveTrack" text="Uložit stopu"/>
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Režim souvrati"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="V režimu souvrati můžete nastavit strategii."/>
 

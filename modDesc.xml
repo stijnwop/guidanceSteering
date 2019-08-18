@@ -13,17 +13,18 @@
     </title>
 
     <description>
-<en>
+        <en>
             <![CDATA[
 Guidance Steering.
 
-Shortcuts
+Shortcuts:
 - Show GPS Menu: left CTRL + S
-- Set new track: left CTRL + E
-- Automatic width: left CTRL + R
-- Enable GPS: left CTRL + W
+- Toggle GPS: left ALT + C
+- Set new track: left ALT + E
+- Automatic width: left ALT + R
 - Decrease width: left ALT + [-] (Numpad)
 - Increase width: left ALT + [+] (Numpad)
+- Realign track: left ALT + HOME
 - Shift track left: left ALT + PAGEUP
 - Shift track right: left ALT + PAGEDOWN]]>
         </en>
@@ -45,14 +46,16 @@ Shortcuts
 
 Klávesové skratky
 - Zobraziť GPS Menu: ľavé CTRL + S
-- Nastaviť bod: ľavé CTRL + E
-- Automatická šírka: ľavé CTRL + R
-- Zapnúť GPS: ľavé CTRL + W
+- Toggle GPS: left ALT + C
+- Nastaviť bod: ľavé ALT + E
+- Automatická šírka: ľavé ALT + R
+- Zapnúť GPS: ľavé ALT + W
 - Žuženie šírky: ľavý ALT + [-] (Numpad)
 - Rozšírenie šírky: ľavý ALT + [+] (Numpad)
+- Realign track: left ALT + HOME
 - Posun riadka doľava: ľavý ALT + PAGEUP
 - Posun riadka doprava: ľavý ALT + PAGEDOWN]]>
-        </cz>     
+        </cz>
     </description>
 
     <l10n filenamePrefix="translations/translation"/>
