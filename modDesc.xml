@@ -19,11 +19,13 @@ Guidance Steering.
 
 Shortcuts
 - Show GPS Menu: left CTRL + S
-- Set new track: left CTRL + E
-- Automatic width: left CTRL + R
-- Enable GPS: left CTRL + W
-- Decrease width: left ALT + [-] (Numpad)
-- Increase width: left ALT + [+] (Numpad)
+- Set the point: left ALT + E
+- Automatic width: left ALT + R
+- Turn on GPS: left ALT + C
+- Turn on guidance steeringS: left ALT + X
+- Align track by tractor: left ALT + HOME
+- Decrease width of track: left ALT + [-] (Numpad)
+- Increase width of track: left ALT + [+] (Numpad)
 - Shift track left: left ALT + PAGEUP
 - Shift track right: left ALT + PAGEDOWN]]>
         </en>
@@ -44,14 +46,16 @@ Shortcuts
 Řízené navádění GPS
 
 Klávesové skratky
-- Zobraziť GPS Menu: ľavé CTRL + S
-- Nastaviť bod: ľavé CTRL + E
-- Automatická šírka: ľavé CTRL + R
-- Zapnúť GPS: ľavé CTRL + W
-- Žuženie šírky: ľavý ALT + [-] (Numpad)
-- Rozšírenie šírky: ľavý ALT + [+] (Numpad)
-- Posun riadka doľava: ľavý ALT + PAGEUP
-- Posun riadka doprava: ľavý ALT + PAGEDOWN]]>
+- Zobrazit GPS Menu: ľavé CTRL + S
+- Nastavit bod: levý ALT + E
+- Automatická šířka: levý ALT + R
+- Zapnout GPS: levý ALT + C
+- Zapnout řízené navádění: levý ALT + X
+- Zarovnání dráhy podle stroje: levý ALT + HOME
+- Zúžení šířky dráhy: levý ALT + [-] (Numpad)
+- Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
+- Posun dráhy doleva: levý ALT + PAGEUP
+- Posun dráhy doprava: levý ALT + PAGEDOWN]]>
         </cz>     
     </description>
 
