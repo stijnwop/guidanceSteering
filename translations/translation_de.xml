@@ -66,6 +66,7 @@
         <text name="guidanceSteering_setting_widthIncrement" text="Präzision der Arbeitsbreite"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Präzision des Versatzes"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatische Breite"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Versatz umkehren"/>
         <text name="guidanceSteering_setting_changeWidth" text="Manuelle Breitenanpassung"/>
         <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Versatz einstellen"/>
