@@ -67,6 +67,7 @@
         <text name="guidanceSteering_setting_widthIncrement" text="Szélesség növelés"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto szélesség"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Növelje a szélességet"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Eltolás szélessége"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Eltolás visszaállítása"/>

@@ -67,6 +67,7 @@
         <text name="guidanceSteering_setting_widthIncrement" text="Hodnota změny šířky"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Hodnota změny odsazení"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto šířka"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_invertOffset" text="Přehodit odsazení"/>
         <text name="guidanceSteering_setting_cardinals" text="Hlavní bod"/>
         <text name="guidanceSteering_setting_changeWidth" text="Nárust šířky"/>
