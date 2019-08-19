@@ -9,19 +9,19 @@
 
         <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: GPS ON/OFF"/>
-        <text name="input_GS_SHOW_UI" text="Mostrar menu de GPS"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Largura Auto"/>
+        <text name="input_GS_SHOW_UI" text="GS: Mostrar menu de GPS"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Largura Auto"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realinhar faixa"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Mudar para a direita"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Mudar para a esquerda"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Aumentar a largura da faixa"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Diminuir a largura da faixa"/>
+        <text name="input_GS_AXIS_REALIGN" text="GS: Realinhar faixa"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Mudar para a direita"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Mudar para a esquerda"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Aumentar a largura da faixa"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Diminuir a largura da faixa"/>
 
-        <text name="input_GS_ENABLE_STEERING" text="Ligar GPS"/>
-        <text name="input_GS_SETPOINT" text="Definir ponto de gps"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Ajustar ao ângulo do terreno"/>
-        <text name="input_GS_TURN_STEERING" text="Definir direção de direção"/>
+        <text name="input_GS_ENABLE_STEERING" text="GS: Ligar GPS"/>
+        <text name="input_GS_SETPOINT" text="GS: Definir ponto de gps"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Ajustar ao ângulo do terreno"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Definir direção de direção"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Conduza pelo menos 15m para definir o ponto B. Distância percorrida atual: %.2f"/>
