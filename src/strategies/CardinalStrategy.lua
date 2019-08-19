@@ -55,8 +55,9 @@ function CardinalStrategy:cardinalCallback(cardinal)
 
         local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
         if spec.lineStrategy:getIsGuidancePossible() then
-            -- if we already can do handle the next event directly.
-            spec.multiActionEvent:handle()
+            -- When possible we do handle the next event directly.
+            spec.multiActionEvent:reset()
+            GlobalPositioningSystem.computeGuidanceDirection(self.vehicle)
         end
     else
         showCardinalDialog(self)

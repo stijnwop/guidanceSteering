@@ -13,7 +13,7 @@
             </GuiElement>
 
             <GuiElement position="30px 0px" type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyMethodElement"
-                        toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_strategyMethod">
+                        toolTipElementId="settingsHelpBoxText" onClick="onStrategyChanged" toolTipText="$l10n_guidanceSteering_tooltip_strategyMethod">
                 <GuiElement type="button" profile="multiTextOptionLeft" />
                 <GuiElement type="button" profile="multiTextOptionRight" />
                 <GuiElement type="text" profile="multiTextOptionText" />
@@ -23,16 +23,6 @@
 
             <GuiElement position="30px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointA" onClick="onClickSetPointA" id="guidanceSteeringPointAButton" />
             <GuiElement position="30px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointB" onClick="onClickSetPointB" id="guidanceSteeringPointBButton" />
-
-            <GuiElement position="30px 0px" type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringCardinalsElement"
-                        toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_cardinals">
-                <GuiElement type="button" profile="multiTextOptionLeft" />
-                <GuiElement type="button" profile="multiTextOptionRight" />
-                <GuiElement type="text" profile="multiTextOptionText" />
-                <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_cardinals" />
-                <GuiElement type="bitmap" profile="multiTextOptionBg" />
-            </GuiElement>
-
         </GuiElement>
 
         <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="413px 500px" position="413px 0px" id="boxLayout">
