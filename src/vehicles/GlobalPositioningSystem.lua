@@ -129,7 +129,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.axisForward = 0
     spec.axisForwardSent = 0
 
-    local rootNode = self.components[1].node
+    local rootNode = self.rootNode
     local componentIndex = getXMLString(self.xmlFile, "vehicle.guidanceSteering#index")
     if componentIndex ~= nil then
         rootNode = I3DUtil.indexToObject(self.components, componentIndex)
@@ -681,13 +681,15 @@ function GlobalPositioningSystem:getHasGuidanceSystem()
     return spec.hasGuidanceSystem and spec.guidanceIsActive
 end
 
-function GlobalPositioningSystem:setGuidanceStrategy(method)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
+    if not noEventSend then
+        g_client:getServerConnection():sendEvent(GuidanceStrategyChangedEvent:new(self, method))
+    end
 
+    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     if method == ABStrategy.AB then
         spec.lineStrategy = StraightABStrategy:new(self)
     elseif method == ABStrategy.A_AUTO_B then
-
     elseif method == ABStrategy.A_PLUS_HEADING then
         spec.lineStrategy = CardinalStrategy:new(self)
     end
@@ -716,8 +718,6 @@ end
 ---@param isReset boolean
 ---@param noEventSend boolean
 function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, isReset, noEventSend)
-    Logger.info("We got called -> eventSend: ", noEventSend)
-
     GuidanceDataChangedEvent.sendEvent(self, guidanceData, isCreation, isReset, noEventSend)
 
     if isCreation then
@@ -751,6 +751,8 @@ function GlobalPositioningSystem.computeGuidanceTarget(self)
         transX, transY, transZ = getWorldTranslation(guidanceNode)
     end
 
+
+    --local driveDirX, driveDirZ = AIVehicleUtil.getDriveDirection(guidanceNode, dirX, transY, dirZ)
     local driveDirX, driveDirZ = GuidanceUtil.getDriveDirection(dirX, dirZ)
     if not data.movingForwards then
         driveDirX, driveDirZ = -driveDirX, -driveDirZ
@@ -818,8 +820,6 @@ function GlobalPositioningSystem:onCreateGuidanceData()
 
     local data = spec.guidanceData
     data.isCreated = true
-
-    Logger.info("onCreateGuidanceData")
 end
 
 function GlobalPositioningSystem:onResetGuidanceData()
@@ -839,7 +839,6 @@ function GlobalPositioningSystem:onResetGuidanceData()
     end
 
     spec.lastInputValues.guidanceSteeringIsActive = false
-    Logger.info("onResetGuidanceData")
 end
 
 function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
@@ -858,7 +857,6 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
     if self.isServer then
         spec.stateMachine:reset()
     end
-    Logger.info("onUpdateGuidanceData")
 end
 
 function GlobalPositioningSystem:onSteeringStateChanged(isActive)
@@ -1063,7 +1061,6 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
 
     event:addAction(function()
         self:updateGuidanceData(nil, false, true)
-        Logger.info("Resetting AB line strategy")
         return true
     end)
 
@@ -1084,14 +1081,15 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
             return false
         end
 
-        if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
-            g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_dropDistance"):format(spec.abDistanceCounter), 4000)
-            return false
+        if spec.lineStrategy:needsDrivingDistanceThreshold() then
+            if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
+                g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_dropDistance"):format(spec.abDistanceCounter), 4000)
+                return false
+            end
         end
 
         self:pushABPoint()
 
-        Logger.info("Generating AB line strategy")
         GlobalPositioningSystem.computeGuidanceDirection(self)
 
         return true
