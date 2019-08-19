@@ -83,16 +83,18 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
-                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE, self, GlobalPositioningSystem.actionEventToggleGuidanceSteering, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
                     g_inputBinding:setActionEventTextVisibility(actionEventId, false)
                 end
 
+                local _, actionEventIdToggleGS = self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE, self, GlobalPositioningSystem.actionEventToggleGuidanceSteering, false, true, false, true, nil, nil, true)
                 local _, actionEventIdToggleUI = self:addActionEvent(spec.actionEvents, InputAction.GS_SHOW_UI, self, GlobalPositioningSystem.actionEventOnToggleUI, false, true, false, true, nil, nil, true)
                 g_inputBinding:setActionEventTextVisibility(actionEventIdToggleUI, true)
+                g_inputBinding:setActionEventTextVisibility(actionEventIdToggleGS, true)
                 g_inputBinding:setActionEventTextPriority(actionEventIdToggleUI, GS_PRIO_LOW)
+                g_inputBinding:setActionEventTextPriority(actionEventIdToggleGS, GS_PRIO_LOW)
             end
         end
     end
