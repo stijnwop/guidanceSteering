@@ -22,7 +22,6 @@ Shortcuts
 - Set the point: left ALT + E
 - Automatic width: left ALT + R
 - Turn on GPS: left ALT + C
-- Toggle line display: left ALT + END
 - Turn on guidance steering: left ALT + X
 - Align track by tractor: left ALT + HOME
 - Decrease width of track: left ALT + [-] (Numpad)
@@ -50,7 +49,6 @@ Klávesové skratky
 - Zobrazit GPS Menu: levé CTRL + S
 - Nastavit bod: levý ALT + E
 - Automatická šířka: levý ALT + R
-- Zskrýt nebo zobrazit čáry: left ALT + END
 - Zapnout GPS: levý ALT + C
 - Zapnout řízené navádění: levý ALT + X
 - Zarovnání dráhy podle stroje: levý ALT + HOME
@@ -79,13 +77,9 @@ Klávesové skratky
         <action name="GS_AXIS_WIDTH" axisType="FULL"/>
         <action name="GS_AXIS_SHIFT" axisType="FULL"/>
         <action name="GS_AXIS_REALIGN" axisType="HALF"/>
-        <action name="GS_SHOW_LINES" axisType="HALF"/>
     </actions>
 
     <inputBinding>
-        <actionBinding action="GS_SHOW_LINES">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_end"/>
-        </actionBinding>
         <actionBinding action="GS_TOGGLE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_c"/>
         </actionBinding>

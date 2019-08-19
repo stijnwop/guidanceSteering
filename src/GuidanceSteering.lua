@@ -31,7 +31,7 @@ function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputMa
 
     self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, gui, inputManager, messageCenter)
 
-    self.showGuidanceLines = false
+    self.showGuidanceLines = true
     self.guidanceTerrainAngleIsActive = true
 
     BaseMission.onEnterVehicle = Utils.appendedFunction(BaseMission.onEnterVehicle, GuidanceSteering.onEnterVehicle)
