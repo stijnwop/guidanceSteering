@@ -8,8 +8,8 @@
 ABStrategy = {}
 
 ABStrategy.AB = 0
-ABStrategy.A_AUTO_B = 1
-ABStrategy.A_PLUS_HEADING = 2
+ABStrategy.A_PLUS_HEADING = 1
+ABStrategy.A_AUTO_B = 2
 
 ABStrategy.METHODS = {
     ABStrategy.AB,
@@ -161,13 +161,18 @@ function ABStrategy:getIsABDirectionPossible()
     return not self.ab:getIsEmpty()
 end
 
+---Returns true when the vehicle needs to drive a certain threshold, false otherwise.
+function ABStrategy:needsDrivingDistanceThreshold()
+    return true
+end
+
 ---Gets the UI texts for the methods
 ---@param i18n table
 function ABStrategy:getTexts(i18n)
     -- Remember the order is important here.
     return {
         i18n:getText("guidanceSteering_strategyMethod_aPlusB"), -- ABStrategy.AB
+        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
         --i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
-        --i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
     }
 end

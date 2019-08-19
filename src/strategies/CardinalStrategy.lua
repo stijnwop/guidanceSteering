@@ -7,21 +7,19 @@
 
 CardinalStrategy = {}
 
-CardinalStrategy.NORTH = 0
-CardinalStrategy.SOUTH = 90
-CardinalStrategy.EAST = -90
-CardinalStrategy.WEST = 180
-
 local CardinalStrategy_mt = Class(CardinalStrategy, ABStrategy)
 
 function CardinalStrategy:new(vehicle, customMt)
     local instance = ABStrategy:new(vehicle, customMt or CardinalStrategy_mt)
+
+    instance.currentCardinal = nil
 
     return instance
 end
 
 function CardinalStrategy:delete()
     CardinalStrategy:superClass().delete(self)
+    self.currentCardinal = nil
 end
 
 function CardinalStrategy:update(dt)
@@ -32,30 +30,68 @@ function CardinalStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
     CardinalStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
+local function showCardinalDialog(target)
+    g_gui:showTextInputDialog({
+        text = "Desired cardinal (degrees)",
+        defaultText = "0",
+        maxCharacters = 3,
+        target = target,
+        callback = CardinalStrategy.cardinalCallback,
+        confirmText = "Set cardinal"
+    })
+end
+
+function CardinalStrategy:pushABPoint(guidanceData)
+    if self.ab:getIsEmpty() then
+        showCardinalDialog(self)
+        return self.ab:nextPoint(guidanceData)
+    end
+end
+
+function CardinalStrategy:cardinalCallback(cardinal)
+    cardinal = tonumber(cardinal)
+    if cardinal ~= nil then
+        self.currentCardinal = MathUtil.degToRad(cardinal)
+
+        local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        if spec.lineStrategy:getIsGuidancePossible() then
+            -- if we already can do handle the next event directly.
+            spec.multiActionEvent:handle()
+        end
+    else
+        showCardinalDialog(self)
+    end
+end
+
 ---Gets the guidance drive data for the given cardinals
 ---@param guidanceNode number
 ---@param data table
 function CardinalStrategy:getGuidanceData(guidanceNode, data)
-    local cardinal = 0 -- Todo: get cardinal from settings
-
     local pointA = self.ab:getPointNode(ABPoint.POINT_A)
 
-    local x, y, z = 0, 0, 0
-    local dirX, dirZ = math.sin(cardinal), math.cos(cardinal)
+    local x, y, z = getWorldTranslation(guidanceNode)
+    local dx, dz = 0, 0
+    if self.currentCardinal ~= nil then
+        local cardinal = self.currentCardinal + math.pi
+        dx, dz = math.sin(cardinal), -math.cos(cardinal)
+    else
+        local a = { localToWorld(guidanceNode, 0, 0, 0) }
+        local b = { localToWorld(pointA, 0, 0, 0) }
 
-    -- tx, ty, tz = drive target translation
-    -- dirX, dirZ = drive direction
-    local d = {
-        tx = x,
-        ty = y,
-        tz = z,
-        dirX = dirX,
-        dirZ = dirZ,
-    }
+        local dirX = a[1] - b[1]
+        local dirZ = a[3] - b[3]
+        local length = MathUtil.vector2Length(dirX, dirZ)
 
-    return d
+        dx, dz = dirX / length, dirZ / length
+    end
+
+    return { x, y, z, dx, dz }
 end
 
 function CardinalStrategy:getIsGuidancePossible()
     return self.ab:getPointNode(ABPoint.POINT_A) ~= nil
+end
+
+function CardinalStrategy:needsDrivingDistanceThreshold()
+    return false
 end
