@@ -164,7 +164,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceTargetNode = createGuideNode("guidance_reverse_node", true)
 
     spec.lineStrategy = StraightABStrategy:new(self)
-    spec.guidanceIsActive = true
+    spec.guidanceIsActive = false
     spec.guidanceSteeringIsActive = false
     spec.autoInvertOffset = false
     spec.shiftParallel = false
@@ -175,7 +175,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.abDistanceCounter = 0
 
     spec.lastInputValues = {}
-    spec.lastInputValues.guidanceIsActive = true
+    spec.lastInputValues.guidanceIsActive = false
     spec.lastInputValues.guidanceSteeringIsActive = false
     spec.lastInputValues.autoInvertOffset = false
     spec.lastInputValues.shiftParallel = false
@@ -199,7 +199,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.widthControl.widthSent = GlobalPositioningSystem.DEFAULT_WIDTH
 
     spec.guidanceSteeringIsActiveSent = false
-    spec.showGuidanceLinesSent = false
     spec.guidanceIsActiveSent = false
     spec.guidanceTerrainAngleIsActiveSent = false
     spec.shiftParallelSent = false
