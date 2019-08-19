@@ -74,7 +74,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversione offset"/> <!-- Offset reversal -->
         <text name="guidanceSteering_setting_width" text="Larghezza"/> <!-- Width -->
         <text name="guidanceSteering_setting_widthIncrement" text="Incremento di larghezza"/> <!-- Width increment -->
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/> <!-- Auto width -->
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Aumenta larghezza"/> <!-- Increment width -->
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/> <!-- Cardinal point -->
         <text name="guidanceSteering_setting_offsetWidth" text="Larghezza offset"/> <!-- Offset width -->
@@ -91,16 +93,15 @@
         <text name="guidanceSteering_setting_removeTrack" text="Rimuovi traccia"/> <!-- Remove track -->
         <text name="guidanceSteering_setting_saveTrack" text="Salva traccia"/> <!-- Save track -->
 
-        <!-- Todo: new below -->
-        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Modalità testata"/> <!-- Headland mode -->
+        <text name="guidanceSteering_tooltip_headlandMode" text="Con la modalità testata puoi selezionare la strategia di funzionamento sulla testata"/> <!-- With the headland mode you can set the acting strategy on the headland. -->
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distanza attivazione testata"/> <!-- Headland act distance -->
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distanza in metri per attivare prima di avvicinarsi alla testata."/> <!-- Distance in meters to act before approaching the headland. -->
 
-        <text name="guidanceSteering_headland_mode_0" text="Off"/>
-        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
-        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
-        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+        <text name="guidanceSteering_headland_mode_0" text="Spento"/> <!-- Off -->
+        <text name="guidanceSteering_headland_mode_1" text="Ferma"/> <!-- Stop -->
+        <text name="guidanceSteering_headland_mode_2" text="Svolta a sinistra"/> <!-- Turn left -->
+        <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/> <!-- Turn right -->
     </texts>
 </l10n>

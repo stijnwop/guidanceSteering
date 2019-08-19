@@ -65,7 +65,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Реверсивное смещение"/>
         <text name="guidanceSteering_setting_width" text="Рабочая ширина"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Шаг изменения ширины/смещения"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Автоширина"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Изменить ширину"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Величина смещения"/>

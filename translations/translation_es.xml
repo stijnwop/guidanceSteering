@@ -65,7 +65,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Ancho"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Incrementar Ancho"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Cambiar Ancho"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Ancho de compensación"/>

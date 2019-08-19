@@ -13,17 +13,17 @@
     </title>
 
     <description>
-<en>
+        <en>
             <![CDATA[
-Guidance Steering
+Guidance Steering.
 
-Shortcuts
+Shortcuts:
 - Show GPS Menu: left CTRL + S
-- Set the point: left ALT + E
-- Automatic width: left ALT + R
-- Turn on GPS: left ALT + C
+- Toggle GPS: left ALT + C
 - Turn on guidance steering: left ALT + X
-- Align track by tractor: left ALT + HOME
+- Set track point: left ALT + E
+- Automatic width: left ALT + R
+- Realign track: left ALT + HOME
 - Decrease width of track: left ALT + [-] (Numpad)
 - Increase width of track: left ALT + [+] (Numpad)
 - Shift track left: left ALT + PAGEUP
@@ -56,7 +56,7 @@ Klávesové skratky
 - Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
 - Posun dráhy doleva: levý ALT + PAGEUP
 - Posun dráhy doprava: levý ALT + PAGEDOWN]]>
-        </cz>     
+        </cz>  
     </description>
 
     <l10n filenamePrefix="translations/translation"/>

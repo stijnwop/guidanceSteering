@@ -48,17 +48,18 @@
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatycznie odwraca korekcję przy nawrocie"/>
         <text name="guidanceSteering_tooltip_width" text="Ustawia szerokość twojego pojazdu/maszyny"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Ustawia korekcję toru jazdy dla twojego pojazdu"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Ustawia wartość o jaką zmienisz szerokość roboczą i korekcję toru jazdy"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Ustawia wartość o jaką zmienisz szerokość roboczą"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Ustawia wartość o jaką zmienisz korekcję toru jazdy"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Określa, którą metodę strategii zastosować"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Wybiera bieżącą ścieżkę do użycia"/>
-        <text name="guidanceSteering_tooltip_cardinals" text="Ustawia główne punkty"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Ustawia główny kierunek"/>
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Ścieżka o nazwie '%s' już istnieje!"/>
-
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Niepowodzenie, najpierw stwórz lub załaduj ścieżkę!"/>
+        
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Pokaż linie"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Wyrównaj do kąta terenu"/>
@@ -66,9 +67,11 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Odwrócona korekcja"/>
         <text name="guidanceSteering_setting_width" text="Szerokość"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Zmiana wartości"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Zmiana wartości"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Odwróć korekcję"/>
         <text name="guidanceSteering_setting_changeWidth" text="Popraw szerokość"/>
-        <text name="guidanceSteering_setting_cardinals" text="Punkt główny"/>
+        <text name="guidanceSteering_setting_cardinals" text="Główny kierunek"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Korekcja boczna"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Resetuj korekcję"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Zwiększ korekcję"/>

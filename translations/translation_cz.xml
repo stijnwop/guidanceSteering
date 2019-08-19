@@ -84,7 +84,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Odstranit stopu"/>
         <text name="guidanceSteering_setting_saveTrack" text="Uložit stopu"/>
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Režim souvrati"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="V režimu souvrati můžete nastavit strategii."/>
 
