@@ -13,6 +13,7 @@ source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
 source(Utils.getFilename("src/events/ABPointPushedEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
 source(Utils.getFilename("src/events/HeadlandModeChangedEvent.lua", directory))
+source(Utils.getFilename("src/events/GuidanceStrategyChangedEvent.lua", directory))
 
 source(Utils.getFilename("src/utils/Logger.lua", directory))
 source(Utils.getFilename("src/utils/DriveUtil.lua", directory))
@@ -43,7 +44,7 @@ source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 
 source(Utils.getFilename("src/strategies/ABStrategy.lua", directory))
 source(Utils.getFilename("src/strategies/StraightABStrategy.lua", directory))
---source(Utils.getFilename("src/strategies/CurveABStrategy.lua", directory))
+source(Utils.getFilename("src/strategies/CardinalStrategy.lua", directory))
 
 local guidanceSteering
 local guidanceConfigurations = {}
