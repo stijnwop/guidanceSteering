@@ -8,11 +8,11 @@
         <text name="configuration_buyableGPS_withGPS" text="Avec"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
+        <text name="input_GS_TOGGLE" text="GS: Commutation du système de guidage"/>
         <text name="input_GS_SHOW_UI" text="Afficher le menu de guidage"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
+        <text name="input_GS_AXIS_REALIGN" text="Réalignement de la trace"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Déplacer la ligne vers la droite"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Déplacer la ligne vers la gauche"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Augmenter la largeur des lignes"/>
@@ -85,11 +85,11 @@
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
 
         <!-- Todo: new below -->
-        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Mode fourrière"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Avec le mode fourrière, vous pouvez régler la manœuvre en fourrière."/>
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distance d'action en bout de champ."/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance en mètres pour agir avant l'approche de la fourrière."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
