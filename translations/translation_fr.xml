@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Fullpowershift, Farmer1602</translationContributors>
+    <translationContributors>Fullpowershift, Farmer1602, yumi</translationContributors>
 
     <texts>
         <text name="configuration_buyableGPS" text="Système de guidage"/>
@@ -48,7 +48,7 @@
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage du véhicule"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Précision du décalage pour augmenter/réduire le décalage"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Détermine quel mode de guidage utiliser pour créer les lignes"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Détermine le mode de guidage souhaité"/>
@@ -65,9 +65,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversion du décalage"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
-        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Précision du décalage"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
-        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Inverser le décalage"/>
         <text name="guidanceSteering_setting_changeWidth" text="Ajuster la largeur"/>
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Largeur du décalage"/>
@@ -93,7 +93,7 @@
 
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
-        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
-        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+        <text name="guidanceSteering_headland_mode_2" text="Tourner à gauche"/>
+        <text name="guidanceSteering_headland_mode_3" text="Tourner à droite"/>
     </texts>
 </l10n>
