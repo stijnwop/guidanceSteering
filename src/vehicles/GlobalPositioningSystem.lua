@@ -233,10 +233,9 @@ end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
     local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-    local parts = self.spec_dynamicallyLoadedParts.parts
 
-    if parts ~= nil then
-        for _, part in pairs(parts) do
+    if self.spec_dynamicallyLoadedParts ~= nil then
+        for _, part in pairs(self.spec_dynamicallyLoadedParts.parts) do
             -- linkNode field is set by the GlobalPositioningSystem code.
             if part.linkNode ~= nil then
                 setVisibility(part.linkNode, spec.hasGuidanceSystem)
