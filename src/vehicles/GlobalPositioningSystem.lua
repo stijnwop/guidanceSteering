@@ -639,10 +639,10 @@ end
 
 function GlobalPositioningSystem:onPostAttachImplement()
     if self.isClient then
-        if self:getHasGuidanceSystem() then
-            local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
-            local length = self.sizeLength
+        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
 
+        if spec.hasGuidanceSystem then
+            local length = self.sizeLength
             local function toLength(implement)
                 local object = implement.object
                 return object ~= nil and object.sizeLength or 0
