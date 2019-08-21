@@ -37,7 +37,7 @@
 
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+ Richtung"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Richtung"/>
 
         <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Visuelle Unterstützung durch Führungslinien"/>
