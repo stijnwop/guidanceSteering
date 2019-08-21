@@ -62,7 +62,7 @@ function DriveUtil.guideSteering(vehicle, dt)
 
     vehicle:getMotor():setSpeedLimit(speed)
 
-    DriveUtil.accelerateInDirection(vehicle, spec.axisForward, dt)
+    DriveUtil.accelerateInDirection(vehicle, spec.axisForward, dt, false)
 end
 
 ---Drives the given vehicle to the point.
@@ -147,7 +147,8 @@ end
 ---@param vehicle table
 ---@param axisForward number
 ---@param dt number
-function DriveUtil.accelerateInDirection(vehicle, axisForward, dt)
+---@param forceBrake boolean
+function DriveUtil.accelerateInDirection(vehicle, axisForward, dt, forceBrake)
     local spec = vehicle.spec_drivable
     local acceleration = 0
 
@@ -171,7 +172,7 @@ function DriveUtil.accelerateInDirection(vehicle, axisForward, dt)
 
     if vehicle.firstTimeRun then
         if vehicle.spec_wheels ~= nil then
-            WheelsUtil.updateWheelsPhysics(vehicle, dt, vehicle.lastSpeedReal * vehicle.movingDirection, acceleration, false, g_currentMission.missionInfo.stopAndGoBraking)
+            WheelsUtil.updateWheelsPhysics(vehicle, dt, vehicle.lastSpeedReal * vehicle.movingDirection, acceleration, forceBrake, g_currentMission.missionInfo.stopAndGoBraking)
         end
     end
 

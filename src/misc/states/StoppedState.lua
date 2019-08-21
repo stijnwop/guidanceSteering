@@ -50,7 +50,7 @@ function StoppedState:update(dt)
     StoppedState:superClass().update(self, dt)
 
     -- Force zero accelerating because the steering still can be active.
-    DriveUtil.accelerateInDirection(self.object, 0, dt)
+    DriveUtil.accelerateInDirection(self.object, 0, dt, true)
 
     return FSM.ANY_STATE
 end
