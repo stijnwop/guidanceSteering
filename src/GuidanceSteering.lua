@@ -323,7 +323,7 @@ end
 function GuidanceSteering:onEnterVehicle()
     if self:getIsClient() then
         local vehicle = self.controlledVehicle
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         local hasGuidanceSystem = spec ~= nil and spec.hasGuidanceSystem
         local gui = g_guidanceSteering.ui
 
@@ -355,7 +355,7 @@ function GuidanceSteering.installSpecializations(vehicleTypeManager, specializat
 end
 
 function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, inputValue, ...)
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive and vehicle.getShuttleDriveDirection == nil then
         spec.axisAccelerate = MathUtil.clamp(inputValue, 0, 1)
     end
@@ -364,7 +364,7 @@ function GuidanceSteering.actionEventAccelerate(vehicle, superFunc, actionName, 
 end
 
 function GuidanceSteering.actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.guidanceSteeringIsActive and vehicle.getShuttleDriveDirection == nil then
         spec.axisBrake = MathUtil.clamp(inputValue, 0, 1)
     end
@@ -376,7 +376,7 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
     superFunc(vehicle, actionName, inputValue, callbackState, isAnalog, ...)
 
     if inputValue ~= 0 then
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         if spec ~= nil and vehicle:getHasGuidanceSystem() and spec.lastInputValues.guidanceSteeringIsActive then
             if not isAnalog then
                 spec.lastInputValues.guidanceSteeringIsActive = false

@@ -34,7 +34,7 @@ function DriveUtil.guideSteering(vehicle, dt)
         return
     end
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
 
     local data = spec.guidanceData
     local driveX, driveY, driveZ = unpack(data.driveTarget)

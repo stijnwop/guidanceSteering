@@ -24,7 +24,7 @@ function FSMContext.createGuidanceStateMachine(object)
 
     engine:add(FSMContext.STATES.FOLLOW_LINE_STATE, FollowLineState:new(FSMContext.STATES.FOLLOW_LINE_STATE, object))
     engine:addUpdateAction(FSMContext.STATES.FOLLOW_LINE_STATE, function(state)
-        local spec = state.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = state.object.spec_globalPositioningSystem
         state.actDistance = spec.headlandActDistance
     end)
 

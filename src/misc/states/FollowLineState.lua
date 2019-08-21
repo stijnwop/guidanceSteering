@@ -34,7 +34,7 @@ function FollowLineState:onEntry()
     -- On entry transition
     Logger.info("FollowLineState: onEntry")
 
-    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.object.spec_globalPositioningSystem
 
     self.initialDetectedHeadland = self:detectedHeadland(0)
     self.lastIsNotOnField = false
@@ -99,7 +99,7 @@ function FollowLineState:detectedHeadland(lastSpeed)
     local distanceToHeadLand, isDistanceOnField = HeadlandUtil.getDistanceToHeadLand(self, self.object, x, y, z, lookAheadStepDistance)
 
     if distanceToHeadLand <= distanceToAct + (lookAheadStepDistance * 0.5) and not isDistanceOnField then
-        local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.object.spec_globalPositioningSystem
         spec.playHeadLandWarning = true
     end
 

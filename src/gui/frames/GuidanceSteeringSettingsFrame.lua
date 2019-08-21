@@ -100,7 +100,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
 
     local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
@@ -132,7 +132,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
     if self.allowSave then
         local vehicle = self.ui:getVehicle()
         if vehicle ~= nil then
-            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local spec = vehicle.spec_globalPositioningSystem
             local data = spec.guidanceData
 
             local state = self.guidanceSteeringWidthIncrementElement:getState()
@@ -217,7 +217,7 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
     local vehicle = self.ui:getVehicle()
 
     if vehicle ~= nil then
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
         self.currentGuidanceWidth = width
         self.currentGuidanceOffset = offset

@@ -300,7 +300,7 @@ function GuidanceSteeringStrategyFrame:onClickSetPointA()
         return
     end
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if not spec.lineStrategy:getIsABDirectionPossible() then
         -- First request reset to make sure the current track is clear
         vehicle:updateGuidanceData(nil, false, true)
@@ -317,7 +317,7 @@ function GuidanceSteeringStrategyFrame:onClickSetPointB()
         return
     end
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec.lineStrategy:getIsABDirectionPossible() then
         -- Make sure the multi action event isn't doing anything in the meantime.
         spec.multiActionEvent:reset()

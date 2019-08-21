@@ -66,7 +66,7 @@ end
 
 function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if self.isClient then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.spec_globalPositioningSystem
 
         self:clearActionEventsTable(spec.actionEvents)
 
@@ -118,7 +118,8 @@ function GlobalPositioningSystem:onLoad(savegame)
         end
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    self.spec_globalPositioningSystem = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.hasGuidanceSystem = hasGuidanceSystem
 
@@ -232,7 +233,7 @@ function GlobalPositioningSystem:onLoad(savegame)
 end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if self.spec_dynamicallyLoadedParts ~= nil then
         for _, part in pairs(self.spec_dynamicallyLoadedParts.parts) do
@@ -256,7 +257,7 @@ end
 
 function GlobalPositioningSystem:onReadStream(streamId, connection)
     if connection:getIsServer() then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.spec_globalPositioningSystem
 
         if spec.hasGuidanceSystem then
             if streamReadBool(streamId) then
@@ -276,7 +277,7 @@ end
 
 function GlobalPositioningSystem:onWriteStream(streamId, connection)
     if not connection:getIsServer() then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.spec_globalPositioningSystem
 
         if spec.hasGuidanceSystem then
             local data = spec.guidanceData
@@ -296,7 +297,7 @@ function GlobalPositioningSystem:onWriteStream(streamId, connection)
 end
 
 function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connection)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if spec.hasGuidanceSystem then
         if streamReadBool(streamId) then
@@ -326,7 +327,7 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
 end
 
 function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirtyMask)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if spec.hasGuidanceSystem then
         if streamWriteBool(streamId, bitAND(dirtyMask, spec.dirtyFlag) ~= 0) then
@@ -349,7 +350,7 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
 end
 
 function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if spec.hasGuidanceSystem then
         setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
@@ -361,7 +362,7 @@ function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
 end
 
 function GlobalPositioningSystem:onDelete()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     -- Cleanup current strategy
     spec.lineStrategy:delete()
@@ -377,7 +378,7 @@ function GlobalPositioningSystem:onDelete()
 end
 
 function GlobalPositioningSystem.updateNetworkInputs(self)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
     spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
@@ -412,7 +413,7 @@ end
 ---@param self table
 ---@param dt number
 function GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local data = spec.guidanceData
 
     local lastShiftParallelValue = spec.lastInputValues.shiftParallelValue
@@ -472,7 +473,7 @@ function GlobalPositioningSystem.updateDelayedNetworkInputs(self, dt)
 end
 
 function GlobalPositioningSystem:onUpdate(dt)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local isControlled = self.getIsControlled ~= nil and self:getIsControlled()
 
     -- We don't update when no player is in the vehicle
@@ -584,7 +585,7 @@ function GlobalPositioningSystem:onUpdate(dt)
 end
 
 function GlobalPositioningSystem:onUpdateTick(dt)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if self.isClient then
         GlobalPositioningSystem.updateSounds(self, spec, dt)
@@ -598,13 +599,13 @@ function GlobalPositioningSystem:onDraw()
     end
 
     if g_guidanceSteering:isShowGuidanceLinesEnabled() then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.spec_globalPositioningSystem
         spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
     end
 end
 
 function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, superFunc)
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec.guidanceSteeringIsActive then
         return false
     end
@@ -613,7 +614,7 @@ function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, sup
 end
 
 function GlobalPositioningSystem.inj_getCanStartAIVehicle(vehicle, superFunc)
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec.guidanceSteeringIsActive then
         return false
     end
@@ -638,7 +639,7 @@ end
 
 function GlobalPositioningSystem:onPostAttachImplement()
     if self.isClient then
-        local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.spec_globalPositioningSystem
 
         if spec.hasGuidanceSystem then
             local length = self.sizeLength
@@ -677,7 +678,7 @@ function GlobalPositioningSystem.getActualWorkWidth(guidanceNode, object)
 end
 
 function GlobalPositioningSystem:getHasGuidanceSystem()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     return spec.hasGuidanceSystem and spec.guidanceIsActive
 end
 
@@ -686,7 +687,7 @@ function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
         g_client:getServerConnection():sendEvent(GuidanceStrategyChangedEvent:new(self, method))
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     if method == ABStrategy.AB then
         spec.lineStrategy = StraightABStrategy:new(self)
     elseif method == ABStrategy.A_AUTO_B then
@@ -696,19 +697,19 @@ function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
 end
 
 function GlobalPositioningSystem:getGuidanceStrategy()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     return spec.lineStrategy
 end
 
 function GlobalPositioningSystem:pushABPoint(noEventSend)
     ABPointPushedEvent.sendEvent(self, noEventSend)
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     spec.lineStrategy:pushABPoint(spec.guidanceData)
 end
 
 function GlobalPositioningSystem:getGuidanceData()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     return spec.guidanceData
 end
 
@@ -731,7 +732,7 @@ function GlobalPositioningSystem:updateGuidanceData(guidanceData, isCreation, is
 end
 
 function GlobalPositioningSystem.computeGuidanceTarget(self)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local data = spec.guidanceData
 
     local guidanceNode = spec.guidanceTargetNode
@@ -769,7 +770,7 @@ function GlobalPositioningSystem.computeGuidanceTarget(self)
 end
 
 function GlobalPositioningSystem.computeGuidanceDirection(self)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local data = spec.guidanceData
 
     local guidanceNode = spec.guidanceTargetNode
@@ -811,7 +812,7 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
 end
 
 function GlobalPositioningSystem:onCreateGuidanceData()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     -- Reset distance counter
     spec.abDistanceCounter = 0
@@ -823,7 +824,7 @@ function GlobalPositioningSystem:onCreateGuidanceData()
 end
 
 function GlobalPositioningSystem:onResetGuidanceData()
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     -- Reset distance counter
     spec.abDistanceCounter = 0
@@ -846,7 +847,7 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local data = spec.guidanceData
     data.width = Utils.getNoNil(guidanceData.width, GlobalPositioningSystem.DEFAULT_WIDTH)
     data.offsetWidth = Utils.getNoNil(guidanceData.offsetWidth, GlobalPositioningSystem.DEFAULT_OFFSET)
@@ -860,7 +861,7 @@ function GlobalPositioningSystem:onUpdateGuidanceData(guidanceData)
 end
 
 function GlobalPositioningSystem:onSteeringStateChanged(isActive)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     if self.isServer then
         spec.stateMachine:reset()
@@ -880,7 +881,7 @@ end
 ---@param headlandMode number
 ---@param headlandActDistance number
 function GlobalPositioningSystem:onHeadlandStateChanged(headlandMode, headlandActDistance)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.headlandMode = headlandMode
     spec.headlandActDistance = headlandActDistance
@@ -957,7 +958,7 @@ end
 
 --- Action events
 function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionName, inputValue, callbackState, isAnalog)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.lastInputValues.guidanceIsActive = not spec.lastInputValues.guidanceIsActive
 
@@ -981,7 +982,7 @@ function GlobalPositioningSystem.actionEventSetAutoWidth(self, actionName, input
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local data = spec.guidanceData
     local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, self)
     data.width = width
@@ -994,7 +995,7 @@ function GlobalPositioningSystem.actionEventWidth(self, actionName, inputValue, 
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.lastInputValues.widthValue = inputValue
 end
@@ -1004,7 +1005,7 @@ function GlobalPositioningSystem.actionEventShift(self, actionName, inputValue, 
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     spec.lastInputValues.shiftParallel = true
     spec.lastInputValues.shiftParallelValue = inputValue
 end
@@ -1029,7 +1030,7 @@ function GlobalPositioningSystem.actionEventSetABPoint(self, actionName, inputVa
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
 
     spec.multiActionEvent:handle()
 end
@@ -1039,7 +1040,7 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
         return
     end
 
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     self.spec_drivable.allowPlayerControl = self.guidanceSteeringIsActive
 
     if spec.guidanceData.width <= 0 then
@@ -1056,7 +1057,7 @@ function GlobalPositioningSystem.actionEventEnableSteering(self, actionName, inp
 end
 
 function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
-    local spec = self:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.spec_globalPositioningSystem
     local event = MultiPurposeActionEvent:new(3)
 
     event:addAction(function()

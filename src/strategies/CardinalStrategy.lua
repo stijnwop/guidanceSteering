@@ -53,7 +53,7 @@ function CardinalStrategy:cardinalCallback(cardinal)
     if cardinal ~= nil then
         self.currentCardinal = MathUtil.degToRad(cardinal)
 
-        local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.vehicle.spec_globalPositioningSystem
         if spec.lineStrategy:getIsGuidancePossible() then
             -- When possible we do handle the next event directly.
             spec.multiActionEvent:reset()

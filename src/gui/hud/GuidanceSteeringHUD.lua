@@ -152,7 +152,7 @@ end
 
 function GuidanceSteeringHUD:drawText()
     if self.speedMeterDisplay.isVehicleDrawSafe and self.stateBox:getVisible() then
-        local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
         self.laneText = self:getLaneText(data.currentLane)

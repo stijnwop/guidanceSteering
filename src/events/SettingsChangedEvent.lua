@@ -44,7 +44,7 @@ function SettingsChangedEvent:run(connection)
         g_server:broadcastEvent(self, false, connection, self.vehicle)
     end
 
-    local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.vehicle.spec_globalPositioningSystem
     spec.guidanceIsActive = self.guidanceIsActive
     spec.showGuidanceLines = self.showGuidanceLines
     spec.guidanceSteeringIsActive = self.guidanceSteeringIsActive

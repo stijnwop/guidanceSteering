@@ -39,7 +39,7 @@ local ABStrategy_mt = Class(ABStrategy)
 ---@param customMt table
 function ABStrategy:new(vehicle, customMt)
     local instance = {}
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
 
     instance.ab = ABPoint:new(spec.guidanceNode)
     instance.turnActive = false
