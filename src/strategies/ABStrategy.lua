@@ -44,10 +44,19 @@ function ABStrategy:new(vehicle, customMt)
     instance.ab = ABPoint:new(spec.guidanceNode)
     instance.turnActive = false
     instance.vehicle = vehicle
+    instance.id = ABStrategy.AB
 
     setmetatable(instance, customMt or ABStrategy_mt)
 
     return instance
+end
+
+---Called on read stream.
+function ABStrategy:readStream(streamId, connection)
+end
+
+---Called on write stream.
+function ABStrategy:writeStream(streamId, connection)
 end
 
 ---Delete
@@ -144,6 +153,11 @@ end
 ---@param guidanceData table
 function ABStrategy:pushABPoint(guidanceData)
     return self.ab:nextPoint(guidanceData)
+end
+
+---Interaction function that is called from an MP event.
+---@param data table
+function ABStrategy:interact(data)
 end
 
 ---Gets if guidance can be activated

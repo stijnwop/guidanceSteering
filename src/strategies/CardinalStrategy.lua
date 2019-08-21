@@ -13,8 +13,26 @@ function CardinalStrategy:new(vehicle, customMt)
     local instance = ABStrategy:new(vehicle, customMt or CardinalStrategy_mt)
 
     instance.currentCardinal = nil
+    instance.id = ABStrategy.A_PLUS_HEADING
 
     return instance
+end
+
+function CardinalStrategy:readStream(streamId, connection)
+    CardinalStrategy:superClass().readStream(self, streamId, connection)
+
+    if streamReadBool(streamId) then
+        self.currentCardinal = streamReadFloat32(streamId)
+    end
+end
+
+function CardinalStrategy:writeStream(streamId, connection)
+    CardinalStrategy:superClass().writeStream(self, streamId, connection)
+
+    streamWriteBool(streamId, self.currentCardinal ~= nil)
+    if self.currentCardinal ~= nil then
+        streamWriteFloat32(streamId, self.currentCardinal)
+    end
 end
 
 function CardinalStrategy:delete()
@@ -43,7 +61,9 @@ end
 
 function CardinalStrategy:pushABPoint(guidanceData)
     if self.ab:getIsEmpty() then
-        showCardinalDialog(self)
+        if self.vehicle == g_currentMission.controlledVehicle then
+            showCardinalDialog(self)
+        end
         return self.ab:nextPoint(guidanceData)
     end
 end
@@ -57,6 +77,7 @@ function CardinalStrategy:cardinalCallback(cardinal)
         if spec.lineStrategy:getIsGuidancePossible() then
             -- When possible we do handle the next event directly.
             spec.multiActionEvent:reset()
+            self.vehicle:pushABPoint() -- call again for event.
             GlobalPositioningSystem.computeGuidanceDirection(self.vehicle)
         end
     else

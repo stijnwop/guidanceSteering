@@ -26,10 +26,16 @@ end
 
 function ABPointPushedEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.object)
+
+    local spec = self.object.spec_globalPositioningSystem
+    spec.lineStrategy:writeStream(streamId, connection)
 end
 
 function ABPointPushedEvent:readStream(streamId, connection)
     self.object = NetworkUtil.readNodeObject(streamId)
+    local spec = self.object.spec_globalPositioningSystem
+    spec.lineStrategy:readStream(streamId, connection)
+
     self:run(connection)
 end
 

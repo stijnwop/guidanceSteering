@@ -683,14 +683,11 @@ function GlobalPositioningSystem:getHasGuidanceSystem()
 end
 
 function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
-    if not noEventSend then
-        g_client:getServerConnection():sendEvent(GuidanceStrategyChangedEvent:new(self, method))
-    end
+    GuidanceStrategyChangedEvent.sendEvent(self, method, noEventSend)
 
     local spec = self.spec_globalPositioningSystem
     if method == ABStrategy.AB then
         spec.lineStrategy = StraightABStrategy:new(self)
-    elseif method == ABStrategy.A_AUTO_B then
     elseif method == ABStrategy.A_PLUS_HEADING then
         spec.lineStrategy = CardinalStrategy:new(self)
     end
