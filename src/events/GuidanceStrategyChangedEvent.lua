@@ -27,12 +27,12 @@ end
 
 function GuidanceStrategyChangedEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
-    streamWriteInt8(streamId, self.method)
+    streamWriteInt8(streamId, self.method + 1)
 end
 
 function GuidanceStrategyChangedEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
-    self.method = streamReadInt8(streamId)
+    self.method = streamReadInt8(streamId) - 1
 
     self:run(connection)
 end
@@ -43,5 +43,15 @@ function GuidanceStrategyChangedEvent:run(connection)
     -- Send from server to all clients
     if not connection:getIsServer() then
         g_server:broadcastEvent(self, false, connection, self.vehicle)
+    end
+end
+
+function GuidanceStrategyChangedEvent.sendEvent(object, method, noEventSend)
+    if noEventSend == nil or not noEventSend then
+        if g_server ~= nil then
+            g_server:broadcastEvent(GuidanceStrategyChangedEvent:new(object, method), nil, nil, object)
+        else
+            g_client:getServerConnection():sendEvent(GuidanceStrategyChangedEvent:new(object, method))
+        end
     end
 end

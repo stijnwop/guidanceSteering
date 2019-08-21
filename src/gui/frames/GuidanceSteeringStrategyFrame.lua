@@ -94,7 +94,7 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
         local strategy = vehicle:getGuidanceStrategy()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
-        self.guidanceSteeringStrategyMethodElement:setState(self.lastLoadedMethod + 1)
+        self.guidanceSteeringStrategyMethodElement:setState(strategy.id + 1)
         self:displayMethodElements()
 
         self.allowSave = true
