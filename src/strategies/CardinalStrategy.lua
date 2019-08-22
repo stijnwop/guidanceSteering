@@ -48,26 +48,28 @@ function CardinalStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
     CardinalStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
+---Show the input dialog for setting the current cardinal.
 local function showCardinalDialog(target)
-    g_gui:showTextInputDialog({
-        text = "Desired cardinal (degrees)",
-        defaultText = "0",
-        maxCharacters = 3,
-        target = target,
-        callback = CardinalStrategy.cardinalCallback,
-        confirmText = "Set cardinal"
-    })
-end
-
-function CardinalStrategy:pushABPoint(guidanceData)
-    if self.ab:getIsEmpty() then
-        if self.vehicle == g_currentMission.controlledVehicle then
-            showCardinalDialog(self)
-        end
-        return self.ab:nextPoint(guidanceData)
+    if target.vehicle == g_currentMission.controlledVehicle then
+        g_gui:showTextInputDialog({
+            text = "Desired cardinal (degrees)",
+            defaultText = "0",
+            maxCharacters = 3,
+            target = target,
+            callback = CardinalStrategy.cardinalCallback,
+            confirmText = "Set cardinal"
+        })
     end
 end
 
+function CardinalStrategy:interact(guidanceData)
+    if self.ab:getIsEmpty() then
+        showCardinalDialog(self)
+        self.ab:nextPoint(guidanceData)
+    end
+end
+
+---Callback on the dialog to set and calculate the current direction.
 function CardinalStrategy:cardinalCallback(cardinal)
     cardinal = tonumber(cardinal)
     if cardinal ~= nil then
@@ -77,7 +79,7 @@ function CardinalStrategy:cardinalCallback(cardinal)
         if spec.lineStrategy:getIsGuidancePossible() then
             -- When possible we do handle the next event directly.
             spec.multiActionEvent:reset()
-            self.vehicle:pushABPoint() -- call again for event.
+            self.vehicle:interactWithGuidanceStrategy() -- call again for event.
             GlobalPositioningSystem.computeGuidanceDirection(self.vehicle)
         end
     else

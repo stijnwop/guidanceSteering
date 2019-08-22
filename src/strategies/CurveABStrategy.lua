@@ -277,7 +277,7 @@ function CurveABStrategy:getGuidanceData(guidanceNode, data)
     return d
 end
 
-function CurveABStrategy:pushABPoint(guidanceNode, data)
+function CurveABStrategy:interact(guidanceNode, data)
     GuidanceUtil.createABPoint(guidanceNode, data, self.curvedABPoints)
 end
 

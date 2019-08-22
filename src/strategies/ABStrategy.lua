@@ -149,15 +149,10 @@ function ABStrategy:getGuidanceData(guidanceNode, data)
     return nil
 end
 
----Creates the next AB point
----@param guidanceData table
-function ABStrategy:pushABPoint(guidanceData)
-    return self.ab:nextPoint(guidanceData)
-end
-
 ---Interaction function that is called from an MP event.
 ---@param data table
 function ABStrategy:interact(data)
+    self.ab:nextPoint(data)
 end
 
 ---Gets if guidance can be activated

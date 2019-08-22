@@ -33,7 +33,7 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setGuidanceStrategy", GlobalPositioningSystem.setGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "getGuidanceData", GlobalPositioningSystem.getGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "updateGuidanceData", GlobalPositioningSystem.updateGuidanceData)
-    SpecializationUtil.registerFunction(vehicleType, "pushABPoint", GlobalPositioningSystem.pushABPoint)
+    SpecializationUtil.registerFunction(vehicleType, "interactWithGuidanceStrategy", GlobalPositioningSystem.interactWithGuidanceStrategy)
     SpecializationUtil.registerFunction(vehicleType, "onResetGuidanceData", GlobalPositioningSystem.onResetGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onCreateGuidanceData", GlobalPositioningSystem.onCreateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onUpdateGuidanceData", GlobalPositioningSystem.onUpdateGuidanceData)
@@ -698,11 +698,11 @@ function GlobalPositioningSystem:getGuidanceStrategy()
     return spec.lineStrategy
 end
 
-function GlobalPositioningSystem:pushABPoint(noEventSend)
-    ABPointPushedEvent.sendEvent(self, noEventSend)
+function GlobalPositioningSystem:interactWithGuidanceStrategy(noEventSend)
+    StrategyInteractEvent.sendEvent(self, noEventSend)
 
     local spec = self.spec_globalPositioningSystem
-    spec.lineStrategy:pushABPoint(spec.guidanceData)
+    spec.lineStrategy:interact(spec.guidanceData)
 end
 
 function GlobalPositioningSystem:getGuidanceData()
@@ -1068,7 +1068,7 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
             return false
         end
 
-        self:pushABPoint()
+        self:interactWithGuidanceStrategy()
 
         return true
     end)
@@ -1086,7 +1086,7 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
             end
         end
 
-        self:pushABPoint()
+        self:interactWithGuidanceStrategy()
 
         GlobalPositioningSystem.computeGuidanceDirection(self)
 

@@ -10,7 +10,7 @@ local modName = g_currentModName
 
 source(Utils.getFilename("src/events/TrackSaveEvent.lua", directory))
 source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
-source(Utils.getFilename("src/events/ABPointPushedEvent.lua", directory))
+source(Utils.getFilename("src/events/StrategyInteractEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceDataChangedEvent.lua", directory))
 source(Utils.getFilename("src/events/HeadlandModeChangedEvent.lua", directory))
 source(Utils.getFilename("src/events/GuidanceStrategyChangedEvent.lua", directory))
