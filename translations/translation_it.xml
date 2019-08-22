@@ -9,19 +9,19 @@
 
 		<!-- Inputs -->
 		<text name="input_GS_TOGGLE" text="GS: attiva/disattiva Guidance Steering"/>
-		<text name="input_GS_SHOW_UI" text="Mostra menu Guidance Steering"/>
-		<text name="input_GS_SET_AUTO_WIDTH" text="Larghezza automatica"/>
+		<text name="input_GS_SHOW_UI" text="GS: Mostra menu Guidance Steering"/>
+		<text name="input_GS_SET_AUTO_WIDTH" text="GS: Larghezza automatica"/>
 
-		<text name="input_GS_AXIS_REALIGN" text="Riallinea traccia"/>
-		<text name="input_GS_AXIS_SHIFT_1" text="Sposta traccia a destra"/>
-		<text name="input_GS_AXIS_SHIFT_2" text="Sposta traccia a sinistra"/>
-		<text name="input_GS_AXIS_WIDTH_1" text="Aumenta larghezza traccia"/>
-		<text name="input_GS_AXIS_WIDTH_2" text="Diminuisci larghezza traccia"/>
+		<text name="input_GS_AXIS_REALIGN" text="GS: Riallinea traccia"/>
+		<text name="input_GS_AXIS_SHIFT_1" text="GS: Sposta traccia a destra"/>
+		<text name="input_GS_AXIS_SHIFT_2" text="GS: Sposta traccia a sinistra"/>
+		<text name="input_GS_AXIS_WIDTH_1" text="GS: Aumenta larghezza traccia"/>
+		<text name="input_GS_AXIS_WIDTH_2" text="GS: Diminuisci larghezza traccia"/>
 
-		<text name="input_GS_ENABLE_STEERING" text="Attiva Guidance Steering"/>
-		<text name="input_GS_SETPOINT" text="Assegna il punto di direzione"/>
-		<text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Aggancia all'angolo del terreno"/>
-		<text name="input_GS_TURN_STEERING" text="Stabilisci la direzione dello sterzo"/>
+		<text name="input_GS_ENABLE_STEERING" text="GS: Attiva Guidance Steering"/>
+		<text name="input_GS_SETPOINT" text="GS: Assegna il punto di direzione"/>
+		<text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Aggancia all'angolo del terreno"/>
+		<text name="input_GS_TURN_STEERING" text="GS: Stabilisci la direzione dello sterzo"/>
 
 		<!-- Warnings -->
 		<text name="guidanceSteering_warning_dropDistance" text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f"/>
