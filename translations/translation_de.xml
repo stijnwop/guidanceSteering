@@ -95,7 +95,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Rechts wenden"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Gewünschte Richtung (Winkel)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Richtung setzen"/>
     </texts>
 </l10n>
