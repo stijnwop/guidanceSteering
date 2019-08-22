@@ -101,7 +101,7 @@ end
 
 function GuidanceSteering:onReadStream(streamId, connection)
     if connection:getIsServer() then
-        local numTracks = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS) + 1
+        local numTracks = streamReadUIntN(streamId, GuidanceSteering.SEND_NUM_BITS)
 
         for i = 1, numTracks do
             local track = {}
@@ -119,7 +119,7 @@ end
 
 function GuidanceSteering:onWriteStream(streamId, connection)
     if not connection:getIsServer() then
-        streamWriteUIntN(streamId, #self.savedTracks - 1, GuidanceSteering.SEND_NUM_BITS)
+        streamWriteUIntN(streamId, #self.savedTracks, GuidanceSteering.SEND_NUM_BITS)
 
         for _, track in ipairs(self.savedTracks) do
             streamWriteString(streamId, track.name)
