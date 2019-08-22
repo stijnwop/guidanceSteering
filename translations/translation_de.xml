@@ -93,5 +93,9 @@
         <text name="guidanceSteering_headland_mode_1" text="Anhalten"/>
         <text name="guidanceSteering_headland_mode_2" text="Links wenden"/>
         <text name="guidanceSteering_headland_mode_3" text="Rechts wenden"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

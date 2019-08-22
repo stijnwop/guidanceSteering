@@ -52,12 +52,12 @@ end
 local function showCardinalDialog(target)
     if target.vehicle == g_currentMission.controlledVehicle then
         g_gui:showTextInputDialog({
-            text = "Desired cardinal (degrees)",
+            text = g_i18n:getText("guidanceSteering_setting_cardinalTitle"),
             defaultText = "0",
             maxCharacters = 3,
             target = target,
             callback = CardinalStrategy.cardinalCallback,
-            confirmText = "Set cardinal"
+            confirmText = g_i18n:getText("guidanceSteering_setting_cardinalConfirmText")
         })
     end
 end
