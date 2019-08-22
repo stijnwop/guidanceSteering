@@ -96,7 +96,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Vira a direita"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Ângulo desejado (graus)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Defenir ângulo"/>
     </texts>
 </l10n>
