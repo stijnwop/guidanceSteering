@@ -686,6 +686,9 @@ function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
     GuidanceStrategyChangedEvent.sendEvent(self, method, noEventSend)
 
     local spec = self.spec_globalPositioningSystem
+    spec.lineStrategy:delete()
+    spec.multiActionEvent:reset()
+
     if method == ABStrategy.AB then
         spec.lineStrategy = StraightABStrategy:new(self)
     elseif method == ABStrategy.A_PLUS_HEADING then
