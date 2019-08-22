@@ -84,7 +84,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Borrar pista"/>
         <text name="guidanceSteering_setting_saveTrack" text="Guardar pista"/>
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
 
@@ -95,5 +94,9 @@
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
         <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

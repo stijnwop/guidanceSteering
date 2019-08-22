@@ -83,16 +83,19 @@
         <text name="guidanceSteering_setting_removeTrack" text="Verwijder Spoor"/>
         <text name="guidanceSteering_setting_saveTrack" text="Bewaar spoor"/>
 
-        <!-- Todo: new below -->
-        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Kopakker mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Met de kopakker mode kun je de handeling strategie instellen voor op de kopakker."/>
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Kopakker handeling afstand"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Afstand in meters om te handelen voordat je de kopakker benadert."/>
 
-        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_0" text="Uit"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
-        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
-        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+        <text name="guidanceSteering_headland_mode_2" text="Stuur left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Stuur right"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Gewenste kardinaal (graden)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Zet kardinaal"/>
     </texts>
 </l10n>

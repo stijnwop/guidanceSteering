@@ -41,7 +41,7 @@ function OnHeadlandState:onEntry()
     -- On entry transition
     Logger.info("OnHeadlandState: onEntry")
 
-    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.object.spec_globalPositioningSystem
     self.mode = spec.headlandMode
 end
 

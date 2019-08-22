@@ -84,7 +84,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Supprimer"/>
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Mode fourrière"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Avec le mode fourrière, vous pouvez régler la manœuvre en fourrière."/>
 
@@ -95,5 +94,9 @@
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Tourner à gauche"/>
         <text name="guidanceSteering_headland_mode_3" text="Tourner à droite"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

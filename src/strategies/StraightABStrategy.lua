@@ -27,14 +27,10 @@ function StraightABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffse
     StraightABStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
----Gets the guidance drive data for straight ab lines
+---Gets the guidance drive data for straight AB lines.
 ---@param guidanceNode number
 ---@param data table
 function StraightABStrategy:getGuidanceData(guidanceNode, data)
-    --    if self.vehicle.turningActive then
-    --        return StraightABStrategy:superClass().getGuidanceData(self, guidanceNode, data)
-    --    end
-
     local pointA = guidanceNode
     local pointB = self.ab:getPointNode(ABPoint.POINT_A)
     local pointBIsDropped = self:getIsGuidancePossible()
@@ -54,25 +50,12 @@ function StraightABStrategy:getGuidanceData(guidanceNode, data)
     dirX, dirZ = dirX / length, dirZ / length
 
     local x, y, z = getWorldTranslation(guidanceNode)
-    --        local localDirX, localDirY, localDirZ = worldDirectionToLocal(pointA, localDirectionToWorld(pointB, 0, 0, 1))
-    --    local dirPoint = pointB
-    local dx, dy, dz
+    local dx, dy, dz = dirX, 0, dirZ
     if pointBIsDropped then
         dx, dy, dz = localDirectionToWorld(guidanceNode, worldDirectionToLocal(pointB, dirX, 0, dirZ))
-    else
-        dx, dz = dirX, dirZ
     end
 
     -- tx, ty, tz = drive target translation
     -- dirX, dirZ = drive direction
-    -- Todo: multiply by movingDirection
-    local d = {
-        x,
-        y,
-        z,
-        dx,
-        dz,
-    }
-
-    return d
+    return { x, y, z, dx, dz }
 end

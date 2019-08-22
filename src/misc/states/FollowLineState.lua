@@ -34,7 +34,7 @@ function FollowLineState:onEntry()
     -- On entry transition
     Logger.info("FollowLineState: onEntry")
 
-    local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = self.object.spec_globalPositioningSystem
 
     self.initialDetectedHeadland = self:detectedHeadland(0)
     self.lastIsNotOnField = false
@@ -64,18 +64,22 @@ function FollowLineState:update(dt)
     DriveUtil.guideSteering(object, dt)
 
     if isOnField then
-        local detectedHeadland = self:detectedHeadland(object:getLastSpeed())
-        -- We start the guidance when facing to the field edge
-        if self.initialDetectedHeadland then
-            if not detectedHeadland then
-                self.initialDetectedHeadland = false
-            end
-            -- We return until we got back on the field again.
-            return FSM.ANY_STATE
-        end
+        local lastSpeed = object:getLastSpeed()
 
-        if detectedHeadland then
-            return FSMContext.STATES.ON_HEADLAND_STATE
+        if lastSpeed > 2 then
+            local detectedHeadland = self:detectedHeadland(lastSpeed)
+            -- We start the guidance when facing to the field edge
+            if self.initialDetectedHeadland then
+                if not detectedHeadland then
+                    self.initialDetectedHeadland = false
+                end
+                -- We return until we got back on the field again.
+                return FSM.ANY_STATE
+            end
+
+            if detectedHeadland then
+                return FSMContext.STATES.ON_HEADLAND_STATE
+            end
         end
     end
 
@@ -95,7 +99,7 @@ function FollowLineState:detectedHeadland(lastSpeed)
     local distanceToHeadLand, isDistanceOnField = HeadlandUtil.getDistanceToHeadLand(self, self.object, x, y, z, lookAheadStepDistance)
 
     if distanceToHeadLand <= distanceToAct + (lookAheadStepDistance * 0.5) and not isDistanceOnField then
-        local spec = self.object:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.object.spec_globalPositioningSystem
         spec.playHeadLandWarning = true
     end
 

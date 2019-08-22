@@ -14,7 +14,6 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
     CONTAINER = "container",
     STRATEGY = "guidanceSteeringStrategyElement",
     STRATEGY_METHOD = "guidanceSteeringStrategyMethodElement",
-    CARDINALS = "guidanceSteeringCardinalsElement",
     -- Text box
     TRACK_TEXT_INPUT = "guidanceSteeringTrackNameElement",
     -- Buttons
@@ -45,6 +44,7 @@ function GuidanceSteeringStrategyFrame:new(ui, i18n)
     self.rowToTrackId = {}
 
     self.lastLoadedTrackId = 0
+    self.lastLoadedMethod = 0
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -63,13 +63,6 @@ function GuidanceSteeringStrategyFrame:initialize()
         self.i18n:getText("guidanceSteering_strategy_abStraight"),
     })
 
-    local cardinals = {}
-
-    for deg = 0, 360, 360 / 16 do
-        table.insert(cardinals, deg)
-    end
-
-    self.guidanceSteeringCardinalsElement:setTexts(cardinals)
     self.guidanceSteeringTrackNameElement:setText("Track name")
 
     self:build()
@@ -101,6 +94,8 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
         local strategy = vehicle:getGuidanceStrategy()
 
         self.guidanceSteeringStrategyMethodElement:setTexts(strategy:getTexts(self.i18n))
+        self.guidanceSteeringStrategyMethodElement:setState(strategy.id + 1)
+        self:displayMethodElements()
 
         self.allowSave = true
     end
@@ -119,6 +114,9 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
                 self.lastLoadedTrackId = trackId
             end
         end
+
+        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
+        self:loadStrategy(method)
 
         self.allowSave = false
     end
@@ -302,11 +300,20 @@ function GuidanceSteeringStrategyFrame:onClickSetPointA()
         return
     end
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if not spec.lineStrategy:getIsABDirectionPossible() then
         -- First request reset to make sure the current track is clear
+        spec.multiActionEvent:reset()
+
+        -- Simulate event invoked:
+        -- 1 Reset
+        -- 2 Point A
+        for i = 1, 2 do
+            spec.multiActionEvent:invoked()
+        end
+
         vehicle:updateGuidanceData(nil, false, true)
-        vehicle:pushABPoint()
+        vehicle:interactWithGuidanceStrategy()
     end
 end
 
@@ -317,11 +324,27 @@ function GuidanceSteeringStrategyFrame:onClickSetPointB()
         return
     end
 
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
     if spec.lineStrategy:getIsABDirectionPossible() then
-        vehicle:pushABPoint()
+        -- Make sure the multi action event isn't doing anything in the meantime.
+        spec.multiActionEvent:reset()
+
+        -- Simulate event invoked:
+        -- 1 Reset
+        -- 2 Point A
+        -- 3 Point B
+        for i = 1, 3 do
+            spec.multiActionEvent:invoked()
+        end
+
+        vehicle:interactWithGuidanceStrategy()
         GlobalPositioningSystem.computeGuidanceDirection(vehicle)
     end
+end
+
+function GuidanceSteeringStrategyFrame:onStrategyChanged(method)
+    self:loadStrategy(method - 1)
+    self:displayMethodElements()
 end
 
 --- Functions
@@ -350,6 +373,8 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
 
             -- Now we send a creation event
             vehicle:updateGuidanceData(data, true, false)
+
+            vehicle:setGuidanceStrategy(track.strategy - 1)
         end
     end
 end
@@ -360,6 +385,16 @@ end
 
 function GuidanceSteeringStrategyFrame:deleteTrack(trackId)
     g_client:getServerConnection():sendEvent(TrackDeleteEvent:new(trackId))
+end
+
+function GuidanceSteeringStrategyFrame:loadStrategy(method)
+    local vehicle = self.guidanceSteering.ui:getVehicle()
+    if vehicle ~= nil then
+        if method ~= self.lastLoadedMethod then
+            vehicle:setGuidanceStrategy(method)
+            self.lastLoadedMethod = method
+        end
+    end
 end
 
 function GuidanceSteeringStrategyFrame:setWarningMessage(message)
@@ -390,11 +425,9 @@ function GuidanceSteeringStrategyFrame:displayMethodElements()
     if method == ABStrategy.AB then
         self.guidanceSteeringPointAButton:setVisible(true)
         self.guidanceSteeringPointBButton:setVisible(true)
-        self.guidanceSteeringCardinalsElement:setVisible(false)
     elseif method == ABStrategy.A_AUTO_B or method == ABStrategy.A_PLUS_HEADING then
         self.guidanceSteeringPointAButton:setVisible(true)
         self.guidanceSteeringPointBButton:setVisible(false)
-        self.guidanceSteeringCardinalsElement:setVisible(method == ABStrategy.A_PLUS_HEADING)
     end
 end
 

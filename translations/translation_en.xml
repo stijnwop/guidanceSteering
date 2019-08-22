@@ -73,7 +73,6 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
         <text name="guidanceSteering_setting_cardinals" text="Cardinal point"/>
-        <text name="guidanceSteering_setting_invertOffset" text="Invert Offset"/>        
 
         <text name="guidanceSteering_setting_strategy" text="Line strategy"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Line method"/>
@@ -95,5 +94,9 @@
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
         <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

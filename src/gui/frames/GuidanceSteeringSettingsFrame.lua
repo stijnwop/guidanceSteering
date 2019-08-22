@@ -95,14 +95,13 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
     self.guidanceSteeringWidthIncrementElement:setTexts(increments)
     self.guidanceSteeringOffsetIncrementElement:setTexts(increments)
 
-    self.guidanceSteeringShowLinesElement:setIsChecked(g_guidanceSteering:isShowGuidanceLinesEnabled())
-    self.guidanceSteeringSnapAngleElement:setIsChecked(g_guidanceSteering:isTerrainAngleSnapEnabled())
-
     local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
+        self.guidanceSteeringShowLinesElement:setIsChecked(g_guidanceSteering:isShowGuidanceLinesEnabled())
+        self.guidanceSteeringSnapAngleElement:setIsChecked(g_guidanceSteering:isTerrainAngleSnapEnabled())
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
         self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
 
@@ -123,16 +122,16 @@ end
 function GuidanceSteeringSettingsFrame:onFrameClose()
     GuidanceSteeringSettingsFrame:superClass().onFrameClose(self)
 
-    -- Client only
-    g_guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
-    g_guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
-    g_guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
-    g_guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
-
     if self.allowSave then
+        -- Client only
+        g_guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
+        g_guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
+        g_guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
+        g_guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
+
         local vehicle = self.ui:getVehicle()
         if vehicle ~= nil then
-            local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local spec = vehicle.spec_globalPositioningSystem
             local data = spec.guidanceData
 
             local state = self.guidanceSteeringWidthIncrementElement:getState()
@@ -217,7 +216,7 @@ function GuidanceSteeringSettingsFrame:onClickAutoWidth()
     local vehicle = self.ui:getVehicle()
 
     if vehicle ~= nil then
-        local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = vehicle.spec_globalPositioningSystem
         local width, offset = GlobalPositioningSystem.getActualWorkWidth(spec.guidanceNode, vehicle)
         self.currentGuidanceWidth = width
         self.currentGuidanceOffset = offset

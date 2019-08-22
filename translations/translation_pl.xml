@@ -59,7 +59,7 @@
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Ścieżka o nazwie '%s' już istnieje!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Niepowodzenie, najpierw stwórz lub załaduj ścieżkę!"/>
-        
+
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Pokaż linie"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Wyrównaj do kąta terenu"/>
@@ -86,7 +86,6 @@
         <text name="guidanceSteering_setting_removeTrack" text="Usuń ścieżkę"/>
         <text name="guidanceSteering_setting_saveTrack" text="Zapisz ścieżkę"/>
 
-        <!-- Todo: new below -->
         <text name="guidanceSteering_setting_headlandMode" text="Tryb uwroci"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Ustawia strategię działania na uwrociu."/>
 
@@ -97,5 +96,9 @@
         <text name="guidanceSteering_headland_mode_1" text="Zatrzymaj pojazd"/>
         <text name="guidanceSteering_headland_mode_2" text="Skręć w lewo"/>
         <text name="guidanceSteering_headland_mode_3" text="Skręć w prawo"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

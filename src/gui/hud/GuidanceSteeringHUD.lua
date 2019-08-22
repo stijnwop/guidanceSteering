@@ -126,6 +126,11 @@ function GuidanceSteeringHUD:storeScaledValues()
     self.laneTextPositionX = boxPosX + boxWidth + textOffX
     self.laneTextPositionY = boxPosY + boxHeight + textOffY
     self.laneTextSize = self.speedMeterDisplay:scalePixelToScreenHeight(GuidanceSteeringHUD.TEXT_SIZE.LANE)
+
+    textOffX, textOffY = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.POSITION.ANGLE_TEXT)
+    self.angleTextPositionX = boxPosX + boxWidth + textOffX
+    self.angleTextPositionY = boxPosY + textOffY
+    self.angleTextSize = self.speedMeterDisplay:scalePixelToScreenHeight(GuidanceSteeringHUD.TEXT_SIZE.ANGLE)
 end
 
 --- Sets the current vehicle to display on the HUD.
@@ -149,7 +154,7 @@ end
 
 function GuidanceSteeringHUD:drawText()
     if self.speedMeterDisplay.isVehicleDrawSafe and self.stateBox:getVisible() then
-        local spec = self.vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = self.vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
         self.laneText = self:getLaneText(data.currentLane)
@@ -168,19 +173,32 @@ function GuidanceSteeringHUD:drawText()
         end
 
         self:drawLaneText()
+        self:drawDirectionAngleText(spec.guidanceNode)
 
         setTextBold(false)
         setTextAlignment(RenderText.ALIGN_LEFT)
     end
 end
 
-function GuidanceSteeringHUD:drawLaneText(lane)
+function GuidanceSteeringHUD:drawLaneText()
     setTextBold(true)
     setTextAlignment(RenderText.ALIGN_RIGHT)
     setTextColor(unpack(GuidanceSteeringHUD.TEXT_COLOR.LANE))
 
     if self.laneTextPositionX ~= nil then
         renderText(self.laneTextPositionX, self.laneTextPositionY, self.laneTextSize, self.laneText)
+    end
+end
+
+function GuidanceSteeringHUD:drawDirectionAngleText(node)
+    setTextBold(true)
+    setTextAlignment(RenderText.ALIGN_RIGHT)
+    setTextColor(unpack(GuidanceSteeringHUD.TEXT_COLOR.LANE))
+
+    local dirX, _, dirZ = localDirectionToWorld(node, 0, 0, 1)
+    local angleRad = math.abs(MathUtil.getYRotationFromDirection(dirX, dirZ) - math.pi)
+    if self.angleTextPositionX ~= nil then
+        renderText(self.angleTextPositionX, self.angleTextPositionY, self.angleTextSize, tostring(MathUtil.round(math.deg(angleRad), 1)) .. "°")
     end
 end
 
@@ -209,7 +227,8 @@ GuidanceSteeringHUD.POSITION = {
     WIDTH_TEXT = { 30, -62.5 },
     WIDTH_ICON = { 20, 25 },
     SEPARATOR = { 0, 0 },
-    LANE_TEXT = { -8, -20 }
+    LANE_TEXT = { -8, -20 },
+    ANGLE_TEXT = { -8, -8 },
 }
 
 GuidanceSteeringHUD.TEXT_COLOR = {
@@ -222,5 +241,6 @@ GuidanceSteeringHUD.COLOR = {
 }
 
 GuidanceSteeringHUD.TEXT_SIZE = {
-    LANE = 14
+    LANE = 14,
+    ANGLE = 12
 }
