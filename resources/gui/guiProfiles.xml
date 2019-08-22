@@ -96,12 +96,12 @@
         <Value name="lateralFlowSize" value="150px" />
     </Profile>
 
-    <Profile name="guidanceSteeringHeaderSelector" extends="multiTextOptionSettings">
+    <Profile name="guidanceSteeringHeaderSelector" extends="uiInGameMenuHeaderSelector">
         <Value name="size" value="1280px 112px" />
     </Profile>
 
-    <Profile name="guidanceSteeringHeaderSelectorWide" extends="multiTextOptionSettings">
-        <Value name="size" value="1280px 150px" />
+    <Profile name="guidanceSteeringHeaderSelectorWide" extends="uiInGameMenuHeaderSelector">
+        <Value name="size" value="960px 112px" />
     </Profile>
 
     <Profile name="guidanceSteeringPagingButtonLeft" extends="uiInGameMenuPagingButtonLeft">
