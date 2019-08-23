@@ -54,7 +54,7 @@
         <text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Określa, którą metodę strategii zastosować"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Wybiera bieżącą ścieżkę do użycia"/>
-        <text name="guidanceSteering_tooltip_cardinals" text="Ustawia główny kierunek"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Ustawia kierunek świata"/>
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Ścieżka o nazwie '%s' już istnieje!"/>
@@ -71,7 +71,7 @@
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>
         <text name="guidanceSteering_setting_invertOffset" text="Odwróć korekcję"/>
         <text name="guidanceSteering_setting_changeWidth" text="Popraw szerokość"/>
-        <text name="guidanceSteering_setting_cardinals" text="Główny kierunek"/>
+        <text name="guidanceSteering_setting_cardinals" text="Kierunek świata"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Korekcja boczna"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Resetuj korekcję"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Zwiększ korekcję"/>
@@ -98,7 +98,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Skręć w prawo"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Kierunek świata (stopnie)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Ustaw kierunek"/>
     </texts>
 </l10n>
