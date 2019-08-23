@@ -96,7 +96,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Punto cardinale desiderato (gradi)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Imposta punto cardinale"/>
     </texts>
 </l10n>
