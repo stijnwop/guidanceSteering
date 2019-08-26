@@ -962,6 +962,13 @@ function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionN
 
     spec.lastInputValues.guidanceIsActive = not spec.lastInputValues.guidanceIsActive
 
+    if spec.actionEvents ~= nil then
+        local actionEvent = spec.actionEvents[InputAction.GS_SHOW_UI]
+        if actionEvent ~= nil then
+            g_inputBinding:setActionEventTextVisibility(actionEvent.actionEventId, spec.lastInputValues.guidanceIsActive)
+        end
+    end
+
     -- Force stop guidance
     spec.lastInputValues.guidanceSteeringIsActive = false
 end
