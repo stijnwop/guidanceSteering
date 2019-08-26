@@ -91,12 +91,12 @@
         <text name="guidanceSteering_tooltip_headlandDistance" text="На каком расстоянии от разворотной полосы (в метрах) начать действовать."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Выкл"/>
-        <text name="guidanceSteering_headland_mode_1" text="Стоп"/>
+        <text name="guidanceSteering_headland_mode_1" text="Остановится"/>
         <text name="guidanceSteering_headland_mode_2" text="Повернуть налево"/>
         <text name="guidanceSteering_headland_mode_3" text="Повернуть направо"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Желаемый кардинал (градусы)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Установить кардинал"/>
     </texts>
 </l10n>
