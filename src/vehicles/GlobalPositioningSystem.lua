@@ -39,6 +39,7 @@ function GlobalPositioningSystem.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "onUpdateGuidanceData", GlobalPositioningSystem.onUpdateGuidanceData)
     SpecializationUtil.registerFunction(vehicleType, "onSteeringStateChanged", GlobalPositioningSystem.onSteeringStateChanged)
     SpecializationUtil.registerFunction(vehicleType, "onHeadlandStateChanged", GlobalPositioningSystem.onHeadlandStateChanged)
+    SpecializationUtil.registerFunction(vehicleType, "setIsGuidanceSteeringEnabled", GlobalPositioningSystem.setIsGuidanceSteeringEnabled)
 end
 
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
@@ -268,7 +269,7 @@ function GlobalPositioningSystem:onReadStream(streamId, connection)
             end
 
             -- sync settings
-            spec.guidanceIsActive = streamReadBool(streamId)
+            self:setIsGuidanceSteeringEnabled(streamReadBool(streamId))
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.autoInvertOffset = streamReadBool(streamId)
         end
@@ -303,7 +304,7 @@ function GlobalPositioningSystem:onReadUpdateStream(streamId, timestamp, connect
         if streamReadBool(streamId) then
             local guidanceSteeringIsActive = spec.guidanceSteeringIsActive
 
-            spec.guidanceIsActive = streamReadBool(streamId)
+            self:setIsGuidanceSteeringEnabled(streamReadBool(streamId))
             spec.guidanceSteeringIsActive = streamReadBool(streamId)
             spec.autoInvertOffset = streamReadBool(streamId)
             spec.shiftParallel = streamReadBool(streamId)
@@ -380,7 +381,7 @@ end
 function GlobalPositioningSystem.updateNetworkInputs(self)
     local spec = self.spec_globalPositioningSystem
 
-    spec.guidanceIsActive = spec.lastInputValues.guidanceIsActive
+    self:setIsGuidanceSteeringEnabled(spec.lastInputValues.guidanceIsActive)
     spec.guidanceSteeringIsActive = spec.lastInputValues.guidanceSteeringIsActive
     spec.autoInvertOffset = spec.lastInputValues.autoInvertOffset
     spec.shiftParallel = spec.lastInputValues.shiftParallel
@@ -891,6 +892,18 @@ function GlobalPositioningSystem:onHeadlandStateChanged(headlandMode, headlandAc
     end
 end
 
+function GlobalPositioningSystem:setIsGuidanceSteeringEnabled(isEnabled)
+    local spec = self.spec_globalPositioningSystem
+    spec.guidanceIsActive = isEnabled
+
+    if spec.actionEvents ~= nil then
+        local actionEvent = spec.actionEvents[InputAction.GS_SHOW_UI]
+        if actionEvent ~= nil then
+            g_inputBinding:setActionEventTextVisibility(actionEvent.actionEventId, isEnabled)
+        end
+    end
+end
+
 ---Shifts the created track parallel
 ---@param data table
 ---@param dt number
@@ -961,13 +974,6 @@ function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionN
     local spec = self.spec_globalPositioningSystem
 
     spec.lastInputValues.guidanceIsActive = not spec.lastInputValues.guidanceIsActive
-
-    if spec.actionEvents ~= nil then
-        local actionEvent = spec.actionEvents[InputAction.GS_SHOW_UI]
-        if actionEvent ~= nil then
-            g_inputBinding:setActionEventTextVisibility(actionEvent.actionEventId, spec.lastInputValues.guidanceIsActive)
-        end
-    end
 
     -- Force stop guidance
     spec.lastInputValues.guidanceSteeringIsActive = false
