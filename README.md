@@ -45,6 +45,11 @@ In order to open the menu hit `ctrl + S`. Make sure that you have Guidance Steer
 
 #### AB Straight line
 The AB mode requires two (AB) points in order to calculate the angle to generate the line.
+
+Make sure that you selected the method in the menu!
+
+![Image of AB method](https://github.com/stijnwop/guidanceSteering/blob/master/.github/images/abstraight.PNG)
+
 1. Drive to the location where you want to setup your lines.
 2. Hit `alt + E` once (or use the menu) in order to reset the AB creation.
 3. Hit `alt + E` once more (or use the menu) in order to set point A.
@@ -52,6 +57,11 @@ The AB mode requires two (AB) points in order to calculate the angle to generate
 
 #### A+Heading line
 The A+Heading mode requires only an A point and a cardinal angle in order to generate the line.
+
+Make sure that you selected the method in the menu!
+
+![Image of A+Heading method](https://github.com/stijnwop/guidanceSteering/blob/master/.github/images/aplusheading.PNG)
+
 1. Drive to the location where you want to setup your lines.
 2. Hit `alt + E` once (or use the menu) in order to reset the A+Heading creation.
 3. Hit `alt + E` once more (or use the menu) in order to set point A.
