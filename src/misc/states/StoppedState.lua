@@ -25,9 +25,6 @@ end
 function StoppedState:onEntry()
     StoppedState:superClass().onEntry(self)
 
-    -- On entry transition
-    Logger.info("StoppedState: onEntry")
-
     -- We turn off the cruiseControl
     local spec = self.object:guidanceSteering_getSpecTable("drivable")
     if spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
@@ -40,9 +37,6 @@ end
 ---@see AbstractState#onExit
 function StoppedState:onExit()
     StoppedState:superClass().onExit(self)
-
-    -- On exit transition
-    Logger.info("StoppedState: onExit")
 end
 
 ---@see AbstractState#update

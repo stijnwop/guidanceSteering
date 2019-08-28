@@ -38,9 +38,6 @@ end
 function OnHeadlandState:onEntry()
     OnHeadlandState:superClass().onEntry(self)
 
-    -- On entry transition
-    Logger.info("OnHeadlandState: onEntry")
-
     local spec = self.object.spec_globalPositioningSystem
     self.mode = spec.headlandMode
 end
@@ -48,9 +45,6 @@ end
 ---@see AbstractState#onExit
 function OnHeadlandState:onExit()
     OnHeadlandState:superClass().onExit(self)
-
-    -- On exit transition
-    Logger.info("OnHeadlandState: onExit")
 end
 
 ---@see AbstractState#update

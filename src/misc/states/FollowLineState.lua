@@ -31,9 +31,6 @@ end
 function FollowLineState:onEntry()
     FollowLineState:superClass().onEntry(self)
 
-    -- On entry transition
-    Logger.info("FollowLineState: onEntry")
-
     local spec = self.object.spec_globalPositioningSystem
 
     self.initialDetectedHeadland = self:detectedHeadland(0)
@@ -49,9 +46,6 @@ end
 ---@see AbstractState#onExit
 function FollowLineState:onExit()
     FollowLineState:superClass().onExit(self)
-
-    -- On exit transition
-    Logger.info("FollowLineState: onExit")
 end
 
 ---@see AbstractState#update
