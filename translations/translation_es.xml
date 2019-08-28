@@ -84,19 +84,19 @@
         <text name="guidanceSteering_setting_removeTrack" text="Borrar pista"/>
         <text name="guidanceSteering_setting_saveTrack" text="Guardar pista"/>
 
-        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+        <text name="guidanceSteering_setting_headlandMode" text="Modo Cabecera"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Con este modo puede fijar la estrategia del mismo."/>
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distancia de Actuación en Cabecera"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distancia en metros para actuar antes de acercarse al final."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
-        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
-        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
-        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+        <text name="guidanceSteering_headland_mode_1" text="Parar"/>
+        <text name="guidanceSteering_headland_mode_2" text="Girar Izq."/>
+        <text name="guidanceSteering_headland_mode_3" text="Girar Der."/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Orientación deseada (grados)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Fijar Orientación"/>
     </texts>
 </l10n>
