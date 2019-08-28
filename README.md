@@ -32,22 +32,31 @@ To quickly build a zip of the developer version without the needed extra's, use 
 ## Documentation
 
 ### Buying GPS
-To be able to use the GPS you first need to buy the technology for your vehicle. Either buy a new vehicle and add the GPS or drive your current vehicle to the shop and configure it there.
+To be able to use Guidance Steering you first need to buy the GPS technology for your vehicle. Either buy a new vehicle and add the GPS configuration or drive your current vehicle to the shop and configure it there.
 
 ### Toggle Guidance Steering
-In order to turn guidance steering on and off hit `alt + c`
+When you buy the GPS configuration for the first time Guidance Steering is disabled.
+In order to turn Guidance Steering on and off hit `alt + c`
 
 ### Open the menu
-In order to open the menu hit `ctrl + S`.
+In order to open the menu hit `ctrl + S`. Make sure that you have Guidance Steering enabled first!
 
-### Setting up the line
+### Setting up the guidance line
 
-#### AB line
-The AB mode requires two points between which the GPS is aligned.
+#### AB Straight line
+The AB mode requires two (AB) points in order to calculate the angle to generate the line.
 1. Drive to the location where you want to setup your lines.
 2. Hit `alt + E` once (or use the menu) in order to reset the AB creation.
 3. Hit `alt + E` once more (or use the menu) in order to set point A.
 4. Hit `alt + E` once more (or use the menu) in order to set point B which will create the track.
+
+#### A+Heading line
+The A+Heading mode requires only an A point and a cardinal angle in order to generate the line.
+1. Drive to the location where you want to setup your lines.
+2. Hit `alt + E` once (or use the menu) in order to reset the A+Heading creation.
+3. Hit `alt + E` once more (or use the menu) in order to set point A.
+4. Enter the desired cardinal angle (in degrees).
+5. Hit the button 'Set Cardinal' in order to create the line.
 
 ### Auto width
 Hit `alt + R` (or use the menu) in order to detect the width of your vehicle.
@@ -67,6 +76,9 @@ Hit `alt + page up` and `alt + page down` in order to shift the track left and r
 ### Realign track
 Hit `alt + home` in order to realign the track with the vehicle.
 
+### Rotate track
+Enter the strategy menu and hit the 90 degree button in order to rotate the current track.
+
 ### Terrain angle snapping
 If you're not able to create straight lines yourself you can enable angle snapping in the menu. This will align the AB lines with the terrain.
 
@@ -74,10 +86,14 @@ If you're not able to create straight lines yourself you can enable angle snappi
 Once a track is created hit `alt + X` to toggle the steering.
 
 ### Headland control
-Currently the automatic steering stops at the headland when cruise control is enabled. Headland turning is still being worked on.
+You can set the current headland mode in order to change interaction with the headland.
+
+When you set the mode on `stop` the vehicle will stop at the set interaction distance.
+When you set the mode on `off` the vehicle will only warn you at the set interaction distance.
 
 ### Store and load tracks
 It's also possible to store the tracks and reload them. Open the second page in the menu in order to do it.
+This is also an easy way to share track data among other players in multiplayer.
 
 ### Visuals
 On the vanilla John Deere vehicles the starfires visibility is toggled when you choose to buy the GPS system.
