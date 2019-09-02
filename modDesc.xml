@@ -15,19 +15,17 @@
     <description>
         <en>
             <![CDATA[
-Guidance Steering.
+Complete field applications quickly and efficiently with the Guidance Steering mod that helps you accurately setup tracks to work your fields.
+Guidance Steering allows you to use different methods in order to create tracks. The AB point method requires you to setup two points (A and B) in order to calculate the steering angle. The A+heading method simplifies this setup with only forcing you to enter the desired steering angle.
 
-Shortcuts:
-- Show GPS Menu: left CTRL + S
-- Toggle GPS: left ALT + C
-- Turn on guidance steering: left ALT + X
-- Set track point: left ALT + E
-- Automatic width: left ALT + R
-- Realign track: left ALT + HOME
-- Decrease width of track: left ALT + [-] (Numpad)
-- Increase width of track: left ALT + [+] (Numpad)
-- Shift track left: left ALT + PAGEUP
-- Shift track right: left ALT + PAGEDOWN]]>
+Make sure to enable Guidance Steering before you're able to enter the menu.
+
+In order todo this:
+- Enable Guidance Steering: left ALT + C
+- Show Guidance Steering menu: left CTRL + S
+
+For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
+]]>
         </en>
         <de>
             <![CDATA[Guidance Steering.]]>
@@ -56,7 +54,7 @@ Klávesové skratky
 - Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
 - Posun dráhy doleva: levý ALT + PAGEUP
 - Posun dráhy doprava: levý ALT + PAGEDOWN]]>
-        </cz>  
+        </cz>
     </description>
 
     <l10n filenamePrefix="translations/translation"/>
