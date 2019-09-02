@@ -28,7 +28,19 @@ For further info on gameplay please checkout the <a href="https://github.com/sti
 ]]>
         </en>
         <de>
-            <![CDATA[Guidance Steering.]]>
+            <![CDATA[
+Beende die Feldarbeit schnell und effizient mit dem Guidance Steering Mod, dieser Mod ermöglicht dir, Spuren zu erstellen, um deine Felder effizient zu bearbeiten.
+Guidance Steering ermöglicht dir verschiedene Wege um Spuren zu erstellen. Die AB Methode benötigt zwei Punkte (A und B) um den Lenkradwinkel zu errechnen.
+Die A+Heading Methode vereinfacht die Einstellung, du kannst den einfach Lenkradwinkel direkt eingeben.
+
+Zuerst musst du Guidance Steering einschalten, bevor du das Menü aufrufen kannst.
+Um dies zu machen, musst du zuerst:
+- Ein-/Ausschalten des GPS Menü: linke ALT + C
+danach
+- Zeige GPS Menü: linke CTRL + S
+
+Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
+]]>
         </de>
         <fr>
             <![CDATA[Guidage Direction.]]>
