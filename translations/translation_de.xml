@@ -56,7 +56,7 @@
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spurname '%s' existiert bereits!"/>
-        <text name="guidanceSteering_warning_createTrackFirst" text="Bitte erstelle oder lade zuerst eine Spur bevor du die automatische Führung aktivierst!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Fehler beim Speichern. Bitte erstelle oder lade zuerst eine Spur bevor du Sie speicherst!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Zeige Linien"/>
