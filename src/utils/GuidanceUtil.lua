@@ -170,19 +170,14 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     return data
 end
 
-function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, rgb)
-    local sx, sy, sz = project(x, y, z)
-
-    if sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1 then
-        setTextBold(true)
-        setTextAlignment(RenderText.ALIGN_CENTER)
-        setTextColor(0, 0, 0, 0.75)
-        renderText(sx, sy - 0.0015, textSize, text)
-        setTextColor(rgb[1], rgb[2], rgb[3], 1)
-        renderText(sx, sy, textSize, text)
-        setTextAlignment(RenderText.ALIGN_LEFT)
-        setTextBold(false)
-    end
+function GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, textSize, text, rgb)
+    setTextBold(true)
+    setTextColor(rgb[1], rgb[2], rgb[3], 1)
+    setTextAlignment(RenderText.ALIGN_CENTER)
+    renderText3D(x1, y1, z1, rx, ry, rz, textSize, text)
+    setTextBold(false)
+    setTextColor(1, 1, 1, 1)
+    setTextAlignment(RenderText.ALIGN_LEFT)
 end
 
 function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)

@@ -109,6 +109,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         offset = data.lineDistance * 0.5
     end
 
+    local activeCamera = self.vehicle:getActiveCamera()
+    local rx, ry, rz = getWorldRotation(activeCamera.cameraNode)
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
@@ -118,7 +120,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         local z1 = lz - offset * dirZ + stepSize * step * dirZ
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
 
-        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", 0.02, rgb)
+        GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, 0.35, ".", rgb)
+
         drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, rgb)
     end
 
