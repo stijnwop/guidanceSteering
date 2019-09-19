@@ -44,11 +44,11 @@
         <text name="guidanceSteering_tooltip_showLines" text="Ayuda visual mostrando líneas de guía"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Ajustar la dirección al ángulo del terreno"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Deje que el GPS guíe la dirección."/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatically invert the offset on a turn"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Invertir linea diferida cuando gira automaticamente"/>
         <text name="guidanceSteering_tooltip_width" text="Fijar el ancho de su vehículo"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Fijar lineas de compensación del vehículo"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Fijar el ancho a incremetar por aumento/disminución del ancho."/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Fijar la distancia de la línea diferida"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine qué estrategia utilizar para crear las líneas de guía."/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determinar qué método de estrategia utilizar"/>
@@ -57,18 +57,18 @@
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="El Nombre de Pista: %s ya existe!"/>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create or load a track first!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Fallo al guardar la pista, ¡por favor cree o cargue una pista primero!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Mostrar lineas"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Ajuste del ángulo del terreno"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Habilitar dirección de guiada"/>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Ajuste automático de línea diferida"/>
         <text name="guidanceSteering_setting_width" text="Ancho"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Incrementar Ancho"/>
-        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Aumentar línea diferida"/>
         <text name="guidanceSteering_setting_autoWidth" text="Ancho Automático"/>
-        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invertir línea diferida"/>
         <text name="guidanceSteering_setting_changeWidth" text="Cambiar Ancho"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto Cardinal"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Ancho de compensación"/>
@@ -86,7 +86,7 @@
         <text name="guidanceSteering_setting_saveTrack" text="Guardar pista"/>
 
         <text name="guidanceSteering_setting_headlandMode" text="Modo Cabecera"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="Con este modo puede fijar la estrategia del mismo."/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Con este modo puede fijar la estrategia del modo cabecera."/>
 
         <text name="guidanceSteering_setting_headlandDistance" text="Distancia de Actuación en Cabecera"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distancia en metros para actuar antes de acercarse al final."/>
