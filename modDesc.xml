@@ -44,16 +44,14 @@ Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/gu
         </de>
         <fr>
             <![CDATA[
-Complete field applications quickly and efficiently with the Guidance Steering mod that helps you accurately setup tracks to work your fields.
-Guidance Steering allows you to use different methods in order to create tracks. The AB point method requires you to setup two points (A and B) in order to calculate the steering angle. The A+heading method simplifies this setup with only forcing you to enter the desired steering angle.
+Accomplissez les travaux dans les champs rapidement et efficacement avec le mod Guidance Steering qui vous aide à configurer avec précision les trajectoires pour travailler vos champs.
+Guidance Steering vous permet d'utiliser différentes méthodes pour créer des trajectoires. La méthode du point AB exige que vous configuriez deux points (A et B) afin de calculer le gisement de de direction. La méthode de cap A+ simplifie cette configuration en vous forçant seulement à entrer la valeur de la direction souhaitée.
+Assurez-vous d'activer la fonction Guidage avant d'entrer dans le menu.
+Pour ce faire :
+- Activer le guidage de la direction : gauche ALT + C
+- Afficher le menu Guidage Direction : à gauche CTRL + S
 
-Make sure to enable Guidance Steering before you're able to enter the menu.
-
-In order todo this:
-- Enable Guidance Steering: left ALT + C
-- Show Guidance Steering menu: left CTRL + S
-
-For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
+Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
 ]]>
         </fr>
         <it>
