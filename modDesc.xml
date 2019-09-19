@@ -60,7 +60,18 @@ For further info on gameplay please checkout the <a href="https://github.com/sti
             <![CDATA[Direzione di guida.]]>
         </it>
         <es>
-            <![CDATA[Dirección de Guiado.]]>
+            <![CDATA[
+Complete las tareas de campo rápida y eficazmente con el mod Dirección de Guiado que le ayudará con precisión a ajustsar las líneas de trabajo en su campo.
+Dirección de Guiado le permite usar diferentes métodos para crear pistas de trabajo. El método Punto AB necesita que fije 2 puntos (A y B) para ajustar el sentido de orientación. El método A+ simplifica esta configuración con solo forzarlo a ingresar el ángulo de dirección deseado..
+
+Asegúrese de activar la Dirección de Guiado antes de entrar en al menú.
+
+Para hacer esto:
+- Active Dirección de Guiado con: Alt + C
+- Ver menú Dirección de Guiado: CTRL Izq. + S
+
+Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
+]]>
         </es>
         <cz>
             <![CDATA[
