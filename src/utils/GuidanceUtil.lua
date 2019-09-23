@@ -26,9 +26,8 @@ function GuidanceUtil.getActiveSprayType(object)
 end
 
 ---Calculates the work width
----@param guidanceNode number
 ---@param object table
-function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+function GuidanceUtil.getMaxWorkAreaWidth(object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
 
     local calculateWorkAreas = true
@@ -37,6 +36,15 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     end
 
     local maxWidth, minWidth = 0, 0
+
+    local function createGuideNode(name, linkNode)
+        local node = createTransformGroup(name)
+        link(linkNode, node)
+        setTranslation(node, 0, 0, 0)
+        return node
+    end
+
+    local node = createGuideNode("width_node", object.rootNode)
 
     if calculateWorkAreas then
         local activeSprayType = GuidanceUtil.getActiveSprayType(object)
@@ -62,9 +70,9 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
                 return nil -- will GC table value cause ipairs
             end
 
-            local x0 = localToLocal(workArea.start, guidanceNode, 0, 0, 0)
-            local x1 = localToLocal(workArea.width, guidanceNode, 0, 0, 0)
-            local x2 = localToLocal(workArea.height, guidanceNode, 0, 0, 0)
+            local x0 = localToLocal(workArea.start, node, 0, 0, 0)
+            local x1 = localToLocal(workArea.width, node, 0, 0, 0)
+            local x2 = localToLocal(workArea.height, node, 0, 0, 0)
 
             return { x0, x1, x2 }
         end
@@ -81,8 +89,8 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local width = maxWidth + math.abs(minWidth)
     local leftMarker, rightMarker = object:getAIMarkers()
     if leftMarker ~= nil and rightMarker ~= nil then
-        local lx = localToLocal(leftMarker, guidanceNode, 0, 0, 0)
-        local rx = localToLocal(rightMarker, guidanceNode, 0, 0, 0)
+        local lx = localToLocal(leftMarker, node, 0, 0, 0)
+        local rx = localToLocal(rightMarker, node, 0, 0, 0)
         width = math.max(math.abs(lx - rx), width)
     end
 
@@ -90,6 +98,8 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     if math.abs(offset) < 0.1 then
         offset = 0
     end
+
+    delete(node)
 
     return MathUtil.round(width, 3), MathUtil.round(offset, 3)
 end
