@@ -55,7 +55,18 @@ Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="ht
 ]]>
         </fr>
         <it>
-            <![CDATA[Direzione di guida.]]>
+            <![CDATA[
+Accelera il tuo lavoro sul campo con la mod Guidance Steering, crea percorsi precisi e aumenta l'efficienza.
+Guidance Steering ti consente di creare tracce in diversi metodi.
+Il metodo AB richiede due punti (A e B) per calcolare l'angolo di sterzata.
+Il metodo A+testata semplifica la creazione, è possibile inserire direttamente l'angolo di sterzata.
+
+È necessario attivare la mod Guidance Steering prima di poter accedere al menu.
+Primo: accendi il GPS (ALT sinistro + C)
+Quindi: apri il menu GPS (CTRL sinistro + S)
+
+Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
+]]>
         </it>
         <es>
             <![CDATA[
