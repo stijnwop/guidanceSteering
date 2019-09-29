@@ -8,20 +8,24 @@
         <text name="configuration_buyableGPS_withGPS" text="Ano"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="Zapnout/vypnout GPS"/>
-        <text name="input_GS_SHOW_UI" text="Zobrazit menu GPS"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Auto šířka"/>
+        <text name="input_GS_TOGGLE" text="GPS: Zapnout/vypnout GPS"/>
+        <text name="input_GS_SHOW_UI" text="GPS: Zobrazit menu GPS"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GPS: Automatická šířka"/>      
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Posunout stopu doprava"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Posunout stopu doleva"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Zvýšit šířku"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Snížit šířku"/>
+        <text name="input_GS_AXIS_REALIGN" text="GPS: Realign track"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GPS: Posunout stopu doprava"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GPS: Posunout stopu doleva"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GPS: Zvětšit šířku dráhy"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GPS: Zmenšit šířku dráhy"/>
 
-        <text name="input_GS_ENABLE_STEERING" text="Systém řízení GPS"/>
-        <text name="input_GS_SETPOINT" text="Nastavit orientační bod"/>
+        <text name="input_GS_ENABLE_STEERING" text="GPS: Zapnout/vypnout řízené navádění GPS"/>
+        <text name="input_GS_SETPOINT" text="GPS: Nastavit orientační bod"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uchopit úhel terénu"/>
         <text name="input_GS_TURN_STEERING" text="Nastavit směr řízení"/>
+
+        <!-- shortcuts added by the.geremy -->
+        <text name="input_GS_SHOW_LINES" text="GPS: Zapnout/vypnout vodítka GPS"/>
+        <text name="input_GS_ROT90_TRACK" text="GPS: Otočit dráhu o 90 stupňů"/>  
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Pro nastavení bodu B jeďte nejméně 15 m. Momentální ujetá vzdálenost: %.2f"/>
@@ -96,7 +100,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Odbočit vpravo"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Požadovaný kardinál (stupně)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Nastavit kardinál"/>
     </texts>
 </l10n>
