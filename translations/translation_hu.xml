@@ -23,6 +23,7 @@
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Terepszög rögzítése"/>
         <text name="input_GS_TURN_STEERING" text="Kormányzás beállítása"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="A B. pont beállításához legalább 15 métert kell vezetni: %.2f"/>

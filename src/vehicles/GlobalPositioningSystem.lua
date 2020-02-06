@@ -85,6 +85,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE_LINE_DISPLAY, self, GlobalPositioningSystem.actionEventToggleLineDisplay, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ROTATE_TRACK, self, GlobalPositioningSystem.actionEventRotateTrack, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -971,6 +972,16 @@ function GlobalPositioningSystem.updateSounds(self, spec, dt)
 end
 
 --- Action events
+
+function GlobalPositioningSystem.actionEventRotateTrack(self, actionName, inputValue, callbackState, isAnalog)
+    local data = self:getGuidanceData()
+    if not data.isCreated then
+        self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+        return
+    end
+
+    GlobalPositioningSystem.rotateTrack(self, data)
+end
 
 function GlobalPositioningSystem.actionEventToggleLineDisplay(self, actionName, inputValue, callbackState, isAnalog)
     if g_guidanceSteering ~= nil then

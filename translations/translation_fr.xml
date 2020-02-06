@@ -23,6 +23,7 @@
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Alignement sur l'angle du terrain"/>
         <text name="input_GS_TURN_STEERING" text="Définir la direction"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"

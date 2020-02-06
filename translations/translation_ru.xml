@@ -23,6 +23,7 @@
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Привязка к углам местности"/>
         <text name="input_GS_TURN_STEERING" text="GS: Установить направление руления"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Проедьте не менее 15 м, чтобы установить точку B. Текущее пройденное расстояние: %.2f"/>

@@ -23,6 +23,7 @@
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uitlijnen met de terreinhoeken"/>
         <text name="input_GS_TURN_STEERING" text="Stel een stuurrichting in"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: belijning aan/uit schakelen"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: draai spoor"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Rijd minimaal 15m om een B punt in te stellen. Huidige afgelegde afstand: %.2f"/>
@@ -48,7 +49,7 @@
         <text name="guidanceSteering_tooltip_width" text="Stel de werkbreedte van je voertuig in"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Stel de afwijking van je voertuig in"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Stel de offset-toename in om de offset te verhogen / verlagen"/> 
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Stel de offset-toename in om de offset te verhogen / verlagen"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>

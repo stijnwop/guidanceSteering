@@ -133,6 +133,7 @@ Klávesové skratky
         <action name="GS_AXIS_SHIFT" axisType="FULL"/>
         <action name="GS_AXIS_REALIGN" axisType="HALF"/>
         <action name="GS_TOGGLE_LINE_DISPLAY" axisType="HALF"/>
+        <action name="GS_ROTATE_TRACK" axisType="HALF"/>
     </actions>
 
     <inputBinding>
@@ -164,6 +165,9 @@ Klávesové skratky
         </actionBinding>
         <actionBinding action="GS_TOGGLE_LINE_DISPLAY">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_l"/>
+        </actionBinding>
+        <actionBinding action="GS_ROTATE_TRACK">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_end"/>
         </actionBinding>
     </inputBinding>
 </modDesc>
