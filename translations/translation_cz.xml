@@ -12,7 +12,7 @@
         <text name="input_GS_SHOW_UI" text="GPS: Zobrazit menu GPS"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="GPS: Automatická šířka"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="GPS: Realign track"/>
+        <text name="input_GS_AXIS_REALIGN" text="GPS: Srovnat stopu"/>
         <text name="input_GS_AXIS_SHIFT_1" text="GPS: Posunout stopu doprava"/>
         <text name="input_GS_AXIS_SHIFT_2" text="GPS: Posunout stopu doleva"/>
         <text name="input_GS_AXIS_WIDTH_1" text="GPS: Zvětšit šířku dráhy"/>
@@ -39,7 +39,7 @@
 
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Heading"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Směr"/>
 
         <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Podporujte své vizualizace zobrazením vodítek"/>
@@ -98,7 +98,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Odbočit vpravo"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Požadovaný kardinál (stupně)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Nastavit kardinál"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Požadovaný směr (stupně)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Nastavit směr"/>
     </texts>
 </l10n>
