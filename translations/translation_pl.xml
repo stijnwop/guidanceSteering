@@ -24,8 +24,8 @@
         <text name="input_GS_SETPOINT" text="GS: Ustaw punkt nawigacji"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Wyrównaj do kąta terenu"/>
         <text name="input_GS_TURN_STEERING" text="GS: Ustaw kierunek sterowania"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
-        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Pokaż/Ukryj linie"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Obróć ścieżkę"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Przejedź co najmniej 15m, aby ustawić punkt B. Aktualnie przebyta odległość: %.2f"/>
