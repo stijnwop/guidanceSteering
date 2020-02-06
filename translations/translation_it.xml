@@ -22,6 +22,7 @@
         <text name="input_GS_SETPOINT" text="GS: Assegna il punto di direzione"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Aggancia all'angolo del terreno"/>
         <text name="input_GS_TURN_STEERING" text="GS: Stabilisci la direzione dello sterzo"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
 
         <!-- Warnings -->
         <text name="guidanceSteering_warning_dropDistance" text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f"/>

@@ -22,6 +22,7 @@
         <text name="input_GS_SETPOINT" text="GS: Punkt setzen"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: An Texturwinkel ausrichten"/>
         <text name="input_GS_TURN_STEERING" text="GS: Lenkrichtung einstellen"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Fahre mindestens 15m, um den Punkt B zu setzten. Aktuelle Distanz: %.2f"/>

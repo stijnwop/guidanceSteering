@@ -22,9 +22,7 @@
         <text name="input_GS_SETPOINT" text="GPS: Nastavit orientační bod"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uchopit úhel terénu"/>
         <text name="input_GS_TURN_STEERING" text="Nastavit směr řízení"/>
-
-        <!-- shortcuts added by the.geremy -->
-        <text name="input_GS_SHOW_LINES" text="GPS: Zapnout/vypnout vodítka GPS"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GPS: Zapnout/vypnout vodítka GPS"/>
         <text name="input_GS_ROT90_TRACK" text="GPS: Otočit dráhu o 90 stupňů"/>  
 
         <!--Warnings-->

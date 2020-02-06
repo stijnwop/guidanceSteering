@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="44">
+<modDesc descVersion="47">
     <author>Wopster</author>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
 
     <title>
         <en>Guidance Steering</en>
@@ -132,6 +132,7 @@ Klávesové skratky
         <action name="GS_AXIS_WIDTH" axisType="FULL"/>
         <action name="GS_AXIS_SHIFT" axisType="FULL"/>
         <action name="GS_AXIS_REALIGN" axisType="HALF"/>
+        <action name="GS_TOGGLE_LINE_DISPLAY" axisType="HALF"/>
     </actions>
 
     <inputBinding>
@@ -160,6 +161,9 @@ Klávesové skratky
         </actionBinding>
         <actionBinding action="GS_AXIS_REALIGN">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_home"/>
+        </actionBinding>
+        <actionBinding action="GS_TOGGLE_LINE_DISPLAY">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_l"/>
         </actionBinding>
     </inputBinding>
 </modDesc>

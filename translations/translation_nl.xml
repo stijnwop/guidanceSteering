@@ -22,6 +22,7 @@
         <text name="input_GS_SETPOINT" text="Stel een richtpunt in"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uitlijnen met de terreinhoeken"/>
         <text name="input_GS_TURN_STEERING" text="Stel een stuurrichting in"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: belijning aan/uit schakelen"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Rijd minimaal 15m om een B punt in te stellen. Huidige afgelegde afstand: %.2f"/>

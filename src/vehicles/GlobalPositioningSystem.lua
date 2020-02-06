@@ -84,6 +84,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_ENABLE_STEERING, self, GlobalPositioningSystem.actionEventEnableSteering, false, true, false, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_SHIFT, self, GlobalPositioningSystem.actionEventShift, false, true, true, true, nil, nil, true))
                 insert(self:addActionEvent(spec.actionEvents, InputAction.GS_AXIS_REALIGN, self, GlobalPositioningSystem.actionEventRealign, false, true, false, true, nil, nil, true))
+                insert(self:addActionEvent(spec.actionEvents, InputAction.GS_TOGGLE_LINE_DISPLAY, self, GlobalPositioningSystem.actionEventToggleLineDisplay, false, true, false, true, nil, nil, true))
 
                 for _, actionEventId in ipairs(nonDrawnActionEvents) do
                     g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
@@ -970,6 +971,14 @@ function GlobalPositioningSystem.updateSounds(self, spec, dt)
 end
 
 --- Action events
+
+function GlobalPositioningSystem.actionEventToggleLineDisplay(self, actionName, inputValue, callbackState, isAnalog)
+    if g_guidanceSteering ~= nil then
+        local isShowGuidanceLinesEnabled = g_guidanceSteering:isShowGuidanceLinesEnabled()
+        g_guidanceSteering:setIsShowGuidanceLinesEnabled(not isShowGuidanceLinesEnabled)
+    end
+end
+
 function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionName, inputValue, callbackState, isAnalog)
     local spec = self.spec_globalPositioningSystem
 
@@ -979,7 +988,6 @@ function GlobalPositioningSystem.actionEventToggleGuidanceSteering(self, actionN
     spec.lastInputValues.guidanceSteeringIsActive = false
 end
 
---- Action events
 function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputValue, callbackState, isAnalog)
     if not self.isClient then
         return

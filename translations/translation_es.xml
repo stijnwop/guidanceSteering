@@ -22,6 +22,7 @@
         <text name="input_GS_SETPOINT" text="Fijar punto de guía"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Ajustar al ángulo del terreno"/>
         <text name="input_GS_TURN_STEERING" text="Fijar dirección"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
