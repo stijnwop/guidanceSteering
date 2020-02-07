@@ -8,7 +8,7 @@
         <text name="configuration_buyableGPS_withGPS" text="Si"/>
 
         <!-- Inputs -->
-        <text name="input_GS_TOGGLE" text="GS: attiva/disattiva Guidance Steering"/>
+        <text name="input_GS_TOGGLE" text="GS: Attiva/disattiva Guidance Steering"/>
         <text name="input_GS_SHOW_UI" text="GS: Mostra menu Guidance Steering"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="GS: Larghezza automatica"/>
 
@@ -22,8 +22,8 @@
         <text name="input_GS_SETPOINT" text="GS: Assegna il punto di direzione"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Aggancia all'angolo del terreno"/>
         <text name="input_GS_TURN_STEERING" text="GS: Stabilisci la direzione dello sterzo"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
-        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Mostra/nascondi traccia"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Ruota traccia"/>
 
         <!-- Warnings -->
         <text name="guidanceSteering_warning_dropDistance" text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f"/>
@@ -42,7 +42,7 @@
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+testata"/>
 
         <!-- Tooltips -->
-        <text name="guidanceSteering_tooltip_showLines" text="Aiuta la tua visuale mostrando le linee guida"/>
+        <text name="guidanceSteering_tooltip_showLines" text="Aiuta la tua visuale mostrando la traccia guida"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aggancia la direzione all'angolo del terreno"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Lascia che il GPS guidi lo sterzo"/>
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inverte automaticamente l'offset in svolta"/>
@@ -61,7 +61,7 @@
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Impossibile salvare i dati della traccia, creane una prima!"/>
 
         <!-- Settings -->
-        <text name="guidanceSteering_setting_showLines" text="Mostra linee"/>
+        <text name="guidanceSteering_setting_showLines" text="Mostra tracce"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l'angolo del terreno"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Attiva Guidance Steering"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversione offset"/>
@@ -76,8 +76,8 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Azzera offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Modifica offset"/>
 
-        <text name="guidanceSteering_setting_strategy" text="Strategia linea"/>
-        <text name="guidanceSteering_setting_strategyMethod" text="Metodo linea"/>
+        <text name="guidanceSteering_setting_strategy" text="Strategia traccia"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Metodo traccia"/>
         <text name="guidanceSteering_setting_currentTrack" text="Traccia attuale"/>
 
         <text name="guidanceSteering_setting_pointA" text="Imposta A"/>
