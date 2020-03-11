@@ -22,8 +22,8 @@
         <text name="input_GS_SETPOINT" text="GS: Definir ponto de gps"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Ajustar ao ângulo do terreno"/>
         <text name="input_GS_TURN_STEERING" text="GS: Definir direção de direção"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
-        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Mostrar linhas"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rodar faixa"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Conduza pelo menos 15m para definir o ponto B. Distância percorrida atual: %.2f"/>
