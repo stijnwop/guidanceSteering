@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Fullpowershift, Farmer1602</translationContributors>
+    <translationContributors>Fullpowershift, Farmer1602, yumi</translationContributors>
 
     <texts>
         <text name="configuration_buyableGPS" text="Système de guidage"/>
@@ -8,11 +8,11 @@
         <text name="configuration_buyableGPS_withGPS" text="Avec"/>
 
         <!--Inputs-->
-        <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
+        <text name="input_GS_TOGGLE" text="GS: Commutation du système de guidage"/>
         <text name="input_GS_SHOW_UI" text="Afficher le menu de guidage"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
+        <text name="input_GS_AXIS_REALIGN" text="Réalignement de la trace"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Déplacer la ligne vers la droite"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Déplacer la ligne vers la gauche"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Augmenter la largeur des lignes"/>
@@ -22,6 +22,8 @@
         <text name="input_GS_SETPOINT" text="Déterminer un point de guidage"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Alignement sur l'angle du terrain"/>
         <text name="input_GS_TURN_STEERING" text="Définir la direction"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Basculer le déplacement de la ligne"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Faire pivoter la trace"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
@@ -48,6 +50,7 @@
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage du véhicule"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Précision du décalage pour augmenter/réduire le décalage"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Détermine quel mode de guidage utiliser pour créer les lignes"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Détermine le mode de guidage souhaité"/>
@@ -56,6 +59,7 @@
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="La ligne: %s existe deja!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Si vous n'avez pas réussi à sauvegarder les données de la ligne, veuillez d'abord créer ou charger une ligne!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Afficher les lignes"/>
@@ -64,7 +68,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversion du décalage"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Précision du décalage"/>
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Inverser le décalage"/>
         <text name="guidanceSteering_setting_changeWidth" text="Ajuster la largeur"/>
         <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Largeur du décalage"/>
@@ -80,5 +86,20 @@
         <text name="guidanceSteering_setting_newTrack" text="Créer"/>
         <text name="guidanceSteering_setting_removeTrack" text="Supprimer"/>
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Mode fourrière"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Avec le mode fourrière, vous pouvez régler la manœuvre en fourrière."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Distance d'action en bout de champ."/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance en mètres pour agir avant l'approche de la fourrière."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Tourner à gauche"/>
+        <text name="guidanceSteering_headland_mode_3" text="Tourner à droite"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Direction souhaitée (degrés)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Définir la direction"/>
     </texts>
 </l10n>

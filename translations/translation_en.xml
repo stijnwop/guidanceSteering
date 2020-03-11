@@ -9,19 +9,21 @@
 
         <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
-        <text name="input_GS_SHOW_UI" text="Show guidance steering menu"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Auto width"/>
+        <text name="input_GS_SHOW_UI" text="GS: Show guidance steering menu"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Auto width"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Shift track right"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Shift track left"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Increase track width"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Decrease track width"/>
+        <text name="input_GS_AXIS_REALIGN" text="GS: Realign track"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Shift track right"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Shift track left"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Increase track width"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Decrease track width"/>
 
-        <text name="input_GS_ENABLE_STEERING" text="Steering guidance"/>
-        <text name="input_GS_SETPOINT" text="Set guidance point"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Snap to terrain angle"/>
-        <text name="input_GS_TURN_STEERING" text="Set steering direction"/>
+        <text name="input_GS_ENABLE_STEERING" text="GS: Steering guidance"/>
+        <text name="input_GS_SETPOINT" text="GS: Set guidance point"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Snap to terrain angle"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Set steering direction"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Drive at least 15m in order to set point B. Current traveled distance: %.2f"/>
@@ -47,6 +49,7 @@
         <text name="guidanceSteering_tooltip_width" text="Set the width of your vehicle"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Set the width increment to increase/decrease the width"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/>
 
         <text name="guidanceSteering_tooltip_strategy" text="Determine which strategy to use to create the guidance lines"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use"/>
@@ -54,8 +57,8 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
 
         <!--Warning tooltip-->
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name: %s already exists!"/>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create a track first!"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name '%s' already exists!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create or load a track first!"/>
 
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Show lines"/>
@@ -63,8 +66,10 @@
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Enable guidance steering"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
         <text name="guidanceSteering_setting_width" text="Width"/>
-        <text name="guidanceSteering_setting_widthIncrement" text="Increment"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Width increment"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto width"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Increment width"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Offset width"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Reset offset"/>
@@ -80,5 +85,20 @@
         <text name="guidanceSteering_setting_newTrack" text="Create track"/>
         <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
         <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

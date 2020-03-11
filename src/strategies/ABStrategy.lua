@@ -8,8 +8,8 @@
 ABStrategy = {}
 
 ABStrategy.AB = 0
-ABStrategy.A_AUTO_B = 1
-ABStrategy.A_PLUS_HEADING = 2
+ABStrategy.A_PLUS_HEADING = 1
+ABStrategy.A_AUTO_B = 2
 
 ABStrategy.METHODS = {
     ABStrategy.AB,
@@ -39,15 +39,24 @@ local ABStrategy_mt = Class(ABStrategy)
 ---@param customMt table
 function ABStrategy:new(vehicle, customMt)
     local instance = {}
-    local spec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+    local spec = vehicle.spec_globalPositioningSystem
 
     instance.ab = ABPoint:new(spec.guidanceNode)
     instance.turnActive = false
     instance.vehicle = vehicle
+    instance.id = ABStrategy.AB
 
     setmetatable(instance, customMt or ABStrategy_mt)
 
     return instance
+end
+
+---Called on read stream.
+function ABStrategy:readStream(streamId, connection)
+end
+
+---Called on write stream.
+function ABStrategy:writeStream(streamId, connection)
 end
 
 ---Delete
@@ -100,6 +109,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         offset = data.lineDistance * 0.5
     end
 
+    local activeCamera = self.vehicle:getActiveCamera()
+    local rx, ry, rz = getWorldRotation(activeCamera.cameraNode)
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
@@ -109,7 +120,8 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         local z1 = lz - offset * dirZ + stepSize * step * dirZ
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
 
-        GuidanceUtil.renderTextAtWorldPosition(x1, y1, z1, ".", 0.02, rgb)
+        GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, 0.35, ".", rgb)
+
         drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, rgb)
     end
 
@@ -140,10 +152,10 @@ function ABStrategy:getGuidanceData(guidanceNode, data)
     return nil
 end
 
----Creates the next AB point
----@param guidanceData table
-function ABStrategy:pushABPoint(guidanceData)
-    return self.ab:nextPoint(guidanceData)
+---Interaction function that is called from an MP event.
+---@param data table
+function ABStrategy:interact(data)
+    self.ab:nextPoint(data)
 end
 
 ---Gets if guidance can be activated
@@ -161,13 +173,18 @@ function ABStrategy:getIsABDirectionPossible()
     return not self.ab:getIsEmpty()
 end
 
+---Returns true when the vehicle needs to drive a certain threshold, false otherwise.
+function ABStrategy:needsDrivingDistanceThreshold()
+    return true
+end
+
 ---Gets the UI texts for the methods
 ---@param i18n table
 function ABStrategy:getTexts(i18n)
     -- Remember the order is important here.
     return {
         i18n:getText("guidanceSteering_strategyMethod_aPlusB"), -- ABStrategy.AB
+        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
         --i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
-        --i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
     }
 end

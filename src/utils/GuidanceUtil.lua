@@ -26,9 +26,8 @@ function GuidanceUtil.getActiveSprayType(object)
 end
 
 ---Calculates the work width
----@param guidanceNode number
 ---@param object table
-function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
+function GuidanceUtil.getMaxWorkAreaWidth(object)
     local workAreaSpec = object:guidanceSteering_getSpecTable("workArea")
 
     local calculateWorkAreas = true
@@ -37,6 +36,15 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     end
 
     local maxWidth, minWidth = 0, 0
+
+    local function createGuideNode(name, linkNode)
+        local node = createTransformGroup(name)
+        link(linkNode, node)
+        setTranslation(node, 0, 0, 0)
+        return node
+    end
+
+    local node = createGuideNode("width_node", object.rootNode)
 
     if calculateWorkAreas then
         local activeSprayType = GuidanceUtil.getActiveSprayType(object)
@@ -62,9 +70,9 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
                 return nil -- will GC table value cause ipairs
             end
 
-            local x0 = localToLocal(workArea.start, guidanceNode, 0, 0, 0)
-            local x1 = localToLocal(workArea.width, guidanceNode, 0, 0, 0)
-            local x2 = localToLocal(workArea.height, guidanceNode, 0, 0, 0)
+            local x0 = localToLocal(workArea.start, node, 0, 0, 0)
+            local x1 = localToLocal(workArea.width, node, 0, 0, 0)
+            local x2 = localToLocal(workArea.height, node, 0, 0, 0)
 
             return { x0, x1, x2 }
         end
@@ -81,8 +89,8 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     local width = maxWidth + math.abs(minWidth)
     local leftMarker, rightMarker = object:getAIMarkers()
     if leftMarker ~= nil and rightMarker ~= nil then
-        local lx = localToLocal(leftMarker, guidanceNode, 0, 0, 0)
-        local rx = localToLocal(rightMarker, guidanceNode, 0, 0, 0)
+        local lx = localToLocal(leftMarker, node, 0, 0, 0)
+        local rx = localToLocal(rightMarker, node, 0, 0, 0)
         width = math.max(math.abs(lx - rx), width)
     end
 
@@ -90,6 +98,8 @@ function GuidanceUtil.getMaxWorkAreaWidth(guidanceNode, object)
     if math.abs(offset) < 0.1 then
         offset = 0
     end
+
+    delete(node)
 
     return MathUtil.round(width, 3), MathUtil.round(offset, 3)
 end
@@ -170,19 +180,14 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     return data
 end
 
-function GuidanceUtil.renderTextAtWorldPosition(x, y, z, text, textSize, rgb)
-    local sx, sy, sz = project(x, y, z)
-
-    if sx > -1 and sx < 2 and sy > -1 and sy < 2 and sz <= 1 then
-        setTextBold(true)
-        setTextAlignment(RenderText.ALIGN_CENTER)
-        setTextColor(0, 0, 0, 0.75)
-        renderText(sx, sy - 0.0015, textSize, text)
-        setTextColor(rgb[1], rgb[2], rgb[3], 1)
-        renderText(sx, sy, textSize, text)
-        setTextAlignment(RenderText.ALIGN_LEFT)
-        setTextBold(false)
-    end
+function GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, textSize, text, rgb)
+    setTextBold(true)
+    setTextColor(rgb[1], rgb[2], rgb[3], 1)
+    setTextAlignment(RenderText.ALIGN_CENTER)
+    renderText3D(x1, y1, z1, rx, ry, rz, textSize, text)
+    setTextBold(false)
+    setTextColor(1, 1, 1, 1)
+    setTextAlignment(RenderText.ALIGN_LEFT)
 end
 
 function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)

@@ -22,6 +22,8 @@
         <text name="input_GS_SETPOINT" text="Vezetőpont beállítása"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Terepszög rögzítése"/>
         <text name="input_GS_TURN_STEERING" text="Kormányzás beállítása"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="A B. pont beállításához legalább 15 métert kell vezetni: %.2f"/>
@@ -47,6 +49,7 @@
         <text name="guidanceSteering_tooltip_width" text="Járműszélesség beállítása"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Eltolás beállítása"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Szélesség beállítása növelése/csökkentése"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
 
         <text name="guidanceSteering_tooltip_strategy" text="Határozza meg, hogy melyik módot kell használni az irányvonalak létrehozásához"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Határozza meg, hogy melyik módszert használja"/>
@@ -64,7 +67,9 @@
         <text name="guidanceSteering_setting_autoInvertOffset" text="Eltolás fordítása"/>
         <text name="guidanceSteering_setting_width" text="Szélesség"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Szélesség növelés"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Offset increment"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto szélesség"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Invert offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Növelje a szélességet"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Eltolás szélessége"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Eltolás visszaállítása"/>
@@ -80,5 +85,20 @@
         <text name="guidanceSteering_setting_newTrack" text="Lejátszás készítése"/>
         <text name="guidanceSteering_setting_removeTrack" text="Lejátszás törlése"/>
         <text name="guidanceSteering_setting_saveTrack" text="Lejátszás mentése"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Off"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
+        <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
     </texts>
 </l10n>

@@ -21,14 +21,12 @@ function HeadlandUtil.getDistanceToHeadLand(processor, object, x, y, z, lookAhea
     local bits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
     local isOnField = bits ~= 0
 
-    --if spec.showGuidanceLines then
-        local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
-        DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
-    --end
+    local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
+    DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
 
     processor.lastIsNotOnField = not isOnField
     if isOnField then
-        local spec = object:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local spec = object.spec_globalPositioningSystem
         local distance = object.lastMovedDistance
         local dirX, dirY, dirZ = localDirectionToWorld(spec.guidanceNode, 0, 0, distance + 0.75)
         processor.lastValidGroundPos = { x + dirX, y + dirY, z + dirZ }

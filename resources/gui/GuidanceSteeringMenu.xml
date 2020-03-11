@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
-    <!-- Background FullScreen Transparent -->
-    <GuiElement type="bitmap" profile="uiFullInGameBackground"/>
+    <GuiElement type="empty" profile="newLayer" />
 
-    <!-- Header - Top 112 px-->
-    <GuiElement type="bitmap" profile="uiInGameMenuHeader" id="header">
-        <GuiElement type="multiTextOption" profile="uiInGameMenuHeaderSelector" onClick="onClickPageSelection" id="pageSelector" soundDisabled="true">
-            <GuiElement type="button" profile="uiInGameMenuPagingButtonLeft" id="pagingButtonLeft"/>
-            <GuiElement type="button" profile="uiInGameMenuPagingButtonRight" id="pagingButtonRight"/>
+    <GuiElement type="bitmap" profile="guidanceSteeringDialogBg" id="dialogBackground">
+        <GuiElement type="bitmap" profile="guidanceSteeringMenuHeader" id="header">
+            <GuiElement type="multiTextOption" profile="guidanceSteeringHeaderSelector" onClick="onClickPageSelection" id="pageSelector" soundDisabled="true">
+                <GuiElement type="button" profile="guidanceSteeringPagingButtonLeft" id="pagingButtonLeft" />
+                <GuiElement type="button" profile="guidanceSteeringPagingButtonRight" id="pagingButtonRight" />
+            </GuiElement>
+
+            <GuiElement type="list" profile="guidanceSteeringPagingTabList" id="pagingTabList" handleFocus="false">
+                <!-- Page tab template element, will be cloned for each known page: -->
+                <GuiElement type="listItem" id="pagingTabTemplate" profile="guidanceSteeringMenuPageTab" position="0px 0px" handleFocus="false">
+                    <GuiElement type="button" name="tabButton" profile="guidanceSteeringTabButton" handleFocus="false" />
+                </GuiElement>
+            </GuiElement>
         </GuiElement>
 
-        <GuiElement type="list" profile="uiInGameMenuPagingTabList" id="pagingTabList" handleFocus="false">
-            <!-- Page tab template element, will be cloned for each known page: -->
-            <GuiElement type="listItem" id="pagingTabTemplate" profile="uiTabbedMenuPageTab" position="0px 0px" handleFocus="false">
-                <GuiElement type="button" name="tabButton" profile="uiTabbedMenuPageTabButton" handleFocus="false"/>
+        <!-- Body - Central -->
+        <GuiElement type="bitmap" profile="uiElementContainerFullScreenSpanning" size="1280px 608px">
+            <GuiElement type="paging" profile="uiInGameMenuPaging" size="1280px 608px" position="0px 0px" onPageChange="onPageChange" onPageUpdate="onPageUpdate" id="pagingElement">
+                <GuiElement type="frameReference" ref="guidanceSteeringSettings" name="guidanceSteeringSettings" id="pageSettings" />
+                <GuiElement type="frameReference" ref="guidanceSteeringStrategy" name="guidanceSteeringStrategy" id="pageStrategy" />
             </GuiElement>
         </GuiElement>
     </GuiElement>
 
-    <!-- Body - Central -->
-    <GuiElement type="bitmap" profile="uiElementContainerFullScreenSpanning" size="1920px 1080px">
-        <GuiElement type="paging" profile="uiInGameMenuPaging" onPageChange="onPageChange" onPageUpdate="onPageUpdate" id="pagingElement">
-            <GuiElement type="frameReference" ref="guidanceSteeringSettings" name="guidanceSteeringSettings" id="pageSettings"/>
-            <GuiElement type="frameReference" ref="guidanceSteeringStrategy" name="guidanceSteeringStrategy" id="pageStrategy"/>
-        </GuiElement>
-    </GuiElement>
-
-    <GuiElement type="flowLayout" profile="buttonBoxDocked" screenAlign="bottomLeft" positionOrigin="bottomLeft" position="130px 77px" id="buttonsPanel">
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[1]"/>
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[2]"/>
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[3]"/>
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[4]"/>
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[5]"/>
-        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[6]"/>
+    <GuiElement type="flowLayout" profile="buttonBoxDocked" screenAlign="bottomLeft" size="1280px 100px" positionOrigin="bottomLeft" id="buttonsPanel">
+        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[1]" />
+        <GuiElement type="button" profile="buttonBack" onClick="onClickBack" id="menuButton[2]" />
     </GuiElement>
 </GUI>
