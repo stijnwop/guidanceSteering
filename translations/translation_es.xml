@@ -9,21 +9,21 @@
 
         <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: GPS ON/OFF"/>
-        <text name="input_GS_SHOW_UI" text="Mostrar Menú GPS"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Ancho Auto"/>
+        <text name="input_GS_SHOW_UI" text="GS: Mostrar Menú GPS"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Ancho Auto"/>
 
-        <text name="input_GS_AXIS_REALIGN" text="Realign track"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Mover hacia la derecha"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Mover hacia la izquierda"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Aumentar ancho de trabajo"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Disminuir ancho de trabajo"/>
+        <text name="input_GS_AXIS_REALIGN" text="GS: Resetear guia"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Mover hacia la derecha"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Mover hacia la izquierda"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Aumentar ancho de trabajo"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Disminuir ancho de trabajo"/>
 
-        <text name="input_GS_ENABLE_STEERING" text="Guías de Dirección"/>
-        <text name="input_GS_SETPOINT" text="Fijar punto de guía"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Ajustar al ángulo del terreno"/>
-        <text name="input_GS_TURN_STEERING" text="Fijar dirección"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
-        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
+        <text name="input_GS_ENABLE_STEERING" text="GS: Guías de Dirección"/>
+        <text name="input_GS_SETPOINT" text="GS: Fijar punto de guía"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Ajustar al ángulo del terreno"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Fijar dirección"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Ver Líneas"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Girar guia"/>
 
         <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance"
