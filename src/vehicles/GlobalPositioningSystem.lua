@@ -135,10 +135,13 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.axisForward = 0
     spec.axisForwardSent = 0
 
+    -- Index is deprecated.
+    XMLUtil.checkDeprecatedXMLElements(self.xmlFile, self.configFileName, "vehicle.guidanceSteering#index", "vehicle.guidanceSteering#node")
+
     local rootNode = self.rootNode
-    local componentIndex = getXMLString(self.xmlFile, "vehicle.guidanceSteering#index")
-    if componentIndex ~= nil then
-        rootNode = I3DUtil.indexToObject(self.components, componentIndex)
+    local nodeString = getXMLString(self.xmlFile, "vehicle.guidanceSteering#node")
+    if nodeString ~= nil then
+        rootNode = I3DUtil.indexToObject(self.components, nodeString, self.i3dMappings)
     end
 
     local function createGuideNode(name, isTarget)
