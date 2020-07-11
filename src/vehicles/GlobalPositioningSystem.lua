@@ -612,7 +612,7 @@ end
 
 function GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer(vehicle, superFunc)
     local spec = vehicle.spec_globalPositioningSystem
-    if spec.guidanceSteeringIsActive then
+    if spec ~= nil and spec.guidanceSteeringIsActive then
         return false
     end
 
