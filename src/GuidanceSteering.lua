@@ -7,7 +7,7 @@
 
 GuidanceSteering = {}
 
-GuidanceSteering.SEND_NUM_BITS = 7 -- 2 ^ 7 = 128 max
+GuidanceSteering.SEND_NUM_BITS = 8 -- 2 ^ 8 = 256 max
 GuidanceSteering.MAX_NUM_TRACKS = 2 ^ GuidanceSteering.SEND_NUM_BITS
 
 local GuidanceSteering_mt = Class(GuidanceSteering)
