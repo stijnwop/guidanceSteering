@@ -136,7 +136,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 
             local state = self.guidanceSteeringWidthIncrementElement:getState()
             local headlandMode = self.guidanceSteeringHeadlandModeElement:getState()
-            local headlandActDistance = tonumber(self.guidanceSteeringHeadlandDistanceElement:getText())
+            local headlandActDistance = tonumber(self.guidanceSteeringHeadlandDistanceElement:getText()) or 0
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
             -- Todo: cleanup later
