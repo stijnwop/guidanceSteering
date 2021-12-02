@@ -23,7 +23,8 @@ source(Utils.getFilename("src/utils/stream.lua", directory))
 
 source(Utils.getFilename("src/gui/GuidanceSteeringUI.lua", directory))
 source(Utils.getFilename("src/gui/GuidanceSteeringMenu.lua", directory))
-source(Utils.getFilename("src/gui/frames/GuidanceSteeringSettingsFrame.lua", directory))
+--source(Utils.getFilename("src/gui/frames/GuidanceSteeringSettingsFrame.lua", directory))
+source(Utils.getFilename("src/gui/frames/GuidanceSteeringSettingsFrame2.lua", directory))
 source(Utils.getFilename("src/gui/frames/GuidanceSteeringStrategyFrame.lua", directory))
 source(Utils.getFilename("src/gui/hud/GuidanceSteeringHUD.lua", directory))
 
