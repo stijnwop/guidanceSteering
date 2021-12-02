@@ -66,16 +66,14 @@ function init()
     SavegameSettingsEvent.readStream = Utils.appendedFunction(SavegameSettingsEvent.readStream, readStream)
     SavegameSettingsEvent.writeStream = Utils.appendedFunction(SavegameSettingsEvent.writeStream, writeStream)
 
-    VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, validateVehicleTypes)
+    TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, validateVehicleTypes)
     StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, addGPSConfigurationUtil)
 end
 
 function loadMission(mission)
-    assert(g_guidanceSteering == nil)
-
     guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter)
 
-    getfenv(0)["g_guidanceSteering"] = guidanceSteering
+    mission.guidanceSteering = guidanceSteering
 
     addModEventListener(guidanceSteering)
 
@@ -131,7 +129,10 @@ function unload()
 
     guidanceSteering:delete()
     guidanceSteering = nil -- Allows garbage collecting
-    getfenv(0)["g_guidanceSteering"] = nil
+
+    if g_currentMission ~= nil then
+        g_currentMission.guidanceSteering = nil
+    end
 end
 
 function saveToXMLFile(missionInfo)
@@ -166,8 +167,10 @@ function writeStream(e, streamId, connection)
     guidanceSteering:onWriteStream(streamId, connection)
 end
 
-function validateVehicleTypes(vehicleTypeManager)
-    GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
+function validateVehicleTypes(typeManager)
+    if typeManager.typeName == "vehicle" then
+        GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
+    end
 end
 
 -- StoreItem insertion
@@ -213,8 +216,8 @@ local disallowedCategories = {
 }
 
 local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
-    local isDrivable = hasXMLProperty(xmlFile, "vehicle.drivable")
-    local isMotorized = hasXMLProperty(xmlFile, "vehicle.motorized")
+    local isDrivable = xmlFile:hasProperty("vehicle.drivable")
+    local isMotorized = xmlFile:hasProperty("vehicle.motorized")
 
     return disallowedCategories[storeItem.categoryName] == nil and isDrivable and isMotorized
 end
