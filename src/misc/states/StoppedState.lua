@@ -31,7 +31,8 @@ function StoppedState:onEntry()
         self.object:setCruiseControlState(Drivable.CRUISECONTROL_STATE_OFF)
     end
 
-    -- Todo: stop actual guidance steering
+    spec = self.object.spec_globalPositioningSystem
+    spec.lastInputValues.guidanceSteeringIsActive = not spec.lastInputValues.guidanceSteeringIsActive
 end
 
 ---@see AbstractState#onExit
