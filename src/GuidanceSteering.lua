@@ -67,7 +67,7 @@ function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
         track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
         track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
 
-        ListUtil.addElementToList(self.savedTracks, track)
+        table.addElement(self.savedTracks, track)
 
         i = i + 1
     end
@@ -139,15 +139,15 @@ end
 ---Add listener
 ---@param listener table
 function GuidanceSteering:subscribe(listener)
-    if not ListUtil.hasListElement(self.listeners, listener) then
-        ListUtil.addElementToList(self.listeners, listener)
+    if not table.hasElement(self.listeners, listener) then
+        table.addElement(self.listeners, listener)
     end
 end
 
 ---Remove listener
 ---@param listener table
 function GuidanceSteering:unsubscribe(listener)
-    ListUtil.removeElementFromList(self.listeners, listener)
+    table.removeElement(self.listeners, listener)
 end
 
 ---Notify listeners on track change
@@ -167,11 +167,11 @@ local function _createTrack(self, id, data)
         return
     end
 
-    local entry = ListUtil.copyTable(data)
+    local entry = table.copy(data)
     entry.farmId = 0 -- Todo: make tracks farm dependent
 
-    if not ListUtil.hasListElement(self.savedTracks, entry) then
-        ListUtil.addElementToList(self.savedTracks, entry)
+    if not table.hasElement(self.savedTracks, entry) then
+        table.addElement(self.savedTracks, entry)
 
         -- Sort by name
         table.sort(self.savedTracks, function(lhs, rhs)
@@ -221,10 +221,10 @@ function GuidanceSteering:deleteTrack(id)
     local entry = self:getTrack(id)
 
     if entry ~= nil then
-        ListUtil.removeElementFromList(self.savedTracks, entry)
+        table.removeElement(self.savedTracks, entry)
 
         -- Call listeners
-        self:onTrackChanged(ListUtil.size(self.savedTracks))
+        self:onTrackChanged(table.size(self.savedTracks))
     end
 end
 
@@ -242,7 +242,7 @@ end
 
 ---Returns the next index
 function GuidanceSteering:getNewTrackId()
-    return ListUtil.size(self.savedTracks) + 1
+    return table.size(self.savedTracks) + 1
 end
 
 ---Checks if the current track is valid to load
@@ -319,7 +319,7 @@ function GuidanceSteering:onEnterVehicle()
         local vehicle = self.controlledVehicle
         local spec = vehicle.spec_globalPositioningSystem
         local hasGuidanceSystem = spec ~= nil and spec.hasGuidanceSystem
-        local gui = g_guidanceSteering.ui
+        local gui = g_currentMission.guidanceSteering.ui
 
         gui:setVehicle(hasGuidanceSystem and vehicle or nil)
     end
@@ -328,7 +328,7 @@ end
 ---Set remove the vehicle from the GS GUI.
 function GuidanceSteering:onLeaveVehicle()
     if self:getIsClient() then
-        local gui = g_guidanceSteering.ui
+        local gui = g_currentMission.guidanceSteering.ui
         gui:setVehicle(nil)
     end
 end
@@ -336,7 +336,7 @@ end
 function GuidanceSteering.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
     specializationManager:addSpecialization("globalPositioningSystem", "GlobalPositioningSystem", Utils.getFilename("src/vehicles/GlobalPositioningSystem.lua", modDirectory), nil) -- Nil is important here
 
-    for typeName, typeEntry in pairs(vehicleTypeManager:getVehicleTypes()) do
+    for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
         if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) and
                 not SpecializationUtil.hasSpecialization(SplineVehicle, typeEntry.specializations) then
             vehicleTypeManager:addSpecialization(typeName, modName .. ".globalPositioningSystem")
