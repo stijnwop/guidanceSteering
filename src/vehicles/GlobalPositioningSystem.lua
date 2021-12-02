@@ -12,7 +12,7 @@ GlobalPositioningSystem = {}
 -- Curves
 -- Circles
 
-GlobalPositioningSystem.CONFIG_NAME = "buyableGPS"
+GlobalPositioningSystem.CONFIG_NAME = "globalPositioningSystem"
 GlobalPositioningSystem.DEFAULT_WIDTH = 9.144 -- autotrack default (~30ft)
 GlobalPositioningSystem.DEFAULT_OFFSET = 0
 GlobalPositioningSystem.DIRECTION_LEFT = -1
@@ -25,6 +25,20 @@ GlobalPositioningSystem.INPUT_MULTIPLIER_STEP = 0.005
 
 function GlobalPositioningSystem.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Drivable, specializations)
+end
+
+function GlobalPositioningSystem.initSpecialization(vehicleType)
+
+    local schema = Vehicle.xmlSchema
+
+    schema:setXMLSpecializationType("GuidanceSteering")
+    schema:register(XMLValueType.NODE_INDEX, "vehicle.guidanceSteering#node", "GuidanceSteering rootNode")
+    schema:setXMLSpecializationType()
+
+    g_configurationManager:addConfigurationType(GlobalPositioningSystem.CONFIG_NAME, g_i18n:getText("configuration_buyableGPS"), "globalPositioningSystem", nil, nil, nil, ConfigurationUtil.SELECTOR_MULTIOPTION)
+
+    --local schemaSavegame = Vehicle.xmlSchemaSavegame
+    --schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.manualAttachConnectionHoses#hasAttachedConnectionHoses"):format(g_manualAttachModName), "State of initial connection hoses")
 end
 
 function GlobalPositioningSystem.registerFunctions(vehicleType)
@@ -103,21 +117,21 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
     end
 end
 
-function GlobalPositioningSystem.initSpecialization()
-    g_configurationManager:addConfigurationType(GlobalPositioningSystem.CONFIG_NAME, g_i18n:getText("configuration_buyableGPS"), nil, nil, nil, nil, ConfigurationUtil.SELECTOR_MULTIOPTION)
-end
-
 function GlobalPositioningSystem:onLoad(savegame)
-    local hasGuidanceSystem = false
-    local configId = self.configurations[GlobalPositioningSystem.CONFIG_NAME]
+    local hasGuidanceSystem = true
 
+    local configId = Utils.getNoNil(self.configurations.globalPositioningSystem, 1)
     if configId ~= nil then
         local item = g_storeManager:getItemByXMLFilename(self.configFileName)
-        local config = item.configurations[GlobalPositioningSystem.CONFIG_NAME][configId]
+        --Todo: fix new categories
+        if item.configurations.globalPositioningSystem ~= nil then
 
-        if config ~= nil then
-            hasGuidanceSystem = config.enabled
-            ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.buyableGPSConfigurations.buyableGPSConfiguration", configId, self.components, self)
+            local config = item.configurations.globalPositioningSystem[configId]
+
+            if config ~= nil then
+                --hasGuidanceSystem = config.enabled
+                ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.globalPositioningSystemConfigurations.globalPositioningSystemConfiguration", configId, self.components, self)
+            end
         end
     end
 
@@ -139,9 +153,9 @@ function GlobalPositioningSystem:onLoad(savegame)
     XMLUtil.checkDeprecatedXMLElements(self.xmlFile, self.configFileName, "vehicle.guidanceSteering#index", "vehicle.guidanceSteering#node")
 
     local rootNode = self.rootNode
-    local nodeString = getXMLString(self.xmlFile, "vehicle.guidanceSteering#node")
-    if nodeString ~= nil then
-        rootNode = I3DUtil.indexToObject(self.components, nodeString, self.i3dMappings)
+    local guideNode  = self.xmlFile:getValue("vehicle.guidanceSteering#node", nil, self.components, self.i3dMappings)
+    if guideNode ~= nil then
+        rootNode = guideNode
     end
 
     local function createGuideNode(name, isTarget)
@@ -155,12 +169,12 @@ function GlobalPositioningSystem:onLoad(savegame)
     end
 
     if self.isClient then
-        local xmlFile = loadXMLFile("GuidanceSounds", Utils.getFilename("resources/sounds.xml", g_guidanceSteering.modDirectory))
+        local xmlFile = loadXMLFile("GuidanceSounds", Utils.getFilename("resources/sounds.xml", g_currentMission.guidanceSteering.modDirectory))
         if xmlFile ~= nil then
             spec.samples = {}
-            spec.samples.activate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "activate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
-            spec.samples.deactivate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "deactivate", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
-            spec.samples.warning = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "warning", g_guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+            spec.samples.activate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "activate", g_currentMission.guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+            spec.samples.deactivate = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "deactivate", g_currentMission.guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
+            spec.samples.warning = g_soundManager:loadSampleFromXML(xmlFile, "sounds", "warning", g_currentMission.guidanceSteering.modDirectory, self.components, 1, AudioGroup.VEHICLE, self.i3dMappings, self)
 
             spec.playHeadLandWarning = false
             spec.isHeadlandWarningSamplePlaying = false
@@ -251,13 +265,25 @@ function GlobalPositioningSystem:onPostLoad(savegame)
     end
 
     if spec.hasGuidanceSystem and savegame ~= nil then
-        local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
+        --local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
+        --
+        --spec.lastInputValues.guidanceIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceIsActive"), spec.guidanceIsActive)
+        --spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
+        --
+        --local data = spec.guidanceData
+        --data.lineDistance = Utils.getNoNil(getXMLFloat(savegame.xmlFile, key .. "#lineDistance"), data.lineDistance)
+    end
+end
 
-        spec.lastInputValues.guidanceIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceIsActive"), spec.guidanceIsActive)
-        spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
+function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
+    local spec = self.spec_globalPositioningSystem
 
-        local data = spec.guidanceData
-        data.lineDistance = Utils.getNoNil(getXMLFloat(savegame.xmlFile, key .. "#lineDistance"), data.lineDistance)
+    if spec.hasGuidanceSystem then
+        --setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
+        --setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
+        --
+        --local data = spec.guidanceData
+        --setXMLFloat(xmlFile, key .. "#lineDistance", data.lineDistance)
     end
 end
 
@@ -352,18 +378,6 @@ function GlobalPositioningSystem:onWriteUpdateStream(streamId, connection, dirty
         if not connection:getIsServer() then
             streamWriteBool(streamId, spec.playHeadLandWarning)
         end
-    end
-end
-
-function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
-    local spec = self.spec_globalPositioningSystem
-
-    if spec.hasGuidanceSystem then
-        setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
-        setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
-
-        local data = spec.guidanceData
-        setXMLFloat(xmlFile, key .. "#lineDistance", data.lineDistance)
     end
 end
 
@@ -604,7 +618,7 @@ function GlobalPositioningSystem:onDraw()
         return
     end
 
-    if g_guidanceSteering:isShowGuidanceLinesEnabled() then
+    if g_currentMission.guidanceSteering:isShowGuidanceLinesEnabled() then
         local spec = self.spec_globalPositioningSystem
         spec.lineStrategy:draw(spec.guidanceData, spec.guidanceSteeringIsActive, spec.autoInvertOffset)
     end
@@ -648,14 +662,14 @@ function GlobalPositioningSystem:onPostAttachImplement()
         local spec = self.spec_globalPositioningSystem
 
         if spec.hasGuidanceSystem then
-            local length = self.sizeLength
+            local length = self.size.length
             local function toLength(implement)
                 local object = implement.object
-                return object ~= nil and object.sizeLength or 0
+                return object ~= nil and object.size.length or 0
             end
 
             local lengths = stream(self:getAttachedImplements()):map(toLength):toList()
-            length = stream(lengths):reduce(self.sizeLength, function(r, e)
+            length = stream(lengths):reduce(self.size.length, function(r, e)
                 return r + e
             end)
 
@@ -796,8 +810,8 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
 
     local angleRad = MathUtil.getYRotationFromDirection(dirX, dirZ)
     -- Snap to terrain when settings is active
-    if g_guidanceSteering:isTerrainAngleSnapEnabled() then
-        local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.terrainDetailAngleMaxValue + 1))
+    if g_currentMission.guidanceSteering:isTerrainAngleSnapEnabled() then
+        local snapAngle = math.max(self:getDirectionSnapAngle(), math.pi / (g_currentMission.fieldGroundSystem:getGroundAngleMaxValue() + 1))
         angleRad = math.floor(angleRad / snapAngle + 0.5) * snapAngle
     end
 
@@ -987,9 +1001,9 @@ function GlobalPositioningSystem.actionEventRotateTrack(self, actionName, inputV
 end
 
 function GlobalPositioningSystem.actionEventToggleLineDisplay(self, actionName, inputValue, callbackState, isAnalog)
-    if g_guidanceSteering ~= nil then
-        local isShowGuidanceLinesEnabled = g_guidanceSteering:isShowGuidanceLinesEnabled()
-        g_guidanceSteering:setIsShowGuidanceLinesEnabled(not isShowGuidanceLinesEnabled)
+    if g_currentMission.guidanceSteering ~= nil then
+        local isShowGuidanceLinesEnabled = g_currentMission.guidanceSteering:isShowGuidanceLinesEnabled()
+        g_currentMission.guidanceSteering:setIsShowGuidanceLinesEnabled(not isShowGuidanceLinesEnabled)
     end
 end
 
@@ -1008,7 +1022,7 @@ function GlobalPositioningSystem.actionEventOnToggleUI(self, actionName, inputVa
     end
 
     if self:getHasGuidanceSystem() and self == g_currentMission.controlledVehicle then
-        g_guidanceSteering.ui:onToggleUI()
+        g_currentMission.guidanceSteering.ui:onToggleUI()
     end
 end
 
