@@ -71,7 +71,7 @@ end
 ---@param tX number
 ---@param tZ number
 function DriveUtil.driveToPoint(vehicle, dt, tX, tZ)
-    if vehicle.firstTimeRun then
+    if vehicle.finishedFirstUpdate then
         local halfX = tX * 0.5
         local halfZ = tZ * 0.5
 
@@ -170,7 +170,7 @@ function DriveUtil.accelerateInDirection(vehicle, axisForward, dt, forceBrake)
         end
     end
 
-    if vehicle.firstTimeRun then
+    if vehicle.finishedFirstUpdate then
         if vehicle.spec_wheels ~= nil then
             WheelsUtil.updateWheelsPhysics(vehicle, dt, vehicle.lastSpeedReal * vehicle.movingDirection, acceleration, forceBrake, g_currentMission.missionInfo.stopAndGoBraking)
         end
