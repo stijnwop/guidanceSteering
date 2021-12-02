@@ -11,7 +11,7 @@ local GuidanceStrategyChangedEvent_mt = Class(GuidanceStrategyChangedEvent, Even
 InitEventClass(GuidanceStrategyChangedEvent, "GuidanceStrategyChangedEvent")
 
 function GuidanceStrategyChangedEvent:emptyNew()
-    local self = Event:new(GuidanceStrategyChangedEvent_mt)
+    local self = Event.new(GuidanceStrategyChangedEvent_mt)
 
     return self
 end

@@ -11,9 +11,9 @@ local TrackSaveEvent_mt = Class(TrackSaveEvent, Event)
 InitEventClass(TrackSaveEvent, "TrackSaveEvent")
 
 function TrackSaveEvent:emptyNew()
-    local self = Event:new(TrackSaveEvent_mt)
+    local self = Event.new(TrackSaveEvent_mt)
 
-    self.guidanceSteering = g_guidanceSteering
+    self.guidanceSteering = g_currentMission.guidanceSteering
 
     return self
 end

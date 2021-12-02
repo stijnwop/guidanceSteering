@@ -11,7 +11,7 @@ local HeadlandModeChangedEvent_mt = Class(HeadlandModeChangedEvent, Event)
 InitEventClass(HeadlandModeChangedEvent, "HeadlandModeChangedEvent")
 
 function HeadlandModeChangedEvent:emptyNew()
-    local self = Event:new(HeadlandModeChangedEvent_mt)
+    local self = Event.new(HeadlandModeChangedEvent_mt)
 
     return self
 end
