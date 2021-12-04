@@ -45,7 +45,7 @@ function GuidanceSteering:delete()
 end
 
 function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
-    self.showGuidanceLines = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines"), false)
+    self.showGuidanceLines = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines"), true)
     self.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive"), true)
 
     local i = 0
@@ -386,12 +386,15 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
     end
 end
 
--- Thanks to Jos
--- Ripped from Seasons
 function GuidanceSteering:mergeModTranslations(i18n)
     -- We can copy all our translations to the global table because we prefix everything with guidanceSteering_
     -- The mod-based l10n lookup only really works for vehicles, not UI and script mods.
-    local global = getfenv(0).g_i18n.texts
+
+    -- Thanks for blocking the getfenv Giants..
+    local modEnvMeta = getmetatable(_G)
+    local env = modEnvMeta.__index
+
+    local global = env.g_i18n.texts
     for key, text in pairs(i18n.texts) do
         global[key] = text
     end
