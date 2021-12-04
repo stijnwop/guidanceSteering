@@ -11,7 +11,6 @@ GuidanceSteeringSettingsFrame = {}
 local GuidanceSteeringSettingsFrame_mt = Class(GuidanceSteeringSettingsFrame, TabbedMenuFrameElement)
 
 GuidanceSteeringSettingsFrame.CONTROLS = {
-    CONTAINER = "container",
     WIDTH_DISPLAY = "widthDisplay",
     WIDTH_PLUS = "guidanceSteeringMinusButton",
     WIDTH_MINUS = "guidanceSteeringPlusButton",
@@ -29,20 +28,22 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     HEADLAND_DISPLAY = "headlandDisplay",
     HEADLAND_MODE = "guidanceSteeringHeadlandModeElement",
     HEADLAND_DISTANCE = "guidanceSteeringHeadlandDistanceElement",
-    HEADLAND_DISTANCE_TEXT = "guidanceSteeringHeadlandDistanceText",
 
     TOGGLE_SHOW_LINES = "guidanceSteeringShowLinesElement",
     TOGGLE_SNAP_TERRAIN_ANGLE = "guidanceSteeringSnapAngleElement",
     TOGGLE_ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
     TOGGLE_AUTO_INVERT_OFFSET = "guidanceSteeringAutoInvertOffsetElement",
+
+    CONTAINER = "container",
+    BOX_LAYOUT_SETTINGS = "boxLayoutSettings",
 }
 
 GuidanceSteeringSettingsFrame.INCREMENTS = { 0.01, 0.05, 0.1, 0.5, 1 }
 
 ---Creates a new instance of the GuidanceSteeringSettingsFrame.
 ---@return GuidanceSteeringSettingsFrame
-function GuidanceSteeringSettingsFrame:new(ui, i18n)
-    local self = TabbedMenuFrameElement:new(nil, GuidanceSteeringSettingsFrame_mt)
+function GuidanceSteeringSettingsFrame.new(ui, i18n)
+    local self = TabbedMenuFrameElement.new(nil, GuidanceSteeringSettingsFrame_mt)
 
     self.ui = ui
     self.i18n = i18n
@@ -77,7 +78,6 @@ function GuidanceSteeringSettingsFrame:initialize()
 
     local initialUnit = self:getFormattedUnitLength(0)
     self.guidanceSteeringHeadlandDistanceElement:setText(tostring(0))
-    self.guidanceSteeringHeadlandDistanceText:setText(initialUnit)
     self.guidanceSteeringWidthText:setText(initialUnit)
     self.guidanceSteeringOffsetWidthText:setText(initialUnit)
 
@@ -89,7 +89,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
 
     local increments = {}
     for _, increment in pairs(GuidanceSteeringSettingsFrame.INCREMENTS) do
-        table.insert(increments, self:getUnitLength(increment))
+        table.insert(increments, tostring(self:getUnitLength(increment)))
     end
 
     self.guidanceSteeringWidthIncrementElement:setTexts(increments)
@@ -100,8 +100,8 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         local spec = vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
-        self.guidanceSteeringShowLinesElement:setIsChecked(g_guidanceSteering:isShowGuidanceLinesEnabled())
-        self.guidanceSteeringSnapAngleElement:setIsChecked(g_guidanceSteering:isTerrainAngleSnapEnabled())
+        self.guidanceSteeringShowLinesElement:setIsChecked(g_currentMission.guidanceSteering:isShowGuidanceLinesEnabled())
+        self.guidanceSteeringSnapAngleElement:setIsChecked(g_currentMission.guidanceSteering:isTerrainAngleSnapEnabled())
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
         self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
 
@@ -113,9 +113,16 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         local currentHeadlandActDistance = spec.headlandActDistance
         self.guidanceSteeringHeadlandModeElement:setState(spec.headlandMode)
         self.guidanceSteeringHeadlandDistanceElement:setText(tostring(currentHeadlandActDistance))
-        self.guidanceSteeringHeadlandDistanceText:setText(self:getFormattedUnitLength(currentHeadlandActDistance))
 
         self.allowSave = true
+    end
+
+    self.boxLayoutSettings:invalidateLayout()
+
+    if FocusManager:getFocusedElement() == nil then
+        self:setSoundSuppressed(true)
+        FocusManager:setFocus(self.boxLayoutSettings)
+        self:setSoundSuppressed(false)
     end
 end
 
@@ -124,10 +131,10 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
 
     if self.allowSave then
         -- Client only
-        g_guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
-        g_guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
-        g_guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
-        g_guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
 
         local vehicle = self.ui:getVehicle()
         if vehicle ~= nil then
@@ -140,14 +147,14 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state]
 
             -- Todo: cleanup later
-            local guidanceSteeringIsActive = g_guidanceSteering:isGuidanceEnabled()
+            local guidanceSteeringIsActive = g_currentMission.guidanceSteering:isGuidanceEnabled()
             if guidanceSteeringIsActive and not data.isCreated then
                 g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 4000)
             else
                 spec.lastInputValues.guidanceSteeringIsActive = guidanceSteeringIsActive
             end
 
-            spec.lastInputValues.autoInvertOffset = g_guidanceSteering:isAutoInvertOffsetEnabled()
+            spec.lastInputValues.autoInvertOffset = g_currentMission.guidanceSteering:isAutoInvertOffsetEnabled()
             spec.lastInputValues.widthIncrement = math.abs(increment)
 
             if spec.headlandMode ~= headlandMode or spec.headlandActDistance ~= headlandActDistance then
@@ -158,7 +165,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             end
 
             if data.width ~= nil and data.width ~= self.currentGuidanceWidth
-                    or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentGuidanceOffset then
+                or data.offsetWidth ~= nil and data.offsetWidth ~= self.currentGuidanceOffset then
                 data.width = self.currentGuidanceWidth
                 data.offsetWidth = self.currentGuidanceOffset
 
@@ -170,16 +177,19 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
     end
 end
 
+function GuidanceSteeringSettingsFrame:updateToolTipBoxVisibility(box)
+    local hasText = box.text ~= nil and box.text ~= ""
+    box:setVisible(hasText)
+end
+
 function GuidanceSteeringSettingsFrame:build()
     local uiFilename = self.ui.uiFilename
 
-    -- Bitmaps
     self.widthDisplay:setImageFilename(uiFilename)
-    self.widthDisplay:setImageUVs(nil, unpack(getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.WIDTH_DISPLAY)))
+    self.widthDisplay:setImageUVs(nil, unpack(GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.WIDTH_DISPLAY)))
+
     self.offsetDisplay:setImageFilename(uiFilename)
-    self.offsetDisplay:setImageUVs(nil, unpack(getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY)))
-    self.headlandDisplay:setImageFilename(uiFilename)
-    self.headlandDisplay:setImageUVs(nil, unpack(getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.HEADLAND_DISPLAY)))
+    self.offsetDisplay:setImageUVs(nil, unpack(GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY)))
 
     -- Buttons
     self.guidanceSteeringPlusButton:setImageFilename(nil, uiFilename)
@@ -190,14 +200,16 @@ function GuidanceSteeringSettingsFrame:build()
     self.guidanceSteeringMinusOffsetButton:setImageFilename(nil, uiFilename)
     self.guidanceSteeringResetOffsetButton:setImageFilename(nil, uiFilename)
 
-    self.guidanceSteeringPlusButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_PLUS))
-    self.guidanceSteeringMinusButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_MIN))
-    self.guidanceSteeringResetWidthButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_RESET))
-
-    self.guidanceSteeringPlusOffsetButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_PLUS))
-    self.guidanceSteeringMinusOffsetButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_MIN))
-    self.guidanceSteeringResetOffsetButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_RESET))
+    self.guidanceSteeringPlusButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_PLUS))
+    self.guidanceSteeringMinusButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_MIN))
+    self.guidanceSteeringResetWidthButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_RESET))
+    --
+    self.guidanceSteeringPlusOffsetButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_PLUS))
+    self.guidanceSteeringMinusOffsetButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_MIN))
+    self.guidanceSteeringResetOffsetButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.BUTTON_RESET))
 end
+
+---Callbacks
 
 function GuidanceSteeringSettingsFrame:onClickIncrementWidth()
     self:changeWidth(1)
@@ -279,16 +291,14 @@ function GuidanceSteeringSettingsFrame:onHeadlandDistanceChanged(_, text)
             lastDistance = OnHeadlandState.MAX_ACT_DISTANCE
             self.guidanceSteeringHeadlandDistanceElement:setText(tostring(lastDistance))
         end
-
-        self.guidanceSteeringHeadlandDistanceText:setText(self:getFormattedUnitLength(lastDistance))
     end
 end
 
 function GuidanceSteeringSettingsFrame:updateOffsetUVs()
     if self.currentGuidanceOffset < 0 then
-        self.offsetDisplay:setImageUVs(nil, unpack(getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY)))
+        self.offsetDisplay:setImageUVs(nil, unpack(GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY)))
     else
-        self.offsetDisplay:setImageUVs(nil, unpack(getNormalizedUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY_RIGHT)))
+        self.offsetDisplay:setImageUVs(nil, unpack(GuiUtils.getUVs(GuidanceSteeringSettingsFrame.UVS.OFFSET_DISPLAY_RIGHT)))
     end
 end
 
@@ -307,21 +317,6 @@ function GuidanceSteeringSettingsFrame:getFormattedUnitLength(meters)
     end
 
     return string.format("%.2f %s", unitLength, "m")
-end
-
---- Get the frame's main content element's screen size.
-function GuidanceSteeringSettingsFrame:getMainElementSize()
-    return self.container.size
-end
-
---- Get the frame's main content element's screen position.
-function GuidanceSteeringSettingsFrame:getMainElementPosition()
-    return self.container.absPosition
-end
-
-function GuidanceSteeringSettingsFrame:updateToolTipBoxVisibility(box)
-    local hasText = box.text ~= nil and box.text ~= ""
-    box:setVisible(hasText)
 end
 
 GuidanceSteeringSettingsFrame.L10N_SYMBOL = {}

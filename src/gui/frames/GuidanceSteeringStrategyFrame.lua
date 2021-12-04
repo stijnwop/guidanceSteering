@@ -33,10 +33,10 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
 
 ---Creates a new instance of the GuidanceSteeringStrategyFrame.
 ---@return GuidanceSteeringStrategyFrame
-function GuidanceSteeringStrategyFrame:new(ui, i18n)
-    local self = TabbedMenuFrameElement:new(nil, GuidanceSteeringStrategyFrame_mt)
+function GuidanceSteeringStrategyFrame.new(ui, i18n)
+    local self = TabbedMenuFrameElement.new(nil, GuidanceSteeringStrategyFrame_mt)
 
-    self.guidanceSteering = g_guidanceSteering
+    self.guidanceSteering = g_currentMission.guidanceSteering
 
     self.ui = ui
     self.i18n = i18n
@@ -77,10 +77,10 @@ function GuidanceSteeringStrategyFrame:build()
     self.guidanceSteeringRemoveTrackButton:setImageFilename(nil, uiFilename)
     self.guidanceSteeringRotateTrackButton:setImageFilename(nil, uiFilename)
 
-    self.guidanceSteeringCreateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.CREATE_TRACK))
-    self.guidanceSteeringSaveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.SAVE_TRACK))
-    self.guidanceSteeringRemoveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.REMOVE_TRACK))
-    self.guidanceSteeringRotateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.ROTATE_TRACK))
+    self.guidanceSteeringCreateTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.CREATE_TRACK))
+    self.guidanceSteeringSaveTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.SAVE_TRACK))
+    self.guidanceSteeringRemoveTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.REMOVE_TRACK))
+    self.guidanceSteeringRotateTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.ROTATE_TRACK))
 end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
@@ -104,22 +104,7 @@ end
 function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
-    if self.allowSave then
-        local element = self.rowToTrackId[self.list:getSelectedElement()]
-        if element ~= nil then
-            local trackId = element.trackId
-
-            if trackId ~= self.lastLoadedTrackId then
-                self:loadTrack(trackId)
-                self.lastLoadedTrackId = trackId
-            end
-        end
-
-        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
-        self:loadStrategy(method)
-
-        self.allowSave = false
-    end
+    self.allowSave = false
 
     self.guidanceSteering:unsubscribe(self)
 end
@@ -189,6 +174,22 @@ end
 --- Get the frame's main content element's screen position.
 function GuidanceSteeringStrategyFrame:getMainElementPosition()
     return self.container.absPosition
+end
+
+function GuidanceSteeringStrategyFrame:onClickSelect(element)
+    if self.allowSave then
+        if element ~= nil then
+            local trackId = element.trackId
+
+            if trackId ~= self.lastLoadedTrackId then
+                self:loadTrack(trackId)
+                self.lastLoadedTrackId = trackId
+            end
+        end
+
+        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
+        self:loadStrategy(method)
+    end
 end
 
 function GuidanceSteeringStrategyFrame:onListSelectionChanged()

@@ -1,162 +1,159 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUI name="guidanceSteeringSettings">
-    <GuiElement type="bitmap" profile="settingsBox" size="1280px 620px" position="0px -12px" positionOrigin="bottomLeft" id="container">
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="640px 250px" position="0px 0px" id="boxLayout1">
+    <GuiElement type="bitmap" profile="settingsBox" position="20px 170px" positionOrigin="bottomLeft" id="container">
 
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="640px 125px">
+        <GuiElement type="empty" profile="ingameMenuSettingsBox" size="340px 500px" id="settingsContainer" positionOrigin="bottomLeft">
+            <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" size="340px 500px" id="boxLayoutSettings">
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ui_ingameMenuGameSettingsGeneral"/>
+
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringEnableSteeringElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_enableGuidanceSteering">
-                    <GuiElement type="button" profile="multiTextOptionLeft" />
-                    <GuiElement type="button" profile="multiTextOptionRight" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_enableGuidanceSteering" />
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" />
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_enableGuidanceSteering"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
 
                 <!--Option show guide lines-->
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringShowLinesElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_showLines">
-                    <GuiElement type="button" profile="multiTextOptionLeft" />
-                    <GuiElement type="button" profile="multiTextOptionRight" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_showLines" />
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" />
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_showLines"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
-            </GuiElement>
 
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="640px 125px">
                 <!--Option to snap to terrain angle-->
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringSnapAngleElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_terrainAngleSnap">
-                    <GuiElement type="button" profile="multiTextOptionLeft" />
-                    <GuiElement type="button" profile="multiTextOptionRight" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_terrainAngleSnap" />
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" />
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_terrainAngleSnap"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
 
                 <!--Option to auto invert offset-->
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringAutoInvertOffsetElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_autoInvertOffset">
-                    <GuiElement type="button" profile="multiTextOptionLeft" />
-                    <GuiElement type="button" profile="multiTextOptionRight" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText" />
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_autoInvertOffset" />
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" />
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_autoInvertOffset"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
-            </GuiElement>
-        </GuiElement>
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutRight" size="640px 250px" position="640px 0px" id="boxLayout2">
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 250px">
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 200px">
-                    <GuiElement type="bitmap" id="widthDisplay" profile="cellImageBackground" name="backgroundBitmap" />
-                </GuiElement>
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 50px">
-                    <GuiElement type="text" id="guidanceSteeringWidthText" profile="detailText" text="9.12m" position="0px 0px" />
-                </GuiElement>
-            </GuiElement>
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 250px">
 
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="button" profile="guidanceButtonDetailRight"
-                                onClick="onClickIncrementWidth"
-                                id="guidanceSteeringPlusButton" />
-                    <GuiElement type="button" profile="guidanceButtonDetailLeft"
-                                onClick="onClickDecrementWidth"
-                                id="guidanceSteeringMinusButton" />
-                    <GuiElement type="button" profile="guidanceButtonDetailLeft"
-                                onClick="onClickResetWidth"
-                                id="guidanceSteeringResetWidthButton" />
-                </GuiElement>
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringWidthIncrementElement"
-                                toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
-                        <GuiElement type="button" profile="multiTextOptionLeft" />
-                        <GuiElement type="button" profile="multiTextOptionRight" />
-                        <GuiElement type="text" profile="multiTextOptionText" />
-                        <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthIncrement" />
-                        <GuiElement type="bitmap" profile="multiTextOptionBg" />
-                    </GuiElement>
-                </GuiElement>
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth" position="-210px 64px"
-                                onClick="onClickAutoWidth" />
-                </GuiElement>
-            </GuiElement>
-        </GuiElement>
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_guidanceSteering_setting_header_headland"/>
 
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="640px 250px" position="0px -250px" id="boxLayout3">
-
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 250px">
-                <GuiElement type="multiTextOption" profile="guidanceHeadlandMultiTextOptionSettings" id="guidanceSteeringHeadlandModeElement"
-                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_headlandMode">
-                    <GuiElement type="button" profile="multiTextOptionLeft" />
-                    <GuiElement type="button" profile="multiTextOptionRight" />
-                    <GuiElement type="text" profile="multiTextOptionText" />
-                    <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_headlandMode" />
-                    <GuiElement type="bitmap" profile="multiTextOptionBg" />
+                <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringHeadlandModeElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_autoInvertOffset">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_headlandMode"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
+
                 <GuiElement type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringHeadlandDistanceElement"
                             toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_headlandDistance" maxCharacters="5"
                             imeKeyboardType="normal" onTextChanged="onHeadlandDistanceChanged">
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_headlandDistance" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_headlandDistance"/>
                 </GuiElement>
             </GuiElement>
 
-            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 250px">
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 200px">
-                    <GuiElement type="bitmap" id="headlandDisplay" profile="cellImageBackground" name="backgroundBitmap" />
-                </GuiElement>
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 50px">
-                    <GuiElement type="text" id="guidanceSteeringHeadlandDistanceText" profile="detailText" text="0m" position="0px 0px" />
-                </GuiElement>
+            <GuiElement type="threePartBitmap" profile="verticalListSliderRightDocked" size="12px 500px">
+                <GuiElement type="slider" profile="verticalListSliderBar" dataElementId="boxLayoutSettings" handleFocus="false" size="6px 500px"/>
             </GuiElement>
-
         </GuiElement>
 
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutRight" size="640px 250px" position="640px -250px" id="boxLayout4">
+        <GuiElement type="bitmap" profile="ingameMenuWeatherVerticalSeparator" position="-25px -50px" size="2dp 400px" />
+
+        <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="640px 250px" position="480px 15px" id="boxLayout2">
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 250px">
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 200px">
-                    <GuiElement type="bitmap" id="offsetDisplay" profile="cellImageBackground" name="backgroundBitmap" />
+                    <GuiElement type="bitmap" id="widthDisplay" profile="cellImageBackground" name="backgroundBitmap"/>
                 </GuiElement>
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 50px">
-                    <GuiElement type="text" id="guidanceSteeringOffsetWidthText" profile="detailText" text="0m" position="0px 0px" />
+                    <GuiElement type="text" id="guidanceSteeringWidthText" profile="detailText" text="9.12m" position="0px 0px"/>
                 </GuiElement>
             </GuiElement>
+
             <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 250px">
+                <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
+                    <GuiElement type="button" profile="guidanceButtonDetailRight"
+                                onClick="onClickIncrementWidth"
+                                id="guidanceSteeringPlusButton"/>
+                    <GuiElement type="button" profile="guidanceButtonDetailLeft"
+                                onClick="onClickDecrementWidth"
+                                id="guidanceSteeringMinusButton"/>
+                    <GuiElement type="button" profile="guidanceButtonDetailLeft"
+                                onClick="onClickResetWidth"
+                                id="guidanceSteeringResetWidthButton"/>
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="guidanceMultiTextOptionSettings" size="315px 48px" id="guidanceSteeringWidthIncrementElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_widthInCrement">
+                    <GuiElement type="button" profile="multiTextOptionLeft" />
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text"   profile="guidanceMultiTextOptionText" />
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_widthIncrement"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" size="220px 48px"/>
+                </GuiElement>
 
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
+                    <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_autoWidth"
+                                onClick="onClickAutoWidth"/>
+                </GuiElement>
+            </GuiElement>
+        </GuiElement>
+
+        <GuiElement type="bitmap" profile="ingameMenuWeatherHorizontalSeparator" position="320px -250px" size="600px 2dp" />
+
+        <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="640px 250px" position="480px -265px" id="boxLayout4">
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 250px">
+                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 200px">
+                    <GuiElement type="bitmap" id="offsetDisplay" profile="cellImageBackground" name="backgroundBitmap"/>
+                </GuiElement>
+                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="250px 50px">
+                    <GuiElement type="text" id="guidanceSteeringOffsetWidthText" profile="detailText" text="0m" position="0px 0px"/>
+                </GuiElement>
+            </GuiElement>
+
+            <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 250px">
+                <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
                     <GuiElement type="button" profile="guidanceButtonDetailRight"
                                 onClick="onClickIncrementOffsetWidth"
-                                id="guidanceSteeringPlusOffsetButton" />
+                                id="guidanceSteeringPlusOffsetButton"/>
                     <GuiElement type="button" profile="guidanceButtonDetailLeft"
                                 onClick="onClickDecrementOffsetWidth"
-                                id="guidanceSteeringMinusOffsetButton" />
+                                id="guidanceSteeringMinusOffsetButton"/>
                     <GuiElement type="button" profile="guidanceButtonDetailLeft"
                                 onClick="onClickResetOffsetWidth"
-                                id="guidanceSteeringResetOffsetButton" />
+                                id="guidanceSteeringResetOffsetButton"/>
                 </GuiElement>
-                <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="multiTextOption" profile="multiTextOptionSettings" id="guidanceSteeringOffsetIncrementElement"
-                                toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetIncrement">
-                        <GuiElement type="button" profile="multiTextOptionLeft" />
-                        <GuiElement type="button" profile="multiTextOptionRight" />
-                        <GuiElement type="text" profile="multiTextOptionText" />
-                        <GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetIncrement" />
-                        <GuiElement type="bitmap" profile="multiTextOptionBg" />
-                    </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="guidanceMultiTextOptionSettings" size="315px 48px" id="guidanceSteeringOffsetIncrementElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetIncrement">
+                    <GuiElement type="button" profile="multiTextOptionLeft" />
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text"   profile="guidanceMultiTextOptionText" />
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetIncrement"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg" size="225px 48px"/>
                 </GuiElement>
+
                 <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="390px 83px">
-                    <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_invertOffset" position="-210px 64px"
-                                onClick="onClickInvertOffset" />
+                    <GuiElement type="button" profile="guidanceButton" text="$l10n_guidanceSteering_setting_invertOffset"
+                                onClick="onClickInvertOffset"/>
                 </GuiElement>
             </GuiElement>
         </GuiElement>
     </GuiElement>
 
     <!-- Tool tip display -->
-    <GuiElement type="bitmap" profile="ingameMenuHelpRowBg" position="80px 45px" id="settingsHelpBox" visible="true">
-        <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon" />
-        <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged" />
+    <GuiElement type="bitmap" profile="ingameMenuHelpRowBg" position="30px 90px" id="settingsHelpBox" visible="true">
+        <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon"/>
+        <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged"/>
     </GuiElement>
 </GUI>

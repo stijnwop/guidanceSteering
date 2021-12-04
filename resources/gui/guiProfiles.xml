@@ -14,7 +14,7 @@
         <Preset name="colorGlassLight_50" value="0.718 0.716 0.715 0.0625" />
         <Preset name="colorGlassLight_75" value="0.718 0.716 0.715 0.09375" />
 
-        <Preset name="colorMainUI" value="0.9910 0.3865 0.0100 1" />
+        <Preset name="colorMainUI"    value="0.0227 0.5346 0.8519 1.0"/>
         <Preset name="colorMainUIAlt" value="0.9900 0.4640 0.0010 1" />
         <Preset name="colorDisabled" value="0.4 0.4 0.4 1" />
 
@@ -155,7 +155,7 @@
     <Profile name="guidanceButton" extends="ingameMenuSettingsPauseButton">
         <Value name="screenAlign" value="bottomLeft" />
         <Value name="positionOrigin" value="bottomLeft" />
-        <Value name="margin" value="30px 15px 30px 15px" />
+        <Value name="margin" value="15px 15px 15px 15px" />
         <Value name="iconSize" value="0px 0px" />
         <Value name="position" value="0px 0px" />
         <Value name="textBold" value="false" />
@@ -191,6 +191,11 @@
 
     <Profile name="guidanceMultiTextOptionSettings" extends="multiTextOptionSettings">
         <Value name="size" value="250px 48px" />
+        <Value name="margin" value="15px 42px 15px 16px" />
+    </Profile>
+
+    <Profile name="guidanceMultiTextOptionSettingsWide" extends="multiTextOptionSettings">
+        <Value name="size" value="250px 48px" />
         <Value name="margin" value="35px 42px 35px 16px" />
     </Profile>
 
@@ -225,17 +230,17 @@
     </Profile>
 
     <Profile name="guidanceButtonDetailLeft" extends="guidanceButtonDetail">
-        <Value name="margin" value="30px 15px 30px 15px" />
+        <Value name="margin" value="40px 15px 40px 15px" />
         <Value name="textOffset" value="-5px 0px" />
-        <Value name="size" value="65px 65px" />
+        <Value name="size" value="50px 50px" />
         <Value name="iconSize" value="50px 50px" />
         <Value name="iconTextOffset" value="10px 0px" />
     </Profile>
 
     <Profile name="guidanceButtonDetailRight" extends="guidanceButtonDetail">
-        <Value name="margin" value="30px 15px 30px 15px" />
+        <Value name="margin" value="15px 15px 40px 15px" />
         <Value name="textOffset" value="-5px 0px" />
-        <Value name="size" value="65px 65px" />
+        <Value name="size" value="50px 50px" />
         <Value name="iconSize" value="50px 50px" />
         <Value name="iconTextOffset" value="10px 0px" />
     </Profile>

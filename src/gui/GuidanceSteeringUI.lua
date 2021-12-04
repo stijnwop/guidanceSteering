@@ -52,10 +52,10 @@ end
 
 ---Loads the menus.
 function GuidanceSteeringUI:loadMenu()
-    local settingsFrame = GuidanceSteeringSettingsFrame:new(self, self.i18n)
-    local strategyFrame = GuidanceSteeringStrategyFrame:new(self, self.i18n)
+    local settingsFrame = GuidanceSteeringSettingsFrame.new(self, self.i18n)
+    local strategyFrame = GuidanceSteeringStrategyFrame.new(self, self.i18n)
 
-    self.menu = GuidanceSteeringMenu:new(self.messageCenter, self.i18n, self.inputManager)
+    self.menu = GuidanceSteeringMenu.new(self.messageCenter, self.i18n, self.inputManager)
 
     local root = Utils.getFilename("resources/gui/", self.modDirectory)
     self.gui:loadGui(root .. "GuidanceSteeringSettingsFrame.xml", "GuidanceSteeringSettingsFrame", settingsFrame, true)
@@ -65,7 +65,7 @@ end
 
 ---Unloads and removes the menus.
 function GuidanceSteeringUI:unloadMenu()
-    -- self.gui:unloadGui("GuidanceSteeringMenu")
+    self.gui:unloadGui("GuidanceSteeringMenu")
 
     self.menu:delete()
 end
