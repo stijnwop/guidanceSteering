@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUI name="guidanceSteeringStrategy">
     <GuiElement type="bitmap" profile="settingsBox" position="20px 170px" positionOrigin="bottomLeft" id="container">
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="350px 500px" id="boxLayout">
+        <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="-20px 0px" size="350px 500px" id="boxLayout">
 
-            <GuiElement position="10px 0px" type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyElement"
+            <GuiElement type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyElement"
                         toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_strategy">
                 <GuiElement type="button" profile="multiTextOptionLeft"/>
                 <GuiElement type="button" profile="multiTextOptionRight"/>
@@ -12,7 +12,7 @@
                 <GuiElement type="bitmap" profile="multiTextOptionBg"/>
             </GuiElement>
 
-            <GuiElement position="10px 0px" type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyMethodElement"
+            <GuiElement type="multiTextOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringStrategyMethodElement"
                         toolTipElementId="settingsHelpBoxText" onClick="onStrategyChanged" toolTipText="$l10n_guidanceSteering_tooltip_strategyMethod">
                 <GuiElement type="button" profile="multiTextOptionLeft"/>
                 <GuiElement type="button" profile="multiTextOptionRight"/>
@@ -21,17 +21,20 @@
                 <GuiElement type="bitmap" profile="multiTextOptionBg"/>
             </GuiElement>
 
-            <GuiElement position="10px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointA" onClick="onClickSetPointA" id="guidanceSteeringPointAButton"/>
-            <GuiElement position="10px 0px" type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointB" onClick="onClickSetPointB" id="guidanceSteeringPointBButton"/>
+            <GuiElement type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointA" onClick="onClickSetPointA" id="guidanceSteeringPointAButton"/>
+            <GuiElement type="button" profile="guidanceSettingsButton" text="$l10n_guidanceSteering_setting_pointB" onClick="onClickSetPointB" id="guidanceSteeringPointBButton"/>
         </GuiElement>
 
-        <GuiElement type="boxLayout" profile="guidanceSettingsLayoutLeft" size="350px 500px" position="350px 0px" id="boxLayout">
+        <GuiElement type="bitmap" profile="ingameMenuWeatherVerticalSeparator" position="-130px -50px" size="2dp 400px"/>
 
-            <GuiElement position="10px 0px" type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringTrackNameElement"
-                        onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName"
-                        maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName"
-                        imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen">
-                <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ui_savegameName"/>
+        <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="350px 500px" position="350px -30px" id="boxLayout">
+
+            <GuiElement size="350px 48px" type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
+                <GuiElement position="10px 0px"  type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringTrackNameElement"
+                            onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName"
+                            maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName"
+                            imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen"/>
+                <GuiElement position="10px 10px" type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_ui_savegameName"/>
             </GuiElement>
 
             <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="350px 83px">
@@ -46,27 +49,23 @@
 
         </GuiElement>
 
-        <GuiElement type="empty" profile="wardrobeListFrame" size="400px 500px" position="480px 0px" id="trackListBox">
-            <GuiElement type="bitmap" profile="topScrollClipper" name="topClipper"/>
-            <GuiElement type="bitmap" profile="bottomScrollClipper" name="bottomClipper"/>
+        <GuiElement type="bitmap" profile="ingameMenuWeatherVerticalSeparator" position="210px -50px" size="2dp 400px"/>
 
-            <GuiElement type="list" size="454px 500px" position="1px -1px" profile="uiInGameMenuPagingTabList" id="list" onSelectionChanged="onListSelectionChanged" onClick="onClickSelect" onDoubleClick="onClickSelect" focusInit="onOpen" listSectionHeader="section" startClipperElementName="topClipper" endClipperElementName="bottomClipper" showHighlights="true">
+        <GuiElement type="empty" profile="wardrobeListFrame" size="400px 500px" position="455px 0px" id="trackListBox">
+            <GuiElement type="list" size="454px 500px" profile="trackList" id="list" onSelectionChanged="onListSelectionChanged" onClick="onClickSelect" onDoubleClick="onClickSelect" focusInit="onOpen" listSectionHeader="section" showHighlights="true">
                 <GuiElement type="listItem" profile="trackListItem" id="listItemTemplate">
                     <GuiElement type="text" profile="trackListItemTitle" name="title"/>
-                </GuiElement>
-                <GuiElement type="listItem" profile="trackListItemGroup" id="listCategoryTemplate">
-                    <GuiElement type="text" profile="trackListItemGroupTitle" name="title"/>
                 </GuiElement>
             </GuiElement>
         </GuiElement>
 
-        <GuiElement type="threePartBitmap" profile="verticalListSliderRightDocked" id="itemListSlider" size="12px 740px">
-            <GuiElement type="slider" profile="verticalListSliderBar" dataElementId="list" handleFocus="false" size="6px 732px"/>
+        <GuiElement type="threePartBitmap" profile="verticalListSliderRightDocked" id="itemListSlider" size="12px 500px" position="160px 0px">
+            <GuiElement type="slider" profile="verticalListSliderBar" dataElementId="list" handleFocus="false" size="6px 500px"/>
         </GuiElement>
     </GuiElement>
 
     <!-- Tool tip display -->
-    <GuiElement type="bitmap" profile="ingameMenuHelpRowBg" position="30px 100px" id="settingsHelpBox" visible="true">
+    <GuiElement type="bitmap" profile="ingameMenuHelpRowBg" position="30px 90px" id="settingsHelpBox" visible="true">
         <GuiElement type="bitmap" profile="ingameMenuHelpRowIcon"/>
         <GuiElement type="text" profile="ingameMenuHelpRowText" id="settingsHelpBoxText" text="" onTextChanged="onToolTipBoxTextChanged"/>
     </GuiElement>

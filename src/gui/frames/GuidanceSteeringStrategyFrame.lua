@@ -104,7 +104,23 @@ end
 function GuidanceSteeringStrategyFrame:onFrameClose()
     GuidanceSteeringStrategyFrame:superClass().onFrameClose(self)
 
-    self.allowSave = false
+    if self.allowSave then
+        local element = self.rowToTrackId[self.list:getSelectedElement()]
+        if element ~= nil then
+            local trackId = element.trackId
+
+            if trackId ~= self.lastLoadedTrackId then
+                self:loadTrack(trackId)
+                self.lastLoadedTrackId = trackId
+            end
+        end
+
+        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
+        self:loadStrategy(method)
+
+        self.allowSave = false
+    end
+
 
     self.guidanceSteering:unsubscribe(self)
 end
@@ -126,7 +142,6 @@ function GuidanceSteeringStrategyFrame:buildList()
 
     local groups = { "Base group" }
     for _, group in ipairs(groups) do
-        local groupHeader = self:createGroupHeader(group)
 
         for id, track in ipairs(self.guidanceSteering.savedTracks) do
             local row = self:createItem(("%s - %s"):format(id, track.name))
@@ -176,20 +191,8 @@ function GuidanceSteeringStrategyFrame:getMainElementPosition()
     return self.container.absPosition
 end
 
-function GuidanceSteeringStrategyFrame:onClickSelect(element)
-    if self.allowSave then
-        if element ~= nil then
-            local trackId = element.trackId
+function GuidanceSteeringStrategyFrame:onClickSelect(_, element)
 
-            if trackId ~= self.lastLoadedTrackId then
-                self:loadTrack(trackId)
-                self.lastLoadedTrackId = trackId
-            end
-        end
-
-        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
-        self:loadStrategy(method)
-    end
 end
 
 function GuidanceSteeringStrategyFrame:onListSelectionChanged()
@@ -207,7 +210,7 @@ function GuidanceSteeringStrategyFrame:onClickCreateTrack()
     if trackData ~= nil then
         -- might check if the name already exists
         if self.guidanceSteering:isExistingTrack(trackId, trackData.name) then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(trackData.name))
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(trackData.name))
             return
         end
 
@@ -257,7 +260,7 @@ function GuidanceSteeringStrategyFrame:onClickRotateTrack()
         local data = vehicle:getGuidanceData()
 
         if not data.isCreated then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
             return
         end
 
@@ -277,7 +280,7 @@ function GuidanceSteeringStrategyFrame:getVehicleTrackData()
         local data = vehicle:getGuidanceData()
 
         if not data.isCreated then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
             return nil
         end
 

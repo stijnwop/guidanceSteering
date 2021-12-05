@@ -281,14 +281,14 @@
         <Value name="imageColor" value="$preset_colorListRowBackground" />
         <Value name="imageFocusedColor" value="$preset_colorMainUI" />
         <Value name="imageSelectedColor" value="$preset_colorMainUI" />
-        <Value name="size" value="425px 46.86px" />
+        <Value name="size" value="400px 46.86px" />
         <Value name="position" value="0px 0px" />
     </Profile>
     <Profile name="trackListItemAlternate" extends="trackListItem" with="alternateRow" />
 
     <Profile name="trackListItemTitle" extends="textDefault">
-        <Value name="size" value="425px 46px" />
-        <Value name="textMaxWidth" value="425px" />
+        <Value name="size" value="400px 46px" />
+        <Value name="textMaxWidth" value="400px" />
         <Value name="textVerticalAlignment" value="middle" />
         <Value name="textSize" value="16px" />
         <Value name="textBold" value="false" />

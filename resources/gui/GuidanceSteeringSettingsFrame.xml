@@ -2,8 +2,8 @@
 <GUI name="guidanceSteeringSettings">
     <GuiElement type="bitmap" profile="settingsBox" position="20px 170px" positionOrigin="bottomLeft" id="container">
 
-        <GuiElement type="empty" profile="ingameMenuSettingsBox" size="340px 500px" id="settingsContainer" positionOrigin="bottomLeft">
-            <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" size="340px 500px" id="boxLayoutSettings">
+        <GuiElement type="empty" profile="ingameMenuSettingsBox" size="300px 500px" id="settingsContainer" positionOrigin="bottomLeft">
+            <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" size="300px 500px" id="boxLayoutSettings">
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ui_ingameMenuGameSettingsGeneral"/>
 
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringEnableSteeringElement"
@@ -56,10 +56,11 @@
                     <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
 
-                <GuiElement type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringHeadlandDistanceElement"
-                            toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_headlandDistance" maxCharacters="5"
-                            imeKeyboardType="normal" onTextChanged="onHeadlandDistanceChanged">
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_guidanceSteering_setting_headlandDistance"/>
+                <GuiElement size="300px 48px" margin="15px 42px 15px 16px" type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
+                    <GuiElement position="0px 0px" size="250px 48px" type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringHeadlandDistanceElement"
+                                toolTipElementId="settingsHelpBox" toolTipText="$l10n_guidanceSteering_tooltip_headlandDistance" maxCharacters="5"
+                                imeKeyboardType="normal" onTextChanged="onHeadlandDistanceChanged"/>
+                    <GuiElement position="0px 20px" type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_headlandDistance"/>
                 </GuiElement>
             </GuiElement>
 

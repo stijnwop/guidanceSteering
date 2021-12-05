@@ -149,7 +149,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
             -- Todo: cleanup later
             local guidanceSteeringIsActive = g_currentMission.guidanceSteering:isGuidanceEnabled()
             if guidanceSteeringIsActive and not data.isCreated then
-                g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 4000)
+                g_currentMission:showBlinkingWarning(self.i18n:getText("guidanceSteering_warning_createTrackFirst"), 4000)
             else
                 spec.lastInputValues.guidanceSteeringIsActive = guidanceSteeringIsActive
             end
