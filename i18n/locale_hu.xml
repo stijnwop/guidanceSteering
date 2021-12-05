@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Chris von Bone</translationContributors>
-
+    <locale>hu</locale>
     <texts>
         <text name="configuration_buyableGPS" text="GPS vezérlő rendszer"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Nem"/>
         <text name="configuration_buyableGPS_withGPS" text="Igen"/>
-
-        <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: Toggle guidance steering"/>
         <text name="input_GS_SHOW_UI" text="GPS menu megjelenítése"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Auto szélesség"/>
-
         <text name="input_GS_AXIS_REALIGN" text="Lejátszás újrarendezése"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Lejátszás eltolása jobbra"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Lejátszás eltolása balra"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Lejátszás szélességének növelése"/>
         <text name="input_GS_AXIS_WIDTH_2" text="Lejátszás szélességének csökkentése"/>
-
         <text name="input_GS_ENABLE_STEERING" text="Kormányvezérlés"/>
         <text name="input_GS_SETPOINT" text="Vezetőpont beállítása"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Terepszög rögzítése"/>
         <text name="input_GS_TURN_STEERING" text="Kormányzás beállítása"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/><!-- UPDATE -->
-        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/><!-- UPDATE -->
-
-        <!--Warnings-->
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Toggle line display"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotate track"/>
         <text name="guidanceSteering_warning_dropDistance" text="A B. pont beállításához legalább 15 métert kell vezetni: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Kérjük, először állítsa be a munkaszélességet!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Kérjük, először hozzon létre vagy töltsön be egy pályát, mielőtt engedélyezi az irányítást!"/>
-
-        <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Vezérlésbeállítások"/>
         <text name="guidanceSteering_ui_strategy" text="Vezérlési mód"/>
-
         <text name="guidanceSteering_strategy_abStraight" text="AB egyenes"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB görbe"/>
-
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Cím"/>
-
-        <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Vezetővonal megejelenítése"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Terepszög rögzítése"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="GPS kormányvezérlés engedélyezése"/>
@@ -49,18 +36,13 @@
         <text name="guidanceSteering_tooltip_width" text="Járműszélesség beállítása"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Eltolás beállítása"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Szélesség beállítása növelése/csökkentése"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/> <!-- TODO -->
-
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Set the offset increment to increase/decrease the offset"/>
         <text name="guidanceSteering_tooltip_strategy" text="Határozza meg, hogy melyik módot kell használni az irányvonalak létrehozásához"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Határozza meg, hogy melyik módszert használja"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Válassza ki a használni kívánt lejátszást"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Állítsa be a szükséges pontokat"/>
-
-        <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Lejátszás neve: %s már létezik!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Nem sikerölt menteni a lejátszási adatokat, először készítsen egy lejátszást!"/>
-
-        <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Vonal megjelenítése"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Snap terepszög"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Kormányvezérlés engedélyezése"/>
@@ -75,30 +57,26 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Eltolás visszaállítása"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Eltolás növelése"/>
         <text name="guidanceSteering_setting_cardinals" text="Támpont"/>
-
         <text name="guidanceSteering_setting_strategy" text="Vonal mód"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Vonal módszer"/>
         <text name="guidanceSteering_setting_currentTrack" text="Jelenlegi lejátszás"/>
-
         <text name="guidanceSteering_setting_pointA" text="A beállítás"/>
         <text name="guidanceSteering_setting_pointB" text="B beállítás"/>
         <text name="guidanceSteering_setting_newTrack" text="Lejátszás készítése"/>
         <text name="guidanceSteering_setting_removeTrack" text="Lejátszás törlése"/>
         <text name="guidanceSteering_setting_saveTrack" text="Lejátszás mentése"/>
-
         <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
-
         <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
-
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Turn left"/>
         <text name="guidanceSteering_headland_mode_3" text="Turn right"/>
-
-        <!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_header_headland" text="Headland management">
+            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
+        <!--Inputs UPDATE  UPDATE WarningsGUITooltips TODO Warning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

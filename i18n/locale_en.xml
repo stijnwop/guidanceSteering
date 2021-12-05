@@ -86,6 +86,8 @@
         <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
         <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
 
+        <text name="guidanceSteering_setting_header_headland" text="Headland management"/>
+
         <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>
 

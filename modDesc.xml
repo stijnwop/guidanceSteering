@@ -168,7 +168,7 @@ Changelog:
         </ru>
     </description>
 
-    <l10n filenamePrefix="translations/translation"/>
+    <l10n filenamePrefix="i18n/locale"/>
 
     <iconFilename>icon.png</iconFilename>
     <multiplayer supported="true"/>
