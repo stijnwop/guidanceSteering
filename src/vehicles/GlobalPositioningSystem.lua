@@ -136,6 +136,10 @@ function GlobalPositioningSystem:onLoad(savegame)
         end
     end
 
+    if self.propertyState == Vehicle.PROPERTY_STATE_MISSION then
+        hasGuidanceSystem = true
+    end
+
     self.spec_globalPositioningSystem = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local spec = self.spec_globalPositioningSystem
 
