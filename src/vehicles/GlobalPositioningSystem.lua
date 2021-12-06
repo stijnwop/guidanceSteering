@@ -28,7 +28,6 @@ function GlobalPositioningSystem.prerequisitesPresent(specializations)
 end
 
 function GlobalPositioningSystem.initSpecialization(vehicleType)
-
     local schema = Vehicle.xmlSchema
 
     schema:setXMLSpecializationType("GuidanceSteering")
@@ -37,8 +36,10 @@ function GlobalPositioningSystem.initSpecialization(vehicleType)
 
     g_configurationManager:addConfigurationType(GlobalPositioningSystem.CONFIG_NAME, g_i18n:getText("configuration_buyableGPS"), "globalPositioningSystem", nil, nil, nil, ConfigurationUtil.SELECTOR_MULTIOPTION)
 
-    --local schemaSavegame = Vehicle.xmlSchemaSavegame
-    --schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.manualAttachConnectionHoses#hasAttachedConnectionHoses"):format(g_manualAttachModName), "State of initial connection hoses")
+    local schemaSavegame = Vehicle.xmlSchemaSavegame
+    schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.globalPositioningSystem#guidanceIsActive"):format(g_guidanceSteeringModName), "The guidance system active state")
+    schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.globalPositioningSystem#autoInvertOffset"):format(g_guidanceSteeringModName), "The guidance auto invert offset state")
+    schemaSavegame:register(XMLValueType.FLOAT, ("vehicles.vehicle(?).%s.globalPositioningSystem#lineDistance"):format(g_guidanceSteeringModName), "The guidance line distance")
 end
 
 function GlobalPositioningSystem.registerFunctions(vehicleType)
@@ -265,13 +266,13 @@ function GlobalPositioningSystem:onPostLoad(savegame)
     end
 
     if spec.hasGuidanceSystem and savegame ~= nil then
-        --local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
-        --
-        --spec.lastInputValues.guidanceIsActive = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#guidanceIsActive"), spec.guidanceIsActive)
-        --spec.lastInputValues.autoInvertOffset = Utils.getNoNil(getXMLBool(savegame.xmlFile, key .. "#autoInvertOffset"), spec.autoInvertOffset)
-        --
-        --local data = spec.guidanceData
-        --data.lineDistance = Utils.getNoNil(getXMLFloat(savegame.xmlFile, key .. "#lineDistance"), data.lineDistance)
+        local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
+
+        spec.lastInputValues.guidanceIsActive = savegame.xmlFile:getValue(key .. "#guidanceIsActive", spec.guidanceIsActive)
+        spec.lastInputValues.autoInvertOffset = savegame.xmlFile:getValue(key .. "#autoInvertOffset", spec.autoInvertOffset)
+
+        local data = spec.guidanceData
+        data.lineDistance = savegame.xmlFile:getValue(key .. "#lineDistance", data.lineDistance)
     end
 end
 
@@ -279,11 +280,11 @@ function GlobalPositioningSystem:saveToXMLFile(xmlFile, key, usedModNames)
     local spec = self.spec_globalPositioningSystem
 
     if spec.hasGuidanceSystem then
-        --setXMLBool(xmlFile, key .. "#guidanceIsActive", spec.guidanceIsActive)
-        --setXMLBool(xmlFile, key .. "#autoInvertOffset", spec.autoInvertOffset)
-        --
-        --local data = spec.guidanceData
-        --setXMLFloat(xmlFile, key .. "#lineDistance", data.lineDistance)
+        xmlFile:setValue(key .. "#guidanceIsActive", spec.guidanceIsActive)
+        xmlFile:setValue(key .. "#autoInvertOffset", spec.autoInvertOffset)
+
+        local data = spec.guidanceData
+        xmlFile:setValue(key .. "#lineDistance", data.lineDistance)
     end
 end
 
