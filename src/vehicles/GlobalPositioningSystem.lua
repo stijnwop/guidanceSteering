@@ -66,6 +66,7 @@ end
 function GlobalPositioningSystem.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onLoad", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", GlobalPositioningSystem)
+    SpecializationUtil.registerEventListener(vehicleType, "onLoadFinished", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", GlobalPositioningSystem)
     SpecializationUtil.registerEventListener(vehicleType, "onReadUpdateStream", GlobalPositioningSystem)
@@ -124,13 +125,12 @@ function GlobalPositioningSystem:onLoad(savegame)
     local configId = Utils.getNoNil(self.configurations.globalPositioningSystem, 1)
     if configId ~= nil then
         local item = g_storeManager:getItemByXMLFilename(self.configFileName)
-        --Todo: fix new categories
-        if item.configurations.globalPositioningSystem ~= nil then
 
+        if item.configurations.globalPositioningSystem ~= nil then
             local config = item.configurations.globalPositioningSystem[configId]
 
             if config ~= nil then
-                --hasGuidanceSystem = config.enabled
+                hasGuidanceSystem = config.enabled
                 ObjectChangeUtil.updateObjectChanges(self.xmlFile, "vehicle.globalPositioningSystemConfigurations.globalPositioningSystemConfiguration", configId, self.components, self)
             end
         end
@@ -255,16 +255,6 @@ end
 
 function GlobalPositioningSystem:onPostLoad(savegame)
     local spec = self.spec_globalPositioningSystem
-
-    if self.spec_dynamicallyLoadedParts ~= nil then
-        for _, part in pairs(self.spec_dynamicallyLoadedParts.parts) do
-            -- linkNode field is set by the GlobalPositioningSystem code.
-            if part.linkNode ~= nil then
-                setVisibility(part.linkNode, spec.hasGuidanceSystem)
-            end
-        end
-    end
-
     if spec.hasGuidanceSystem and savegame ~= nil then
         local key = savegame.key .. "." .. self:guidanceSteering_getModName() .. ".globalPositioningSystem"
 
@@ -273,6 +263,18 @@ function GlobalPositioningSystem:onPostLoad(savegame)
 
         local data = spec.guidanceData
         data.lineDistance = savegame.xmlFile:getValue(key .. "#lineDistance", data.lineDistance)
+    end
+end
+
+function GlobalPositioningSystem:onLoadFinished()
+    local spec = self.spec_globalPositioningSystem
+    if self.spec_dynamicallyLoadedParts ~= nil then
+        for _, part in ipairs(self.spec_dynamicallyLoadedParts.parts) do
+            -- linkNode field is set by the GlobalPositioningSystem code.
+            if part.gpsLinkNode ~= nil then
+                setVisibility(part.gpsLinkNode, spec.hasGuidanceSystem)
+            end
+        end
     end
 end
 
@@ -644,24 +646,21 @@ function GlobalPositioningSystem.inj_getCanStartAIVehicle(vehicle, superFunc)
 end
 
 function GlobalPositioningSystem.inj_onDynamicallyPartI3DLoaded(vehicle, superFunc, i3dNode, failedReason, args)
-    local succeeded = superFunc(vehicle, i3dNode, failedReason, args)
+    local xmlFile, partKey, dynamicallyLoadedPart = unpack(args)
 
-    -- Great this has no default return value.. only false on failure.
-    if not succeeded == false then
-        local xmlFile, partKey, dynamicallyLoadedPart = unpack(args)
-
-        local function isSharedStarFire(path)
-            local matches = {
-                ["$data/shared/assets/starfire.i3d"] = true,
-                ["$data/shared/assets/gps.i3d"] = true
-            }
-            return matches[path:lower()] ~= nil
-        end
-
-        if isSharedStarFire(dynamicallyLoadedPart.filename) then
-            dynamicallyLoadedPart.linkNode = xmlFile:getValue(partKey .. "#linkNode", "0>", self.components, self.i3dMappings)
-        end
+    local function isSharedStarFire(path)
+        local matches = {
+            ["data/shared/assets/starfire.i3d"] = true,
+            ["data/shared/assets/gps.i3d"] = true
+        }
+        return matches[path:lower()] ~= nil
     end
+
+    if isSharedStarFire(dynamicallyLoadedPart.filename) then
+        dynamicallyLoadedPart.gpsLinkNode = xmlFile:getValue(partKey .. "#linkNode", "0>", vehicle.components, vehicle.i3dMappings)
+    end
+
+    return superFunc(vehicle, i3dNode, failedReason, args)
 end
 
 function GlobalPositioningSystem:onPostAttachImplement()
