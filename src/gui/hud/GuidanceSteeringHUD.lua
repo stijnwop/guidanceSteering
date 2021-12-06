@@ -136,7 +136,7 @@ function GuidanceSteeringHUD:getLaneText(laneNumber)
 end
 
 function GuidanceSteeringHUD:drawText()
-    if self.speedMeterDisplay.isVehicleDrawSafe and self.stateBox:getVisible() then
+    if self.speedMeterDisplay.isVehicleDrawSafe and self.stateBox ~= nil and self.stateBox:getVisible() then
         local spec = self.vehicle.spec_globalPositioningSystem
         local data = spec.guidanceData
 
