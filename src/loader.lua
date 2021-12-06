@@ -78,10 +78,10 @@ function loadMission(mission)
 
     addModEventListener(guidanceSteering)
 
-    local xmlFile = loadXMLFile("ConfigurationXML", directory .. "resources/buyableGPSConfiguration.xml")
+    local xmlFile = loadXMLFile("ConfigurationXML", directory .. "resources/globalPositioningSystemConfiguration.xml")
     if xmlFile ~= nil then
         for i = 1, 2 do
-            local key = ("buyableGPSConfigurations.buyableGPSConfiguration(%d)"):format(i - 1)
+            local key = ("globalPositioningSystemConfigurations.globalPositioningSystemConfiguration(%d)"):format(i - 1)
 
             local config = {}
             config.desc = ""
@@ -91,6 +91,8 @@ function loadMission(mission)
             config.price = getXMLInt(xmlFile, key .. "#price")
             config.name = g_i18n:getText(getXMLString(xmlFile, key .. "#name"))
             config.enabled = getXMLBool(xmlFile, key .. "#enabled")
+            config.isSelectable = true
+            config.saveId = tostring(config.index)
 
             table.insert(guidanceConfigurations, config)
         end
@@ -223,18 +225,18 @@ local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
     return disallowedCategories[storeItem.categoryName] == nil and isDrivable and isMotorized
 end
 
-function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
-    local configurations = superFunc(xmlFile, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
+function addGPSConfigurationUtil(xmlFile, superFunc, key, baseDir, customEnvironment, isMod, storeItem)
+    local configurations = superFunc(xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
 
-    if canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
-        local key = GlobalPositioningSystem.CONFIG_NAME
+    if StoreItemUtil.getIsVehicle(storeItem) and canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
+        local gpsKey = GlobalPositioningSystem.CONFIG_NAME
 
         if configurations ~= nil then
-            if configurations[key] == nil then
-                configurations[key] = guidanceConfigurations
+            if configurations[gpsKey] == nil then
+                configurations[gpsKey] = guidanceConfigurations
             else
                 -- Add enabled values to added xml configurations
-                for id, config in pairs(configurations[key]) do
+                for id, config in pairs(configurations[gpsKey]) do
                     config.enabled = id > 1
                 end
             end
