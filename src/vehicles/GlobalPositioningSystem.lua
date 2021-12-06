@@ -59,7 +59,7 @@ end
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanStartAIVehicle", GlobalPositioningSystem.inj_getCanStartAIVehicle)
-    SpecializationUtil.registerOverwrittenFunction(vehicleType, "loadDynamicallyPartsFromXML", GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "onDynamicallyPartI3DLoaded", GlobalPositioningSystem.inj_onDynamicallyPartI3DLoaded)
 end
 
 function GlobalPositioningSystem.registerEventListeners(vehicleType)
@@ -153,7 +153,7 @@ function GlobalPositioningSystem:onLoad(savegame)
     XMLUtil.checkDeprecatedXMLElements(self.xmlFile, self.configFileName, "vehicle.guidanceSteering#index", "vehicle.guidanceSteering#node")
 
     local rootNode = self.rootNode
-    local guideNode  = self.xmlFile:getValue("vehicle.guidanceSteering#node", nil, self.components, self.i3dMappings)
+    local guideNode = self.xmlFile:getValue("vehicle.guidanceSteering#node", nil, self.components, self.i3dMappings)
     if guideNode ~= nil then
         rootNode = guideNode
     end
@@ -410,10 +410,10 @@ function GlobalPositioningSystem.updateNetworkInputs(self)
 
     local steeringChanged = spec.guidanceSteeringIsActive ~= spec.guidanceSteeringIsActiveSent
     if steeringChanged
-            or spec.guidanceIsActive ~= spec.guidanceIsActiveSent
-            or spec.autoInvertOffset ~= spec.autoInvertOffsetSent
-            or spec.shiftParallel ~= spec.shiftParallelSent
-            or spec.shiftParallelDirection ~= spec.shiftParallelDirectionSent
+        or spec.guidanceIsActive ~= spec.guidanceIsActiveSent
+        or spec.autoInvertOffset ~= spec.autoInvertOffsetSent
+        or spec.shiftParallel ~= spec.shiftParallelSent
+        or spec.shiftParallelDirection ~= spec.shiftParallelDirectionSent
     then
         spec.guidanceSteeringIsActiveSent = spec.guidanceSteeringIsActive
         spec.guidanceIsActiveSent = spec.guidanceIsActive
@@ -614,7 +614,7 @@ end
 
 function GlobalPositioningSystem:onDraw()
     if not self.isClient
-            or not self:getHasGuidanceSystem() then
+        or not self:getHasGuidanceSystem() then
         return
     end
 
@@ -642,19 +642,25 @@ function GlobalPositioningSystem.inj_getCanStartAIVehicle(vehicle, superFunc)
     return superFunc(vehicle)
 end
 
-function GlobalPositioningSystem.inj_loadDynamicallyPartsFromXML(vehicle, superFunc, dynamicallyLoadedPart, xmlFile, key)
-    local ret = superFunc(vehicle, dynamicallyLoadedPart, xmlFile, key)
-    if ret then
+function GlobalPositioningSystem.inj_onDynamicallyPartI3DLoaded(vehicle, superFunc, i3dNode, failedReason, args)
+    local succeeded = superFunc(vehicle, i3dNode, failedReason, args)
+
+    -- Great this has no default return value.. only false on failure.
+    if not succeeded == false then
+        local xmlFile, partKey, dynamicallyLoadedPart = unpack(args)
+
         local function isSharedStarFire(path)
-            return path:lower() == "$data/shared/assets/starfire.i3d"
+            local matches = {
+                ["$data/shared/assets/starfire.i3d"] = true,
+                ["$data/shared/assets/gps.i3d"] = true
+            }
+            return matches[path:lower()] ~= nil
         end
 
         if isSharedStarFire(dynamicallyLoadedPart.filename) then
-            dynamicallyLoadedPart.linkNode = I3DUtil.indexToObject(vehicle.components, Utils.getNoNil(getXMLString(xmlFile, key .. "#linkNode"), "0>"), vehicle.i3dMappings)
+            dynamicallyLoadedPart.linkNode = xmlFile:getValue(partKey .. "#linkNode", "0>", self.components, self.i3dMappings)
         end
     end
-
-    return ret
 end
 
 function GlobalPositioningSystem:onPostAttachImplement()
@@ -760,7 +766,7 @@ function GlobalPositioningSystem.computeGuidanceTarget(self)
     local dirX, dirZ
 
     if spec.lineStrategy:getHasABDependentDirection()
-            and spec.lineStrategy:getIsABDirectionPossible() then
+        and spec.lineStrategy:getIsABDirectionPossible() then
         if not data.movingForwards then
             guidanceNode = spec.guidanceNode -- inverse line
         end
@@ -799,7 +805,7 @@ function GlobalPositioningSystem.computeGuidanceDirection(self)
     local dirX, _, dirZ = localDirectionToWorld(guidanceNode, 0, 0, 1)
 
     if spec.lineStrategy:getHasABDependentDirection()
-            and spec.lineStrategy:getIsABDirectionPossible() then
+        and spec.lineStrategy:getIsABDirectionPossible() then
         if not data.movingForwards then
             guidanceNode = spec.guidanceNode -- inverse line
         end
