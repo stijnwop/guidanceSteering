@@ -57,7 +57,7 @@
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_guidanceSteering_setting_header_headland"/>
 
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringHeadlandModeElement"
-                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_autoInvertOffset">
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_headlandMode">
                     <GuiElement type="button" profile="multiTextOptionLeft"/>
                     <GuiElement type="button" profile="multiTextOptionRight"/>
                     <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
