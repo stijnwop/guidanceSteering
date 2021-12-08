@@ -3,7 +3,7 @@
     <translationContributors>Wopster</translationContributors>
 
     <texts>
-        <text name="configuration_buyableGPS" text="Global Positioning System"/>
+        <text name="configuration_buyableGPS" text="GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="No"/>
         <text name="configuration_buyableGPS_withGPS" text="Yes"/>
 
@@ -55,6 +55,9 @@
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determine which strategy method to use"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
+
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it's accessible for everyone"/>
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name '%s' already exists!"/>

@@ -77,6 +77,10 @@
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Nastavit směr"/>
         <text name="guidanceSteering_setting_header_headland" text="Headland management">
             <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
+            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
         <!--InputsWarningsGUITooltips TODO Warning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

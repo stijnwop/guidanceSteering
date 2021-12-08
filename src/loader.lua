@@ -108,10 +108,10 @@ function loadedMission(mission, node)
 
     if mission:getIsServer() then
         if mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml") then
-            local xmlFile = loadXMLFile("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
+            local xmlFile = XMLFile.load("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
             if xmlFile ~= nil then
                 guidanceSteering:onMissionLoadFromSavegame(xmlFile)
-                delete(xmlFile)
+                xmlFile:delete()
             end
         end
     end
@@ -144,12 +144,11 @@ function saveToXMLFile(missionInfo)
     end
 
     if missionInfo.isValid then
-        local xmlFile = createXMLFile("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
+        local xmlFile = XMLFile.create("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
         if xmlFile ~= nil then
             guidanceSteering:onMissionSaveToSavegame(xmlFile)
-
-            saveXMLFile(xmlFile)
-            delete(xmlFile)
+            xmlFile:save()
+            xmlFile:delete()
         end
     end
 end

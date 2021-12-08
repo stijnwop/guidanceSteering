@@ -30,11 +30,20 @@
         <GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" size="350px 500px" position="350px -30px" id="boxLayout">
 
             <GuiElement size="350px 48px" type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
-                <GuiElement position="10px 0px"  type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringTrackNameElement"
+                <GuiElement position="10px 0px" type="textInput" profile="guidanceSettingsTextInput" id="guidanceSteeringTrackNameElement"
                             onEnterPressed="onEnterPressedTrackName" toolTipElementId="settingsHelpBox" toolTipText="$l10n_toolTip_savegameName"
                             maxCharacters="30" imeKeyboardType="normal" imeTitle="$l10n_ui_savegameName" imeDescription="$l10n_ui_savegameName"
                             imePlaceholder="$l10n_ui_savegameName" focusInit="onOpen"/>
                 <GuiElement position="10px 10px" type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_ui_savegameName"/>
+            </GuiElement>
+
+            <GuiElement type="checkedOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringScopeFarmIdElement"
+                        toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_scopeTrackFarmId">
+                <GuiElement position="-20px 0px" type="button" profile="multiTextOptionLeft"/>
+                <GuiElement position="-20px 0px" type="button" profile="multiTextOptionRight"/>
+                <GuiElement position="-20px 0px" type="text" profile="multiTextOptionText"/>
+                <GuiElement position="-20px 10px" type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_scopeTrackFarmId"/>
+                <GuiElement position="-20px 0px" type="bitmap" profile="multiTextOptionBg"/>
             </GuiElement>
 
             <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="350px 83px">
