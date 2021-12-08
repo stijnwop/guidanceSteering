@@ -5,22 +5,22 @@
         <text name="configuration_buyableGPS" text="Nawigacja GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Nie"/>
         <text name="configuration_buyableGPS_withGPS" text="Tak"/>
-        <text name="input_GS_TOGGLE" text="GS: Włącz/Wyłącz GPS"/>
-        <text name="input_GS_SHOW_UI" text="GS: Pokaż menu ustawień nawigacji"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Automatyczna szerokość"/>
-        <text name="input_GS_AXIS_REALIGN" text="GS: Centrowanie ścieżki"/>
-        <text name="input_GS_AXIS_SHIFT" text="GS: Przesunięcie ścieżki"/>
-        <text name="input_GS_AXIS_WIDTH" text="GS: Zmiana szerokości"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="GS: Przesuń ścieżkę w prawo"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="GS: Przesuń ścieżkę w lewo"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="GS: Zwiększ szerokość"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="GS: Zmniejsz szerokość"/>
-        <text name="input_GS_ENABLE_STEERING" text="GS: Automatyczne sterowanie"/>
-        <text name="input_GS_SETPOINT" text="GS: Ustaw punkt nawigacji"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Wyrównaj do kąta terenu"/>
-        <text name="input_GS_TURN_STEERING" text="GS: Ustaw kierunek sterowania"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Pokaż/Ukryj linie"/>
-        <text name="input_GS_ROTATE_TRACK" text="GS: Obróć ścieżkę"/>
+        <text name="input_GS_TOGGLE" text="Włącz/Wyłącz GPS"/>
+        <text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
+        <text name="input_GS_AXIS_REALIGN" text="Centrowanie ścieżki"/>
+        <text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/>
+        <text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="Przesuń ścieżkę w prawo"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="Przesuń ścieżkę w lewo"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="Zwiększ szerokość"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Zmniejsz szerokość"/>
+        <text name="input_GS_ENABLE_STEERING" text="Automatyczne sterowanie"/>
+        <text name="input_GS_SETPOINT" text="Ustaw punkt nawigacji"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Wyrównaj do kąta terenu"/>
+        <text name="input_GS_TURN_STEERING" text="Ustaw kierunek sterowania"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="Pokaż/Ukryj linie"/>
+        <text name="input_GS_ROTATE_TRACK" text="Obróć ścieżkę"/>
         <text name="guidanceSteering_warning_dropDistance" text="Przejedź co najmniej 15m, aby ustawić punkt B. Aktualnie przebyta odległość: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Najpierw ustaw szerokość roboczą!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Najpierw stwórz lub załaduj ścieżkę zanim włączysz automatyczne sterowanie!"/>
@@ -77,16 +77,11 @@
         <text name="guidanceSteering_headland_mode_3" text="Skręć w prawo"/>
         <text name="guidanceSteering_setting_cardinalTitle" text="Kierunek świata (stopnie)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Ustaw kierunek"/>
-        <text name="guidanceSteering_setting_header_headland" text="Headland management">
-            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
-            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
-        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
-            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <text name="guidanceSteering_setting_header_headland" text="Działania na uwrociach"/>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Zapisz ścieżkę dla gospodarstwa"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Zapisuje ścieżkę dla gospodarstwa do którego należy pojazd, domyślnie jest zapisywane dla wszystkich."/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Przesunięcie linii dla lepszej widoczności na terenie."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Przesuń linie"/>
         <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>
