@@ -30,6 +30,7 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     HEADLAND_DISTANCE = "guidanceSteeringHeadlandDistanceElement",
 
     TOGGLE_SHOW_LINES = "guidanceSteeringShowLinesElement",
+    OFFSET_LINES = "guidanceSteeringLinesOffsetElement",
     TOGGLE_SNAP_TERRAIN_ANGLE = "guidanceSteeringSnapAngleElement",
     TOGGLE_ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
     TOGGLE_AUTO_INVERT_OFFSET = "guidanceSteeringAutoInvertOffsetElement",
@@ -95,6 +96,12 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
     self.guidanceSteeringWidthIncrementElement:setTexts(increments)
     self.guidanceSteeringOffsetIncrementElement:setTexts(increments)
 
+    local offsets = stream({ 1, 2, 3, 4, 5, 6 }):map(function(offset)
+        return tostring(offset * GuidanceSteering.GROUND_CLEARANCE_OFFSET)
+    end)
+    self.offsets = offsets:toList()
+    self.guidanceSteeringLinesOffsetElement:setTexts(self.offsets)
+
     local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
         local spec = vehicle.spec_globalPositioningSystem
@@ -135,6 +142,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
         g_currentMission.guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
+        g_currentMission.guidanceSteering:setLineOffset(tonumber(self.offsets[self.guidanceSteeringLinesOffsetElement:getState()]))
 
         local vehicle = self.ui:getVehicle()
         if vehicle ~= nil then

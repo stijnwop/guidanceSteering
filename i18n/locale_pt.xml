@@ -81,6 +81,10 @@
             <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
             <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
+        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
+            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
         <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

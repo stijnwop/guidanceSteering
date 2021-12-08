@@ -25,6 +25,15 @@
                     <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
 
+                <GuiElement type="multiTextOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringLinesOffsetElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetLines">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetLines"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
+                </GuiElement>
+
                 <!--Option to snap to terrain angle-->
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringSnapAngleElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_terrainAngleSnap">

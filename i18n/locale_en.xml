@@ -59,6 +59,9 @@
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it's accessible for everyone"/>
 
+        <text name="guidanceSteering_setting_offsetLines" text="Line offset"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance."/>
+
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name '%s' already exists!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create or load a track first!"/>

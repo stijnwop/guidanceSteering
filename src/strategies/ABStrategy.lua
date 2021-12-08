@@ -30,7 +30,6 @@ ABStrategy.ABLines = {
 
 ABStrategy.STEP_SIZE = 1 -- 1m each line
 ABStrategy.NUM_STEPS = 15 -- draw 10
-ABStrategy.GROUND_CLEARANCE_OFFSET = .2
 
 local ABStrategy_mt = Class(ABStrategy)
 
@@ -109,6 +108,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         offset = data.lineDistance * 0.5
     end
 
+    local lineOffset = g_currentMission.guidanceSteering:getLineOffset()
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
@@ -116,10 +116,10 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
 
         local x1 = lx + ABStrategy.STEP_SIZE * step * dirX
         local z1 = lz + ABStrategy.STEP_SIZE * step * dirZ
-        local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
+        local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + lineOffset
         local x2 = lx + ABStrategy.STEP_SIZE * (step + 1) * dirX
         local z2 = lz + ABStrategy.STEP_SIZE * (step + 1) * dirZ
-        local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + ABStrategy.GROUND_CLEARANCE_OFFSET
+        local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + lineOffset
 
         drawDebugLine(x1, y1, z1, rgb[1], rgb[2], rgb[3], x2, y2, z2, rgb[1], rgb[2], rgb[3])
 
