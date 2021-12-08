@@ -32,7 +32,7 @@
         <text name="guidanceSteering_tooltip_showLines" text="Visuelle Unterstützung durch Führungslinien"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richtet die Lenkung zum Geländewinkel aus"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Steuerung wird vom GPS übernommen"/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Versatz beim Wenden automatisch umgekehren"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Versatz beim Wenden automatisch umkehren"/>
         <text name="guidanceSteering_tooltip_width" text="Stellt die Breite des Arbeitsgerätes ein"/>
         <text name="guidanceSteering_tooltip_offsetWidth" text="Versatz einstellen"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Einstellung der Arbeitsbreite. Verbreitern oder verringern"/>
@@ -75,16 +75,11 @@
         <text name="guidanceSteering_headland_mode_3" text="Rechts wenden"/>
         <text name="guidanceSteering_setting_cardinalTitle" text="Gewünschte Richtung (Winkel)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Richtung setzen"/>
-        <text name="guidanceSteering_setting_header_headland" text="Headland management">
-            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
-            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
-        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
-            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <text name="guidanceSteering_setting_header_headland" text="Vorgewende Management"/>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Kurs für diesen Hof speichern"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Kurs für den Hof des Fahrzeugs speichern, standardmäßig ist er für alle zugänglich"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Linenversatz für die Führungslinen."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Linenversatz"/>
         <!--You could use "Globales Positionsbestimmungssystem" but thats a bit long i thinkInputs UPDATE  UPDATE WarningsGUITooltipsWarning tooltipSettings I think that is plenty enough since you got the "yes" or "no" below keeping it the same as above with the working width  Cardinal strategy -->
     </texts>
 </l10n>
