@@ -60,6 +60,7 @@ end
 function GlobalPositioningSystem.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getIsVehicleControlledByPlayer", GlobalPositioningSystem.inj_getIsVehicleControlledByPlayer)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanStartAIVehicle", GlobalPositioningSystem.inj_getCanStartAIVehicle)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getShowAIToggleActionEvent", GlobalPositioningSystem.inj_getCanStartAIVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "onDynamicallyPartI3DLoaded", GlobalPositioningSystem.inj_onDynamicallyPartI3DLoaded)
 end
 
