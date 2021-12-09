@@ -173,7 +173,7 @@ function GuidanceSteeringHUD:drawLaneText()
     local color = self.receiverIconIsActive and GuidanceSteeringHUD.COLOR.ACTIVE or GuidanceSteeringHUD.COLOR.INACTIVE
 
     setTextBold(true)
-    setTextAlignment(RenderText.ALIGN_RIGHT)
+    setTextAlignment(RenderText.ALIGN_CENTER)
     setTextColor(unpack(color))
 
     if self.laneTextPositionX ~= nil then
@@ -202,7 +202,7 @@ GuidanceSteeringHUD.UV = {
 }
 
 GuidanceSteeringHUD.POSITION = {
-    LANE_TEXT = { -7, -20 },
+    LANE_TEXT = { -22, -20 },
     ICON = { 5, 5 },
 }
 
