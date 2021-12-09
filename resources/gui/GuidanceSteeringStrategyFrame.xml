@@ -39,11 +39,11 @@
 
             <GuiElement type="checkedOption" profile="guidanceSettingsMultiTextOptionSettings" id="guidanceSteeringScopeFarmIdElement"
                         toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_scopeTrackFarmId">
-                <GuiElement position="-20px 0px" type="button" profile="multiTextOptionLeft"/>
-                <GuiElement position="-20px 0px" type="button" profile="multiTextOptionRight"/>
-                <GuiElement position="-20px 0px" type="text" profile="multiTextOptionText"/>
-                <GuiElement position="-20px 10px" type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_scopeTrackFarmId"/>
-                <GuiElement position="-20px 0px" type="bitmap" profile="multiTextOptionBg"/>
+                <GuiElement position="-25px 0px" type="button" profile="multiTextOptionLeft"/>
+                <GuiElement position="-25px 0px" type="button" profile="multiTextOptionRight"/>
+                <GuiElement position="-25px 0px" type="text" profile="multiTextOptionText"/>
+                <GuiElement position="-25px 14px" type="text" profile="multiTextOptionTitle" text="$l10n_guidanceSteering_setting_scopeTrackFarmId"/>
+                <GuiElement position="-25px 0px" type="bitmap" profile="multiTextOptionBg"/>
             </GuiElement>
 
             <GuiElement type="flowLayout" profile="ingameMenuSettingsLayout" size="350px 83px">
