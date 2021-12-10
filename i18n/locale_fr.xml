@@ -76,11 +76,9 @@
         <text name="guidanceSteering_setting_cardinalTitle" text="Direction souhaitée (degrés)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Définir la direction"/>
         <text name="guidanceSteering_setting_header_headland" text="Gestion des fourrières"/>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Sauvegarder la trace pour la ferme.">
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Sauvegarde de la piste limitée à la ferme du véhicule, par défaut elle est accessible à tous.">
-        <text name="guidanceSteering_tooltip_offsetLines" text="Décalez la ligne pour augmenter la garde au sol.">
-        <text name="guidanceSteering_setting_offsetLines" text="Décalage de la ligne">
-
-        <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Sauvegarder la trace pour la ferme."/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Sauvegarde de la piste limitée à la ferme du véhicule, par défaut elle est accessible à tous."/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Décalez la ligne pour augmenter la garde au sol."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Décalage de la ligne"/>
     </texts>
 </l10n>
