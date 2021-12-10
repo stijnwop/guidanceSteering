@@ -27,14 +27,8 @@ In order todo this:
 
 For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </en>
         <de>
@@ -50,14 +44,8 @@ Danach: GPS-Menü öffnen (linke STRG + S)
 
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </de>
         <fr>
@@ -71,14 +59,8 @@ Pour ce faire :
 
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </fr>
         <it>
@@ -94,14 +76,8 @@ Quindi: apri il menu GPS (CTRL sinistro + S)
 
 Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </it>
         <es>
@@ -117,14 +93,8 @@ Para hacer esto:
 
 Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </es>
         <cz>
@@ -141,7 +111,11 @@ Klávesové skratky
 - Zúžení šířky dráhy: levý ALT + [-] (Numpad)
 - Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
 - Posun dráhy doleva: levý ALT + PAGEUP
-- Posun dráhy doprava: levý ALT + PAGEDOWN]]>
+- Posun dráhy doprava: levý ALT + PAGEDOWN
+
+Changelog 2.0.0.0:
+- FS22 release
+]]>
         </cz>
         <ru>
             <![CDATA[
@@ -156,14 +130,8 @@ Klávesové skratky
 
 Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
 
-Changelog:
-- Change render text to the 3D function in order to prevent clipping through the vehicles
-- Fix issue with angled implements resulting in wrong width calculation
-- Added toggle to display the line (ALT + L)
-- Add rotate track input (ALT + END)
-- Doubled amount of possible tracks
-- Prevent nil value to be set on the headland act distance
-- Several fixes
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </ru>
     </description>
