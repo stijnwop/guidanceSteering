@@ -96,7 +96,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
     self.guidanceSteeringWidthIncrementElement:setTexts(increments)
     self.guidanceSteeringOffsetIncrementElement:setTexts(increments)
 
-    local offsets = stream({ 1, 2, 3, 4, 5, 6 }):map(function(offset)
+    local offsets = stream({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }):map(function(offset)
         return tostring(offset * GuidanceSteering.GROUND_CLEARANCE_OFFSET)
     end)
     self.offsets = offsets:toList()
