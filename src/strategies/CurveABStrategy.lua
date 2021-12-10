@@ -25,7 +25,7 @@ CurveABStrategy.GROUND_CLEARANCE_OFFSET = .2
 
 function CurveABStrategy:new(customMt)
     local instance = {}
-    
+
     setmetatable(instance, customMt or CurveABStrategy_mt)
 
     instance.curvedABPoints = {} -- {id = object pointer, name = render name}
@@ -164,9 +164,8 @@ function CurveABStrategy:createParallelSpline(points, data, dir)
 
     local lineDirX, lineDirZ = unpack(data.snapDirection)
 
-    local lineXDir = data.snapDirectionMultiplier * lineDirX * data.movingDirection
-    local lineZDir = data.snapDirectionMultiplier * lineDirZ * data.movingDirection
-
+    local lineXDir = data.snapDirectionMultiplier * lineDirX
+    local lineZDir = data.snapDirectionMultiplier * lineDirZ
     for i = 1, numOfPoints do
         local p = points[i]
         --        local pNext = points[math.max(numOfPoints - i, 1)]

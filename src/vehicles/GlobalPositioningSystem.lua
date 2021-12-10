@@ -236,7 +236,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
     spec.guidanceData.offsetWidth = 0
-    spec.guidanceData.movingDirection = 1
     spec.guidanceData.isReverseDriving = false
     spec.guidanceData.movingForwards = false
     spec.guidanceData.snapDirectionMultiplier = 1
@@ -585,22 +584,11 @@ function GlobalPositioningSystem:onUpdate(dt)
         local spec_reverseDriving = self.spec_reverseDriving
 
         data.snapDirectionMultiplier = snapDirectionMultiplier
-        data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
-
-        local movingDirection = 1
-        if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
-            movingDirection = -movingDirection
-        end
+        data.isReverseDriving = spec_reverseDriving ~= nil and not spec_reverseDriving.isChangingDirection and spec_reverseDriving.isReverseDriving
 
         if data.isReverseDriving then
-            movingDirection = -movingDirection
-
-            if self.movingDirection > 0 then
-                movingDirection = math.abs(movingDirection)
-            end
+            data.snapDirectionMultiplier = -data.snapDirectionMultiplier
         end
-
-        data.movingDirection = movingDirection
     end
 
     if not self.isServer then
