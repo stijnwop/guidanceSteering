@@ -35,6 +35,7 @@ function GlobalPositioningSystem.initSpecialization(vehicleType)
     schema:setXMLSpecializationType()
 
     g_configurationManager:addConfigurationType(GlobalPositioningSystem.CONFIG_NAME, g_i18n:getText("configuration_buyableGPS"), "globalPositioningSystem", nil, nil, nil, ConfigurationUtil.SELECTOR_MULTIOPTION)
+    ObjectChangeUtil.registerObjectChangeXMLPaths(schema, "vehicle.globalPositioningSystemConfigurations.globalPositioningSystemConfiguration(?)")
 
     local schemaSavegame = Vehicle.xmlSchemaSavegame
     schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.globalPositioningSystem#guidanceIsActive"):format(g_guidanceSteeringModName), "The guidance system active state")
