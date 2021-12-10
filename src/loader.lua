@@ -8,6 +8,8 @@
 local directory = g_currentModDirectory
 local modName = g_currentModName
 
+g_guidanceSteeringModName = modName
+
 source(Utils.getFilename("src/events/TrackSaveEvent.lua", directory))
 source(Utils.getFilename("src/events/TrackDeleteEvent.lua", directory))
 source(Utils.getFilename("src/events/StrategyInteractEvent.lua", directory))
@@ -65,23 +67,21 @@ function init()
     SavegameSettingsEvent.readStream = Utils.appendedFunction(SavegameSettingsEvent.readStream, readStream)
     SavegameSettingsEvent.writeStream = Utils.appendedFunction(SavegameSettingsEvent.writeStream, writeStream)
 
-    VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, validateVehicleTypes)
+    TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, validateVehicleTypes)
     StoreItemUtil.getConfigurationsFromXML = Utils.overwrittenFunction(StoreItemUtil.getConfigurationsFromXML, addGPSConfigurationUtil)
 end
 
 function loadMission(mission)
-    assert(g_guidanceSteering == nil)
-
     guidanceSteering = GuidanceSteering:new(mission, directory, modName, g_i18n, g_gui, g_gui.inputManager, g_messageCenter)
 
-    getfenv(0)["g_guidanceSteering"] = guidanceSteering
+    mission.guidanceSteering = guidanceSteering
 
     addModEventListener(guidanceSteering)
 
-    local xmlFile = loadXMLFile("ConfigurationXML", directory .. "resources/buyableGPSConfiguration.xml")
+    local xmlFile = loadXMLFile("ConfigurationXML", directory .. "resources/globalPositioningSystemConfiguration.xml")
     if xmlFile ~= nil then
         for i = 1, 2 do
-            local key = ("buyableGPSConfigurations.buyableGPSConfiguration(%d)"):format(i - 1)
+            local key = ("globalPositioningSystemConfigurations.globalPositioningSystemConfiguration(%d)"):format(i - 1)
 
             local config = {}
             config.desc = ""
@@ -91,6 +91,8 @@ function loadMission(mission)
             config.price = getXMLInt(xmlFile, key .. "#price")
             config.name = g_i18n:getText(getXMLString(xmlFile, key .. "#name"))
             config.enabled = getXMLBool(xmlFile, key .. "#enabled")
+            config.isSelectable = true
+            config.saveId = tostring(config.index)
 
             table.insert(guidanceConfigurations, config)
         end
@@ -106,10 +108,10 @@ function loadedMission(mission, node)
 
     if mission:getIsServer() then
         if mission.missionInfo.savegameDirectory ~= nil and fileExists(mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml") then
-            local xmlFile = loadXMLFile("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
+            local xmlFile = XMLFile.load("GuidanceXML", mission.missionInfo.savegameDirectory .. "/guidanceSteering.xml")
             if xmlFile ~= nil then
                 guidanceSteering:onMissionLoadFromSavegame(xmlFile)
-                delete(xmlFile)
+                xmlFile:delete()
             end
         end
     end
@@ -130,7 +132,10 @@ function unload()
 
     guidanceSteering:delete()
     guidanceSteering = nil -- Allows garbage collecting
-    getfenv(0)["g_guidanceSteering"] = nil
+
+    if g_currentMission ~= nil then
+        g_currentMission.guidanceSteering = nil
+    end
 end
 
 function saveToXMLFile(missionInfo)
@@ -139,12 +144,11 @@ function saveToXMLFile(missionInfo)
     end
 
     if missionInfo.isValid then
-        local xmlFile = createXMLFile("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
+        local xmlFile = XMLFile.create("GuidanceXML", missionInfo.savegameDirectory .. "/guidanceSteering.xml", "guidanceSteering")
         if xmlFile ~= nil then
             guidanceSteering:onMissionSaveToSavegame(xmlFile)
-
-            saveXMLFile(xmlFile)
-            delete(xmlFile)
+            xmlFile:save()
+            xmlFile:delete()
         end
     end
 end
@@ -165,8 +169,10 @@ function writeStream(e, streamId, connection)
     guidanceSteering:onWriteStream(streamId, connection)
 end
 
-function validateVehicleTypes(vehicleTypeManager)
-    GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
+function validateVehicleTypes(typeManager)
+    if typeManager.typeName == "vehicle" then
+        GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
+    end
 end
 
 -- StoreItem insertion
@@ -212,24 +218,24 @@ local disallowedCategories = {
 }
 
 local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
-    local isDrivable = hasXMLProperty(xmlFile, "vehicle.drivable")
-    local isMotorized = hasXMLProperty(xmlFile, "vehicle.motorized")
+    local isDrivable = xmlFile:hasProperty("vehicle.drivable")
+    local isMotorized = xmlFile:hasProperty("vehicle.motorized")
 
     return disallowedCategories[storeItem.categoryName] == nil and isDrivable and isMotorized
 end
 
-function addGPSConfigurationUtil(xmlFile, superFunc, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
-    local configurations = superFunc(xmlFile, baseXMLName, baseDir, customEnvironment, isMod, storeItem)
+function addGPSConfigurationUtil(xmlFile, superFunc, key, baseDir, customEnvironment, isMod, storeItem)
+    local configurations = superFunc(xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
 
-    if canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
-        local key = GlobalPositioningSystem.CONFIG_NAME
+    if StoreItemUtil.getIsVehicle(storeItem) and canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
+        local gpsKey = GlobalPositioningSystem.CONFIG_NAME
 
         if configurations ~= nil then
-            if configurations[key] == nil then
-                configurations[key] = guidanceConfigurations
+            if configurations[gpsKey] == nil then
+                configurations[gpsKey] = guidanceConfigurations
             else
                 -- Add enabled values to added xml configurations
-                for id, config in pairs(configurations[key]) do
+                for id, config in pairs(configurations[gpsKey]) do
                     config.enabled = id > 1
                 end
             end

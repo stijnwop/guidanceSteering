@@ -1,0 +1,13 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+end_of_line = CRLF # CRLF based line ending because of Windows based game.
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+charset = utf-8
+
+[*.yml]
+indent_size = 2

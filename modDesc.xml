@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="47">
+<modDesc descVersion="61">
     <author>Wopster</author>
-    <version>1.0.0.1</version>
+    <version>2.0.0.0</version>
 
     <title>
         <en>Guidance Steering</en>
@@ -26,6 +26,9 @@ In order todo this:
 - Show Guidance Steering menu: left CTRL + S
 
 For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </en>
         <de>
@@ -40,6 +43,9 @@ Zuerst: GPS anschalten (linke ALT + C)
 Danach: GPS-Menü öffnen (linke STRG + S)
 
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </de>
         <fr>
@@ -52,6 +58,9 @@ Pour ce faire :
 - Afficher le menu Guidage Direction : à gauche CTRL + S
 
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </fr>
         <it>
@@ -66,6 +75,9 @@ Primo: accendi il GPS (ALT sinistro + C)
 Quindi: apri il menu GPS (CTRL sinistro + S)
 
 Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </it>
         <es>
@@ -80,6 +92,9 @@ Para hacer esto:
 - Ver menú Dirección de Guiado: CTRL Izq. + S
 
 Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </es>
         <cz>
@@ -96,7 +111,11 @@ Klávesové skratky
 - Zúžení šířky dráhy: levý ALT + [-] (Numpad)
 - Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
 - Posun dráhy doleva: levý ALT + PAGEUP
-- Posun dráhy doprava: levý ALT + PAGEDOWN]]>
+- Posun dráhy doprava: levý ALT + PAGEDOWN
+
+Changelog 2.0.0.0:
+- FS22 release
+]]>
         </cz>
         <ru>
             <![CDATA[
@@ -110,11 +129,14 @@ Klávesové skratky
 - Показать меню Guidance Steering: левый CTRL + S
 
 Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
+
+Changelog 2.0.0.0:
+- FS22 release
 ]]>
         </ru>
     </description>
 
-    <l10n filenamePrefix="translations/translation"/>
+    <l10n filenamePrefix="i18n/locale"/>
 
     <iconFilename>icon.png</iconFilename>
     <multiplayer supported="true"/>

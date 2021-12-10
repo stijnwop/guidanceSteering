@@ -9,12 +9,9 @@
 OnHeadlandState = {}
 
 ---@type number<string, number> The headland states.
-OnHeadlandState.MODES = {
-    OFF = 1,
-    STOP = 2,
-    --TURN_LEFT = 3,
-    --TURN_RIGHT = 4,
-}
+OnHeadlandState.MODES = {}
+OnHeadlandState.MODES.OFF = 1
+OnHeadlandState.MODES.STOP = 2
 
 OnHeadlandState.DEFAULT_ACT_DISTANCE = 9 -- m
 OnHeadlandState.MAX_ACT_DISTANCE = 100 -- m

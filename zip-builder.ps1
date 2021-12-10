@@ -1,5 +1,5 @@
 $include = @("*.xml", "*.lua", "*.i3d", "*.i3d.shapes", "*.dds", "*.ogg")
-$zipfilename = "FS19_guidanceSteering_dev.zip"
+$zipfilename = "FS22_guidanceSteering_dev.zip"
 
 if (test-path "$env:ProgramFiles\7-Zip\7z.exe") {
     set-alias 7z "$env:ProgramFiles\7-Zip\7z.exe"

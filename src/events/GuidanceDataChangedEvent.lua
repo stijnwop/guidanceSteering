@@ -11,7 +11,7 @@ local GuidanceDataChangedEvent_mt = Class(GuidanceDataChangedEvent, Event)
 InitEventClass(GuidanceDataChangedEvent, "GuidanceDataChangedEvent")
 
 function GuidanceDataChangedEvent:emptyNew()
-    local self = Event:new(GuidanceDataChangedEvent_mt)
+    local self = Event.new(GuidanceDataChangedEvent_mt)
 
     return self
 end

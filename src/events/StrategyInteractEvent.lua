@@ -11,7 +11,7 @@ local StrategyInteractEvent_mt = Class(StrategyInteractEvent, Event)
 InitEventClass(StrategyInteractEvent, "StrategyInteractEvent")
 
 function StrategyInteractEvent:emptyNew()
-    local self = Event:new(StrategyInteractEvent_mt)
+    local self = Event.new(StrategyInteractEvent_mt)
 
     return self
 end

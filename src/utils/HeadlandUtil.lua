@@ -21,8 +21,8 @@ function HeadlandUtil.getDistanceToHeadLand(processor, object, x, y, z, lookAhea
     local bits = getDensityAtWorldPos(g_currentMission.terrainDetailId, fx, 0, fz)
     local isOnField = bits ~= 0
 
-    local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
-    DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
+    --local fy = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, fx, 0, fz)
+    --DebugUtil.drawDebugCircle(fx, fy + .2, fz, 1, 10)
 
     processor.lastIsNotOnField = not isOnField
     if isOnField then

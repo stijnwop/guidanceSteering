@@ -16,6 +16,8 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
     STRATEGY_METHOD = "guidanceSteeringStrategyMethodElement",
     -- Text box
     TRACK_TEXT_INPUT = "guidanceSteeringTrackNameElement",
+    -- Check box
+    SCOPE_FARM_ID = "guidanceSteeringScopeFarmIdElement",
     -- Buttons
     POINT_A_BUTTON = "guidanceSteeringPointAButton",
     POINT_B_BUTTON = "guidanceSteeringPointBButton",
@@ -33,10 +35,10 @@ GuidanceSteeringStrategyFrame.CONTROLS = {
 
 ---Creates a new instance of the GuidanceSteeringStrategyFrame.
 ---@return GuidanceSteeringStrategyFrame
-function GuidanceSteeringStrategyFrame:new(ui, i18n)
-    local self = TabbedMenuFrameElement:new(nil, GuidanceSteeringStrategyFrame_mt)
+function GuidanceSteeringStrategyFrame.new(ui, i18n)
+    local self = TabbedMenuFrameElement.new(nil, GuidanceSteeringStrategyFrame_mt)
 
-    self.guidanceSteering = g_guidanceSteering
+    self.guidanceSteering = g_currentMission.guidanceSteering
 
     self.ui = ui
     self.i18n = i18n
@@ -77,10 +79,10 @@ function GuidanceSteeringStrategyFrame:build()
     self.guidanceSteeringRemoveTrackButton:setImageFilename(nil, uiFilename)
     self.guidanceSteeringRotateTrackButton:setImageFilename(nil, uiFilename)
 
-    self.guidanceSteeringCreateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.CREATE_TRACK))
-    self.guidanceSteeringSaveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.SAVE_TRACK))
-    self.guidanceSteeringRemoveTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.REMOVE_TRACK))
-    self.guidanceSteeringRotateTrackButton:setImageUVs(nil, getNormalizedUVs(GuidanceSteeringStrategyFrame.UVS.ROTATE_TRACK))
+    self.guidanceSteeringCreateTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.CREATE_TRACK))
+    self.guidanceSteeringSaveTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.SAVE_TRACK))
+    self.guidanceSteeringRemoveTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.REMOVE_TRACK))
+    self.guidanceSteeringRotateTrackButton:setImageUVs(nil, GuiUtils.getUVs(GuidanceSteeringStrategyFrame.UVS.ROTATE_TRACK))
 end
 
 function GuidanceSteeringStrategyFrame:onFrameOpen()
@@ -89,7 +91,7 @@ function GuidanceSteeringStrategyFrame:onFrameOpen()
     self.guidanceSteering:subscribe(self)
     self:buildList()
 
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
         local strategy = vehicle:getGuidanceStrategy()
 
@@ -121,6 +123,7 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
         self.allowSave = false
     end
 
+
     self.guidanceSteering:unsubscribe(self)
 end
 
@@ -139,11 +142,16 @@ function GuidanceSteeringStrategyFrame:buildList()
 
     self.rowToTrackId = {}
 
+    local farmId = AccessHandler.EVERYONE
+    local vehicle = self.ui:getVehicle()
+    if vehicle ~= nil then
+        farmId = vehicle:getOwnerFarmId()
+    end
+
     local groups = { "Base group" }
     for _, group in ipairs(groups) do
-        local groupHeader = self:createGroupHeader(group)
 
-        for id, track in ipairs(self.guidanceSteering.savedTracks) do
+        for id, track in pairs(self.guidanceSteering:getTracksForFarmId(farmId)) do
             local row = self:createItem(("%s - %s"):format(id, track.name))
             local selectionIndex = #self.list.elements
 
@@ -191,6 +199,10 @@ function GuidanceSteeringStrategyFrame:getMainElementPosition()
     return self.container.absPosition
 end
 
+function GuidanceSteeringStrategyFrame:onClickSelect(_, element)
+
+end
+
 function GuidanceSteeringStrategyFrame:onListSelectionChanged()
     local element = self.rowToTrackId[self.list:getSelectedElement()]
     if element ~= nil then
@@ -205,8 +217,8 @@ function GuidanceSteeringStrategyFrame:onClickCreateTrack()
 
     if trackData ~= nil then
         -- might check if the name already exists
-        if self.guidanceSteering:isExistingTrack(trackId, trackData.name) then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(trackData.name))
+        if self.guidanceSteering:isExistingTrack(trackId, trackData) then
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackAlreadyExists"):format(trackData.name))
             return
         end
 
@@ -238,7 +250,7 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
         if trackId ~= 0 then
             self:deleteTrack(trackId)
 
-            local vehicle = self.guidanceSteering.ui:getVehicle()
+            local vehicle = self.ui:getVehicle()
             if vehicle ~= nil then
                 -- Reset loaded track when we are deleting it.
                 if trackId ~= self.lastLoadedTrackId then
@@ -251,17 +263,30 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
 end
 
 function GuidanceSteeringStrategyFrame:onClickRotateTrack()
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
         local data = vehicle:getGuidanceData()
 
         if not data.isCreated then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
             return
         end
 
         GlobalPositioningSystem.rotateTrack(vehicle, data)
     end
+end
+
+function GuidanceSteeringStrategyFrame:getFarmId()
+    local isScoped = self.guidanceSteeringScopeFarmIdElement:getIsChecked()
+
+    if isScoped then
+        local vehicle = self.ui:getVehicle()
+        if vehicle ~= nil then
+            return vehicle:getOwnerFarmId()
+        end
+    end
+
+    return AccessHandler.EVERYONE
 end
 
 function GuidanceSteeringStrategyFrame:getVehicleTrackData()
@@ -271,16 +296,16 @@ function GuidanceSteeringStrategyFrame:getVehicleTrackData()
     track.strategy = self.guidanceSteeringStrategyElement:getState()
     track.method = self.guidanceSteeringStrategyMethodElement:getState()
 
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
         local data = vehicle:getGuidanceData()
 
         if not data.isCreated then
-            self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+            self:setWarningMessage(self.i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
             return nil
         end
 
-        track.farmId = vehicle:getOwnerFarmId()
+        track.farmId = self:getFarmId()
         track.guidanceData = {}
         track.guidanceData.width = data.width
         track.guidanceData.offsetWidth = data.offsetWidth
@@ -294,7 +319,7 @@ end
 --- Track creation
 
 function GuidanceSteeringStrategyFrame:onClickSetPointA()
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
 
     if vehicle == nil then
         return
@@ -318,7 +343,7 @@ function GuidanceSteeringStrategyFrame:onClickSetPointA()
 end
 
 function GuidanceSteeringStrategyFrame:onClickSetPointB()
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
 
     if vehicle == nil then
         return
@@ -358,7 +383,7 @@ function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     local track = self.guidanceSteering:getTrack(trackId)
 
     if self.guidanceSteering:isTrackValid(trackId) then
-        local vehicle = self.guidanceSteering.ui:getVehicle()
+        local vehicle = self.ui:getVehicle()
 
         if vehicle ~= nil then
             local data = vehicle:getGuidanceData()
@@ -388,7 +413,7 @@ function GuidanceSteeringStrategyFrame:deleteTrack(trackId)
 end
 
 function GuidanceSteeringStrategyFrame:loadStrategy(method)
-    local vehicle = self.guidanceSteering.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
         if method ~= self.lastLoadedMethod then
             vehicle:setGuidanceStrategy(method)

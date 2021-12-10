@@ -1,0 +1,12 @@
+version: v1
+
+mod:
+  name: GuidanceSteering
+  author: Wopster
+
+build:
+  outputName: FS22_guidanceSteering
+  cleanOutput: true
+  code: src/
+  outputTextures:
+    type: dds

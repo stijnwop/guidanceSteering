@@ -10,6 +10,8 @@ GuidanceSteering = {}
 GuidanceSteering.SEND_NUM_BITS = 8 -- 2 ^ 8 = 256 max
 GuidanceSteering.MAX_NUM_TRACKS = 2 ^ GuidanceSteering.SEND_NUM_BITS
 
+GuidanceSteering.GROUND_CLEARANCE_OFFSET = .25
+
 local GuidanceSteering_mt = Class(GuidanceSteering)
 
 function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputManager, messageCenter)
@@ -33,6 +35,7 @@ function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputMa
 
     self.showGuidanceLines = false
     self.guidanceTerrainAngleIsActive = true
+    self.lineOffset = GuidanceSteering.GROUND_CLEARANCE_OFFSET
 
     BaseMission.onEnterVehicle = Utils.appendedFunction(BaseMission.onEnterVehicle, GuidanceSteering.onEnterVehicle)
     BaseMission.onLeaveVehicle = Utils.appendedFunction(BaseMission.onLeaveVehicle, GuidanceSteering.onLeaveVehicle)
@@ -45,32 +48,26 @@ function GuidanceSteering:delete()
 end
 
 function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
-    self.showGuidanceLines = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines"), false)
-    self.guidanceTerrainAngleIsActive = Utils.getNoNil(getXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive"), true)
+    self.showGuidanceLines = xmlFile:getBool("guidanceSteering.settings.showGuidanceLines", true)
+    self.guidanceTerrainAngleIsActive = xmlFile:getBool("guidanceSteering.settings.guidanceTerrainAngleIsActive", true)
+    self.lineOffset = xmlFile:getFloat("guidanceSteering.settings.lineOffset", self.lineOffset)
 
-    local i = 0
-    while true do
-        local key = ("guidanceSteering.tracks.track(%d)"):format(i)
-        if not hasXMLProperty(xmlFile, key) then
-            break
-        end
-
+    xmlFile:iterate("guidanceSteering.tracks.track", function(_, key)
         local track = {}
 
-        track.name = getXMLString(xmlFile, key .. "#name")
-        track.strategy = getXMLInt(xmlFile, key .. "#strategy")
-        track.method = getXMLInt(xmlFile, key .. "#method")
+        track.name = xmlFile:getString(key .. "#name")
+        track.strategy = xmlFile:getInt(key .. "#strategy")
+        track.method = xmlFile:getInt(key .. "#method")
+        track.farmId = xmlFile:getInt(key .. "#farmId", AccessHandler.EVERYONE)
 
         track.guidanceData = {}
-        track.guidanceData.width = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#width"), 3), GlobalPositioningSystem.DEFAULT_WIDTH)
-        track.guidanceData.offsetWidth = Utils.getNoNil(MathUtil.round(getXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth"), 3), GlobalPositioningSystem.DEFAULT_OFFSET)
-        track.guidanceData.snapDirection = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#snapDirection")) }
-        track.guidanceData.driveTarget = { StringUtil.getVectorFromString(getXMLString(xmlFile, key .. ".guidanceData#driveTarget")) }
+        track.guidanceData.width = MathUtil.round(xmlFile:getFloat(key .. ".guidanceData#width", GlobalPositioningSystem.DEFAULT_WIDTH), 3)
+        track.guidanceData.offsetWidth = MathUtil.round(xmlFile:getFloat(key .. ".guidanceData#offsetWidth", GlobalPositioningSystem.DEFAULT_OFFSET), 3)
+        track.guidanceData.snapDirection = xmlFile:getVector(key .. ".guidanceData#snapDirection")
+        track.guidanceData.driveTarget = xmlFile:getVector(key .. ".guidanceData#driveTarget")
 
-        ListUtil.addElementToList(self.savedTracks, track)
-
-        i = i + 1
-    end
+        table.addElement(self.savedTracks, track)
+    end)
 end
 
 function GuidanceSteering:onMissionLoaded(mission)
@@ -78,23 +75,24 @@ function GuidanceSteering:onMissionLoaded(mission)
 end
 
 function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
-    setXMLInt(xmlFile, "guidanceSteering#version", 1)
-
-    setXMLBool(xmlFile, "guidanceSteering.settings.showGuidanceLines", self.showGuidanceLines)
-    setXMLBool(xmlFile, "guidanceSteering.settings.guidanceTerrainAngleIsActive", self.guidanceTerrainAngleIsActive)
+    xmlFile:setInt("guidanceSteering#version", 1)
+    xmlFile:setBool("guidanceSteering.settings.showGuidanceLines", self.showGuidanceLines)
+    xmlFile:setBool("guidanceSteering.settings.guidanceTerrainAngleIsActive", self.guidanceTerrainAngleIsActive)
+    xmlFile:setFloat("guidanceSteering.settings.lineOffset", self.lineOffset)
 
     if self.savedTracks ~= nil then
         for i, track in ipairs(self.savedTracks) do
             local key = ("guidanceSteering.tracks.track(%d)"):format(i - 1)
 
-            setXMLInt(xmlFile, key .. "#id", i)
-            setXMLString(xmlFile, key .. "#name", track.name)
-            setXMLInt(xmlFile, key .. "#strategy", track.strategy)
-            setXMLInt(xmlFile, key .. "#method", track.method)
-            setXMLFloat(xmlFile, key .. ".guidanceData#width", track.guidanceData.width)
-            setXMLFloat(xmlFile, key .. ".guidanceData#offsetWidth", track.guidanceData.offsetWidth)
-            setXMLString(xmlFile, key .. ".guidanceData#snapDirection", table.concat(track.guidanceData.snapDirection, " "))
-            setXMLString(xmlFile, key .. ".guidanceData#driveTarget", table.concat(track.guidanceData.driveTarget, " "))
+            xmlFile:setInt(key .. "#id", i)
+            xmlFile:setString(key .. "#name", track.name)
+            xmlFile:setInt(key .. "#strategy", track.strategy)
+            xmlFile:setInt(key .. "#method", track.method)
+            xmlFile:setInt(key .. "#farmId", track.farmId)
+            xmlFile:setFloat(key .. ".guidanceData#width",track.guidanceData.width)
+            xmlFile:setFloat(key .. ".guidanceData#offsetWidth",track.guidanceData.offsetWidth)
+            xmlFile:setVector(key .. ".guidanceData#snapDirection",track.guidanceData.snapDirection)
+            xmlFile:setVector(key .. ".guidanceData#driveTarget",track.guidanceData.driveTarget)
         end
     end
 end
@@ -108,6 +106,7 @@ function GuidanceSteering:onReadStream(streamId, connection)
             track.name = streamReadString(streamId)
             track.strategy = streamReadUIntN(streamId, 2)
             track.method = streamReadUIntN(streamId, 2)
+            track.farmId = streamReadUIntN(streamId, FarmManager.FARM_ID_SEND_NUM_BITS)
 
             track.guidanceData = GuidanceUtil.readGuidanceDataObject(streamId)
 
@@ -124,6 +123,7 @@ function GuidanceSteering:onWriteStream(streamId, connection)
             streamWriteString(streamId, track.name)
             streamWriteUIntN(streamId, track.strategy, 2)
             streamWriteUIntN(streamId, track.method, 2)
+            streamWriteUIntN(streamId, track.farmId, FarmManager.FARM_ID_SEND_NUM_BITS)
 
             GuidanceUtil.writeGuidanceDataObject(streamId, track.guidanceData)
         end
@@ -139,15 +139,15 @@ end
 ---Add listener
 ---@param listener table
 function GuidanceSteering:subscribe(listener)
-    if not ListUtil.hasListElement(self.listeners, listener) then
-        ListUtil.addElementToList(self.listeners, listener)
+    if not table.hasElement(self.listeners, listener) then
+        table.addElement(self.listeners, listener)
     end
 end
 
 ---Remove listener
 ---@param listener table
 function GuidanceSteering:unsubscribe(listener)
-    ListUtil.removeElementFromList(self.listeners, listener)
+    table.removeElement(self.listeners, listener)
 end
 
 ---Notify listeners on track change
@@ -167,11 +167,10 @@ local function _createTrack(self, id, data)
         return
     end
 
-    local entry = ListUtil.copyTable(data)
-    entry.farmId = 0 -- Todo: make tracks farm dependent
+    local entry = table.copy(data)
 
-    if not ListUtil.hasListElement(self.savedTracks, entry) then
-        ListUtil.addElementToList(self.savedTracks, entry)
+    if not table.hasElement(self.savedTracks, entry) then
+        table.addElement(self.savedTracks, entry)
 
         -- Sort by name
         table.sort(self.savedTracks, function(lhs, rhs)
@@ -191,6 +190,10 @@ local function _saveTrack(self, id, data)
 
     if track.name ~= data.name then
         track.name = data.name
+    end
+
+    if track.farmId ~= data.farmId then
+        track.farmId = data.farmId
     end
 
     track.strategy = data.strategy
@@ -221,10 +224,10 @@ function GuidanceSteering:deleteTrack(id)
     local entry = self:getTrack(id)
 
     if entry ~= nil then
-        ListUtil.removeElementFromList(self.savedTracks, entry)
+        table.removeElement(self.savedTracks, entry)
 
         -- Call listeners
-        self:onTrackChanged(ListUtil.size(self.savedTracks))
+        self:onTrackChanged(table.size(self.savedTracks))
     end
 end
 
@@ -242,7 +245,14 @@ end
 
 ---Returns the next index
 function GuidanceSteering:getNewTrackId()
-    return ListUtil.size(self.savedTracks) + 1
+    return table.size(self.savedTracks) + 1
+end
+
+---Returns the saved tracks for the given farmId
+function GuidanceSteering:getTracksForFarmId(farmId)
+    return table.filter(self.savedTracks, function(track)
+        return track.farmId == farmId or track.farmId == AccessHandler.EVERYONE
+    end)
 end
 
 ---Checks if the current track is valid to load
@@ -271,9 +281,9 @@ end
 ---Checks if the given name exists on a different track
 ---@param id number
 ---@param name string
-function GuidanceSteering:isExistingTrack(id, name)
+function GuidanceSteering:isExistingTrack(id, data)
     for trackId, track in pairs(self.savedTracks) do
-        if trackId ~= id and track.name == name then
+        if trackId ~= id and track.farmId == data.farmId and track.name == data.name then
             return true
         end
     end
@@ -305,6 +315,14 @@ function GuidanceSteering:setIsTerrainAngleSnapEnabled(enabled)
     self.guidanceTerrainAngleIsActive = enabled
 end
 
+function GuidanceSteering:getLineOffset()
+    return self.lineOffset
+end
+
+function GuidanceSteering:setLineOffset(offset)
+    self.lineOffset = offset
+end
+
 function GuidanceSteering:isAutoInvertOffsetEnabled()
     return self.autoInvertOffset
 end
@@ -319,7 +337,7 @@ function GuidanceSteering:onEnterVehicle()
         local vehicle = self.controlledVehicle
         local spec = vehicle.spec_globalPositioningSystem
         local hasGuidanceSystem = spec ~= nil and spec.hasGuidanceSystem
-        local gui = g_guidanceSteering.ui
+        local gui = g_currentMission.guidanceSteering.ui
 
         gui:setVehicle(hasGuidanceSystem and vehicle or nil)
     end
@@ -328,7 +346,7 @@ end
 ---Set remove the vehicle from the GS GUI.
 function GuidanceSteering:onLeaveVehicle()
     if self:getIsClient() then
-        local gui = g_guidanceSteering.ui
+        local gui = g_currentMission.guidanceSteering.ui
         gui:setVehicle(nil)
     end
 end
@@ -336,9 +354,9 @@ end
 function GuidanceSteering.installSpecializations(vehicleTypeManager, specializationManager, modDirectory, modName)
     specializationManager:addSpecialization("globalPositioningSystem", "GlobalPositioningSystem", Utils.getFilename("src/vehicles/GlobalPositioningSystem.lua", modDirectory), nil) -- Nil is important here
 
-    for typeName, typeEntry in pairs(vehicleTypeManager:getVehicleTypes()) do
+    for typeName, typeEntry in pairs(vehicleTypeManager:getTypes()) do
         if SpecializationUtil.hasSpecialization(Drivable, typeEntry.specializations) and
-                not SpecializationUtil.hasSpecialization(SplineVehicle, typeEntry.specializations) then
+            not SpecializationUtil.hasSpecialization(SplineVehicle, typeEntry.specializations) then
             vehicleTypeManager:addSpecialization(typeName, modName .. ".globalPositioningSystem")
         end
     end
@@ -386,12 +404,15 @@ function GuidanceSteering.actionEventSteer(vehicle, superFunc, actionName, input
     end
 end
 
--- Thanks to Jos
--- Ripped from Seasons
 function GuidanceSteering:mergeModTranslations(i18n)
     -- We can copy all our translations to the global table because we prefix everything with guidanceSteering_
     -- The mod-based l10n lookup only really works for vehicles, not UI and script mods.
-    local global = getfenv(0).g_i18n.texts
+
+    -- Thanks for blocking the getfenv Giants..
+    local modEnvMeta = getmetatable(_G)
+    local env = modEnvMeta.__index
+
+    local global = env.g_i18n.texts
     for key, text in pairs(i18n.texts) do
         global[key] = text
     end

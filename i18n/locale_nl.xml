@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Wopster, JoshvZ, GEZUS95</translationContributors>
-
+    <locale>nl</locale>
     <texts>
         <text name="configuration_buyableGPS" text="Global Positioning System"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Nee"/>
         <text name="configuration_buyableGPS_withGPS" text="Ja"/>
-
-        <!--Inputs-->
         <text name="input_GS_TOGGLE" text="Stuurbegeleiding aan/uit schakelen"/>
         <text name="input_GS_SHOW_UI" text="Laat stuurbegeleidings menu zien"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatische werkbreedte"/>
-
         <text name="input_GS_AXIS_REALIGN" text="Uitlijnen"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Verschuif naar rechts"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Verschuif naar links"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Werkbreedte vergroten"/>
         <text name="input_GS_AXIS_WIDTH_2" text="Werkbreedte verkleinen"/>
-
         <text name="input_GS_ENABLE_STEERING" text="Stuurbegeleiding"/>
         <text name="input_GS_SETPOINT" text="Stel een richtpunt in"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uitlijnen met de terreinhoeken"/>
         <text name="input_GS_TURN_STEERING" text="Stel een stuurrichting in"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: belijning aan/uit schakelen"/>
         <text name="input_GS_ROTATE_TRACK" text="GS: draai spoor"/>
-
-        <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Rijd minimaal 15m om een B punt in te stellen. Huidige afgelegde afstand: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Selecteer eerst een werkbreedte!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Maak of laad eerst een spoor voordat u de stuurbegeleiding inschakelt!"/>
-
-        <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Begeleidings instellingen"/>
         <text name="guidanceSteering_ui_strategy" text="Begeleidingsstrategie"/>
-
         <text name="guidanceSteering_strategy_abStraight" text="AB recht"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB krom"/>
-
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Automatische B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Richting"/>
-
-        <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Ondersteun uw visuals door de begeleidingslijnen te tonen"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Richt de stuurrichting naar de terreinhoek"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laat GPS het sturen begeleiden"/>
@@ -50,17 +37,12 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Stel de afwijking van je voertuig in"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Stel de werkbreedte-verhoging in om de werkbreedte te vergroten / verkleinen"/>
         <text name="guidanceSteering_tooltip_offsetIncrement" text="Stel de offset-toename in om de offset te verhogen / verlagen"/>
-
         <text name="guidanceSteering_tooltip_strategy" text="Bepaal welke strategie je wilt gebruiken om de geleidingslijnen te maken"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Bepaal welke strategie-methode je wilt gebruiken"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Selecteer huidig spoor om deze te gebruiken"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Stel de kardinale punten in"/>
-
-        <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spoor naam: %s bestaat al!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Spoor is niet opgeslagen, maak of laad eerst een spoor!"/>
-
-        <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Geef lijnen weer"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uitlijnen met de terreinhoeken"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Schakel stuurbegeleiding in"/>
@@ -75,30 +57,34 @@
         <text name="guidanceSteering_setting_offsetWidth" text="Afwijking breedte"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Afwijking resetten"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Afwijking aanpassen"/>
-
         <text name="guidanceSteering_setting_strategy" text="Lijn strategie"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Lijn methode"/>
         <text name="guidanceSteering_setting_currentTrack" text="Huidig spoor"/>
-
         <text name="guidanceSteering_setting_pointA" text="Zet A"/>
         <text name="guidanceSteering_setting_pointB" text="Zet B"/>
         <text name="guidanceSteering_setting_newTrack" text="Maak een nieuw spoor"/>
         <text name="guidanceSteering_setting_removeTrack" text="Verwijder Spoor"/>
         <text name="guidanceSteering_setting_saveTrack" text="Bewaar spoor"/>
-
         <text name="guidanceSteering_setting_headlandMode" text="Kopakker mode"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Met de kopakker mode kun je de handeling strategie instellen voor op de kopakker."/>
-
         <text name="guidanceSteering_setting_headlandDistance" text="Kopakker handeling afstand"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Afstand in meters om te handelen voordat je de kopakker benadert."/>
-
         <text name="guidanceSteering_headland_mode_0" text="Uit"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Stuur left"/>
         <text name="guidanceSteering_headland_mode_3" text="Stuur right"/>
-
-        <!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Gewenste kardinaal (graden)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Zet kardinaal"/>
+        <text name="guidanceSteering_setting_header_headland" text="Headland management">
+            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
+            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
+        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
+            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

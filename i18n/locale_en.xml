@@ -3,7 +3,7 @@
     <translationContributors>Wopster</translationContributors>
 
     <texts>
-        <text name="configuration_buyableGPS" text="Global Positioning System"/>
+        <text name="configuration_buyableGPS" text="GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="No"/>
         <text name="configuration_buyableGPS_withGPS" text="Yes"/>
 
@@ -56,6 +56,12 @@
         <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
 
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it's accessible for everyone"/>
+
+        <text name="guidanceSteering_setting_offsetLines" text="Line offset"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance."/>
+
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Track name '%s' already exists!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Failed to save track data, please create or load a track first!"/>
@@ -85,6 +91,8 @@
         <text name="guidanceSteering_setting_newTrack" text="Create track"/>
         <text name="guidanceSteering_setting_removeTrack" text="Remove track"/>
         <text name="guidanceSteering_setting_saveTrack" text="Save track"/>
+
+        <text name="guidanceSteering_setting_header_headland" text="Headland management"/>
 
         <text name="guidanceSteering_setting_headlandMode" text="Headland mode"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="With the headland mode you can set the acting strategy on the headland."/>

@@ -11,9 +11,9 @@ local TrackDeleteEvent_mt = Class(TrackDeleteEvent, Event)
 InitEventClass(TrackDeleteEvent, "TrackDeleteEvent")
 
 function TrackDeleteEvent:emptyNew()
-    local self = Event:new(TrackDeleteEvent_mt)
+    local self = Event.new(TrackDeleteEvent_mt)
 
-    self.guidanceSteering = g_guidanceSteering
+    self.guidanceSteering = g_currentMission.guidanceSteering
 
     return self
 end

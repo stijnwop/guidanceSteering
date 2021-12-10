@@ -18,8 +18,8 @@ ABStrategy.METHODS = {
 }
 
 local RGB_WHITE = { 1, 1, 1 }
-local RGB_GREEN = { 0, 1, 0 }
-local RGB_BLUE = { 0.9913, 0.3940, 0.007 }
+local RGB_GREEN = { 0, 0.447871, 0.003697 }
+local RGB_BLUE = { 0, 0, 1 }
 local RGB_RED = { 1, 0, 0 }
 
 ABStrategy.ABLines = {
@@ -29,8 +29,7 @@ ABStrategy.ABLines = {
 }
 
 ABStrategy.STEP_SIZE = 1 -- 1m each line
-ABStrategy.NUM_STEPS = 10 -- draw 10
-ABStrategy.GROUND_CLEARANCE_OFFSET = .2
+ABStrategy.NUM_STEPS = 15 -- draw 10
 
 local ABStrategy_mt = Class(ABStrategy)
 
@@ -78,7 +77,6 @@ end
 ---@param autoInvertOffset boolean
 function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
     local lines = { ABStrategy.ABLines["middle"] }
-    local skipStep = 1
     local numSteps = data.lineDistance + ABStrategy.NUM_STEPS
     --local drawBotherLines = self:getIsGuidancePossible()
     local drawBotherLines = data.isCreated
@@ -89,6 +87,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         lines = ABStrategy.ABLines
     end
 
+    local stepSkips = 1
     local drawDirectionLine = self:getIsABDirectionPossible() and not drawBotherLines
     if drawDirectionLine then
         -- Todo: optimize
@@ -98,7 +97,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         local dirZ = z - a[3]
         local length = MathUtil.vector2Length(dirX, dirZ)
         numSteps = math.max(math.floor(length) - 1, 0)
-        skipStep = 2
+        stepSkips = 2
     end
 
     local lineXDir = data.snapDirectionMultiplier * lineDirX
@@ -109,20 +108,22 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         offset = data.lineDistance * 0.5
     end
 
-    local activeCamera = self.vehicle:getActiveCamera()
-    local rx, ry, rz = getWorldRotation(activeCamera.cameraNode)
+    local lineOffset = g_currentMission.guidanceSteering:getLineOffset()
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
             return
         end
 
-        local x1 = lx - offset * dirX + stepSize * step * dirX
-        local z1 = lz - offset * dirZ + stepSize * step * dirZ
-        local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + ABStrategy.GROUND_CLEARANCE_OFFSET
+        local x1 = lx + ABStrategy.STEP_SIZE * step * dirX
+        local z1 = lz + ABStrategy.STEP_SIZE * step * dirZ
+        local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + lineOffset
+        local x2 = lx + ABStrategy.STEP_SIZE * (step + 1) * dirX
+        local z2 = lz + ABStrategy.STEP_SIZE * (step + 1) * dirZ
+        local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + lineOffset
 
-        GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, 0.35, ".", rgb)
+        drawDebugLine(x1, y1, z1, rgb[1], rgb[2], rgb[3], x2, y2, z2, rgb[1], rgb[2], rgb[3])
 
-        drawSteps(step + skipStep, stepSize, lx, lz, dirX, dirZ, rgb)
+        drawSteps(step + stepSkips, stepSize, lx, lz, dirX, dirZ, rgb)
     end
 
     for _, line in pairs(lines) do
@@ -132,7 +133,7 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
 
         local rgb = guidanceSteeringIsActive and line.rgbActive or line.rgb
 
-        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, rgb)
+        drawSteps(1, ABStrategy.STEP_SIZE, lineX, lineZ, lineXDir, lineZDir, rgb)-- draw direction arrow
     end
 
     if data.offsetWidth ~= 0 then

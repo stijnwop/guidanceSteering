@@ -1,73 +1,55 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>zed636</translationContributors>
-
+    <locale>it</locale>
     <texts>
         <text name="configuration_buyableGPS" text="GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="No"/>
         <text name="configuration_buyableGPS_withGPS" text="Si"/>
-
-        <!-- Inputs -->
         <text name="input_GS_TOGGLE" text="GS: Attiva/disattiva Guidance Steering"/>
         <text name="input_GS_SHOW_UI" text="GS: Mostra menu Guidance Steering"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="GS: Larghezza automatica"/>
-
         <text name="input_GS_AXIS_REALIGN" text="GS: Riallinea traccia"/>
         <text name="input_GS_AXIS_SHIFT_1" text="GS: Sposta traccia a destra"/>
         <text name="input_GS_AXIS_SHIFT_2" text="GS: Sposta traccia a sinistra"/>
         <text name="input_GS_AXIS_WIDTH_1" text="GS: Aumenta larghezza traccia"/>
         <text name="input_GS_AXIS_WIDTH_2" text="GS: Diminuisci larghezza traccia"/>
-
         <text name="input_GS_ENABLE_STEERING" text="GS: Attiva Guidance Steering"/>
         <text name="input_GS_SETPOINT" text="GS: Assegna il punto di direzione"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Aggancia all'angolo del terreno"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Aggancia all&#39;angolo del terreno"/>
         <text name="input_GS_TURN_STEERING" text="GS: Stabilisci la direzione dello sterzo"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Mostra/nascondi traccia"/>
         <text name="input_GS_ROTATE_TRACK" text="GS: Ruota traccia"/>
-
-        <!-- Warnings -->
         <text name="guidanceSteering_warning_dropDistance" text="Guidare almeno 15m per impostare il punto B. Distanza attualmente percorsa: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Si prega di impostare prima una larghezza di lavoro!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Si prega di creare o caricare una traccia prima di abilitare Guidance Steering!"/>
-
-        <!-- GUI -->
         <text name="guidanceSteering_ui_settings" text="Impostazioni Guidance Steering"/>
         <text name="guidanceSteering_ui_strategy" text="Strategia Guidance Steering"/>
-
         <text name="guidanceSteering_strategy_abStraight" text="AB dritto"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB curvo"/>
-
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+testata"/>
-
-        <!-- Tooltips -->
         <text name="guidanceSteering_tooltip_showLines" text="Aiuta la tua visuale mostrando la traccia guida"/>
-        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aggancia la direzione all'angolo del terreno"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aggancia la direzione all&#39;angolo del terreno"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Lascia che il GPS guidi lo sterzo"/>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inverte automaticamente l'offset in svolta"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inverte automaticamente l&#39;offset in svolta"/>
         <text name="guidanceSteering_tooltip_width" text="Regola la larghezza del tuo veicolo"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Regola l'offset del tuo veicolo"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Imposta il valore d'incremento per aumentare/diminuire la larghezza"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Imposta il valore d'incremento per aumentare/diminuire l'offset"/>
-
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Regola l&#39;offset del tuo veicolo"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Imposta il valore d&#39;incremento per aumentare/diminuire la larghezza"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Imposta il valore d&#39;incremento per aumentare/diminuire l&#39;offset"/>
         <text name="guidanceSteering_tooltip_strategy" text="Determina quale metodo utilizzare per creare le tracce"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determina quale modalità di guida utilizzare"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Seleziona la traccia corrente da usare"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Imposta i punti cardinali"/>
-
-        <!-- Warning tooltip -->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Nome della traccia: %s esiste già!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Impossibile salvare i dati della traccia, creane una prima!"/>
-
-        <!-- Settings -->
         <text name="guidanceSteering_setting_showLines" text="Mostra tracce"/>
-        <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l'angolo del terreno"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l&#39;angolo del terreno"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Attiva Guidance Steering"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversione offset"/>
         <text name="guidanceSteering_setting_width" text="Larghezza"/>
-        <text name="guidanceSteering_setting_widthIncrement" text="Valore d'incremento larghezza"/>
-        <text name="guidanceSteering_setting_offsetIncrement" text="Valore d'incremento Offset"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Valore d&#39;incremento larghezza"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Valore d&#39;incremento Offset"/>
         <text name="guidanceSteering_setting_autoWidth" text="Larghezza automatica"/>
         <text name="guidanceSteering_setting_invertOffset" text="Inverti offset"/>
         <text name="guidanceSteering_setting_changeWidth" text="Modifica larghezza"/>
@@ -75,30 +57,34 @@
         <text name="guidanceSteering_setting_offsetWidth" text="Larghezza offset"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Azzera offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Modifica offset"/>
-
         <text name="guidanceSteering_setting_strategy" text="Strategia traccia"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Metodo traccia"/>
         <text name="guidanceSteering_setting_currentTrack" text="Traccia attuale"/>
-
         <text name="guidanceSteering_setting_pointA" text="Imposta A"/>
         <text name="guidanceSteering_setting_pointB" text="Imposta B"/>
         <text name="guidanceSteering_setting_newTrack" text="Crea traccia"/>
         <text name="guidanceSteering_setting_removeTrack" text="Rimuovi traccia"/>
         <text name="guidanceSteering_setting_saveTrack" text="Salva traccia"/>
-
         <text name="guidanceSteering_setting_headlandMode" text="Modalità testata"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Con la modalità testata è possibile regolare la modalità di funzionamento sulla testata"/>
-
         <text name="guidanceSteering_setting_headlandDistance" text="Distanza funzionamento testata"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distanza in metri per agire prima di avvicinarsi alla testata."/>
-
         <text name="guidanceSteering_headland_mode_0" text="Spento"/>
         <text name="guidanceSteering_headland_mode_1" text="Ferma"/>
         <text name="guidanceSteering_headland_mode_2" text="Svolta a sinistra"/>
         <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/>
-
-        <!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Punto cardinale desiderato (gradi)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Imposta punto cardinale"/>
+        <text name="guidanceSteering_setting_header_headland" text="Headland management">
+            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
+            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
+        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
+            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <!-- Inputs  Warnings  GUI  Tooltips  Warning tooltip  Settings  Cardinal strategy -->
     </texts>
 </l10n>
