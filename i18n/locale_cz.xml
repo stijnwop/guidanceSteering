@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
     <locale>cz</locale>
-    <texts>
+    
+	<texts>
         <text name="configuration_buyableGPS" text="Navigační systém GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Ne"/>
         <text name="configuration_buyableGPS_withGPS" text="Ano"/>
-        <text name="input_GS_TOGGLE" text="GPS: Zapnout/vypnout GPS"/>
+        
+		<!--Inputs-->
+		<text name="input_GS_TOGGLE" text="GPS: Zapnout/vypnout GPS"/>
         <text name="input_GS_SHOW_UI" text="GPS: Zobrazit menu GPS"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="GPS: Automatická šířka"/>
-        <text name="input_GS_AXIS_REALIGN" text="GPS: Srovnat stopu"/>
+        
+		<text name="input_GS_AXIS_REALIGN" text="GPS: Srovnat stopu"/>
         <text name="input_GS_AXIS_SHIFT_1" text="GPS: Posunout stopu doprava"/>
         <text name="input_GS_AXIS_SHIFT_2" text="GPS: Posunout stopu doleva"/>
         <text name="input_GS_AXIS_WIDTH_1" text="GPS: Zvětšit šířku dráhy"/>
         <text name="input_GS_AXIS_WIDTH_2" text="GPS: Zmenšit šířku dráhy"/>
-        <text name="input_GS_ENABLE_STEERING" text="GPS: Zapnout/vypnout řízené navádění GPS"/>
+        
+		<text name="input_GS_ENABLE_STEERING" text="GPS: Zapnout/vypnout řízené navádění GPS"/>
         <text name="input_GS_SETPOINT" text="GPS: Nastavit orientační bod"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Uchopit úhel terénu"/>
         <text name="input_GS_TURN_STEERING" text="Nastavit směr řízení"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GPS: Zapnout/vypnout vodítka GPS"/>
         <text name="input_GS_ROTATE_TRACK" text="GPS: Otočit dráhu o 90 stupňů"/>
+		
+		<!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Pro nastavení bodu B jeďte nejméně 15 m. Momentální ujetá vzdálenost: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Nejprve prosím nastavte pracovní šířku!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Nejprve prosím vytvořte nebo nahrajte stopu!"/>
+		
+		<!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Nastavení navigace"/>
         <text name="guidanceSteering_ui_strategy" text="Strategie navigace"/>
+		
         <text name="guidanceSteering_strategy_abStraight" text="AB rovně"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB křivka"/>
+		
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Směr"/>
+		
+		<!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Podporujte své vizualizace zobrazením vodítek"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Uchopte směr úhlu terénu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Nechte řídit systém GPS za Vás!"/>
@@ -37,13 +50,24 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Nastavte odsazení vašeho vozidla"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Nastavte přírůstek šířky pro zvýšení / snížení šířky"/>
         <text name="guidanceSteering_tooltip_offsetIncrement" text="Zvětšíte nebo zmenšíte odsazení o nastavenou hodnotu."/>
+		
         <text name="guidanceSteering_tooltip_strategy" text="Určete, kterou strategii použijete k vytvoření vodítek"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Určete, kterou strategii použijete"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Vyberte aktuální stopu, kterou chcete použít"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Nastavte hlavní body"/>
+		
+		<text name="guidanceSteering_setting_scopeTrackFarmId" text="Uložit stopu pro farmu"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Uložte stopu pouze pro farmu v níž jste. V základu jsou uložené stopy viditelné všem."/>
+
+        <text name="guidanceSteering_setting_offsetLines" text="Zvednout vodítka"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Zvedněte si vodítka výše od země pro lepší viditelnost."/>
+
+		<!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Název stopy: %s již existuje!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Nepodařilo se uložit data o stopě, prosím vytvořte nebo nahrajte stopu jako první!"/>
-        <text name="guidanceSteering_setting_showLines" text="Zobrazit vodítka"/>
+        
+		<!--Settings-->
+		<text name="guidanceSteering_setting_showLines" text="Zobrazit vodítka"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Uchopit úhel terénu"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktivovat systém GPS"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Prohození odsazení"/>
@@ -52,39 +76,37 @@
         <text name="guidanceSteering_setting_offsetIncrement" text="Hodnota změny odsazení"/>
         <text name="guidanceSteering_setting_autoWidth" text="Auto šířka"/>
         <text name="guidanceSteering_setting_invertOffset" text="Přehodit odsazení"/>
-        <text name="guidanceSteering_setting_cardinals" text="Hlavní bod"/>
         <text name="guidanceSteering_setting_changeWidth" text="Nárust šířky"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Šířka odsazení"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Vynuluj odsazení"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Změna odsazení"/>
+        <text name="guidanceSteering_setting_cardinals" text="Hlavní bod"/>
+		
         <text name="guidanceSteering_setting_strategy" text="Strategie vodítek"/>
-        <text name="guidanceSteering_setting_strategyMethod" text="Metóda vodítek"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Metoda vodítek"/>
         <text name="guidanceSteering_setting_currentTrack" text="Aktuální stopa"/>
+		
         <text name="guidanceSteering_setting_pointA" text="Nastavit A"/>
         <text name="guidanceSteering_setting_pointB" text="Nastavit B"/>
         <text name="guidanceSteering_setting_newTrack" text="Vytvořit stopu"/>
         <text name="guidanceSteering_setting_removeTrack" text="Odstranit stopu"/>
         <text name="guidanceSteering_setting_saveTrack" text="Uložit stopu"/>
+
+        <text name="guidanceSteering_setting_header_headland" text="Nastavení souvratí"/>
+		
         <text name="guidanceSteering_setting_headlandMode" text="Režim souvrati"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="V režimu souvrati můžete nastavit strategii."/>
+		
         <text name="guidanceSteering_setting_headlandDistance" text="Akční vzdálenost souvrati"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Vzdálenost v metrech pro akci v režimu souvrati."/>
+		
         <text name="guidanceSteering_headland_mode_0" text="Vypnuto"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Odbočit vlevo"/>
         <text name="guidanceSteering_headland_mode_3" text="Odbočit vpravo"/>
+		
+		<!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Požadovaný směr (stupně)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Nastavit směr"/>
-        <text name="guidanceSteering_setting_header_headland" text="Headland management">
-            <!--Todo: add missing translation for guidanceSteering_setting_header_headland--></text>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Save track to farm">
-            <!--Todo: add missing translation for guidanceSteering_setting_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it&#39;s accessible for everyone">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_scopeTrackFarmId--></text>
-        <text name="guidanceSteering_setting_offsetLines" text="Line offset">
-            <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
-        <!--InputsWarningsGUITooltips TODO Warning tooltipSettings Cardinal strategy -->
-    </texts>
+	</texts>
 </l10n>
