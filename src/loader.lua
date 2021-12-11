@@ -175,10 +175,6 @@ function writeStream(e, streamId, connection)
 end
 
 function validateVehicleTypes(typeManager)
-    if not isEnabled() then
-        return
-    end
-
     if typeManager.typeName == "vehicle" then
         GuidanceSteering.installSpecializations(g_vehicleTypeManager, g_specializationManager, directory, modName)
     end
