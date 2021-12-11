@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
     <locale>pl</locale>
+
     <texts>
         <text name="configuration_buyableGPS" text="Nawigacja GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Nie"/>
         <text name="configuration_buyableGPS_withGPS" text="Tak"/>
+
+		<!--Inputs-->
         <text name="input_GS_TOGGLE" text="Włącz/Wyłącz GPS"/>
         <text name="input_GS_SHOW_UI" text="Pokaż menu ustawień nawigacji"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="Automatyczna szerokość"/>
+
         <text name="input_GS_AXIS_REALIGN" text="Centrowanie ścieżki"/>
-        <text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/>
-        <text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/>
         <text name="input_GS_AXIS_SHIFT_1" text="Przesuń ścieżkę w prawo"/>
         <text name="input_GS_AXIS_SHIFT_2" text="Przesuń ścieżkę w lewo"/>
         <text name="input_GS_AXIS_WIDTH_1" text="Zwiększ szerokość"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Zmniejsz szerokość"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="Zmniejsz szerokość"/>		
+
         <text name="input_GS_ENABLE_STEERING" text="Automatyczne sterowanie"/>
         <text name="input_GS_SETPOINT" text="Ustaw punkt nawigacji"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Wyrównaj do kąta terenu"/>
         <text name="input_GS_TURN_STEERING" text="Ustaw kierunek sterowania"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="Pokaż/Ukryj linie"/>
         <text name="input_GS_ROTATE_TRACK" text="Obróć ścieżkę"/>
+
+		<!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Przejedź co najmniej 15m, aby ustawić punkt B. Aktualnie przebyta odległość: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Najpierw ustaw szerokość roboczą!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Najpierw stwórz lub załaduj ścieżkę zanim włączysz automatyczne sterowanie!"/>
-        <text name="guidanceSteering_ui_settings" text="Ustawienia nawigacji"/>
+
+		<!--GUI-->
+		<text name="guidanceSteering_ui_settings" text="Ustawienia nawigacji"/>
         <text name="guidanceSteering_ui_strategy" text="Strategia nawigacji"/>
-        <text name="guidanceSteering_strategy_abStraight" text="Prosty odcinek AB"/>
+        
+		<text name="guidanceSteering_strategy_abStraight" text="Prosty odcinek AB"/>
         <text name="guidanceSteering_strategy_abCurve" text="Krzywy odcinek AB"/>
+       
         <text name="guidanceSteering_strategyMethod_aPlusB" text="Punkt A i B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Automatyczny punkt B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="Punkt A i kierunek"/>
-        <text name="guidanceSteering_tooltip_showLines" text="Polepsza twoją widoczność poprzez pokazanie linii pomocniczych"/>
+
+		 <!--Tooltips-->
+		<text name="guidanceSteering_tooltip_showLines" text="Polepsza twoją widoczność poprzez pokazanie linii pomocniczych"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Wyrównuje kierunek względem kąta terenu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Przekazuje kontrolę kierownicy nawigacji"/>
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automatycznie odwraca korekcję przy nawrocie"/>
@@ -39,13 +50,24 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Ustawia korekcję toru jazdy dla twojego pojazdu"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Ustawia wartość o jaką zmienisz szerokość roboczą"/>
         <text name="guidanceSteering_tooltip_offsetIncrement" text="Ustawia wartość o jaką zmienisz korekcję toru jazdy"/>
-        <text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
+
+		<text name="guidanceSteering_tooltip_strategy" text="Określa, którą strategię zastosować, aby utworzyć linie pomocnicze"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Określa, którą metodę strategii zastosować"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Wybiera bieżącą ścieżkę do użycia"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Ustawia kierunek świata"/>
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Ścieżka o nazwie &#39;%s&#39; już istnieje!"/>
+
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Zapisz ścieżkę dla gospodarstwa"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Zapisuje ścieżkę dla gospodarstwa do którego należy pojazd, domyślnie jest zapisywane dla wszystkich."/>
+
+        <text name="guidanceSteering_setting_offsetLines" text="Przesuń linie"/>
+		<text name="guidanceSteering_tooltip_offsetLines" text="Przesunięcie linii dla lepszej widoczności na terenie."/>
+
+        <!--Warning tooltip-->
+		<text name="guidanceSteering_tooltip_trackAlreadyExists" text="Ścieżka o nazwie &#39;%s&#39; już istnieje!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Niepowodzenie, najpierw stwórz lub załaduj ścieżkę!"/>
-        <text name="guidanceSteering_setting_showLines" text="Pokaż linie"/>
+
+		<!--Settings-->
+		<text name="guidanceSteering_setting_showLines" text="Pokaż linie"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Wyrównaj do kąta terenu"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Włącz nawigację"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Odwrócona korekcja"/>
@@ -54,34 +76,41 @@
         <text name="guidanceSteering_setting_offsetIncrement" text="Zmiana wartości"/>
         <text name="guidanceSteering_setting_autoWidth" text="Automatyczna szerokość"/>
         <text name="guidanceSteering_setting_invertOffset" text="Odwróć korekcję"/>
-        <text name="guidanceSteering_setting_changeWidth" text="Popraw szerokość"/>
-        <text name="guidanceSteering_setting_cardinals" text="Kierunek świata"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Popraw szerokość"/>        
         <text name="guidanceSteering_setting_offsetWidth" text="Korekcja boczna"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Resetuj korekcję"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Zwiększ korekcję"/>
+		<text name="guidanceSteering_setting_cardinals" text="Kierunek świata"/>
+
         <text name="guidanceSteering_setting_strategy" text="Strategia linii"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Metoda linii"/>
         <text name="guidanceSteering_setting_currentTrack" text="Obecna ścieżka"/>
+
         <text name="guidanceSteering_setting_pointA" text="Ustaw punkt A"/>
         <text name="guidanceSteering_setting_pointB" text="Ustaw punkt B"/>
         <text name="guidanceSteering_setting_newTrack" text="Stwórz ścieżkę"/>
         <text name="guidanceSteering_setting_removeTrack" text="Usuń ścieżkę"/>
         <text name="guidanceSteering_setting_saveTrack" text="Zapisz ścieżkę"/>
-        <text name="guidanceSteering_setting_headlandMode" text="Tryb uwroci"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="Ustawia strategię działania na uwrociu."/>
-        <text name="guidanceSteering_setting_headlandDistance" text="Odległość działania na uwrociu"/>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Odległość w metrach do działania przed zbliżeniem się do uwrocia."/>
-        <text name="guidanceSteering_headland_mode_0" text="Wyłączone"/>
+
+		<text name="guidanceSteering_setting_header_headland" text="Działania na uwrociach"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Wykonaj akcję"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Ustawia akcję, która zostanie wykonana na uwrociu."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Odległość do krawędzi pola"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Odległość do krawędzi pola (w metrach), przy której zostanie wykonana akcja."/>
+        
+		<text name="guidanceSteering_headland_mode_0" text="Wyłączone"/>
         <text name="guidanceSteering_headland_mode_1" text="Zatrzymaj pojazd"/>
         <text name="guidanceSteering_headland_mode_2" text="Skręć w lewo"/>
         <text name="guidanceSteering_headland_mode_3" text="Skręć w prawo"/>
+		
+		<!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Kierunek świata (stopnie)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Ustaw kierunek"/>
-        <text name="guidanceSteering_setting_header_headland" text="Działania na uwrociach"/>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Zapisz ścieżkę dla gospodarstwa"/>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Zapisuje ścieżkę dla gospodarstwa do którego należy pojazd, domyślnie jest zapisywane dla wszystkich."/>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Przesunięcie linii dla lepszej widoczności na terenie."/>
-        <text name="guidanceSteering_setting_offsetLines" text="Przesuń linie"/>
-        <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
+		
+		<!-- not used anymore? -->
+		<!-- <text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/> -->
+        <!-- <text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/> -->
     </texts>
 </l10n>
