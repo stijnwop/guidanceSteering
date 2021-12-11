@@ -28,9 +28,9 @@
         <text name="guidanceSteering_strategy_abCurve" text="AB courbe"/>
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Rubrique"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Angle"/>
         <text name="guidanceSteering_tooltip_showLines" text="Afficher les lignes de guidage"/>
-        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aligner sur l&#39;angle du terrain"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aligner A+B sur l&#39;angle du terrain"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laisser le guidage gérer la direction"/>
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inversion automatique du décalage lors d&#39;un retour"/>
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
@@ -45,7 +45,7 @@
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Si vous n&#39;avez pas réussi à sauvegarder les données de la ligne, veuillez d&#39;abord créer ou charger une ligne!"/>
         <text name="guidanceSteering_setting_showLines" text="Afficher les lignes"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aligner sur l&#39;angle du terrain"/>
-        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage automatique"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage auto"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Inversion du décalage"/>
         <text name="guidanceSteering_setting_width" text="Largeur"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Précision de largeur de travail"/>
@@ -67,7 +67,7 @@
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
         <text name="guidanceSteering_setting_headlandMode" text="Mode fourrière"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Avec le mode fourrière, vous pouvez régler la manœuvre en fourrière."/>
-        <text name="guidanceSteering_setting_headlandDistance" text="Distance d&#39;action en bout de champ."/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distance d&#39;arrêt"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distance en mètres pour agir avant l&#39;approche de la fourrière."/>
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
@@ -78,7 +78,7 @@
         <text name="guidanceSteering_setting_header_headland" text="Gestion des fourrières"/>
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Sauvegarder la trace pour la ferme."/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Sauvegarde de la piste limitée à la ferme du véhicule, par défaut elle est accessible à tous."/>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Décalez la ligne pour augmenter la garde au sol."/>
-        <text name="guidanceSteering_setting_offsetLines" text="Décalage de la ligne"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Modifier la hauteur des lignes pour améliorer leur visibilité dans des cultures hautes."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Hauteur des lignes"/>
     </texts>
 </l10n>
