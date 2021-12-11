@@ -993,7 +993,7 @@ end
 function GlobalPositioningSystem.actionEventRotateTrack(self, actionName, inputValue, callbackState, isAnalog)
     local data = self:getGuidanceData()
     if not data.isCreated then
-        self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+        g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
         return
     end
 
