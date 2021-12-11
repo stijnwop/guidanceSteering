@@ -57,7 +57,7 @@
         <text name="guidanceSteering_tooltip_cardinals" text="Установка кардинальных точек (соответствует сторонам горизонта)."/>
 
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Сохранить трек для фермы"/>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Сохранить трек только для фермы к которой привязано транспортного средство. По умолчанию трек доступен для всех."/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Сохранить трек только для фермы к которой привязано транспортное средство. По умолчанию трек доступен для всех."/>
 
         <text name="guidanceSteering_setting_offsetLines" text="Высота линии"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Смещение линии по высоте, для лучшей её видимости."/>
