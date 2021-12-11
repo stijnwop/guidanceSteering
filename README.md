@@ -1,4 +1,4 @@
-# Guidance Steering for Farming Simulator 19 (GPS)
+# Guidance Steering for Farming Simulator 22 (GPS)
 
 ![For Farming Simulator 19](https://img.shields.io/badge/Farming%20Simulator-19-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
 
