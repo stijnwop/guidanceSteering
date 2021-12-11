@@ -1,4 +1,4 @@
-# Guidance Steering for Farming Simulator 19 (GPS)
+# Guidance Steering for Farming Simulator 22 (GPS)
 
 ![For Farming Simulator 19](https://img.shields.io/badge/Farming%20Simulator-19-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
 
@@ -88,12 +88,16 @@ Hit `alt + home` in order to realign the track with the vehicle.
 
 ### Rotate track
 Enter the strategy menu and hit the 90 degree button in order to rotate the current track.
+You can also rotate the track by input, `alt + end`.
 
 ### Terrain angle snapping
 If you're not able to create straight lines yourself you can enable angle snapping in the menu. This will align the AB lines with the terrain.
 
 ### Toggle guidance steering
 Once a track is created hit `alt + X` to toggle the steering.
+
+### Toggle guidance line display
+In order to toggle the line display hit `alt + L`.
 
 ### Headland control
 You can set the current headland mode in order to change interaction with the headland.
@@ -105,23 +109,25 @@ When you set the mode on `off` the vehicle will only warn you at the set interac
 It's also possible to store the tracks and reload them. Open the second page in the menu in order to do it.
 This is also an easy way to share track data among other players in multiplayer.
 
+There an option to save tracks per farm, this means that the track will only be available for farm that owns the vehicle. When this settings is turned off the track is accessible to everyone.
+
 ### Visuals
 On the vanilla John Deere vehicles the starfires visibility is toggled when you choose to buy the GPS system.
 If you want the same effect on your mod vehicles you can configure the configuration yourself in the xml:
 
 ~~~ xml
-<buyableGPSConfigurations>
-  <buyableGPSConfiguration name="NO_TEXT" price="0">
+<globalPositioningSystemConfigurations>
+  <globalPositioningSystemConfiguration name="NO_TEXT" price="0">
           <objectChange node="NODE_NAME" visibilityActive="false" visibilityInactive="true" />
-  </buyableGPSConfiguration>
-  <buyableGPSConfiguration name="YES_TEXT" price="15000">
+  </globalPositioningSystemConfiguration>
+  <globalPositioningSystemConfiguration name="YES_TEXT" price="15000">
           <objectChange node="NODE_NAME" visibilityActive="true" visibilityInactive="false" />
-  </buyableGPSConfiguration>
-</buyableGPSConfigurations>
+  </globalPositioningSystemConfiguration>
+</globalPositioningSystemConfigurations>
 ~~~
 
 ## Copyright
 Copyright (c) 2019 [Wopster](https://github.com/stijnwop).
 All rights reserved.
 
-Special thanks to workflowsen for creating the icon! 
+Special thanks to workflowsen for creating the icon!

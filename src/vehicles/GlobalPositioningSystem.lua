@@ -35,6 +35,7 @@ function GlobalPositioningSystem.initSpecialization(vehicleType)
     schema:setXMLSpecializationType()
 
     g_configurationManager:addConfigurationType(GlobalPositioningSystem.CONFIG_NAME, g_i18n:getText("configuration_buyableGPS"), "globalPositioningSystem", nil, nil, nil, ConfigurationUtil.SELECTOR_MULTIOPTION)
+    ObjectChangeUtil.registerObjectChangeXMLPaths(schema, "vehicle.globalPositioningSystemConfigurations.globalPositioningSystemConfiguration(?)")
 
     local schemaSavegame = Vehicle.xmlSchemaSavegame
     schemaSavegame:register(XMLValueType.BOOL, ("vehicles.vehicle(?).%s.globalPositioningSystem#guidanceIsActive"):format(g_guidanceSteeringModName), "The guidance system active state")
@@ -236,7 +237,6 @@ function GlobalPositioningSystem:onLoad(savegame)
     spec.guidanceData = {}
     spec.guidanceData.width = GlobalPositioningSystem.DEFAULT_WIDTH
     spec.guidanceData.offsetWidth = 0
-    spec.guidanceData.movingDirection = 1
     spec.guidanceData.isReverseDriving = false
     spec.guidanceData.movingForwards = false
     spec.guidanceData.snapDirectionMultiplier = 1
@@ -585,22 +585,11 @@ function GlobalPositioningSystem:onUpdate(dt)
         local spec_reverseDriving = self.spec_reverseDriving
 
         data.snapDirectionMultiplier = snapDirectionMultiplier
-        data.isReverseDriving = spec_reverseDriving ~= nil and spec_reverseDriving.isReverseDriving
-
-        local movingDirection = 1
-        if not data.isReverseDriving and self.movingDirection < 0 and lastSpeed > 2 then
-            movingDirection = -movingDirection
-        end
+        data.isReverseDriving = spec_reverseDriving ~= nil and not spec_reverseDriving.isChangingDirection and spec_reverseDriving.isReverseDriving
 
         if data.isReverseDriving then
-            movingDirection = -movingDirection
-
-            if self.movingDirection > 0 then
-                movingDirection = math.abs(movingDirection)
-            end
+            data.snapDirectionMultiplier = -data.snapDirectionMultiplier
         end
-
-        data.movingDirection = movingDirection
     end
 
     if not self.isServer then
@@ -1004,7 +993,7 @@ end
 function GlobalPositioningSystem.actionEventRotateTrack(self, actionName, inputValue, callbackState, isAnalog)
     local data = self:getGuidanceData()
     if not data.isCreated then
-        self:setWarningMessage(g_i18n:getText("guidanceSteering_tooltip_trackIsNotCreated"))
+        g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_createTrackFirst"), 2000)
         return
     end
 

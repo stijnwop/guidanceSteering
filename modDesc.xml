@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="61">
     <author>Wopster</author>
-    <version>2.0.0.0</version>
+    <version>2.0.1.0</version>
 
     <title>
         <en>Guidance Steering</en>
@@ -27,8 +27,9 @@ In order todo this:
 
 For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </en>
         <de>
@@ -44,8 +45,9 @@ Danach: GPS-Menü öffnen (linke STRG + S)
 
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </de>
         <fr>
@@ -59,8 +61,9 @@ Pour ce faire :
 
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </fr>
         <it>
@@ -76,8 +79,9 @@ Quindi: apri il menu GPS (CTRL sinistro + S)
 
 Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </it>
         <es>
@@ -93,8 +97,9 @@ Para hacer esto:
 
 Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </es>
         <cz>
@@ -113,8 +118,9 @@ Klávesové skratky
 - Posun dráhy doleva: levý ALT + PAGEUP
 - Posun dráhy doprava: levý ALT + PAGEDOWN
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </cz>
         <ru>
@@ -130,8 +136,9 @@ Changelog 2.0.0.0:
 
 Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
 
-Changelog 2.0.0.0:
+Changelog 2.0.1.0:
 - FS22 release
+- Fix issue with French translation.
 ]]>
         </ru>
     </description>
