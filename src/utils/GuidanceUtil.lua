@@ -50,7 +50,9 @@ function GuidanceUtil.getMaxWorkAreaWidth(object)
         local activeSprayType = GuidanceUtil.getActiveSprayType(object)
         -- Exclude ridged markers from workArea calculation
         local skipWorkAreas = {
-            ["processRidgeMarkerArea"] = true
+            ["processRidgeMarkerArea"] = true,
+            ["processCombineSwathArea"] = true,
+            ["processCombineChopperArea"] = true,
         }
 
         local function isWorkAreaValid(workArea)
@@ -78,12 +80,14 @@ function GuidanceUtil.getMaxWorkAreaWidth(object)
         end
 
         local areaWidths = stream(workAreaSpec.workAreas):map(toLocalArea):toList()
-        maxWidth = stream(areaWidths):reduce(0, function(r, e)
-            return math.max(r, unpack(e))
-        end)
-        minWidth = stream(areaWidths):reduce(math.huge, function(r, e)
-            return math.min(r, unpack(e))
-        end)
+        if table.size(areaWidths) ~= 0 then
+            maxWidth = stream(areaWidths):reduce(0, function(r, e)
+                return math.max(r, unpack(e))
+            end)
+            minWidth = stream(areaWidths):reduce(math.huge, function(r, e)
+                return math.min(r, unpack(e))
+            end)
+        end
     end
 
     local width = maxWidth + math.abs(minWidth)
@@ -209,9 +213,9 @@ function GuidanceUtil.getHasSplinePoint(spline, x, y, z)
     local t = #spline
     local p = spline[t]
     return t > 0
-            and p.x == x
-            and p.y == y
-            and p.z == z
+        and p.x == x
+        and p.y == y
+        and p.z == z
 end
 
 function GuidanceUtil:computeSpline(points, smoothingSteps)
