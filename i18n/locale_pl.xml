@@ -108,9 +108,5 @@
 		<!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Kierunek świata (stopnie)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Ustaw kierunek"/>
-		
-		<!-- not used anymore? -->
-		<!-- <text name="input_GS_AXIS_SHIFT" text="Przesunięcie ścieżki"/> -->
-        <!-- <text name="input_GS_AXIS_WIDTH" text="Zmiana szerokości"/> -->
     </texts>
 </l10n>
