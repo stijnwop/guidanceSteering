@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="61">
+    <author>Wopster</author>
+    <version>2.0.1.0</version>
+
+    <title>
+        <en>Guidance Steering</en>
+        <de>Guidance Steering</de>
+        <fr>Guidance Steering</fr>
+        <it>Guidance Steering</it>
+        <es>Dirección de Guiado</es>
+        <cz>Řízené navádění</cz>
+        <ru>Guidance Steering</ru>
+		<jp>GPS自動操舵システム</jp>
+    </title>
+
+    <description>
+        <en>
+            <![CDATA[
+Complete field applications quickly and efficiently with the Guidance Steering mod that helps you accurately setup tracks to work your fields.
+Guidance Steering allows you to use different methods in order to create tracks. The AB point method requires you to setup two points (A and B) in order to calculate the steering angle. The A+heading method simplifies this setup with only forcing you to enter the desired steering angle.
+
+Make sure to enable Guidance Steering before you're able to enter the menu.
+
+In order todo this:
+- Enable Guidance Steering: left ALT + C
+- Show Guidance Steering menu: left CTRL + S
+
+For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </en>
+        <de>
+            <![CDATA[
+Beschleunige deine Feldarbeit mit Hilfe des Guidance Steering Mods, erstelle präzise Spuren und steigere die Effizienz.
+Guidance Steering ermöglicht es Dir, auf verschiedenen Wegen Spuren zu erstellen.
+Die AB Methode benötigt zwei Punkte (A und B) um den Lenkwinkel zu errechnen.
+Die A+Richtung Methode vereinfacht die Erstellung, du kannst den Lenkwinkel direkt eingeben.
+
+Du musst Guidance Steering einschalten, bevor du das Menü aufrufen kannst.
+Zuerst: GPS anschalten (linke ALT + C)
+Danach: GPS-Menü öffnen (linke STRG + S)
+
+Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </de>
+        <fr>
+            <![CDATA[
+Accomplissez les travaux dans les champs rapidement et efficacement avec le mod Guidance Steering qui vous aide à configurer avec précision les trajectoires pour travailler vos champs.
+Guidance Steering vous permet d'utiliser différentes méthodes pour créer des trajectoires. La méthode du point AB exige que vous configuriez deux points (A et B) afin de calculer la tajectoire. La méthode de cap A+ simplifie cette configuration en vous forçant seulement à entrer la valeur de la direction souhaitée.
+Assurez-vous d'activer la fonction Guidage avant d'entrer dans le menu.
+Pour ce faire :
+- Activer le guidage de la direction : gauche ALT + C
+- Afficher le menu Guidage Direction : à gauche CTRL + S
+
+Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </fr>
+        <it>
+            <![CDATA[
+Accelera il tuo lavoro sul campo con la mod Guidance Steering, crea percorsi precisi e aumenta l'efficienza.
+Guidance Steering ti consente di creare tracce in diversi metodi.
+Il metodo AB richiede due punti (A e B) per calcolare l'angolo di sterzata.
+Il metodo A+testata semplifica la creazione, è possibile inserire direttamente l'angolo di sterzata.
+
+È necessario attivare la mod Guidance Steering prima di poter accedere al menu.
+Primo: accendi il GPS (ALT sinistro + C)
+Quindi: apri il menu GPS (CTRL sinistro + S)
+
+Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </it>
+        <es>
+            <![CDATA[
+Complete las tareas de campo rápida y eficazmente con el mod Dirección de Guiado que le ayudará con precisión a ajustsar las líneas de trabajo en su campo.
+Dirección de Guiado le permite usar diferentes métodos para crear pistas de trabajo. El método Punto AB necesita que fije 2 puntos (A y B) para ajustar el sentido de orientación. El método A+ simplifica esta configuración con solo forzarlo a ingresar el ángulo de dirección deseado..
+
+Asegúrese de activar la Dirección de Guiado antes de entrar en al menú.
+
+Para hacer esto:
+- Active Dirección de Guiado con: Alt + C
+- Ver menú Dirección de Guiado: CTRL Izq. + S
+
+Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </es>
+        <cz>
+            <![CDATA[
+Řízené navádění GPS
+
+Klávesové skratky
+- Zobrazit GPS Menu: levé CTRL + S
+- Nastavit bod: levý ALT + E
+- Automatická šířka: levý ALT + R
+- Zapnout GPS: levý ALT + C
+- Zapnout řízené navádění: levý ALT + X
+- Zarovnání dráhy podle stroje: levý ALT + HOME
+- Zúžení šířky dráhy: levý ALT + [-] (Numpad)
+- Rozšíření šířky dráhy: levý ALT + [+] (Numpad)
+- Posun dráhy doleva: levý ALT + PAGEUP
+- Posun dráhy doprava: levý ALT + PAGEDOWN
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </cz>
+        <ru>
+            <![CDATA[
+С модом Guidance Steering будете выполняйте свои задачи на поле быстрее и эффективнее. С его помощью сможете точно настроить проходы/треки для работы на ваших полях.
+Для создания треков Guidance Steering позволяет использовать разные методы. Точечный метод AB требует установки двух точек (A и B) для расчета угла направления руления. Метод направления A+ упрощает эту настройку, необходимо только ввести желаемый угол направления движения.
+
+Убедитесь, что вы установили GPS в магазине или мастерской, прежде чем сможете войти в меню.
+
+Для этого:
+- Включить навигацию: левый ALT + C
+- Показать меню Guidance Steering: левый CTRL + S
+
+Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </ru>
+		<jp>
+            <![CDATA[
+GPS自動操舵システムはあらゆる農作業をムラなく精密に行い作業効率を高める為のサポートをします。
+ハンドル操作が自動化されプレイヤーの疲労軽減にもなります。
+
+使用するにはショップにてGPS自動操舵システムを有効（購入）にする必要があります。
+
+1:操作手順は簡単で作業機を取付、展開後に作業幅を設定します。
+2:操舵角の基準となる点（A点、B点）を設定し自動操舵をオンにして走行します。
+
+設定メニューを開くにはGPS自動操舵システムを起動する必要があります。
+
+キーボードショートカット（デフォルト）:
+- GPS自動操舵システムを起動/停止する: ALT + C
+- GPS自動操舵システム設定メニューを表示する: CTRL + S
+- 基準点（A点/B点）を設定する: ALT + E
+- 作業幅の自動設定: ALT + R
+- 自動操舵のオン/オフ: ALT + X
+- 作業幅を拡大する: ALT + ^
+- 作業幅を縮小する: ALT + -
+- 走行ラインを右側にずらす: ALT + PageUp
+- 走行ラインを左側にずらす: ALT + PageDown
+- 走行ラインを再調整する: ALT + Home
+- 走行ラインの表示/非表示: ALT + L
+- 走行ラインを90°回転する: ALT + End
+
+詳しくはGithubの<a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a>を参照してください。
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </jp>
+    </description>
+
+    <l10n filenamePrefix="i18n/locale"/>
+
+    <iconFilename>icon.png</iconFilename>
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+        <sourceFile filename="src/loader.lua"/>
+    </extraSourceFiles>
+
+    <actions>
+        <action name="GS_TOGGLE" axisType="HALF"/>
+        <action name="GS_SHOW_UI" axisType="HALF"/>
+        <action name="GS_SETPOINT" axisType="HALF"/>
+        <action name="GS_SET_AUTO_WIDTH" axisType="HALF"/>
+        <action name="GS_ENABLE_STEERING" axisType="HALF"/>
+        <action name="GS_AXIS_WIDTH" axisType="FULL"/>
+        <action name="GS_AXIS_SHIFT" axisType="FULL"/>
+        <action name="GS_AXIS_REALIGN" axisType="HALF"/>
+        <action name="GS_TOGGLE_LINE_DISPLAY" axisType="HALF"/>
+        <action name="GS_ROTATE_TRACK" axisType="HALF"/>
+    </actions>
+
+    <inputBinding>
+        <actionBinding action="GS_TOGGLE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_c"/>
+        </actionBinding>
+        <actionBinding action="GS_SHOW_UI">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_s"/>
+        </actionBinding>
+        <actionBinding action="GS_SETPOINT">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_e"/>
+        </actionBinding>
+        <actionBinding action="GS_SET_AUTO_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_r"/>
+        </actionBinding>
+        <actionBinding action="GS_ENABLE_STEERING">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_x"/>
+        </actionBinding>
+        <actionBinding action="GS_AXIS_WIDTH">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_equals" axisComponent="+"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_minus" axisComponent="-"/>
+        </actionBinding>
+        <actionBinding action="GS_AXIS_SHIFT">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pageup" axisComponent="+"/>
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_pagedown" axisComponent="-"/>
+        </actionBinding>
+        <actionBinding action="GS_AXIS_REALIGN">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_home"/>
+        </actionBinding>
+        <actionBinding action="GS_TOGGLE_LINE_DISPLAY">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_l"/>
+        </actionBinding>
+        <actionBinding action="GS_ROTATE_TRACK">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_end"/>
+        </actionBinding>
+    </inputBinding>
+</modDesc>
