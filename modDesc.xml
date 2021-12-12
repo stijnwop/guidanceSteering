@@ -11,6 +11,7 @@
         <es>Dirección de Guiado</es>
         <cz>Řízené navádění</cz>
         <ru>Guidance Steering</ru>
+		<jp>GPS自動操舵システム</jp>
     </title>
 
     <description>
@@ -141,6 +142,39 @@ Changelog 2.0.1.0:
 - Fix issue with French translation.
 ]]>
         </ru>
+		<jp>
+            <![CDATA[
+GPS自動操舵システムはあらゆる農作業をムラなく精密に行い作業効率を高める為のサポートをします。
+ハンドル操作が自動化されプレイヤーの疲労軽減にもなります。
+
+使用するにはショップにてGPS自動操舵システムを有効（購入）にする必要があります。
+
+1:操作手順は簡単で作業機を取付、展開後に作業幅を設定します。
+2:操舵角の基準となる点（A点、B点）を設定し自動操舵をオンにして走行します。
+
+設定メニューを開くにはGPS自動操舵システムを起動する必要があります。
+
+キーボードショートカット（デフォルト）:
+- GPS自動操舵システムを起動/停止する: ALT + C
+- GPS自動操舵システム設定メニューを表示する: CTRL + S
+- 基準点（A点/B点）を設定する: ALT + E
+- 作業幅の自動設定: ALT + R
+- 自動操舵のオン/オフ: ALT + X
+- 作業幅を拡大する: ALT + ^
+- 作業幅を縮小する: ALT + -
+- 走行ラインを右側にずらす: ALT + PageUp
+- 走行ラインを左側にずらす: ALT + PageDown
+- 走行ラインを再調整する: ALT + Home
+- 走行ラインの表示/非表示: ALT + L
+- 走行ラインを90°回転する: ALT + End
+
+詳しくはGithubの<a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a>を参照してください。
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </jp>
     </description>
 
     <l10n filenamePrefix="i18n/locale"/>
