@@ -40,7 +40,7 @@
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
         <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+capezzagna"/>
-        
+
         <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Aiuta la tua visuale mostrando la traccia guida"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aggancia la direzione all&#39;angolo del terreno"/>
@@ -50,22 +50,22 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Regola l&#39;offset del tuo veicolo"/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Imposta il valore d&#39;incremento per aumentare/diminuire la larghezza"/>
         <text name="guidanceSteering_tooltip_offsetIncrement" text="Imposta il valore d&#39;incremento per aumentare/diminuire l&#39;offset"/>
-        
+
         <text name="guidanceSteering_tooltip_strategy" text="Determina quale strategia utilizzare per creare le tracce"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Determina quale modalità utilizzare"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Seleziona la traccia corrente da usare"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Imposta i punti cardinali"/>
-        
+
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Salva traccia nella fattoria"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Salva la traccia limitatamente alla fattoria che possiede questo veicolo; per impostazione predefinita è accessibile a tutti"/>
-        
+
         <text name="guidanceSteering_setting_offsetLines" text="Offset altezza traccia"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Distanza della traccia da terra per una migliore visibilità"/>
-        
+
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Traccia '%s' già esistente!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Impossibile salvare i dati della traccia, creane una prima!"/>
-        
+
         <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Mostra tracce"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aggancia l&#39;angolo del terreno"/>
@@ -81,30 +81,30 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Azzera offset"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Modifica offset"/>
         <text name="guidanceSteering_setting_cardinals" text="Punto cardinale"/>
-        
+
         <text name="guidanceSteering_setting_strategy" text="Strategia traccia"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Metodo traccia"/>
         <text name="guidanceSteering_setting_currentTrack" text="Traccia attuale"/>
-        
+
         <text name="guidanceSteering_setting_pointA" text="Imposta A"/>
         <text name="guidanceSteering_setting_pointB" text="Imposta B"/>
         <text name="guidanceSteering_setting_newTrack" text="Crea traccia"/>
         <text name="guidanceSteering_setting_removeTrack" text="Rimuovi traccia"/>
         <text name="guidanceSteering_setting_saveTrack" text="Salva traccia"/>
-        
+
         <text name="guidanceSteering_setting_header_headland" text="Gestione capezzagna"/>
-        
+
         <text name="guidanceSteering_setting_headlandMode" text="Modalità capezzagna"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Con la modalità capezzagna è possibile regolare la strategia di azione a fine campo"/>
-        
+
         <text name="guidanceSteering_setting_headlandDistance" text="Dist. attivazione capezzagna (m)"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distanza in metri prima di avvicinarsi alla strategia di azione come capezzagna"/>
-        
+
         <text name="guidanceSteering_headland_mode_0" text="Spento"/>
         <text name="guidanceSteering_headland_mode_1" text="Ferma"/>
         <text name="guidanceSteering_headland_mode_2" text="Svolta a sinistra"/>
         <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/>
-        
+
         <!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Punto cardinale desiderato (gradi)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Imposta punto cardinale"/>

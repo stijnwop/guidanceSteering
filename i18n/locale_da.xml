@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>Michaelbjerg21978</translationContributors> <!-- DK Oversættelse -->
+
+    <texts>
+        <text name="configuration_buyableGPS" text="GPS"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Nej"/>
+        <text name="configuration_buyableGPS_withGPS" text="Ja"/>
+
+        <!--Inputs-->
+        <text name="input_GS_TOGGLE" text="GS: GPS Til/Fra"/>
+        <text name="input_GS_SHOW_UI" text="GS: Vis GPS menu"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Auto bredde"/>
+
+        <text name="input_GS_AXIS_REALIGN" text="GS: Flyt spor"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Flyt spor til højre"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Flyt spor til venstre"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Gør bredde større"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Gør bredde mindre"/>
+
+        <text name="input_GS_ENABLE_STEERING" text="GS: Styr med gps"/>
+        <text name="input_GS_SETPOINT" text="GS: Sæt GPS punkt"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Følg terræn vinkler"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Sæt styre retning"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Skift linie visning"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Drej spor"/>
+
+        <!--Warnings-->
+        <text name="guidanceSteering_warning_dropDistance" text="Kør mindst 15m for og sætte punnkt B. Du har nu kørt: %.2f"/>
+        <text name="guidanceSteering_warning_setWidth" text="Du skal sætte en arbejdsBredde først!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Opret eller lav et spor først!"/>
+
+        <!--GUI-->
+        <text name="guidanceSteering_ui_settings" text="GPS Indstilllinger"/>
+        <text name="guidanceSteering_ui_strategy" text="GPS strategi"/>
+
+        <text name="guidanceSteering_strategy_abStraight" text="AB Lige"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Kurve"/>
+
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Retning"/>
+
+        <!--Tooltips-->
+        <text name="guidanceSteering_tooltip_showLines" text="Understøtt dine visuelle værktøjer ved at vise retningslinjerne"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Følg retningen med terrænvinklen"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Lad GPS tage styringen"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Vend automatisk Centerforskydning på en sving"/>
+        <text name="guidanceSteering_tooltip_width" text="Sæt bredden på din maskine"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Sæt Centerforskydningen på din maskine"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Indstil breddeudvidelsen for at øge/formindske bredden"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Indstil Centerforskydningen for at øge/mindske forskydningen"/>
+
+        <text name="guidanceSteering_tooltip_strategy" text="Bestem, hvilken strategi du skal bruge til at oprette retningslinjer"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Bestem hvilken strategimetode, der skal bruges"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Vælg det aktuelle spor, der skal bruges"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Indstil kardinalpunkterne"/>
+
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Gem spor til farm"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Save the track scoped to the farm of the vehicle, by default it's accessible for everyone"/>
+
+        <text name="guidanceSteering_setting_offsetLines" text="Linie Centerforskydning"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance."/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Spor navn '%s' eksistere allerede!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Kunne ikke gemme spordata, først skal du oprette eller indlæse et spor først!"/>
+
+        <!--Settings-->
+        <text name="guidanceSteering_setting_showLines" text="Vis linier"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Følg terræn vinkler"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Aktiver GPS"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Centerforskydning modsat"/>
+        <text name="guidanceSteering_setting_width" text="Bredde"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Bredde forøgelse"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Centerforskydning forøgelse"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Auto bredde"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Vend Centerforskydning"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Trækbredde"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Centerforskydning bredde"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Nulstil Centerforskydning"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Forøg Centerforskydning"/>
+        <text name="guidanceSteering_setting_cardinals" text="Kardinalpunkt"/>
+
+        <text name="guidanceSteering_setting_strategy" text="Linie strategi"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Linie metode"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Aktuelle spor"/>
+
+        <text name="guidanceSteering_setting_pointA" text="Sæt A"/>
+        <text name="guidanceSteering_setting_pointB" text="Sæt B"/>
+        <text name="guidanceSteering_setting_newTrack" text="Lav spor"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Fjern spor"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Gem spor"/>
+
+        <text name="guidanceSteering_setting_header_headland" text="Forager styring"/>
+
+        <text name="guidanceSteering_setting_headlandMode" text="Forager mode"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Med forager mode kan du indstille strategien i forageren."/>
+
+        <text name="guidanceSteering_setting_headlandDistance" text="Forager akt afstand"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Afstand i meter, der skal handles, før du nærmer dig forageren."/>
+
+        <text name="guidanceSteering_headland_mode_0" text="Fra"/>
+        <text name="guidanceSteering_headland_mode_1" text="Stop"/>
+        <text name="guidanceSteering_headland_mode_2" text="Drej venstre"/>
+        <text name="guidanceSteering_headland_mode_3" text="Drej højre"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Ønsket retning (grader)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Sæt retning"/>
+    </texts>
+</l10n>
