@@ -54,12 +54,12 @@
         <text name="guidanceSteering_tooltip_strategy" text="Şerit desteklerini hangi yöntem ile belirleyeceğinizi buradan ayarlayabilirsiniz"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Hangi yöntemi kullanacağınızı belirleyin"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Kullanılacak rotayı seçin"/>
-        <text name="guidanceSteering_tooltip_cardinals" text="Set the cardinal points"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Açıyı baz alacak noktaları belirle"/>
 
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Rotayı çiftliğe kaydedin"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Rotayı aracın sahibi olan çiftliğe kaydedin. (Değiştirilmezse rotaya herkesin erişimi olacaktır.)"/>
 
-        <text name="guidanceSteering_setting_offsetLines" text="Şerit yüksekliği"/>
+        <text name="guidanceSteering_setting_offsetLines" text="Şerit çizgilerinin yüksekliği"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Bu ayar ile şeritlerin görünmediği bölgelerde yüksekliğini ayarlayabilirsiniz."/>
 
         <!--Warning tooltip-->
@@ -70,7 +70,7 @@
         <text name="guidanceSteering_setting_showLines" text="Şeritleri göster"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Arazi eğimine sabitle"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Şerit desteğini aktifleştir"/>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="Offset reversal"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Sapmayı otomatik aynala"/>
         <text name="guidanceSteering_setting_width" text="Genişlik"/>
         <text name="guidanceSteering_setting_widthIncrement" text="Genişlik ayarlaması"/>
         <text name="guidanceSteering_setting_offsetIncrement" text="Sapma ayarlaması"/>
@@ -97,7 +97,7 @@
         <text name="guidanceSteering_setting_headlandMode" text="Çevre modu"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Çevre modu ile tarlanın çevresinde nasıl bir taktik izleyeceğinizi seçebilirsiniz."/>
 
-        <text name="guidanceSteering_setting_headlandDistance" text="Çevre etkileşim mesafesi"/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Çevreye kalan mesafe"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Tarla çevresine ulaşmadan önce etkileşime geçilecek mesafe."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Kapalı"/>
@@ -106,7 +106,7 @@
         <text name="guidanceSteering_headland_mode_3" text="Sağa dön"/>
 
         <!-- Cardinal strategy -->
-        <text name="guidanceSteering_setting_cardinalTitle" text="Desired cardinal (degrees)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="İstenilen yön (derece)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Dereceyi ayarla"/>
     </texts>
 </l10n>
