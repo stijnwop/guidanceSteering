@@ -138,18 +138,10 @@ function GlobalPositioningSystem:onLoad(savegame)
         end
     end
 
-    if self.propertyState == Vehicle.PROPERTY_STATE_MISSION then
-        hasGuidanceSystem = true
-    end
-
     self.spec_globalPositioningSystem = self:guidanceSteering_getSpecTable("globalPositioningSystem")
     local spec = self.spec_globalPositioningSystem
 
     spec.hasGuidanceSystem = hasGuidanceSystem
-
-    if not spec.hasGuidanceSystem then
-        return
-    end
 
     spec.axisAccelerate = 0
     spec.axisBrake = 0
@@ -273,6 +265,11 @@ end
 
 function GlobalPositioningSystem:onLoadFinished()
     local spec = self.spec_globalPositioningSystem
+
+    if self.propertyState == Vehicle.PROPERTY_STATE_MISSION then
+        spec.hasGuidanceSystem = true
+    end
+
     if self.spec_dynamicallyLoadedParts ~= nil then
         for _, part in ipairs(self.spec_dynamicallyLoadedParts.parts) do
             -- linkNode field is set by the GlobalPositioningSystem code.

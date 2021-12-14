@@ -59,8 +59,8 @@
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Rotayı çiftliğe kaydedin"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Rotayı aracın sahibi olan çiftliğe kaydedin. (Değiştirilmezse rotaya herkesin erişimi olacaktır.)"/>
 
-        <text name="guidanceSteering_setting_offsetLines" text="Şerit sapması"/>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Daha fazla çalışma alanı elde etmek için şerit sapmasını ayarlayın."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Şerit yüksekliği"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Bu ayar ile şeritlerin görünmediği bölgelerde yüksekliğini ayarlayabilirsiniz."/>
 
         <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text=" '%s' adında bir rota zaten mevcut!"/>
