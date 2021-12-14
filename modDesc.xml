@@ -68,16 +68,16 @@ Changelog 2.0.1.0:
         </fr>
         <it>
             <![CDATA[
-Accelera il tuo lavoro sul campo con la mod Guidance Steering, crea percorsi precisi e aumenta l'efficienza.
-Guidance Steering ti consente di creare tracce in diversi metodi.
-Il metodo AB richiede due punti (A e B) per calcolare l'angolo di sterzata.
-Il metodo A+testata semplifica la creazione, è possibile inserire direttamente l'angolo di sterzata.
+Migliora il tuo lavoro in campo con la mod Guidance Steering creando percorsi precisi e aumentando l'efficienza.
+Guidance Steering ti consente di creare tracciati GPS in diversi metodi.
+Il metodo AB richiede due punti (A inziale e B finale) per calcolare l'angolo di sterzata.
+Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo cardinale rispetto alla posizione attuale.
 
-È necessario attivare la mod Guidance Steering prima di poter accedere al menu.
-Primo: accendi il GPS (ALT sinistro + C)
-Quindi: apri il menu GPS (CTRL sinistro + S)
+È necessario attivare la mod Guidance Steering prima di poter accedere al menù:
+- Abilita il GPS (ALT sinistro + C)
+- Apri il menù GPS (CTRL sinistro + S)
 
-Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
+Per ulteriori informazioni leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> da Github.
 
 Changelog 2.0.1.0:
 - FS22 release
