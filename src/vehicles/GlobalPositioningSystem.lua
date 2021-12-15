@@ -122,7 +122,7 @@ function GlobalPositioningSystem:onRegisterActionEvents(isActiveForInput, isActi
 end
 
 function GlobalPositioningSystem:onLoad(savegame)
-    local hasGuidanceSystem = true
+    local hasGuidanceSystem = false
 
     local configId = Utils.getNoNil(self.configurations.globalPositioningSystem, 1)
     if configId ~= nil then
