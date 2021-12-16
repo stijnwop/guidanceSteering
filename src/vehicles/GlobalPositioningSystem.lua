@@ -639,16 +639,18 @@ end
 function GlobalPositioningSystem.inj_onDynamicallyPartI3DLoaded(vehicle, superFunc, i3dNode, failedReason, args)
     local xmlFile, partKey, dynamicallyLoadedPart = unpack(args)
 
-    local function isSharedStarFire(path)
-        local matches = {
-            ["data/shared/assets/starfire.i3d"] = true,
-            ["data/shared/assets/gps.i3d"] = true
-        }
-        return matches[path:lower()] ~= nil
-    end
+    if dynamicallyLoadedPart ~= nil then
+        local function isSharedStarFire(path)
+            local matches = {
+                ["data/shared/assets/starfire.i3d"] = true,
+                ["data/shared/assets/gps.i3d"] = true
+            }
+            return matches[path:lower()] ~= nil
+        end
 
-    if isSharedStarFire(dynamicallyLoadedPart.filename) then
-        dynamicallyLoadedPart.gpsLinkNode = xmlFile:getValue(partKey .. "#linkNode", "0>", vehicle.components, vehicle.i3dMappings)
+        if isSharedStarFire(dynamicallyLoadedPart.filename) then
+            dynamicallyLoadedPart.gpsLinkNode = xmlFile:getValue(partKey .. "#linkNode", "0>", vehicle.components, vehicle.i3dMappings)
+        end
     end
 
     return superFunc(vehicle, i3dNode, failedReason, args)
