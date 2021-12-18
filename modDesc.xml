@@ -11,6 +11,7 @@
         <es>Dirección de Guiado</es>
         <cz>Řízené navádění</cz>
         <ru>Guidance Steering</ru>
+        <tr>Guidance Steering</tr>
     </title>
 
     <description>
@@ -141,6 +142,24 @@ Changelog 2.0.1.0:
 - Fix issue with French translation.
 ]]>
         </ru>
+        <tr>
+            <![CDATA[
+Guidance Steering modu ile tarlalarınızda çalışmanızı kolaylaştıracak hatlar belirleyerek işlerinizi hızlı ve verimli bir şekilde tamamlayın.
+Guidance Steering, hat oluşturmak için farklı yöntemler kullanmanıza olanak tanır. AB noktası yöntemi, direksiyon açısını hesaplamak için iki nokta (A ve B) kurmanızı sağlar. A+yön yöntemi, sizden yalnızca istenen direksiyon açısını girmenizi sağlayarak kurulumu basitleştirir.
+
+Menüye girebilmek için Sürüş Desteğini etkinleştirdiğinizden emin olun.
+
+Bunu yapmak için:
+- Guidance Steering Etkinleştir: sol ALT + C
+- Guidance Steering menüsünü göster: sol CTRL + S
+
+Oyun hakkında daha fazla bilgi için lütfen Github deposuna göz atın.
+
+Değişiklik günlüğü 2.0.1.0:
+-FS22 sürümü
+- Fransızca çeviri ile ilgili sorunlar düzeltildi.
+]]>
+        </tr>
     </description>
 
     <l10n filenamePrefix="i18n/locale"/>
