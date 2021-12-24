@@ -1,48 +1,72 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+    <translationContributors>Wopster,Lactic68,MrBuBBLs,Farmer1602</translationContributors>
     <locale>fr</locale>
     <texts>
         <text name="configuration_buyableGPS" text="Système de guidage"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Sans"/>
         <text name="configuration_buyableGPS_withGPS" text="Avec"/>
+
+        <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: Commutation du système de guidage"/>
-        <text name="input_GS_SHOW_UI" text="Afficher le menu de guidage"/>
-        <text name="input_GS_SET_AUTO_WIDTH" text="Largeur automatique"/>
-        <text name="input_GS_AXIS_REALIGN" text="Réalignement de la trace"/>
-        <text name="input_GS_AXIS_SHIFT_1" text="Déplacer la ligne vers la droite"/>
-        <text name="input_GS_AXIS_SHIFT_2" text="Déplacer la ligne vers la gauche"/>
-        <text name="input_GS_AXIS_WIDTH_1" text="Augmenter la largeur des lignes"/>
-        <text name="input_GS_AXIS_WIDTH_2" text="Diminuer la largeur des lignes"/>
-        <text name="input_GS_ENABLE_STEERING" text="Guidage automatique"/>
-        <text name="input_GS_SETPOINT" text="Déterminer un point de guidage"/>
-        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="Alignement sur l&#39;angle du terrain"/>
-        <text name="input_GS_TURN_STEERING" text="Définir la direction"/>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Basculer le déplacement de la ligne"/>
-        <text name="input_GS_ROTATE_TRACK" text="GS: Faire pivoter la trace"/>
+        <text name="input_GS_SHOW_UI" text="GS: Afficher le menu de guidage"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Largeur automatique"/>
+
+        <text name="input_GS_AXIS_REALIGN" text="GS: Réalignement des lignes"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Déplacer les lignes vers la droite"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Déplacer les lignes vers la gauche"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Augmenter la largeur des lignes"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Diminuer la largeur des lignes"/>
+
+        <text name="input_GS_ENABLE_STEERING" text="GS: Guidage automatique"/>
+        <text name="input_GS_SETPOINT" text="GS: Déterminer un point de guidage"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Alignement sur l&#39;angle du terrain"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Définir la direction"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Afficher les lignes"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rotation à 90° des lignes"/>
+
+        <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Parcourez au moins 15 m pour atteindre le point B. Distance parcourue actuellement: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Veuillez d&#39;abord régler une largeur de travail!"/>
-        <text name="guidanceSteering_warning_createTrackFirst" text="Veuillez d&#39;abord créer ou charger une trace avant d&#39;activer la direction de guidage.!"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Veuillez d&#39;abord créer ou charger un enregistrement avant d&#39;activer la direction de guidage!"/>
+
+        <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Réglages"/>
-        <text name="guidanceSteering_ui_strategy" text="Strategie"/>
+        <text name="guidanceSteering_ui_strategy" text="Modes"/>
+
         <text name="guidanceSteering_strategy_abStraight" text="AB ligne"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB courbe"/>
+
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Angle"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Orientation"/>
+
+        <!--Tooltips-->
         <text name="guidanceSteering_tooltip_showLines" text="Afficher les lignes de guidage"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Aligner A+B sur l&#39;angle du terrain"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Laisser le guidage gérer la direction"/>
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inversion automatique du décalage lors d&#39;un retour"/>
         <text name="guidanceSteering_tooltip_width" text="Sélectionnez la largeur de travail"/>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage du véhicule"/>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="Précision de largeur de travail"/>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="Précision du décalage pour augmenter/réduire le décalage"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Réglez le décalage de l'outil"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Incréments pour augmenter/réduire la largeur de travail"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Incréments pour augmenter/réduire le décalage de l'outil"/>
+
         <text name="guidanceSteering_tooltip_strategy" text="Détermine quel mode de guidage utiliser pour créer les lignes"/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Détermine le mode de guidage souhaité"/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Sélectionne la ligne de guidage actuelle"/>
         <text name="guidanceSteering_tooltip_cardinals" text="Sélectionne les points cardinaux"/>
-        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="La ligne: %s existe deja!"/>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Si vous n&#39;avez pas réussi à sauvegarder les données de la ligne, veuillez d&#39;abord créer ou charger une ligne!"/>
+
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Sauvegarder l'enregistrement pour la ferme"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Sauvegarde de l'enregistrement limitée à la ferme du véhicule, par défaut elle est accessible à tous"/>
+
+        <text name="guidanceSteering_tooltip_offsetLines" text="Modifier la hauteur des lignes pour améliorer leur visibilité dans des cultures hautes."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Hauteur des lignes"/>
+
+        <!--Warning tooltip-->
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="L&#39;enregistrement : %s existe deja!"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Si vous n&#39;avez pas réussi à sauvegarder les données de la ligne, veuillez d&#39;abord créer ou charger un enregistrement!"/>
+
+        <!--Settings-->
         <text name="guidanceSteering_setting_showLines" text="Afficher les lignes"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Aligner sur l&#39;angle du terrain"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Activer le guidage auto"/>
@@ -53,32 +77,36 @@
         <text name="guidanceSteering_setting_autoWidth" text="Largeur de travail automatique"/>
         <text name="guidanceSteering_setting_invertOffset" text="Inverser le décalage"/>
         <text name="guidanceSteering_setting_changeWidth" text="Ajuster la largeur"/>
-        <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
         <text name="guidanceSteering_setting_offsetWidth" text="Largeur du décalage"/>
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Réinitialiser le décalage"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Augmenter le décalage"/>
+        <text name="guidanceSteering_setting_cardinals" text="Point cardinal"/>
+
         <text name="guidanceSteering_setting_strategy" text="Mode de guidage"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Type"/>
         <text name="guidanceSteering_setting_currentTrack" text="Ligne actuelle"/>
+
         <text name="guidanceSteering_setting_pointA" text="Déterminer A"/>
         <text name="guidanceSteering_setting_pointB" text="Déterminer B"/>
         <text name="guidanceSteering_setting_newTrack" text="Créer"/>
         <text name="guidanceSteering_setting_removeTrack" text="Supprimer"/>
         <text name="guidanceSteering_setting_saveTrack" text="Sauvegarder"/>
+
+        <text name="guidanceSteering_setting_header_headland" text="Gestion des fourrières"/>
+
         <text name="guidanceSteering_setting_headlandMode" text="Mode fourrière"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Avec le mode fourrière, vous pouvez régler la manœuvre en fourrière."/>
+
         <text name="guidanceSteering_setting_headlandDistance" text="Distance d&#39;arrêt"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distance en mètres pour agir avant l&#39;approche de la fourrière."/>
+
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
         <text name="guidanceSteering_headland_mode_2" text="Tourner à gauche"/>
         <text name="guidanceSteering_headland_mode_3" text="Tourner à droite"/>
-        <text name="guidanceSteering_setting_cardinalTitle" text="Direction souhaitée (degrés)"/>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="Définir la direction"/>
-        <text name="guidanceSteering_setting_header_headland" text="Gestion des fourrières"/>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Sauvegarder la trace pour la ferme."/>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Sauvegarde de la piste limitée à la ferme du véhicule, par défaut elle est accessible à tous."/>
-        <text name="guidanceSteering_tooltip_offsetLines" text="Modifier la hauteur des lignes pour améliorer leur visibilité dans des cultures hautes."/>
-        <text name="guidanceSteering_setting_offsetLines" text="Hauteur des lignes"/>
+
+        <!-- Cardinal strategy -->
+        <text name="guidanceSteering_setting_cardinalTitle" text="Orientation souhaitée (degrés)"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Définir l'orientation"/>
     </texts>
 </l10n>

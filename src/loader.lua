@@ -230,9 +230,9 @@ local function canAddGuidanceSteeringConfiguration(storeItem, xmlFile)
 end
 
 function addGPSConfigurationUtil(xmlFile, superFunc, key, baseDir, customEnvironment, isMod, storeItem)
-    local configurations = superFunc(xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
+    local configurations, defaultConfigurationIds = superFunc(xmlFile, key, baseDir, customEnvironment, isMod, storeItem)
 
-    if isEnabled() and StoreItemUtil.getIsVehicle(storeItem) and canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
+    if StoreItemUtil.getIsVehicle(storeItem) and canAddGuidanceSteeringConfiguration(storeItem, xmlFile) then
         local gpsKey = GlobalPositioningSystem.CONFIG_NAME
 
         if configurations ~= nil then
@@ -247,7 +247,7 @@ function addGPSConfigurationUtil(xmlFile, superFunc, key, baseDir, customEnviron
         end
     end
 
-    return configurations
+    return configurations, defaultConfigurationIds
 end
 
 init()

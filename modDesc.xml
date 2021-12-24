@@ -11,6 +11,8 @@
         <es>Dirección de Guiado</es>
         <cz>Řízené navádění</cz>
         <ru>Guidance Steering</ru>
+        <tr>Guidance Steering</tr>
+		    <jp>GPS自動操舵システム</jp>
     </title>
 
     <description>
@@ -68,16 +70,16 @@ Changelog 2.0.1.0:
         </fr>
         <it>
             <![CDATA[
-Accelera il tuo lavoro sul campo con la mod Guidance Steering, crea percorsi precisi e aumenta l'efficienza.
-Guidance Steering ti consente di creare tracce in diversi metodi.
-Il metodo AB richiede due punti (A e B) per calcolare l'angolo di sterzata.
-Il metodo A+testata semplifica la creazione, è possibile inserire direttamente l'angolo di sterzata.
+Migliora il tuo lavoro in campo con la mod Guidance Steering creando percorsi precisi e aumentando l'efficienza.
+Guidance Steering ti consente di creare tracciati GPS in diversi metodi.
+Il metodo AB richiede due punti (A inziale e B finale) per calcolare l'angolo di sterzata.
+Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo cardinale rispetto alla posizione attuale.
 
-È necessario attivare la mod Guidance Steering prima di poter accedere al menu.
-Primo: accendi il GPS (ALT sinistro + C)
-Quindi: apri il menu GPS (CTRL sinistro + S)
+È necessario attivare la mod Guidance Steering prima di poter accedere al menù:
+- Abilita il GPS (ALT sinistro + C)
+- Apri il menù GPS (CTRL sinistro + S)
 
-Per ulteriori informazioni, leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> dal github.
+Per ulteriori informazioni leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> da Github.
 
 Changelog 2.0.1.0:
 - FS22 release
@@ -141,6 +143,57 @@ Changelog 2.0.1.0:
 - Fix issue with French translation.
 ]]>
         </ru>
+        <tr>
+            <![CDATA[
+Guidance Steering modu ile tarlalarınızda çalışmanızı kolaylaştıracak hatlar belirleyerek işlerinizi hızlı ve verimli bir şekilde tamamlayın.
+Guidance Steering, hat oluşturmak için farklı yöntemler kullanmanıza olanak tanır. AB noktası yöntemi, direksiyon açısını hesaplamak için iki nokta (A ve B) kurmanızı sağlar. A+yön yöntemi, sizden yalnızca istenen direksiyon açısını girmenizi sağlayarak kurulumu basitleştirir.
+
+Menüye girebilmek için Sürüş Desteğini etkinleştirdiğinizden emin olun.
+
+Bunu yapmak için:
+- Guidance Steering Etkinleştir: sol ALT + C
+- Guidance Steering menüsünü göster: sol CTRL + S
+
+Oyun hakkında daha fazla bilgi için lütfen Github deposuna göz atın.
+
+Değişiklik günlüğü 2.0.1.0:
+-FS22 sürümü
+- Fransızca çeviri ile ilgili sorunlar düzeltildi.
+]]>
+        </tr>
+		<jp>
+            <![CDATA[
+GPS自動操舵システムはあらゆる農作業をムラなく精密に行い作業効率を高める為のサポートをします。
+ハンドル操作が自動化されプレイヤーの疲ろう軽減にもなります。
+
+使用するにはショップにてGPS自動操舵システムを有効（購入）にする必要があります。
+
+1:操作手順は簡単で作業機を取付、展開後に作業幅を設定します。
+2:操舵角の基準となる点（A点、B点）を設定し自動操舵をオンにして走行します。
+
+設定メニューを開くにはGPS自動操舵システムを起動する必要があります。
+
+キーボードショートカット（デフォルト）:
+- GPS自動操舵システムを起動/停止する: ALT + C
+- GPS自動操舵システム設定メニューを表示する: CTRL + S
+- 基準点（A点/B点）を設定する: ALT + E
+- 作業幅の自動設定: ALT + R
+- 自動操舵のオン/オフ: ALT + X
+- 作業幅を拡大する: ALT + ^
+- 作業幅を縮小する: ALT + -
+- 走行ラインを右側にずらす: ALT + PageUp
+- 走行ラインを左側にずらす: ALT + PageDown
+- 走行ラインを再調整する: ALT + Home
+- 走行ラインの表示/非表示: ALT + L
+- 走行ラインを90°回転する: ALT + End
+
+詳しくはGithubの<a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a>を参照してください。
+
+Changelog 2.0.1.0:
+- FS22 release
+- Fix issue with French translation.
+]]>
+        </jp>
     </description>
 
     <l10n filenamePrefix="i18n/locale"/>

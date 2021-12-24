@@ -107,12 +107,7 @@ function GuidanceSteeringHUD:storeScaledValues()
         return
     end
 
-    local boxPosX, boxPosY = self.stateBox:getPosition()
-    local boxWidth, boxHeight = self.stateBox:getWidth(), self.stateBox:getHeight()
-    local textOffX, textOffY = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.POSITION.LANE_TEXT)
-
-    self.laneTextPositionX = boxPosX + boxWidth + textOffX
-    self.laneTextPositionY = boxPosY + boxHeight + textOffY
+    self.textOffX, self.textOffY = self.speedMeterDisplay:scalePixelToScreenVector(GuidanceSteeringHUD.POSITION.LANE_TEXT)
     self.laneTextSize = self.speedMeterDisplay:scalePixelToScreenHeight(GuidanceSteeringHUD.TEXT_SIZE.LANE)
 end
 
@@ -176,9 +171,12 @@ function GuidanceSteeringHUD:drawLaneText()
     setTextAlignment(RenderText.ALIGN_CENTER)
     setTextColor(unpack(color))
 
-    if self.laneTextPositionX ~= nil then
-        renderText(self.laneTextPositionX, self.laneTextPositionY, self.laneTextSize, self.laneText)
-    end
+    local boxPosX, boxPosY = self.stateBox:getPosition()
+    local boxWidth, boxHeight = self.stateBox:getWidth(), self.stateBox:getHeight()
+
+    self.laneTextPositionX = boxPosX + boxWidth + self.textOffX
+    self.laneTextPositionY = boxPosY + boxHeight + self.textOffY
+    renderText(self.laneTextPositionX, self.laneTextPositionY, self.laneTextSize, self.laneText)
 end
 
 function GuidanceSteeringHUD.speedMeterDisplay_storeScaledValues(speedMeterDisplay)
