@@ -7,7 +7,7 @@
         <en>Guidance Steering</en>
         <de>Guidance Steering</de>
         <fr>Guidance Steering</fr>
-        <it>Guidance Steering</it>
+        <it>Sistema di guida assistita (GPS)</it>
         <es>Dirección de Guiado</es>
         <cz>Řízené navádění</cz>
         <ru>Guidance Steering</ru>
@@ -70,8 +70,8 @@ Changelog 2.0.1.0:
         </fr>
         <it>
             <![CDATA[
-Migliora il tuo lavoro in campo con la mod Guidance Steering creando percorsi precisi e aumentando l'efficienza.
-Guidance Steering ti consente di creare tracciati GPS in diversi metodi.
+Migliora il tuo lavoro in campo con la mod Sistema di Guida Assistita creando percorsi precisi e aumentando l'efficienza.
+Il Sistema di Guida Assistita ti consente di creare tracciati GPS in diversi metodi.
 Il metodo AB richiede due punti (A inziale e B finale) per calcolare l'angolo di sterzata.
 Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo cardinale rispetto alla posizione attuale.
 
@@ -82,8 +82,8 @@ Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo c
 Per ulteriori informazioni leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> da Github.
 
 Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+- Versione FS22
+- Risolto il problema con la traduzione francese.
 ]]>
         </it>
         <es>
