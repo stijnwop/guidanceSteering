@@ -252,6 +252,10 @@ function GuidanceSteeringSettingsFrame:changeWidth(direction)
     local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state] * direction
 
     self.currentGuidanceWidth = math.max(self.currentGuidanceWidth + increment, 0)
+    if 2 * math.abs(self.currentGuidanceOffset) >= self.currentGuidanceWidth then
+		self.currentGuidanceOffset = self.currentGuidanceWidth / 2 * (self.currentGuidanceOffset/math.abs(self.currentGuidanceOffset))
+	end
+	self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
     self.guidanceSteeringWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceWidth))
 end
 
