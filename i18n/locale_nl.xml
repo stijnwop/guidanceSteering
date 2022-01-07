@@ -85,6 +85,8 @@
             <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
         <text name="guidanceSteering_setting_offsetLines" text="Line offset">
             <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
+            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
         <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

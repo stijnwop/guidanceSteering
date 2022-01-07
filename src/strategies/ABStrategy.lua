@@ -5,16 +5,19 @@
 --
 -- Copyright (c) Wopster, 2018
 
+---@class ABStrategy
 ABStrategy = {}
 
 ABStrategy.AB = 0
 ABStrategy.A_PLUS_HEADING = 1
-ABStrategy.A_AUTO_B = 2
+ABStrategy.A_PLUS_DIRECTION = 2
+ABStrategy.A_AUTO_B = 3
 
 ABStrategy.METHODS = {
     ABStrategy.AB,
     ABStrategy.A_AUTO_B,
-    ABStrategy.A_PLUS_HEADING
+    ABStrategy.A_PLUS_HEADING,
+    ABStrategy.A_PLUS_DIRECTION,
 }
 
 local RGB_WHITE = { 1, 1, 1 }
@@ -185,7 +188,8 @@ function ABStrategy:getTexts(i18n)
     -- Remember the order is important here.
     return {
         i18n:getText("guidanceSteering_strategyMethod_aPlusB"), -- ABStrategy.AB
-        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading") -- ABStrategy.A_PLUS_HEADING
+        i18n:getText("guidanceSteering_strategyMethod_aPlusHeading"), -- ABStrategy.A_PLUS_HEADING
+        i18n:getText("guidanceSteering_strategyMethod_aPlusDirection") -- ABStrategy.A_PLUS_DIRECTION
         --i18n:getText("guidanceSteering_strategyMethod_autoB"), -- ABStrategy.A_AUTO_B
     }
 end

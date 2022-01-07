@@ -85,6 +85,8 @@
             <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
         <text name="guidanceSteering_tooltip_offsetLines" text="Offset the line for more ground clearance.">
             <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
+            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
         <!--Inputs UPDATE  UPDATE WarningsGUITooltips TODO Warning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

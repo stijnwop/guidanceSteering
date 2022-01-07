@@ -80,6 +80,8 @@
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Kurs für den Hof des Fahrzeugs speichern, standardmäßig ist er für alle zugänglich"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Linenversatz für die Führungslinen."/>
         <text name="guidanceSteering_setting_offsetLines" text="Linenversatz"/>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
+            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
         <!--You could use "Globales Positionsbestimmungssystem" but thats a bit long i thinkInputs UPDATE  UPDATE WarningsGUITooltipsWarning tooltipSettings I think that is plenty enough since you got the "yes" or "no" below keeping it the same as above with the working width  Cardinal strategy -->
     </texts>
 </l10n>

@@ -47,6 +47,7 @@ source(Utils.getFilename("src/misc/ABPoint.lua", directory))
 source(Utils.getFilename("src/strategies/ABStrategy.lua", directory))
 source(Utils.getFilename("src/strategies/StraightABStrategy.lua", directory))
 source(Utils.getFilename("src/strategies/CardinalStrategy.lua", directory))
+source(Utils.getFilename("src/strategies/SnapDirectionStrategy.lua", directory))
 
 local guidanceSteering
 local guidanceConfigurations = {}

@@ -1,116 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-　　　<translationContributors>Erix05(JapanModding)</translationContributors>
     <locale>jp</locale>
     <texts>
-        <!-- buyable -->
-		<text name="configuration_buyableGPS" text="GPS自動操舵システム"></text>
-        <text name="configuration_buyableGPS_withGPS" text="有効"></text>
-        <text name="configuration_buyableGPS_withoutGPS" text="無効"></text>
-        
-		<!-- input -->
-       　<text name="input_GS_TOGGLE" text="GPS自動操舵システムを起動/停止する"></text>
-        <text name="input_GS_SHOW_UI" text="GPS自動操舵システム設定メニューを表示する"></text>
-        <text name="input_GS_SETPOINT" text="基準点（A点/B点）を設定する"></text>
-        <text name="input_GS_SET_AUTO_WIDTH" text="作業幅の自動設定"></text>
-        <text name="input_GS_ENABLE_STEERING" text="自動操舵のオン/オフ"></text>
-		<text name="input_GS_AXIS_WIDTH_1" text="作業幅を拡大する"></text>
-        <text name="input_GS_AXIS_WIDTH_2" text="作業幅を縮小する"></text>
-        <text name="input_GS_AXIS_SHIFT_1" text="走行ラインを右側にずらす"></text>
-        <text name="input_GS_AXIS_SHIFT_2" text="走行ラインを左側にずらす"></text>
-        <text name="input_GS_AXIS_REALIGN" text="走行ラインを再調整する"></text>
-        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="走行ラインの表示/非表示"></text>
-        <text name="input_GS_ROTATE_TRACK" text="走行ラインを90°回転する"></text>
-		<text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="ほ場に合わせて走行ラインをスナップする"></text>
-        <text name="input_GS_TURN_STEERING" text="GS: Set steering direction"></text>
-        
-		<!-- setting -->
-        <text name="guidanceSteering_setting_enableGuidanceSteering" text="自動操舵のオン/オフ"></text>
-        <text name="guidanceSteering_setting_showLines" text="走行ラインの表示"></text>
-        <text name="guidanceSteering_setting_offsetLines" text="走行ラインの高さ"></text>
-        <text name="guidanceSteering_setting_terrainAngleSnap" text="走行ラインのスナップ"></text>
-        <text name="guidanceSteering_setting_autoInvertOffset" text="オフセットの自動反転"></text>
-        <text name="guidanceSteering_setting_header_headland" text="まくら地"></text>
-        <text name="guidanceSteering_setting_headlandMode" text="まくら地モード"></text>
-		<text name="guidanceSteering_setting_headlandDistance" text="まくら地の距離（m）"></text>	
-        <text name="guidanceSteering_setting_widthIncrement" text="作業幅増加値"></text>
-        <text name="guidanceSteering_setting_autoWidth" text="作業幅を自動設定"></text>
-        <text name="guidanceSteering_setting_offsetIncrement" text="オフセット増加値"></text>
-        <text name="guidanceSteering_setting_invertOffset" text="オフセットを反転"></text>
-        <text name="guidanceSteering_setting_strategy" text="走行ラインの設定"></text>
-        <text name="guidanceSteering_setting_strategyMethod" text="走行ラインの基点設定"></text>
-        <text name="guidanceSteering_setting_pointA" text="A点を設定"></text>
-        <text name="guidanceSteering_setting_pointB" text="B点を設定"></text>
-        <text name="guidanceSteering_setting_cardinalTitle" text="方位の設定（°）"></text>
-        <text name="guidanceSteering_setting_cardinalConfirmText" text="基準点を設定"></text>
-        <text name="guidanceSteering_setting_scopeTrackFarmId" text="農場毎に保存（マルチプレイのみ）"></text>
-
-        <text name="guidanceSteering_setting_saveTrack" text="走行ラインをセーブする"></text>
-        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"></text>
-        <text name="guidanceSteering_setting_removeTrack" text="走行ラインを削除"></text>
-        <text name="guidanceSteering_setting_newTrack" text="走行ラインを新規作成"></text>
-        <text name="guidanceSteering_setting_changeWidth" text="作業幅を拡大"></text>
-        <text name="guidanceSteering_setting_currentTrack" text="現在の走行ライン"></text>
-        <text name="guidanceSteering_setting_resetOffsetWidth" text="オフセットをリセット"></text>
-        <text name="guidanceSteering_setting_cardinals" text="基準点"></text>
-        <text name="guidanceSteering_setting_offsetWidth" text="作業幅のオフセット"></text>
-        <text name="guidanceSteering_setting_width" text="作業幅"></text>
-
-		<!-- strategy -->
-        <text name="guidanceSteering_strategy_abStraight" text="A-Bライン"></text>
-        <text name="guidanceSteering_strategy_abCurve" text="A-Bカーブ"></text>
-        <text name="guidanceSteering_strategyMethod_aPlusB" text="A点+B点"></text>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A点+方位"></text>
-        <text name="guidanceSteering_strategyMethod_autoB" text="自動B点"></text>
-
-		<!-- ui -->
-        <text name="guidanceSteering_ui_settings" text="GPS自動操舵システム設定"></text>
-        <text name="guidanceSteering_ui_strategy" text="ライン作成設定"></text>
-
-		<!-- headland -->
-        <text name="guidanceSteering_headland_mode_0" text="無効(アラームのみ)"></text>
-        <text name="guidanceSteering_headland_mode_1" text="車両を停止"></text>
-        <text name="guidanceSteering_headland_mode_2" text="左旋回"></text>
-		<text name="guidanceSteering_headland_mode_3" text="右旋回"></text>
-
-	   <!-- warning -->
-        <text name="guidanceSteering_warning_setWidth" text="先に作業幅を設定してください"></text>
-        <text name="guidanceSteering_warning_dropDistance" text="A点から15メートル移動してB点を設定してください （現在の移動距離: %.2f）"></text>
-        <text name="guidanceSteering_warning_createTrackFirst" text="走行ラインを作成してください"></text>
- 
-        <!-- tooltip -->
-        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="ステアリングを自動操舵させます"></text>
-       　<text name="guidanceSteering_tooltip_trackAlreadyExists" text="走行ライン名 &#39;%s&#39; は重複しています"></text>
-        <text name="guidanceSteering_tooltip_headlandMode" text="まくら地モードを使用すると、まくら地でのアクションを設定できます"></text>
-        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="走行ラインのセーブに失敗しました。走行ラインを新規作成するかロードを実行してください"></text>
-        <text name="guidanceSteering_tooltip_showLines" text="走行ライン（作業幅）を表示させます"></text>
-        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."></text>
-        <text name="guidanceSteering_tooltip_strategy" text="走行ラインの作成方法を選択します"></text>
-        <text name="guidanceSteering_tooltip_autoInvertOffset" text="旋回後にオフセットを自動で反転させます"></text>
-        <text name="guidanceSteering_tooltip_widthInCrement" text="作業幅の増分を設定して、作業幅を増減します"></text>
-        <text name="guidanceSteering_tooltip_strategyMethod" text="走行ラインの基点設定方法を選択します"></text>
-        <text name="guidanceSteering_tooltip_cardinals" text="基準点を設定"></text>
-        <text name="guidanceSteering_tooltip_width" text="作業幅を設定してください"></text>
-        <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use"></text>
-        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"></text>
-        <text name="guidanceSteering_tooltip_offsetIncrement" text="オフセットの増分を設定して、オフセットを増減します"></text>
-        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="走行ライン作成時、ほ場に合わせて走行ラインをスナップさせます"></text>
-        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="オンで保存:マルチプレイ時に農場毎にデータを共有します。オフで保存:だれでもデータをロードすることができます。（デフォルト:オフ）"></text>
-        <text name="guidanceSteering_tooltip_offsetLines" text="走行ラインの表示を地面からオフセットします"></text>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <text name="configuration_buyableGPS" text="GPS自動操舵システム"/>
+        <text name="configuration_buyableGPS_withGPS" text="有効"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="無効"/>
+        <text name="input_GS_TOGGLE" text="GPS自動操舵システムを起動/停止する"/>
+        <text name="input_GS_SHOW_UI" text="GPS自動操舵システム設定メニューを表示する"/>
+        <text name="input_GS_SETPOINT" text="基準点（A点/B点）を設定する"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="作業幅の自動設定"/>
+        <text name="input_GS_ENABLE_STEERING" text="自動操舵のオン/オフ"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="作業幅を拡大する"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="作業幅を縮小する"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="走行ラインを右側にずらす"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="走行ラインを左側にずらす"/>
+        <text name="input_GS_AXIS_REALIGN" text="走行ラインを再調整する"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="走行ラインの表示/非表示"/>
+        <text name="input_GS_ROTATE_TRACK" text="走行ラインを90°回転する"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="ほ場に合わせて走行ラインをスナップする"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Set steering direction"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="自動操舵のオン/オフ"/>
+        <text name="guidanceSteering_setting_showLines" text="走行ラインの表示"/>
+        <text name="guidanceSteering_setting_offsetLines" text="走行ラインの高さ"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="走行ラインのスナップ"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="オフセットの自動反転"/>
+        <text name="guidanceSteering_setting_header_headland" text="まくら地"/>
+        <text name="guidanceSteering_setting_headlandMode" text="まくら地モード"/>
+        <text name="guidanceSteering_setting_headlandDistance" text="まくら地の距離（m）"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="作業幅増加値"/>
+        <text name="guidanceSteering_setting_autoWidth" text="作業幅を自動設定"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="オフセット増加値"/>
+        <text name="guidanceSteering_setting_invertOffset" text="オフセットを反転"/>
+        <text name="guidanceSteering_setting_strategy" text="走行ラインの設定"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="走行ラインの基点設定"/>
+        <text name="guidanceSteering_setting_pointA" text="A点を設定"/>
+        <text name="guidanceSteering_setting_pointB" text="B点を設定"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="方位の設定（°）"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="基準点を設定"/>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="農場毎に保存（マルチプレイのみ）"/>
+        <text name="guidanceSteering_setting_saveTrack" text="走行ラインをセーブする"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Increment offset"/>
+        <text name="guidanceSteering_setting_removeTrack" text="走行ラインを削除"/>
+        <text name="guidanceSteering_setting_newTrack" text="走行ラインを新規作成"/>
+        <text name="guidanceSteering_setting_changeWidth" text="作業幅を拡大"/>
+        <text name="guidanceSteering_setting_currentTrack" text="現在の走行ライン"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="オフセットをリセット"/>
+        <text name="guidanceSteering_setting_cardinals" text="基準点"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="作業幅のオフセット"/>
+        <text name="guidanceSteering_setting_width" text="作業幅"/>
+        <text name="guidanceSteering_strategy_abStraight" text="A-Bライン"/>
+        <text name="guidanceSteering_strategy_abCurve" text="A-Bカーブ"/>
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A点+B点"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A点+方位"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="自動B点"/>
+        <text name="guidanceSteering_ui_settings" text="GPS自動操舵システム設定"/>
+        <text name="guidanceSteering_ui_strategy" text="ライン作成設定"/>
+        <text name="guidanceSteering_headland_mode_0" text="無効(アラームのみ)"/>
+        <text name="guidanceSteering_headland_mode_1" text="車両を停止"/>
+        <text name="guidanceSteering_headland_mode_2" text="左旋回"/>
+        <text name="guidanceSteering_headland_mode_3" text="右旋回"/>
+        <text name="guidanceSteering_warning_setWidth" text="先に作業幅を設定してください"/>
+        <text name="guidanceSteering_warning_dropDistance" text="A点から15メートル移動してB点を設定してください （現在の移動距離: %.2f）"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="走行ラインを作成してください"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="ステアリングを自動操舵させます"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="走行ライン名 &#39;%s&#39; は重複しています"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="まくら地モードを使用すると、まくら地でのアクションを設定できます"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="走行ラインのセーブに失敗しました。走行ラインを新規作成するかロードを実行してください"/>
+        <text name="guidanceSteering_tooltip_showLines" text="走行ライン（作業幅）を表示させます"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
+        <text name="guidanceSteering_tooltip_strategy" text="走行ラインの作成方法を選択します"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="旋回後にオフセットを自動で反転させます"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="作業幅の増分を設定して、作業幅を増減します"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="走行ラインの基点設定方法を選択します"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="基準点を設定"/>
+        <text name="guidanceSteering_tooltip_width" text="作業幅を設定してください"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Select the current track to use"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Set the offset of your vehicle"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="オフセットの増分を設定して、オフセットを増減します"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="走行ライン作成時、ほ場に合わせて走行ラインをスナップさせます"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="オンで保存:マルチプレイ時に農場毎にデータを共有します。オフで保存:だれでもデータをロードすることができます。（デフォルト:オフ）"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="走行ラインの表示を地面からオフセットします"/>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
+            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
+        <!-- buyable  input  setting  strategy  ui  headland  warning  tooltip -->
     </texts>
 </l10n>
