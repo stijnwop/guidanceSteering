@@ -82,6 +82,10 @@
         <text name="guidanceSteering_setting_offsetLines" text="Linenversatz"/>
         <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
             <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
+        <text name="guidanceSteering_setting_showLinesAsDots" text="Show as dots">
+            <!--Todo: add missing translation for guidanceSteering_setting_showLinesAsDots--></text>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Render the lines with dots, when turned off normal lines are displayed.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_showLinesAsDots--></text>
         <!--You could use "Globales Positionsbestimmungssystem" but thats a bit long i thinkInputs UPDATE  UPDATE WarningsGUITooltipsWarning tooltipSettings I think that is plenty enough since you got the "yes" or "no" below keeping it the same as above with the working width  Cardinal strategy -->
     </texts>
 </l10n>

@@ -35,6 +35,8 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     TOGGLE_ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
     TOGGLE_AUTO_INVERT_OFFSET = "guidanceSteeringAutoInvertOffsetElement",
 
+    TOGGLE_DOT_LINES = "guidanceSteeringShowLinesAsDotsElement",
+
     CONTAINER = "container",
     BOX_LAYOUT_SETTINGS = "boxLayoutSettings",
 }
@@ -82,6 +84,7 @@ function GuidanceSteeringSettingsFrame:initialize()
     self.guidanceSteeringWidthText:setText(initialUnit)
     self.guidanceSteeringOffsetWidthText:setText(initialUnit)
 
+
     self:build()
 end
 
@@ -108,6 +111,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         local data = spec.guidanceData
 
         self.guidanceSteeringShowLinesElement:setIsChecked(g_currentMission.guidanceSteering:isShowGuidanceLinesEnabled())
+        self.guidanceSteeringShowLinesAsDotsElement:setIsChecked(g_currentMission.guidanceSteering:isShowGuidanceLinesAsDotsEnabled())
         self.guidanceSteeringSnapAngleElement:setIsChecked(g_currentMission.guidanceSteering:isTerrainAngleSnapEnabled())
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
         self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
@@ -139,6 +143,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
     if self.allowSave then
         -- Client only
         g_currentMission.guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsShowGuidanceLinesAsDotsEnabled(self.guidanceSteeringShowLinesAsDotsElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())

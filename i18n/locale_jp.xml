@@ -82,6 +82,10 @@
         <text name="guidanceSteering_tooltip_offsetLines" text="走行ラインの表示を地面からオフセットします"/>
         <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
             <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
+        <text name="guidanceSteering_setting_showLinesAsDots" text="Show as dots">
+            <!--Todo: add missing translation for guidanceSteering_setting_showLinesAsDots--></text>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Render the lines with dots, when turned off normal lines are displayed.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_showLinesAsDots--></text>
         <!-- buyable  input  setting  strategy  ui  headland  warning  tooltip -->
     </texts>
 </l10n>

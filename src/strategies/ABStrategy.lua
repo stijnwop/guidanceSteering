@@ -111,6 +111,14 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         offset = data.lineDistance * 0.5
     end
 
+    local showAsDots = g_currentMission.guidanceSteering:isShowGuidanceLinesAsDotsEnabled()
+
+    local camRotX, camRotY, camRotZ = 0, 0, 0
+    if showAsDots then
+        local activeCamera = self.vehicle:getActiveCamera()
+        camRotX, camRotY, camRotZ = getWorldRotation(activeCamera.cameraNode)
+    end
+
     local lineOffset = g_currentMission.guidanceSteering:getLineOffset()
     local function drawSteps(step, stepSize, lx, lz, dirX, dirZ, rgb)
         if step >= numSteps then
@@ -120,11 +128,15 @@ function ABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
         local x1 = lx + ABStrategy.STEP_SIZE * step * dirX
         local z1 = lz + ABStrategy.STEP_SIZE * step * dirZ
         local y1 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x1, 0, z1) + lineOffset
-        local x2 = lx + ABStrategy.STEP_SIZE * (step + 1) * dirX
-        local z2 = lz + ABStrategy.STEP_SIZE * (step + 1) * dirZ
-        local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + lineOffset
 
-        drawDebugLine(x1, y1, z1, rgb[1], rgb[2], rgb[3], x2, y2, z2, rgb[1], rgb[2], rgb[3])
+        if showAsDots then
+            GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, camRotX, camRotY, camRotZ, 0.5, ".", rgb)
+        else
+            local x2 = lx + ABStrategy.STEP_SIZE * (step + 1) * dirX
+            local z2 = lz + ABStrategy.STEP_SIZE * (step + 1) * dirZ
+            local y2 = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x2, 0, z2) + lineOffset
+            drawDebugLine(x1, y1, z1, rgb[1], rgb[2], rgb[3], x2, y2, z2, rgb[1], rgb[2], rgb[3])
+        end
 
         drawSteps(step + stepSkips, stepSize, lx, lz, dirX, dirZ, rgb)
     end
