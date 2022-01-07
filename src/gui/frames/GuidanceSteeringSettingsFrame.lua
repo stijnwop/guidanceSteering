@@ -253,9 +253,9 @@ function GuidanceSteeringSettingsFrame:changeWidth(direction)
 
     self.currentGuidanceWidth = math.max(self.currentGuidanceWidth + increment, 0)
     if 2 * math.abs(self.currentGuidanceOffset) >= self.currentGuidanceWidth then
-		self.currentGuidanceOffset = self.currentGuidanceWidth / 2 * (self.currentGuidanceOffset/math.abs(self.currentGuidanceOffset))
-	end
-	self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
+        self.currentGuidanceOffset = self.currentGuidanceWidth / 2 * (self.currentGuidanceOffset / math.abs(self.currentGuidanceOffset))
+    end
+    self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
     self.guidanceSteeringWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceWidth))
 end
 
@@ -291,9 +291,9 @@ end
 
 function GuidanceSteeringSettingsFrame:onHeadlandDistanceChanged(_, text)
     local lastDistance = tonumber(text)
-    local textLenght = utf8Strlen(text)
+    local textLength = utf8Strlen(text)
 
-    if lastDistance == nil and textLenght > 0 then
+    if lastDistance == nil and textLength > 0 then
         lastDistance = 0
         self.guidanceSteeringHeadlandDistanceElement:setText(tostring(lastDistance))
     end
