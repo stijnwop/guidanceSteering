@@ -28,7 +28,8 @@
         <text name="guidanceSteering_strategy_abCurve" text="AB кривая"/>
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Авто B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+направление"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A + угол"/>
+		<text name="guidanceSteering_strategyMethod_aPlusDirection" text="A + направление"/>
         <text name="guidanceSteering_tooltip_showLines" text="Поддерживает вас визуально, показывая навигационные линии."/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта."/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением."/>
@@ -47,7 +48,7 @@
         <text name="guidanceSteering_tooltip_offsetLines" text="Смещение линии по высоте, для лучшей её видимости."/>
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Название трека &#39; %s &#39; уже существует!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Ошибка при сохранении. Пожалуйста, создайте или загрузите трек, прежде чем его сохранять!"/>
-        <text name="guidanceSteering_setting_showLines" text="Показывать линии"/>
+        <text name="guidanceSteering_setting_showLines" text="Отображать линии"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Привязка к углам местности"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Автоподруливание"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Реверсивное смещение"/>
@@ -80,14 +81,8 @@
         <text name="guidanceSteering_headland_mode_3" text="Повернуть направо"/>
         <text name="guidanceSteering_setting_cardinalTitle" text="Желаемый кардинал (градусы)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Установить кардинал"/>
-        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
-            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
-        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Render the lines with dots, when turned off normal lines are displayed.">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_showLinesAsDots--></text>
-        <text name="guidanceSteering_setting_showLinesAsDots" text="Show as dots">
-            <!--Todo: add missing translation for guidanceSteering_setting_showLinesAsDots--></text>
-        <text name="guidanceSteering_setting_header_lines" text="Lines">
-            <!--Todo: add missing translation for guidanceSteering_setting_header_lines--></text>
-        <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
+		<text name="guidanceSteering_setting_header_lines" text="Линии"/>
+		<text name="guidanceSteering_setting_showLinesAsDots" text="Отображать как точки"/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Отрисовывать линии точками, вместо отображения линий."/>
     </texts>
 </l10n>
