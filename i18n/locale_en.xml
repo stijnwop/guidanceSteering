@@ -101,6 +101,7 @@
         <text name="guidanceSteering_setting_headlandDistance" text="Headland act distance"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Distance in meters to act before approaching the headland."/>
 
+        <text name="guidanceSteering_setting_header_lines" text="Lines"/>
         <text name="guidanceSteering_setting_showLinesAsDots" text="Show as dots"/>
         <text name="guidanceSteering_tooltip_showLinesAsDots" text="Render the lines with dots, when turned off normal lines are displayed."/>
 
