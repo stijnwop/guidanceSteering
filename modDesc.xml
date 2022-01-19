@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="61">
+<modDesc descVersion="63">
     <author>Wopster</author>
-    <version>2.0.1.0</version>
+    <version>2.1.0.0</version>
 
     <title>
         <en>Guidance Steering</en>
@@ -12,7 +12,7 @@
         <cz>Řízené navádění</cz>
         <ru>Guidance Steering</ru>
         <tr>Guidance Steering</tr>
-		    <jp>GPS自動操舵システム</jp>
+        <jp>GPS自動操舵システム</jp>
     </title>
 
     <description>
@@ -29,9 +29,18 @@ In order todo this:
 
 For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </en>
         <de>
@@ -47,9 +56,18 @@ Danach: GPS-Menü öffnen (linke STRG + S)
 
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </de>
         <fr>
@@ -63,9 +81,18 @@ Pour ce faire :
 
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </fr>
         <it>
@@ -81,9 +108,18 @@ Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo c
 
 Per ulteriori informazioni leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> da Github.
 
-Changelog 2.0.1.0:
-- Versione FS22
-- Risolto il problema con la traduzione francese.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </it>
         <es>
@@ -99,9 +135,18 @@ Para hacer esto:
 
 Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </es>
         <cz>
@@ -120,9 +165,18 @@ Klávesové skratky
 - Posun dráhy doleva: levý ALT + PAGEUP
 - Posun dráhy doprava: levý ALT + PAGEDOWN
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </cz>
         <ru>
@@ -138,9 +192,18 @@ Changelog 2.0.1.0:
 
 Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </ru>
         <tr>
@@ -156,12 +219,21 @@ Bunu yapmak için:
 
 Oyun hakkında daha fazla bilgi için lütfen Github deposuna göz atın.
 
-Değişiklik günlüğü 2.0.1.0:
--FS22 sürümü
-- Fransızca çeviri ile ilgili sorunlar düzeltildi.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </tr>
-		<jp>
+        <jp>
             <![CDATA[
 GPS自動操舵システムはあらゆる農作業をムラなく精密に行い作業効率を高める為のサポートをします。
 ハンドル操作が自動化されプレイヤーの疲ろう軽減にもなります。
@@ -189,9 +261,18 @@ GPS自動操舵システムはあらゆる農作業をムラなく精密に行�
 
 詳しくはGithubの<a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a>を参照してください。
 
-Changelog 2.0.1.0:
-- FS22 release
-- Fix issue with French translation.
+Changelog 2.1.0.0:
+- Added new snap to direction guidance strategy
+- Added missing object change configuration XML schema
+- Added option to toggle between dotted lines and normal lines
+- Fixed issue with reverse driving target direction
+- Fixed issue with width calculation for combines
+- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
+- Fixed loading the GPS module from savegame on mission vehicles
+- Fixed out of bounds offsets leading to guidance zigzag
+- Fixed issue with loading initial first track
+- Added and updated translations
+- Several improvements
 ]]>
         </jp>
     </description>
