@@ -12,13 +12,29 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
           versionSpec: '5.x'
+
       - name: Determine Version
         uses: gittools/actions/gitversion/execute@v0.9.7
+
       - name: Create git tag
         run: git tag $GITVERSION_SEMVER
+
       - name: Push to repository
         run: git push --tags
+
+      - name: Package guidanceSteering mod 
+        run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1
+
+      - name: Release
+        uses: docker://antonyurchenko/git-release:v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALLOW_EMPTY_CHANGELOG: 'true'
+        with:
+          args: FS22_guidanceSteering.zip
+
