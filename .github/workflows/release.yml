@@ -4,9 +4,12 @@ on:
     tags:
       - '*'
   workflow_run:
-    workflows: ["createTag"]
+    workflows:
+      - createTag
     type: 
       - complete
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,5 +22,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALLOW_EMPTY_CHANGELOG: 'true'
-          with:
-            args: FS22_guidanceSteering.zip
+        with:
+          args: FS22_guidanceSteering.zip
