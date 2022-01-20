@@ -21,15 +21,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: List directory content
-        run: ls -al
-
-      - name: Show directory
-        run: pwd
-
       # Runs a single command using the runners shell
       - name: Package guidanceSteering mod
-        run: zip -R -x .idea -x data FS22_guidanceSteering.zip *
+        run: zip -r -x .idea -x data FS22_guidanceSteering.zip .
           
       - name: Release
         uses: docker://antonyurchenko/git-release:v4
