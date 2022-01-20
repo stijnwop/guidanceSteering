@@ -27,15 +27,13 @@ jobs:
       - name: Push to repository
         run: git push --tags
 
-      - name: Switch to the new tag
-        run: git checkout $GITVERSION_SEMVER
-
       - name: Package guidanceSteering mod 
         run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1
 
       - name: Release
         uses: docker://antonyurchenko/git-release:v4
         env:
+          GITHUB_REF: /refs/tags/$GITVERSION_SEMVER
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALLOW_EMPTY_CHANGELOG: 'true'
         with:
