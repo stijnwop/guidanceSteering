@@ -3,18 +3,21 @@ on:
   push:
     tags:
       - '*'
-
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - name: Package guidanceSteering mod
-            run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1
-          - name: Release
-            uses: docker://antonyurchenko/git-release:v4
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              ALLOW_EMPTY_CHANGELOG: 'true'
-            with:
-              args: FS22_guidanceSteering.zip
+  workflow_run:
+    workflows: ["createTag"]
+    type: 
+      - complete
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Package guidanceSteering mod
+        run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1
+      - name: Release
+        uses: docker://antonyurchenko/git-release:v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALLOW_EMPTY_CHANGELOG: 'true'
+          with:
+            args: FS22_guidanceSteering.zip
