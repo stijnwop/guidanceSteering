@@ -29,7 +29,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Package guidanceSteering mod
-        run: zip -r -x .idea -x data FS22_guidanceSteering.zip *
+        run: zip -R -x .idea -x data FS22_guidanceSteering.zip *
           
       - name: Release
         uses: docker://antonyurchenko/git-release:v4
