@@ -33,7 +33,8 @@ jobs:
       - name: Release
         uses: docker://antonyurchenko/git-release:v4
         env:
-          GITHUB_REF: /refs/tags/$GITVERSION_SEMVER
+          TAG_PREFIX_REGEX: .+
+          RELEASE_NAME: $GITVERSION_SEMVER
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALLOW_EMPTY_CHANGELOG: 'true'
         with:
