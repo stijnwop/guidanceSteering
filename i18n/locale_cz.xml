@@ -39,10 +39,11 @@
 		
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Směr"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Kurz"/>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Směr"/>
 		
 		<!--Tooltips-->
-        <text name="guidanceSteering_tooltip_showLines" text="Podporujte své vizualizace zobrazením vodítek"/>
+        <text name="guidanceSteering_tooltip_showLines" text="Zobrazí naváděcí linie"/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Uchopte směr úhlu terénu"/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Nechte řídit systém GPS za Vás!"/>
         <text name="guidanceSteering_tooltip_autoInvertOffset" text="Automaticky invertuje odsazení při otočení"/>
@@ -58,10 +59,10 @@
 		
 		<text name="guidanceSteering_setting_scopeTrackFarmId" text="Uložit stopu pro farmu"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Uložte stopu pouze pro farmu v níž jste. V základu jsou uložené stopy viditelné všem."/>
-
-        <text name="guidanceSteering_setting_offsetLines" text="Zvednout vodítka"/>
+        
+		<text name="guidanceSteering_setting_offsetLines" text="Zvednout vodítka"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Zvedněte si vodítka výše od země pro lepší viditelnost."/>
-
+        
 		<!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Název stopy: %s již existuje!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Nepodařilo se uložit data o stopě, prosím vytvořte nebo nahrajte stopu jako první!"/>
@@ -91,14 +92,19 @@
         <text name="guidanceSteering_setting_newTrack" text="Vytvořit stopu"/>
         <text name="guidanceSteering_setting_removeTrack" text="Odstranit stopu"/>
         <text name="guidanceSteering_setting_saveTrack" text="Uložit stopu"/>
-
-        <text name="guidanceSteering_setting_header_headland" text="Nastavení souvratí"/>
+        
+		<text name="guidanceSteering_setting_header_headland" text="Nastavení souvratí"/>
 		
         <text name="guidanceSteering_setting_headlandMode" text="Režim souvrati"/>
-        <text name="guidanceSteering_tooltip_headlandMode" text="V režimu souvrati můžete nastavit strategii."/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Nastaví akci při příjezdu k souvrati."/>
 		
         <text name="guidanceSteering_setting_headlandDistance" text="Akční vzdálenost souvrati"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="Vzdálenost v metrech pro akci v režimu souvrati."/>
+		
+		<text name="guidanceSteering_setting_header_lines" text="Zobrazení vodítek"/>
+		
+		<text name="guidanceSteering_setting_showLinesAsDots" text="Zobrazit jako body"/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Zobrazovat naváděcí linie jako body, pokud vypnuto zobrazí se jako linka."/>
 		
         <text name="guidanceSteering_headland_mode_0" text="Vypnuto"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>

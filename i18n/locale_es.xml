@@ -85,6 +85,14 @@
             <!--Todo: add missing translation for guidanceSteering_tooltip_offsetLines--></text>
         <text name="guidanceSteering_setting_offsetLines" text="Line offset">
             <!--Todo: add missing translation for guidanceSteering_setting_offsetLines--></text>
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direction">
+            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
+        <text name="guidanceSteering_setting_showLinesAsDots" text="Show as dots">
+            <!--Todo: add missing translation for guidanceSteering_setting_showLinesAsDots--></text>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Render the lines with dots, when turned off normal lines are displayed.">
+            <!--Todo: add missing translation for guidanceSteering_tooltip_showLinesAsDots--></text>
+        <text name="guidanceSteering_setting_header_lines" text="Lines">
+            <!--Todo: add missing translation for guidanceSteering_setting_header_lines--></text>
         <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
     </texts>
 </l10n>

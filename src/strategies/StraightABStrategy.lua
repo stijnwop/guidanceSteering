@@ -5,26 +5,14 @@
 --
 -- Copyright (c) Wopster, 2018
 
+---@class StraightABStrategy: ABStrategy
 StraightABStrategy = {}
 
 local StraightABStrategy_mt = Class(StraightABStrategy, ABStrategy)
 
 function StraightABStrategy:new(vehicle, customMt)
     local instance = ABStrategy:new(vehicle, customMt or StraightABStrategy_mt)
-
     return instance
-end
-
-function StraightABStrategy:delete()
-    StraightABStrategy:superClass().delete(self)
-end
-
-function StraightABStrategy:update(dt)
-    StraightABStrategy:superClass().update(self, dt)
-end
-
-function StraightABStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
-    StraightABStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
 ---Gets the guidance drive data for straight AB lines.
@@ -33,9 +21,9 @@ end
 function StraightABStrategy:getGuidanceData(guidanceNode, data)
     local pointA = guidanceNode
     local pointB = self.ab:getPointNode(ABPoint.POINT_A)
-    local pointBIsDropped = self:getIsGuidancePossible()
+    local isPointBDropped = self:getIsGuidancePossible()
 
-    if pointBIsDropped then
+    if isPointBDropped then
         pointA = self.ab:getPointNode(ABPoint.POINT_A)
         pointB = self.ab:getPointNode(ABPoint.POINT_B)
     end
@@ -51,7 +39,7 @@ function StraightABStrategy:getGuidanceData(guidanceNode, data)
 
     local x, y, z = getWorldTranslation(guidanceNode)
     local dx, dy, dz = dirX, 0, dirZ
-    if pointBIsDropped then
+    if isPointBDropped then
         dx, dy, dz = localDirectionToWorld(guidanceNode, worldDirectionToLocal(pointB, dirX, 0, dirZ))
     end
 

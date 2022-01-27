@@ -34,6 +34,7 @@ function GuidanceSteering:new(mission, modDirectory, modName, i18n, gui, inputMa
     self.ui = GuidanceSteeringUI:new(mission, i18n, modDirectory, gui, inputManager, messageCenter)
 
     self.showGuidanceLines = false
+    self.showGuidanceLinesAsDots = false
     self.guidanceTerrainAngleIsActive = true
     self.lineOffset = GuidanceSteering.GROUND_CLEARANCE_OFFSET
 
@@ -49,6 +50,7 @@ end
 
 function GuidanceSteering:onMissionLoadFromSavegame(xmlFile)
     self.showGuidanceLines = xmlFile:getBool("guidanceSteering.settings.showGuidanceLines", true)
+    self.showGuidanceLinesAsDots = xmlFile:getBool("guidanceSteering.settings.showGuidanceLinesAsDots", false)
     self.guidanceTerrainAngleIsActive = xmlFile:getBool("guidanceSteering.settings.guidanceTerrainAngleIsActive", true)
     self.lineOffset = xmlFile:getFloat("guidanceSteering.settings.lineOffset", self.lineOffset)
 
@@ -77,6 +79,7 @@ end
 function GuidanceSteering:onMissionSaveToSavegame(xmlFile)
     xmlFile:setInt("guidanceSteering#version", 1)
     xmlFile:setBool("guidanceSteering.settings.showGuidanceLines", self.showGuidanceLines)
+    xmlFile:setBool("guidanceSteering.settings.showGuidanceLinesAsDots", self.showGuidanceLinesAsDots)
     xmlFile:setBool("guidanceSteering.settings.guidanceTerrainAngleIsActive", self.guidanceTerrainAngleIsActive)
     xmlFile:setFloat("guidanceSteering.settings.lineOffset", self.lineOffset)
 
@@ -297,6 +300,14 @@ end
 
 function GuidanceSteering:setIsShowGuidanceLinesEnabled(enabled)
     self.showGuidanceLines = enabled
+end
+
+function GuidanceSteering:isShowGuidanceLinesAsDotsEnabled()
+    return self.showGuidanceLinesAsDots
+end
+
+function GuidanceSteering:setIsShowGuidanceLinesAsDotsEnabled(enabled)
+    self.showGuidanceLinesAsDots = enabled
 end
 
 function GuidanceSteering:isGuidanceEnabled()

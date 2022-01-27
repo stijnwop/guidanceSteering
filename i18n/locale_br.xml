@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <locale>br</locale>
+    <texts>
+        <text name="input_GS_AXIS_REALIGN" text="GS: Realinhe a trilha"/>
+        <text name="guidanceSteering_setting_cardinals" text="Ponto cardeal"/>
+        <text name="guidanceSteering_headland_mode_1" text="Pare"/>
+        <text name="guidanceSteering_tooltip_currentTrack" text="Selecione a trilha atual para usar"/>
+        <text name="input_GS_ROTATE_TRACK" text="GS: Rodar pista"/>
+        <text name="guidanceSteering_setting_pointA" text="Set A"/>
+        <text name="guidanceSteering_setting_header_headland" text="Gestão de cabeceiras"/>
+        <text name="input_GS_SET_AUTO_WIDTH" text="GS: Largura automática"/>
+        <text name="guidanceSteering_setting_offsetWidth" text="Largura de deslocamento"/>
+        <text name="guidanceSteering_strategy_abCurve" text="AB Curva"/>
+        <text name="guidanceSteering_strategyMethod_autoB" text="Auto B"/>
+        <text name="input_GS_SHOW_UI" text="GS: Mostrar menu de direção de orientação"/>
+        <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Deixe o GPS guiar a direção"/>
+        <text name="guidanceSteering_setting_changeOffsetWidth" text="Deslocamento de incremento"/>
+        <text name="guidanceSteering_setting_currentTrack" text="Trilha atual"/>
+        <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Ajuste a direção ao ângulo do terreno"/>
+        <text name="input_GS_AXIS_WIDTH_2" text="GS: Diminuir a largura da trilha"/>
+        <text name="guidanceSteering_tooltip_cardinals" text="Defina os pontos cardeais"/>
+        <text name="guidanceSteering_tooltip_offsetIncrement" text="Defina o incremento de deslocamento para aumentar / diminuir o deslocamento"/>
+        <text name="guidanceSteering_tooltip_strategyMethod" text="Determine qual método de estratégia usar"/>
+        <text name="guidanceSteering_tooltip_widthInCrement" text="Defina o incremento de largura para aumentar / diminuir a largura"/>
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+Cabiceira"/>
+        <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Ajustar ao ângulo do terreno"/>
+        <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Nome da trilha &#39;%s&#39; já existe!"/>
+        <text name="guidanceSteering_setting_autoInvertOffset" text="Inversão de compensação"/>
+        <text name="guidanceSteering_setting_resetOffsetWidth" text="Redefinir deslocamento"/>
+        <text name="guidanceSteering_setting_headlandDistance" text="Distância do final do campo"/>
+        <text name="guidanceSteering_headland_mode_0" text="Desligado"/>
+        <text name="guidanceSteering_ui_settings" text="Configurações de orientação"/>
+        <text name="guidanceSteering_tooltip_showLines" text="Apoio visual mostrando as linhas de orientação"/>
+        <text name="input_GS_ENABLE_STEERING" text="GS: Orientação de direção"/>
+        <text name="configuration_buyableGPS_withoutGPS" text="Não"/>
+        <text name="guidanceSteering_setting_enableGuidanceSteering" text="Habilitar direção automática"/>
+        <text name="input_GS_AXIS_SHIFT_2" text="GS: Mudar de faixa para a esquerda"/>
+        <text name="input_GS_TOGGLE" text="GS: Alternar direção de orientação"/>
+        <text name="guidanceSteering_warning_setWidth" text="Defina primeiro uma largura de trabalho!"/>
+        <text name="guidanceSteering_strategy_abStraight" text="AB Direto"/>
+        <text name="guidanceSteering_setting_width" text="Largura"/>
+        <text name="guidanceSteering_setting_headlandMode" text="Modo de cabeceira"/>
+        <text name="input_GS_SETPOINT" text="GS: Definir ponto de orientação"/>
+        <text name="guidanceSteering_setting_invertOffset" text="Inverter deslocamento"/>
+        <text name="configuration_buyableGPS" text="Sistema de Posicionamento Global"/>
+        <text name="guidanceSteering_tooltip_autoInvertOffset" text="Inverta automaticamente o deslocamento em uma curva"/>
+        <text name="guidanceSteering_setting_strategyMethod" text="Método de linha"/>
+        <text name="guidanceSteering_setting_newTrack" text="Criar pista"/>
+        <text name="guidanceSteering_setting_strategy" text="Estratégia de linha"/>
+        <text name="guidanceSteering_tooltip_strategy" text="Determine qual estratégia usar para criar as linhas de orientação"/>
+        <text name="guidanceSteering_warning_createTrackFirst" text="Por favor, crie ou carregue uma trilha primeiro!"/>
+        <text name="guidanceSteering_setting_terrainAngleSnap" text="Ângulo de terreno de encaixe"/>
+        <text name="guidanceSteering_warning_dropDistance" text="Dirija pelo menos 15 m para definir o ponto B. Distância atual percorrida: %.2f"/>
+        <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Alternar exibição de linha"/>
+        <text name="guidanceSteering_setting_widthIncrement" text="Incremento de largura"/>
+        <text name="guidanceSteering_tooltip_headlandDistance" text="Distância em metros para agir antes de se aproximar do promontório."/>
+        <text name="configuration_buyableGPS_withGPS" text="Sim"/>
+        <text name="guidanceSteering_setting_saveTrack" text="Salvar trilha"/>
+        <text name="guidanceSteering_setting_pointB" text="Set B"/>
+        <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Falha ao salvar os dados da trilha, crie ou carregue uma trilha primeiro!"/>
+        <text name="guidanceSteering_tooltip_width" text="Defina a largura do seu veículo"/>
+        <text name="guidanceSteering_setting_changeWidth" text="Largura de incremento"/>
+        <text name="guidanceSteering_setting_cardinalConfirmText" text="Set cardinal"/>
+        <text name="guidanceSteering_setting_cardinalTitle" text="Cardeal desejado (graus)"/>
+        <text name="guidanceSteering_setting_autoWidth" text="Largura automática"/>
+        <text name="input_GS_AXIS_WIDTH_1" text="GS: Aumentar a largura da trilha"/>
+        <text name="guidanceSteering_headland_mode_3" text="Vire à direita"/>
+        <text name="guidanceSteering_tooltip_offsetWidth" text="Defina o deslocamento do seu veículo"/>
+        <text name="guidanceSteering_headland_mode_2" text="Vire a esquerda"/>
+        <text name="guidanceSteering_tooltip_headlandMode" text="Com o modo cabeceira, você pode definir a estratégia de atuação na cabeceira."/>
+        <text name="guidanceSteering_setting_showLines" text="Mostrar linhas"/>
+        <text name="input_GS_AXIS_SHIFT_1" text="GS: Mudar de faixa para a direita"/>
+        <text name="guidanceSteering_ui_strategy" text="Estratégia de orientação"/>
+        <text name="guidanceSteering_setting_removeTrack" text="Remover trilha"/>
+        <text name="guidanceSteering_setting_offsetIncrement" text="Incremento de deslocamento"/>
+        <text name="input_GS_TURN_STEERING" text="GS: Definir direção da direção"/>
+        <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
+        <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Salve a trilha com escopo para a fazenda do veículo, por padrão é acessível para todos"/>
+        <text name="guidanceSteering_setting_scopeTrackFarmId" text="Salvar trilha para fazenda"/>
+        <text name="guidanceSteering_tooltip_offsetLines" text="Desloque a linha para obter mais distância ao solo."/>
+        <text name="guidanceSteering_setting_offsetLines" text="Deslocamento de linha"/>
+    </texts>
+</l10n>

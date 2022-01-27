@@ -46,7 +46,6 @@ function GuidanceSteeringStrategyFrame.new(ui, i18n)
     self.rowToTrackId = {}
 
     self.lastLoadedTrackId = 0
-    self.lastLoadedMethod = 0
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -111,7 +110,7 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
         if element ~= nil then
             local trackId = element.trackId
 
-            if trackId ~= self.lastLoadedTrackId then
+            if trackId ~= nil then
                 self:loadTrack(trackId)
                 self.lastLoadedTrackId = trackId
             end
@@ -122,7 +121,6 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
 
         self.allowSave = false
     end
-
 
     self.guidanceSteering:unsubscribe(self)
 end
@@ -255,7 +253,6 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
                 -- Reset loaded track when we are deleting it.
                 if trackId ~= self.lastLoadedTrackId then
                     self:loadTrack(trackId)
-                    self.lastLoadedTrackId = 0
                 end
             end
         end
@@ -382,15 +379,15 @@ end
 function GuidanceSteeringStrategyFrame:loadTrack(trackId)
     local track = self.guidanceSteering:getTrack(trackId)
 
-    if self.guidanceSteering:isTrackValid(trackId) then
-        local vehicle = self.ui:getVehicle()
+    local vehicle = self.ui:getVehicle()
 
-        if vehicle ~= nil then
-            local data = vehicle:getGuidanceData()
+    if vehicle ~= nil then
+        local data = vehicle:getGuidanceData()
 
-            -- First request reset to make sure the current track is clear
-            vehicle:updateGuidanceData(nil, false, true)
+        -- First request reset to make sure the current track is clear
+        vehicle:updateGuidanceData(nil, false, true)
 
+        if self.guidanceSteering:isTrackValid(trackId) then
             data.width = track.guidanceData.width
             data.offsetWidth = track.guidanceData.offsetWidth
             data.snapDirection = track.guidanceData.snapDirection
@@ -415,9 +412,8 @@ end
 function GuidanceSteeringStrategyFrame:loadStrategy(method)
     local vehicle = self.ui:getVehicle()
     if vehicle ~= nil then
-        if method ~= self.lastLoadedMethod then
+        if method ~= nil then
             vehicle:setGuidanceStrategy(method)
-            self.lastLoadedMethod = method
         end
     end
 end

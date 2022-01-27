@@ -15,25 +15,6 @@
                     <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
                 </GuiElement>
 
-                <!--Option show guide lines-->
-                <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringShowLinesElement"
-                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_showLines">
-                    <GuiElement type="button" profile="multiTextOptionLeft"/>
-                    <GuiElement type="button" profile="multiTextOptionRight"/>
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_showLines"/>
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
-                </GuiElement>
-
-                <GuiElement type="multiTextOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringLinesOffsetElement"
-                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetLines">
-                    <GuiElement type="button" profile="multiTextOptionLeft"/>
-                    <GuiElement type="button" profile="multiTextOptionRight"/>
-                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
-                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetLines"/>
-                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
-                </GuiElement>
-
                 <!--Option to snap to terrain angle-->
                 <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringSnapAngleElement"
                             toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_terrainAngleSnap">
@@ -71,6 +52,37 @@
                                 imeKeyboardType="normal" onTextChanged="onHeadlandDistanceChanged"/>
                     <GuiElement position="0px 20px" type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_headlandDistance"/>
                 </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_guidanceSteering_setting_header_lines"/>
+
+                <!--Option show guide lines-->
+                <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringShowLinesElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_showLines">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_showLines"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringLinesOffsetElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_offsetLines">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_offsetLines"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
+                </GuiElement>
+
+                <GuiElement type="checkedOption" profile="guidanceMultiTextOptionSettings" id="guidanceSteeringShowLinesAsDotsElement"
+                            toolTipElementId="settingsHelpBoxText" toolTipText="$l10n_guidanceSteering_tooltip_showLinesAsDots">
+                    <GuiElement type="button" profile="multiTextOptionLeft"/>
+                    <GuiElement type="button" profile="multiTextOptionRight"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionText"/>
+                    <GuiElement type="text" profile="guidanceMultiTextOptionTitle" text="$l10n_guidanceSteering_setting_showLinesAsDots"/>
+                    <GuiElement type="bitmap" profile="guidanceMultiTextOptionBg"/>
+                </GuiElement>
+
             </GuiElement>
 
             <GuiElement type="threePartBitmap" profile="verticalListSliderRightDocked" size="12px 500px">

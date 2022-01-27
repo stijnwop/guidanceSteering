@@ -5,6 +5,7 @@
 --
 -- Copyright (c) Wopster, 2018
 
+---@class CardinalStrategy: ABStrategy
 CardinalStrategy = {}
 
 local CardinalStrategy_mt = Class(CardinalStrategy, ABStrategy)
@@ -38,14 +39,6 @@ end
 function CardinalStrategy:delete()
     CardinalStrategy:superClass().delete(self)
     self.currentCardinal = nil
-end
-
-function CardinalStrategy:update(dt)
-    CardinalStrategy:superClass().update(self, dt)
-end
-
-function CardinalStrategy:draw(data, guidanceSteeringIsActive, autoInvertOffset)
-    CardinalStrategy:superClass().draw(self, data, guidanceSteeringIsActive, autoInvertOffset)
 end
 
 ---Show the input dialog for setting the current cardinal.
@@ -91,14 +84,14 @@ end
 ---@param guidanceNode number
 ---@param data table
 function CardinalStrategy:getGuidanceData(guidanceNode, data)
-    local pointA = self.ab:getPointNode(ABPoint.POINT_A)
-
     local x, y, z = getWorldTranslation(guidanceNode)
     local dx, dz = 0, 0
+
     if self.currentCardinal ~= nil then
         local cardinal = self.currentCardinal + math.pi
         dx, dz = math.sin(cardinal), -math.cos(cardinal)
     else
+        local pointA = self.ab:getPointNode(ABPoint.POINT_A)
         local a = { localToWorld(guidanceNode, 0, 0, 0) }
         local b = { localToWorld(pointA, 0, 0, 0) }
 

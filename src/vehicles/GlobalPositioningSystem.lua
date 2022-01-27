@@ -712,6 +712,8 @@ function GlobalPositioningSystem:setGuidanceStrategy(method, noEventSend)
         spec.lineStrategy = StraightABStrategy:new(self)
     elseif method == ABStrategy.A_PLUS_HEADING then
         spec.lineStrategy = CardinalStrategy:new(self)
+    elseif method == ABStrategy.A_PLUS_DIRECTION then
+        spec.lineStrategy = SnapDirectionStrategy:new(self)
     end
 end
 

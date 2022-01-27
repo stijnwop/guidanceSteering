@@ -184,6 +184,16 @@ function GuidanceUtil.readGuidanceDataObject(streamId)
     return data
 end
 
+function GuidanceUtil.renderText3DAtWorldPosition(x1, y1, z1, rx, ry, rz, textSize, text, rgb)
+    setTextBold(true)
+    setTextColor(rgb[1], rgb[2], rgb[3], 1)
+    setTextAlignment(RenderText.ALIGN_CENTER)
+    renderText3D(x1, y1, z1, rx, ry, rz, textSize, text)
+    setTextBold(false)
+    setTextColor(1, 1, 1, 1)
+    setTextAlignment(RenderText.ALIGN_LEFT)
+end
+
 function GuidanceUtil.aProjectOnLine(px, pz, lineX, lineZ, lineDirX, lineDirZ)
     local dot = GuidanceUtil.getAProjectOnLineParameter(px, pz, lineX, lineZ, lineDirX, lineDirZ)
 

@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>Gonimy_Vetrom</translationContributors>
     <locale>ru</locale>
     <texts>
         <text name="configuration_buyableGPS" text="Система GPS"/>
         <text name="configuration_buyableGPS_withoutGPS" text="Нет"/>
         <text name="configuration_buyableGPS_withGPS" text="Да"/>
-
-        <!--Inputs-->
         <text name="input_GS_TOGGLE" text="GS: Переключение автоподруливания"/>
         <text name="input_GS_SHOW_UI" text="GS: Показать меню автоподруливания"/>
         <text name="input_GS_SET_AUTO_WIDTH" text="GS: Автоширина"/>
-
         <text name="input_GS_AXIS_REALIGN" text="GS: Перестроить трек"/>
         <text name="input_GS_AXIS_SHIFT_1" text="GS: Смещение трека вправо"/>
         <text name="input_GS_AXIS_SHIFT_2" text="GS: Смещение трека влево"/>
         <text name="input_GS_AXIS_WIDTH_1" text="GS: Увеличить ширину трека"/>
         <text name="input_GS_AXIS_WIDTH_2" text="GS: Уменьшить ширину трека"/>
-
         <text name="input_GS_ENABLE_STEERING" text="GS: Включить автоподруливание"/>
         <text name="input_GS_SETPOINT" text="GS: Установить контрольную точку"/>
         <text name="input_GS_TOGGLE_TERRAIN_ANGLE_SNAP" text="GS: Привязка к углам местности"/>
         <text name="input_GS_TURN_STEERING" text="GS: Установить направление руления"/>
         <text name="input_GS_TOGGLE_LINE_DISPLAY" text="GS: Включить/отключить отображение линий трека"/>
         <text name="input_GS_ROTATE_TRACK" text="GS: Вращать трек (шаг 90 градусов)"/>
-
-        <!--Warnings-->
         <text name="guidanceSteering_warning_dropDistance" text="Проедьте не менее 15 м, чтобы установить точку B. Текущее пройденное расстояние: %.2f"/>
         <text name="guidanceSteering_warning_setWidth" text="Пожалуйста, сначала установите рабочую ширину агрегата!"/>
         <text name="guidanceSteering_warning_createTrackFirst" text="Пожалуйста, сначала создайте или загрузите трек, прежде чем включить навигацию!"/>
-
-        <!--GUI-->
         <text name="guidanceSteering_ui_settings" text="Управление настройками"/>
         <text name="guidanceSteering_ui_strategy" text="Управление методом"/>
-
         <text name="guidanceSteering_strategy_abStraight" text="AB прямая"/>
         <text name="guidanceSteering_strategy_abCurve" text="AB кривая"/>
-
         <text name="guidanceSteering_strategyMethod_aPlusB" text="A+B"/>
         <text name="guidanceSteering_strategyMethod_autoB" text="Авто B"/>
-        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A+направление"/>
-
-        <!--Tooltips-->
+        <text name="guidanceSteering_strategyMethod_aPlusHeading" text="A + угол"/>
+		<text name="guidanceSteering_strategyMethod_aPlusDirection" text="A + направление"/>
         <text name="guidanceSteering_tooltip_showLines" text="Поддерживает вас визуально, показывая навигационные линии."/>
         <text name="guidanceSteering_tooltip_terrainAngleSnap" text="Направление привязывается к углам местности/горизонта."/>
         <text name="guidanceSteering_tooltip_enableGuidanceSteering" text="Позволить GPS управлять рулением."/>
@@ -50,24 +38,17 @@
         <text name="guidanceSteering_tooltip_offsetWidth" text="Установка смещение техники."/>
         <text name="guidanceSteering_tooltip_widthInCrement" text="Установка шага увеличения/уменьшения рабочей ширины."/>
         <text name="guidanceSteering_tooltip_offsetIncrement" text="Установка шага увеличения/уменьшения смещение."/>
-
         <text name="guidanceSteering_tooltip_strategy" text="Определяется, какую стратегию использовать для создания навигационных линий."/>
         <text name="guidanceSteering_tooltip_strategyMethod" text="Определяется, какой метод стратегии использовать."/>
         <text name="guidanceSteering_tooltip_currentTrack" text="Выбрать текущий трек для использования."/>
         <text name="guidanceSteering_tooltip_cardinals" text="Установка кардинальных точек (соответствует сторонам горизонта)."/>
-
         <text name="guidanceSteering_setting_scopeTrackFarmId" text="Сохранить трек для фермы"/>
         <text name="guidanceSteering_tooltip_scopeTrackFarmId" text="Сохранить трек только для фермы к которой привязано транспортное средство. По умолчанию трек доступен для всех."/>
-
         <text name="guidanceSteering_setting_offsetLines" text="Высота линии"/>
         <text name="guidanceSteering_tooltip_offsetLines" text="Смещение линии по высоте, для лучшей её видимости."/>
-
-        <!--Warning tooltip-->
         <text name="guidanceSteering_tooltip_trackAlreadyExists" text="Название трека &#39; %s &#39; уже существует!"/>
         <text name="guidanceSteering_tooltip_trackIsNotCreated" text="Ошибка при сохранении. Пожалуйста, создайте или загрузите трек, прежде чем его сохранять!"/>
-
-        <!--Settings-->
-        <text name="guidanceSteering_setting_showLines" text="Показывать линии"/>
+        <text name="guidanceSteering_setting_showLines" text="Отображать линии"/>
         <text name="guidanceSteering_setting_terrainAngleSnap" text="Привязка к углам местности"/>
         <text name="guidanceSteering_setting_enableGuidanceSteering" text="Автоподруливание"/>
         <text name="guidanceSteering_setting_autoInvertOffset" text="Реверсивное смещение"/>
@@ -81,32 +62,27 @@
         <text name="guidanceSteering_setting_resetOffsetWidth" text="Обнулить смещение"/>
         <text name="guidanceSteering_setting_changeOffsetWidth" text="Изменить смещение"/>
         <text name="guidanceSteering_setting_cardinals" text="Кардинальная точка"/>
-
         <text name="guidanceSteering_setting_strategy" text="Стратегия линий"/>
         <text name="guidanceSteering_setting_strategyMethod" text="Метод линий"/>
         <text name="guidanceSteering_setting_currentTrack" text="Текущий трек"/>
-
         <text name="guidanceSteering_setting_pointA" text="Установить A"/>
         <text name="guidanceSteering_setting_pointB" text="Установить B"/>
         <text name="guidanceSteering_setting_newTrack" text="Создать трек"/>
         <text name="guidanceSteering_setting_removeTrack" text="Удалить трек"/>
         <text name="guidanceSteering_setting_saveTrack" text="Сохранить трек"/>
-
         <text name="guidanceSteering_setting_header_headland" text="Разворотная полоса"/>
-
         <text name="guidanceSteering_setting_headlandMode" text="Режим разворотной полосы"/>
         <text name="guidanceSteering_tooltip_headlandMode" text="Здесь вы можете установить, как действовать при достижении разворотной полосы."/>
-
         <text name="guidanceSteering_setting_headlandDistance" text="Дистанция срабатывания"/>
         <text name="guidanceSteering_tooltip_headlandDistance" text="На каком расстоянии от разворотной полосы (в метрах) начать действовать."/>
-
         <text name="guidanceSteering_headland_mode_0" text="Выкл"/>
         <text name="guidanceSteering_headland_mode_1" text="Остановится"/>
         <text name="guidanceSteering_headland_mode_2" text="Повернуть налево"/>
         <text name="guidanceSteering_headland_mode_3" text="Повернуть направо"/>
-
-        <!-- Cardinal strategy -->
         <text name="guidanceSteering_setting_cardinalTitle" text="Желаемый кардинал (градусы)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Установить кардинал"/>
+		<text name="guidanceSteering_setting_header_lines" text="Линии"/>
+		<text name="guidanceSteering_setting_showLinesAsDots" text="Отображать как точки"/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Отрисовывать линии точками, вместо отображения линий."/>
     </texts>
 </l10n>

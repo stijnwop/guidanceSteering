@@ -35,6 +35,8 @@ GuidanceSteeringSettingsFrame.CONTROLS = {
     TOGGLE_ENABLE_STEERING = "guidanceSteeringEnableSteeringElement",
     TOGGLE_AUTO_INVERT_OFFSET = "guidanceSteeringAutoInvertOffsetElement",
 
+    TOGGLE_DOT_LINES = "guidanceSteeringShowLinesAsDotsElement",
+
     CONTAINER = "container",
     BOX_LAYOUT_SETTINGS = "boxLayoutSettings",
 }
@@ -82,6 +84,7 @@ function GuidanceSteeringSettingsFrame:initialize()
     self.guidanceSteeringWidthText:setText(initialUnit)
     self.guidanceSteeringOffsetWidthText:setText(initialUnit)
 
+
     self:build()
 end
 
@@ -108,6 +111,7 @@ function GuidanceSteeringSettingsFrame:onFrameOpen()
         local data = spec.guidanceData
 
         self.guidanceSteeringShowLinesElement:setIsChecked(g_currentMission.guidanceSteering:isShowGuidanceLinesEnabled())
+        self.guidanceSteeringShowLinesAsDotsElement:setIsChecked(g_currentMission.guidanceSteering:isShowGuidanceLinesAsDotsEnabled())
         self.guidanceSteeringSnapAngleElement:setIsChecked(g_currentMission.guidanceSteering:isTerrainAngleSnapEnabled())
         self.guidanceSteeringEnableSteeringElement:setIsChecked(spec.guidanceSteeringIsActive)
         self.guidanceSteeringAutoInvertOffsetElement:setIsChecked(spec.autoInvertOffset)
@@ -139,6 +143,7 @@ function GuidanceSteeringSettingsFrame:onFrameClose()
     if self.allowSave then
         -- Client only
         g_currentMission.guidanceSteering:setIsShowGuidanceLinesEnabled(self.guidanceSteeringShowLinesElement:getIsChecked())
+        g_currentMission.guidanceSteering:setIsShowGuidanceLinesAsDotsEnabled(self.guidanceSteeringShowLinesAsDotsElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsTerrainAngleSnapEnabled(self.guidanceSteeringSnapAngleElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsGuidanceEnabled(self.guidanceSteeringEnableSteeringElement:getIsChecked())
         g_currentMission.guidanceSteering:setIsAutoInvertOffsetEnabled(self.guidanceSteeringAutoInvertOffsetElement:getIsChecked())
@@ -252,6 +257,10 @@ function GuidanceSteeringSettingsFrame:changeWidth(direction)
     local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state] * direction
 
     self.currentGuidanceWidth = math.max(self.currentGuidanceWidth + increment, 0)
+    if 2 * math.abs(self.currentGuidanceOffset) >= self.currentGuidanceWidth then
+        self.currentGuidanceOffset = self.currentGuidanceWidth / 2 * (self.currentGuidanceOffset / math.abs(self.currentGuidanceOffset))
+    end
+    self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
     self.guidanceSteeringWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceWidth))
 end
 
@@ -287,9 +296,9 @@ end
 
 function GuidanceSteeringSettingsFrame:onHeadlandDistanceChanged(_, text)
     local lastDistance = tonumber(text)
-    local textLenght = utf8Strlen(text)
+    local textLength = utf8Strlen(text)
 
-    if lastDistance == nil and textLenght > 0 then
+    if lastDistance == nil and textLength > 0 then
         lastDistance = 0
         self.guidanceSteeringHeadlandDistanceElement:setText(tostring(lastDistance))
     end
