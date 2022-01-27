@@ -103,7 +103,7 @@
 
         <text name="guidanceSteering_setting_header_lines" text="Linhas"/>
         <text name="guidanceSteering_setting_showLinesAsDots" text="Mostrar como pontos"/>
-        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Renderizar as linhas por pontos, quando desligado as linhas normais são exibidas."/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Renderiza as linhas por pontos, quando desligado as linhas normais são exibidas."/>
 
         <text name="guidanceSteering_headland_mode_0" text="Off"/>
         <text name="guidanceSteering_headland_mode_1" text="Stop"/>
