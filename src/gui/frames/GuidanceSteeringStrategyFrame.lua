@@ -45,7 +45,7 @@ function GuidanceSteeringStrategyFrame.new(ui, i18n)
     self.allowSave = false
     self.rowToTrackId = {}
 
-    self.lastLoadedTrackId = 0
+    self.lastLoadedTrackId = -1
 
     self:registerControls(GuidanceSteeringStrategyFrame.CONTROLS)
 
@@ -111,13 +111,12 @@ function GuidanceSteeringStrategyFrame:onFrameClose()
             local trackId = element.trackId
 
             if trackId ~= nil then
-                self:loadTrack(trackId)
-                self.lastLoadedTrackId = trackId
+                if self.lastLoadedTrackId ~= trackId then
+                    self:loadTrack(trackId)
+                    self.lastLoadedTrackId = trackId
+                end
             end
         end
-
-        local method = self.guidanceSteeringStrategyMethodElement:getState() - 1
-        self:loadStrategy(method)
 
         self.allowSave = false
     end
@@ -253,6 +252,7 @@ function GuidanceSteeringStrategyFrame:onClickRemoveTrack()
                 -- Reset loaded track when we are deleting it.
                 if trackId ~= self.lastLoadedTrackId then
                     self:loadTrack(trackId)
+                    self.lastLoadedTrackId = trackId
                 end
             end
         end

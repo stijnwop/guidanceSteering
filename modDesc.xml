@@ -9,7 +9,7 @@
         <fr>Guidance Steering</fr>
         <it>Sistema di guida assistita (GPS)</it>
         <es>Dirección de Guiado</es>
-        <cz>Řízené navádění</cz>
+        <cz>Řízené Navádění</cz>
         <ru>Guidance Steering</ru>
         <tr>Guidance Steering</tr>
         <jp>GPS自動操舵システム</jp>
@@ -57,17 +57,17 @@ Danach: GPS-Menü öffnen (linke STRG + S)
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
 
 Changelog 2.1.0.0:
-- Added new snap to direction guidance strategy
-- Added missing object change configuration XML schema
-- Added option to toggle between dotted lines and normal lines
-- Fixed issue with reverse driving target direction
-- Fixed issue with width calculation for combines
-- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
-- Fixed loading the GPS module from savegame on mission vehicles
-- Fixed out of bounds offsets leading to guidance zigzag
-- Fixed issue with loading initial first track
-- Added and updated translations
-- Several improvements
+- Neuer Snap zur Richtungsweisungsstrategie hinzugefügt
+- Fehlendes XML-Schema für die Objektänderungskonfiguration hinzugefügt
+- Option zum Umschalten zwischen gepunkteten Linien und normalen Linien hinzugefügt
+- Problem mit der Rückwärtsfahrt der Zielrichtung behoben
+- Problem mit der Breitenberechnung für Mähdrescher behoben
+- Möglicher Mod-Konflikt mit anderen Mods, die das ConfigurationUtil überschreiben, wurde behoben
+- Das Laden des GPS-Moduls aus dem Spielstand bei Missionsfahrzeugen wurde behoben
+- Fehlerhafte Offsets, die zu einem Zickzack-Kurs führen, wurden behoben.
+- Problem beim Laden des ersten Tracks behoben
+- Übersetzungen hinzugefügt und aktualisiert
+- Diverse Verbesserungen
 ]]>
         </de>
         <fr>
