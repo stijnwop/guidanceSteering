@@ -88,20 +88,20 @@ Pour ce faire :
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
 
 Changelog 2.1.1.0:
-- Fixed issue with not being able to create A+B tracks through the UI.
+- Correction du problème de l'impossibilité de créer des pistes A+B via l'interface utilisateur.
 
 Changelog 2.1.0.0:
-- Added new snap to direction guidance strategy
-- Added missing object change configuration XML schema
-- Added option to toggle between dotted lines and normal lines
-- Fixed issue with reverse driving target direction
-- Fixed issue with width calculation for combines
-- Fixed possible mod conflict with other mods that overwrite the ConfigurationUtil
-- Fixed loading the GPS module from savegame on mission vehicles
-- Fixed out of bounds offsets leading to guidance zigzag
-- Fixed issue with loading initial first track
-- Added and updated translations
-- Several improvements
+- Ajout d'une nouvelle stratégie de guidage de type " clic sur la direction ".
+- Ajout du schéma XML de configuration des changements d'objets manquants
+- Ajout d'une option permettant de basculer entre les lignes en pointillés et les lignes normales
+- Correction d'un problème avec l'inversion de la direction cible de conduite
+- Correction d'un problème de calcul de la largeur des machines combinées
+- Correction d'un éventuel conflit de mods avec d'autres mods qui écrasent le ConfigurationUtil.
+- Correction du chargement du module GPS à partir de la sauvegarde sur les véhicules de mission.
+- Correction des décalages hors limites conduisant à un zigzag de guidage
+- Correction du problème de chargement de la première piste initiale
+- Ajout et mise à jour de traductions
+- Plusieurs améliorations
 ]]>
         </fr>
         <it>
