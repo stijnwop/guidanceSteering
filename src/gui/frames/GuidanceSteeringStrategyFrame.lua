@@ -446,7 +446,9 @@ function GuidanceSteeringStrategyFrame:displayMethodElements()
     if method == ABStrategy.AB then
         self.guidanceSteeringPointAButton:setVisible(true)
         self.guidanceSteeringPointBButton:setVisible(true)
-    elseif method == ABStrategy.A_AUTO_B or method == ABStrategy.A_PLUS_HEADING then
+    elseif method == ABStrategy.A_AUTO_B
+        or method == ABStrategy.A_PLUS_HEADING
+        or method == ABStrategy.A_PLUS_DIRECTION then
         self.guidanceSteeringPointAButton:setVisible(true)
         self.guidanceSteeringPointBButton:setVisible(false)
     end
