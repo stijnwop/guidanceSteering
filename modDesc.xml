@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="63">
     <author>Wopster</author>
-    <version>2.1.0.0</version>
+    <version>2.1.2.0</version>
 
     <title>
         <en>Guidance Steering</en>
@@ -28,6 +28,9 @@ In order todo this:
 - Show Guidance Steering menu: left CTRL + S
 
 For further info on gameplay please checkout the <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> on the Github repository.
+
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
 
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
@@ -56,6 +59,9 @@ Danach: GPS-Menü öffnen (linke STRG + S)
 
 Für weitere Informationen, lese dir die <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> aus dem Github durch.
 
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
+
 Changelog 2.1.0.0:
 - Neuer Snap zur Richtungsweisungsstrategie hinzugefügt
 - Fehlendes XML-Schema für die Objektänderungskonfiguration hinzugefügt
@@ -80,6 +86,9 @@ Pour ce faire :
 - Afficher le menu Guidage Direction : à gauche CTRL + S
 
 Pour plus d'informations sur le gameplay, veuillez consulter la page <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> du dépot Github.
+
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
 
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
@@ -108,6 +117,9 @@ Il metodo A+capezzagna semplifica la creazione inserendo direttamente l'angolo c
 
 Per ulteriori informazioni leggi <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> da Github.
 
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
+
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
 - Added missing object change configuration XML schema
@@ -134,6 +146,9 @@ Para hacer esto:
 - Ver menú Dirección de Guiado: CTRL Izq. + S
 
 Para obtener más información sobre el juego, consulte el <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md"> README </a> en el repositorio de Github.
+
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
 
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
@@ -165,6 +180,9 @@ Klávesové skratky
 - Posun dráhy doleva: levý ALT + PAGEUP
 - Posun dráhy doprava: levý ALT + PAGEDOWN
 
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
+
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
 - Added missing object change configuration XML schema
@@ -192,6 +210,9 @@ Changelog 2.1.0.0:
 
 Для получения дополнительной информации об игровом процессе переходите к <a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a> в репозитории Github.
 
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
+
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
 - Added missing object change configuration XML schema
@@ -218,6 +239,9 @@ Bunu yapmak için:
 - Guidance Steering menüsünü göster: sol CTRL + S
 
 Oyun hakkında daha fazla bilgi için lütfen Github deposuna göz atın.
+
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
 
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy
@@ -260,6 +284,9 @@ GPS自動操舵システムはあらゆる農作業をムラなく精密に行�
 - 走行ラインを90°回転する: ALT + End
 
 詳しくはGithubの<a href="https://github.com/stijnwop/guidanceSteering/blob/master/README.md">README</a>を参照してください。
+
+Changelog 2.1.1.0:
+- Fixed issue with not being able to create A+B tracks through the UI.
 
 Changelog 2.1.0.0:
 - Added new snap to direction guidance strategy

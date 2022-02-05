@@ -16,16 +16,18 @@ function StrategyInteractEvent:emptyNew()
     return self
 end
 
-function StrategyInteractEvent:new(object)
+function StrategyInteractEvent:new(object, forceInteract)
     local self = StrategyInteractEvent:emptyNew()
 
     self.object = object
+    self.forceInteract = forceInteract or false
 
     return self
 end
 
 function StrategyInteractEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.object)
+    streamWriteBool(streamId, self.forceInteract)
 
     local spec = self.object.spec_globalPositioningSystem
     spec.lineStrategy:writeStream(streamId, connection)
@@ -33,6 +35,7 @@ end
 
 function StrategyInteractEvent:readStream(streamId, connection)
     self.object = NetworkUtil.readNodeObject(streamId)
+    self.forceInteract = streamReadBool(streamId)
     local spec = self.object.spec_globalPositioningSystem
     spec.lineStrategy:readStream(streamId, connection)
 
@@ -44,15 +47,17 @@ function StrategyInteractEvent:run(connection)
         g_server:broadcastEvent(self, false, connection, self.object)
     end
 
-    self.object:interactWithGuidanceStrategy(true)
+    if self.forceInteract then
+        self.object:interactWithGuidanceStrategy(self.forceInteract, true)
+    end
 end
 
-function StrategyInteractEvent.sendEvent(object, noEventSend)
+function StrategyInteractEvent.sendEvent(object, forceInteract, noEventSend)
     if noEventSend == nil or not noEventSend then
         if g_server ~= nil then
-            g_server:broadcastEvent(StrategyInteractEvent:new(object), nil, nil, object)
+            g_server:broadcastEvent(StrategyInteractEvent:new(object, forceInteract), nil, nil, object)
         else
-            g_client:getServerConnection():sendEvent(StrategyInteractEvent:new(object))
+            g_client:getServerConnection():sendEvent(StrategyInteractEvent:new(object, forceInteract))
         end
     end
 end

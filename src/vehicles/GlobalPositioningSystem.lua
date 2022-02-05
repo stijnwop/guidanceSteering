@@ -722,8 +722,9 @@ function GlobalPositioningSystem:getGuidanceStrategy()
     return spec.lineStrategy
 end
 
-function GlobalPositioningSystem:interactWithGuidanceStrategy(noEventSend)
-    StrategyInteractEvent.sendEvent(self, noEventSend)
+function GlobalPositioningSystem:interactWithGuidanceStrategy(forceInteract, noEventSend)
+    forceInteract = forceInteract or false
+    StrategyInteractEvent.sendEvent(self, forceInteract, noEventSend)
 
     local spec = self.spec_globalPositioningSystem
     spec.lineStrategy:interact(spec.guidanceData)
@@ -1121,7 +1122,7 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
             return false
         end
 
-        self:interactWithGuidanceStrategy()
+        self:interactWithGuidanceStrategy(true)
 
         return true
     end)
@@ -1139,7 +1140,7 @@ function GlobalPositioningSystem.registerMultiPurposeActionEvents(self)
             end
         end
 
-        self:interactWithGuidanceStrategy()
+        self:interactWithGuidanceStrategy(true)
 
         GlobalPositioningSystem.computeGuidanceDirection(self)
 

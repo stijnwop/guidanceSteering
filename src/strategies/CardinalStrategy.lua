@@ -72,7 +72,7 @@ function CardinalStrategy:cardinalCallback(cardinal)
         if spec.lineStrategy:getIsGuidancePossible() then
             -- When possible we do handle the next event directly.
             spec.multiActionEvent:reset()
-            self.vehicle:interactWithGuidanceStrategy() -- call again for event.
+            self.vehicle:interactWithGuidanceStrategy(false) -- call again for event.
             GlobalPositioningSystem.computeGuidanceDirection(self.vehicle)
         end
     else

@@ -335,7 +335,7 @@ function GuidanceSteeringStrategyFrame:onClickSetPointA()
         end
 
         vehicle:updateGuidanceData(nil, false, true)
-        vehicle:interactWithGuidanceStrategy()
+        vehicle:interactWithGuidanceStrategy(true)
     end
 end
 
@@ -359,7 +359,7 @@ function GuidanceSteeringStrategyFrame:onClickSetPointB()
             spec.multiActionEvent:invoked()
         end
 
-        vehicle:interactWithGuidanceStrategy()
+        vehicle:interactWithGuidanceStrategy(true)
         GlobalPositioningSystem.computeGuidanceDirection(vehicle)
     end
 end
