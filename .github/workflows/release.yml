@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
 
       - name: Package guidanceSteering mod
-        run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1 fsdev.yml *.png
+        run: zip -r -v FS22_guidanceSteering_dev.zip . -x .idea data .\* zip.bat zip-builder.ps1 fsdev.yml *.png
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
@@ -31,6 +31,6 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: FS22_guidanceSteering.zip
+          artifacts: FS22_guidanceSteering_dev.zip
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.gitversion.outputs.semVer }}
