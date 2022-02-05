@@ -347,7 +347,13 @@ function GuidanceSteeringStrategyFrame:onClickSetPointB()
     end
 
     local spec = vehicle.spec_globalPositioningSystem
+
     if spec.lineStrategy:getIsABDirectionPossible() then
+        if spec.abDistanceCounter < GlobalPositioningSystem.AB_DROP_DISTANCE then
+            g_currentMission:showBlinkingWarning(g_i18n:getText("guidanceSteering_warning_dropDistance"):format(spec.abDistanceCounter), 4000)
+            return
+        end
+
         -- Make sure the multi action event isn't doing anything in the meantime.
         spec.multiActionEvent:reset()
 
