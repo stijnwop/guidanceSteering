@@ -1,6 +1,6 @@
 # Guidance Steering for Farming Simulator 22 (GPS)
 
-![For Farming Simulator 19](https://img.shields.io/badge/Farming%20Simulator-19-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
+![For Farming Simulator 22](https://img.shields.io/badge/Farming%20Simulator-22-FF7C00.svg) [![Releases](https://img.shields.io/github/release/stijnwop/guidanceSteering.svg)](https://github.com/stijnwop/guidanceSteering/releases)
 
 ## Publishing
 Only Wopster is allowed to publish any of this code as a mod to any mod site, or file sharing site. The code is open for your own use, but give credit where due. I will not accept support for any 'version' of Guidance Steering that is obtained from a sketchy mod page. Versioning is controlled by me and not by any other page. This confuses people and really holds back the development which results in no fun for me!
@@ -22,7 +22,7 @@ All official releases will be avaiable at the offical Farming Simulator ModHub.
 
 For installing the release:
 
-Windows: Copy the `FS19_guidanceSteering_rc_<version>.zip` into your `My Games\FarmingSimulator2019\mods` directory.
+Windows: Copy the `FS22_guidanceSteering_dev.zip` into your `My Games\FarmingSimulator2022\mods` directory.
 
 ## Developers version
 To quickly build a zip of the developer version without the needed extra's, use the `zip.bat` which is included in this repository.
@@ -127,7 +127,7 @@ If you want the same effect on your mod vehicles you can configure the configura
 ~~~
 
 ## Copyright
-Copyright (c) 2019 [Wopster](https://github.com/stijnwop).
+Copyright (c) 2022 [Wopster](https://github.com/stijnwop).
 All rights reserved.
 
 Special thanks to workflowsen for creating the icon!
