@@ -80,14 +80,9 @@
         <text name="guidanceSteering_headland_mode_3" text="Sağa dön"/>
         <text name="guidanceSteering_setting_cardinalTitle" text="İstenilen yön (derece)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Dereceyi ayarla"/>
-        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Derece">
-            <!--Todo: add missing translation for guidanceSteering_strategyMethod_aPlusDirection--></text>
-        <text name="guidanceSteering_setting_showLinesAsDots" text="Nokta olarak göster">
-            <!--Todo: add missing translation for guidanceSteering_setting_showLinesAsDots--></text>
-        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Şeritleri noktalar ile göster. Kapatıldığında çizgi olarak gösterilir">
-            <!--Todo: add missing translation for guidanceSteering_tooltip_showLinesAsDots--></text>
-        <text name="guidanceSteering_setting_header_lines" text="Şeritler">
-            <!--Todo: add missing translation for guidanceSteering_setting_header_lines--></text>
-        <!--InputsWarningsGUITooltipsWarning tooltipSettings Cardinal strategy -->
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Derece"/>
+        <text name="guidanceSteering_setting_showLinesAsDots" text="Nokta olarak göster"/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Şeritleri noktalar ile göster. Kapatıldığında çizgi olarak gösterilir"/>
+        <text name="guidanceSteering_setting_header_lines" text="Şeritler"/>
     </texts>
 </l10n>

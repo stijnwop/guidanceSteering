@@ -80,9 +80,9 @@
         <text name="guidanceSteering_headland_mode_3" text="Svolta a destra"/>
         <text name="guidanceSteering_setting_cardinalTitle" text="Punto cardinale desiderato (gradi)"/>
         <text name="guidanceSteering_setting_cardinalConfirmText" text="Imposta punto cardinale"/>
-        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direzione">
-        <text name="guidanceSteering_setting_showLinesAsDots" text="Visualizza a punti">
-        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Visualizzazione delle linee a punti, quando disattivate vengono visualizzate le linee normali.">
-        <text name="guidanceSteering_setting_header_lines" text="Linee">
+        <text name="guidanceSteering_strategyMethod_aPlusDirection" text="A+Direzione"/>
+        <text name="guidanceSteering_setting_showLinesAsDots" text="Visualizza a punti"/>
+        <text name="guidanceSteering_tooltip_showLinesAsDots" text="Visualizzazione delle linee a punti, quando disattivate vengono visualizzate le linee normali."/>
+        <text name="guidanceSteering_setting_header_lines" text="Linee"/>
     </texts>
 </l10n>
