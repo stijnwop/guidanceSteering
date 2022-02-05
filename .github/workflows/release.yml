@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     branches:
-      - master 
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
 
       - name: Package guidanceSteering mod
-        run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1
+        run: zip -r -v FS22_guidanceSteering.zip . -x .idea data .\* zip.bat zip-builder.ps1 fsdev.yml *.png
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
@@ -23,7 +23,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.7
 
       - name: Create git tag
-        run: git tag $GITVERSION_SEMVER
+        run: git tag $GITVERSION_SEMVER -f
 
       - name: Push to repository
         run: git push --tags
