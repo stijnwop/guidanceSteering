@@ -210,7 +210,6 @@ local disallowedCategories = {
     ["WOOD"] = false,
     ["BELTS"] = false,
     ["LEVELER"] = false,
-    ["CARS"] = false,
     ["DECORATION"] = false,
     ["PLACEABLEMISC"] = false,
     ["PLACEABLEMISC"] = false,
