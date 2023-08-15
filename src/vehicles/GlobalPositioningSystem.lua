@@ -560,12 +560,6 @@ function GlobalPositioningSystem:onUpdate(dt)
 
         local lineDirX, lineDirZ, lineX, lineZ = unpack(data.snapDirection)
 
-        if data.width ~= 0 then
-            local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
-            data.currentLane = MathUtil.round(lineAlpha)
-            data.alphaRad = lineAlpha - data.currentLane
-        end
-
         -- Todo: straight strategy prob needs this?
         local dirX, _, dirZ = localDirectionToWorld(guidanceNode, worldDirectionToLocal(guidanceNode, lineDirX, 0, lineDirZ))
         --                local dirX, dirZ = lineDirX, lineDirZ
@@ -586,6 +580,12 @@ function GlobalPositioningSystem:onUpdate(dt)
 
         if data.isReverseDriving then
             data.snapDirectionMultiplier = -data.snapDirectionMultiplier
+        end
+
+        if data.width ~= 0 then
+            local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
+            data.currentLane = MathUtil.round( lineAlpha - (data.offsetWidth * data.snapDirectionMultiplier / data.width))
+            data.alphaRad = lineAlpha - data.currentLane
         end
     end
 
