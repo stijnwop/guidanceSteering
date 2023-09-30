@@ -287,8 +287,7 @@ function GuidanceSteeringSettingsFrame:changeOffsetWidth(direction)
     local state = self.guidanceSteeringOffsetIncrementElement:getState()
     local increment = GuidanceSteeringSettingsFrame.INCREMENTS[state] * direction
 
-    local threshold = self.currentGuidanceWidth * 0.5
-    self.currentGuidanceOffset = MathUtil.clamp(self.currentGuidanceOffset + increment, -threshold, threshold)
+    self.currentGuidanceOffset = self.currentGuidanceOffset + increment
     self.guidanceSteeringOffsetWidthText:setText(self:getFormattedUnitLength(self.currentGuidanceOffset))
 
     self:updateOffsetUVs()
