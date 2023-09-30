@@ -581,10 +581,12 @@ function GlobalPositioningSystem:onUpdate(dt)
         if data.isReverseDriving then
             data.snapDirectionMultiplier = -data.snapDirectionMultiplier
         end
+		
+        local snapFactor = spec.autoInvertOffset and data.snapDirectionMultiplier or 1.0
 
         if data.width ~= 0 then
             local lineAlpha = GuidanceUtil.getAProjectOnLineParameter(z, x, lineZ, lineX, lineDirX, lineDirZ) / data.width
-            data.currentLane = MathUtil.round( lineAlpha - (data.offsetWidth * data.snapDirectionMultiplier / data.width))
+            data.currentLane = MathUtil.round( lineAlpha - (data.offsetWidth * snapFactor / data.width))
             data.alphaRad = lineAlpha - data.currentLane
         end
     end
